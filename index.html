@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PO・TORO 公式ポータル</title>
-  <meta name="description" content="concept cafe PO・TORO（ポ・トロ）の総合ポータル。最新イベント、メニュー、キャスト、アクセス、各種コンテンツへの入口をひとまとめ。" />
+  <meta name="description" content="concept cafe PO・TORO（ポ・トロ）の総合ポータル。最新イベント、メイドさん紹介、アクセス、各種コンテンツへの入口をひとまとめ。" />
   <meta name="format-detection" content="telephone=no" />
   <!-- OGP -->
   <meta property="og:type" content="website" />
@@ -14,23 +14,12 @@
   <meta property="og:url" content="https://example.com" />
   <link rel="icon" href="img/favicon.png" />
   <style>
-    :root{
-      --pink:#f6b7d2;/*パステルピンク*/
-      --blue:#a9d6f7;/*水色*/
-      --deep:#2a2a2a;
-      --ink:#333;
-      --bg:#fff;
-      --card:#ffffffcc;
-      --shadow:0 10px 30px rgba(0,0,0,.12);
-      --radius:16px;
-    }
+    :root{--pink:#f6b7d2;--blue:#a9d6f7;--deep:#2a2a2a;--ink:#333;--bg:#fff;--card:#ffffffcc;--shadow:0 10px 30px rgba(0,0,0,.12);--radius:16px}
     *{box-sizing:border-box}
-    html,body{margin:0;height:100%;font-family:"-apple-system","BlinkMacSystemFont","Hiragino Kaku Gothic ProN","Noto Sans JP",Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji",sans-serif;color:var(--ink);background:linear-gradient(135deg,var(--pink),var(--blue));background-attachment: fixed;}
+    html,body{margin:0;height:100%;font-family:"-apple-system","BlinkMacSystemFont","Hiragino Kaku Gothic ProN","Noto Sans JP",Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji",sans-serif;color:var(--ink);background:linear-gradient(135deg,var(--pink),var(--blue));background-attachment: fixed}
     a{color:#0b69d5;text-decoration:none}
     img{max-width:100%;height:auto;display:block}
     .container{width:min(1100px,92vw);margin:0 auto}
-
-    /* Header */
     header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(10px);background:rgba(255,255,255,.75);box-shadow:0 2px 12px rgba(0,0,0,.08)}
     .nav{display:flex;align-items:center;justify-content:space-between;padding:10px 14px}
     .brand{display:flex;align-items:center;gap:10px}
@@ -43,17 +32,7 @@
     .nav-links a{padding:8px 12px;border-radius:999px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.06);font-size:.92rem}
     .hamburger{display:none;background:#fff;border:none;border-radius:12px;padding:9px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
     .hamburger svg{width:22px;height:22px}
-
-    @media (max-width:880px){
-      .nav-links{display:none}
-      .hamburger{display:inline-grid}
-      .drawer{position:fixed;inset:0 0 0 auto;width:min(84vw,360px);background:#fff;box-shadow:-20px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:.3s;z-index:60;display:flex;flex-direction:column}
-      .drawer.open{transform:translateX(0)}
-      .drawer .head{display:flex;align-items:center;justify-content:space-between;padding:16px}
-      .drawer a{padding:14px 18px;border-bottom:1px solid #eee}
-    }
-
-    /* Hero */
+    @media (max-width:880px){.nav-links{display:none}.hamburger{display:inline-grid}.drawer{position:fixed;inset:0 0 0 auto;width:min(84vw,360px);background:#fff;box-shadow:-20px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:.3s;z-index:60;display:flex;flex-direction:column}.drawer.open{transform:translateX(0)}.drawer .head{display:flex;align-items:center;justify-content:space-between;padding:16px}.drawer a{padding:14px 18px;border-bottom:1px solid #eee}}
     .hero{position:relative;isolation:isolate}
     .hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;padding:40px 0}
     .badge{display:inline-flex;gap:8px;align-items:center;background:#fff;border-radius:999px;padding:6px 10px;box-shadow:var(--shadow);font-size:.85rem}
@@ -64,56 +43,36 @@
     .btn-primary{background:linear-gradient(135deg,#ff81c0,#8ed2ff);color:#fff}
     .btn-ghost{background:#fff;color:#333}
     .hero-card{background:var(--card);backdrop-filter: blur(8px);padding:14px;border-radius:var(--radius);box-shadow:var(--shadow)}
-
-    @media (max-width:880px){
-      .hero .wrap{grid-template-columns:1fr}
-    }
-
-    /* Sections */
+    @media (max-width:880px){.hero .wrap{grid-template-columns:1fr}}
     section{padding:34px 0}
     .sec-title{font-weight:900;font-size:1.3rem;margin:0 0 14px 0;display:flex;align-items:center;gap:8px}
-    .sec-title svg{width:22px;height:22px}
-
-    /* News ticker */
     .ticker{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
     .ticker ul{list-style:none;margin:0;padding:0}
     .ticker li{display:flex;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid #eee}
     .ticker time{font-variant-numeric:tabular-nums;color:#666;min-width:7.7em}
     .label{display:inline-block;padding:.2em .6em;border-radius:999px;font-size:.75rem;font-weight:700;color:#fff;background:#ff72b4}
-
-    /* Cards Grid */
     .grid{display:grid;gap:16px}
     .grid.cols-3{grid-template-columns:repeat(3,1fr)}
     .grid.cols-4{grid-template-columns:repeat(4,1fr)}
     @media (max-width:1024px){.grid.cols-4{grid-template-columns:repeat(3,1fr)}}
     @media (max-width:880px){.grid.cols-4,.grid.cols-3{grid-template-columns:repeat(2,1fr)}}
     @media (max-width:520px){.grid.cols-4,.grid.cols-3{grid-template-columns:1fr}}
-
     .card{background:#fff;border-radius:18px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
-    .card .thumb{aspect-ratio:16/9;background:#f4f4f4}
+    .card .thumb{aspect-ratio:16/9;background:#f4f4f4;object-fit:cover}
     .card .body{padding:12px 14px}
     .card h3{margin:.2rem 0 .4rem;font-size:1.05rem}
     .card p{margin:0;color:#555;font-size:.92rem}
     .chip{display:inline-flex;align-items:center;gap:6px;background:#fafafa;border:1px solid #eee;border-radius:999px;padding:4px 8px;font-size:.78rem}
-
-    /* Quick Links */
     .qlink{display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;text-align:center;background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:18px;min-height:120px}
-    .qlink svg{width:28px;height:28px}
-
-    /* Schedule */
     .table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
     .table th,.table td{padding:12px;border-bottom:1px solid #eee;text-align:left}
     .table th{background:#fafafa}
-
-    /* Footer */
     footer{padding:28px 0;color:#333}
     .foot{display:grid;gap:16px;grid-template-columns:2fr 1fr 1fr}
     .foot h4{margin:.2rem 0 .6rem}
     .sns{display:flex;gap:10px}
     .copyright{margin-top:12px;font-size:.85rem;color:#555}
     @media (max-width:880px){.foot{grid-template-columns:1fr}}
-
-    /* Utility */
     .hidden{display:none}
     .mt-8{margin-top:8px}.mt-12{margin-top:12px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}
     .tag{font-size:.75rem;color:#666}
@@ -132,8 +91,7 @@
       <div class="nav-links" id="navLinks">
         <a href="#news">お知らせ</a>
         <a href="#events">イベント</a>
-        <a href="#menu">メニュー</a>
-        <a href="#cast">キャスト</a>
+        <a href="#maids">メイドさん紹介</a>
         <a href="#games">ゲーム/診断</a>
         <a href="#schedule">営業日</a>
         <a href="#access">アクセス</a>
@@ -149,8 +107,7 @@
       </div>
       <a href="#news">お知らせ</a>
       <a href="#events">イベント</a>
-      <a href="#menu">メニュー</a>
-      <a href="#cast">キャスト</a>
+      <a href="#maids">メイドさん紹介</a>
       <a href="#games">ゲーム/診断</a>
       <a href="#schedule">営業日</a>
       <a href="#access">アクセス</a>
@@ -165,7 +122,7 @@
         <div>
           <span class="badge" aria-label="最新の更新">🔔 最新情報をチェック</span>
           <h1 class="headline">ようこそ、ご主人さま・お嬢さま。<br>PO・TOROの入口はここ♡</h1>
-          <p class="sub">イベント、メニュー、キャスト、ゲームや各種リンクをこのページに集約しました。ブックマーク推奨です！</p>
+          <p class="sub">イベント、メイドさん紹介、ゲームや各種リンクをこのページに集約しました。ブックマーク推奨です！</p>
           <div class="cta">
             <a class="btn btn-primary" href="#events">イベント案内へ</a>
             <a class="btn btn-ghost" href="#games">診断・ゲームで遊ぶ</a>
@@ -176,8 +133,8 @@
           </div>
         </div>
         <div class="hero-card">
-          <img src="img/hero.jpg" alt="PO・TORO イメージ" class="thumb" />
-          <div class="mt-12" style="font-size:.9rem;color:#555">※ ここにキービジュアルを配置（1080×600 以上推奨）</div>
+          <img src="img/potro_twi.jpg" alt="PO・TORO キービジュアル" class="thumb" />
+          <div class="mt-12" style="font-size:.9rem;color:#555">※ 添付いただいた画像（保存名: <code>img/potro_twi.jpg</code>）を使用しています</div>
         </div>
       </div>
     </section>
@@ -187,11 +144,7 @@
       <div class="container">
         <h2 class="sec-title">🗞️ お知らせ</h2>
         <div class="ticker" aria-live="polite">
-          <ul id="newsList">
-            <li><time>2025-10-19</time><span class="label">NEW</span> ポータルβ版公開。フィードバック歓迎！</li>
-            <li><time>2025-10-18</time> メイドプロフィール公開修正（画像パス統一）。</li>
-            <li><time>2025-10-15</time> <strong>萌えセレクトLite</strong> 提供開始（当日限定・滞在中のみ）。</li>
-          </ul>
+          <ul id="newsList"></ul>
         </div>
       </div>
     </section>
@@ -200,100 +153,34 @@
     <section id="events">
       <div class="container">
         <h2 class="sec-title">🎉 イベント</h2>
-        <div class="grid cols-3">
-          <article class="card">
-            <img src="img/event_halloween.jpg" alt="ハロウィンイベント" class="thumb" />
-            <div class="body">
-              <h3>ハロウィン仮装お給仕</h3>
-              <p>10/28(火)〜10/31(金)。先着でお菓子プレゼント（在庫限り）。</p>
-              <div class="mt-12 chip">#ポ・トロ #Halloween</div>
-            </div>
-          </article>
-          <article class="card">
-            <img src="img/event_anniv.jpg" alt="6周年キャンペーン" class="thumb" />
-            <div class="body">
-              <h3>6周年記念キャンペーン</h3>
-              <p>10/6(月)〜10/31(金)。ゲーム連動の特別景品も！</p>
-              <div class="mt-12 chip">#Anniversary</div>
-            </div>
-          </article>
-          <article class="card">
-            <img src="img/event_new.jpg" alt="新着イベント" class="thumb" />
-            <div class="body">
-              <h3>次回予告</h3>
-              <p>近日公開。投票・限定メニューほか、続報をお待ちください。</p>
-              <div class="mt-12 chip">#ComingSoon</div>
-            </div>
-          </article>
-        </div>
+        <div class="grid cols-3" id="eventsGrid"></div>
       </div>
     </section>
 
-    <!-- Menu -->
-    <section id="menu">
+    <!-- メイドさん紹介 -->
+    <section id="maids">
       <div class="container">
-        <h2 class="sec-title">🍽️ メニュー</h2>
-        <div class="grid cols-4">
-          <article class="card">
-            <img src="img/menu_softdrink.jpg" alt="ソフトドリンク" class="thumb" />
-            <div class="body"><h3>飲み放題</h3><p>30分 1,000円（キャストドリンク無し／生ビールも飲み放題 など店舗ルール表記）</p></div>
-          </article>
-          <article class="card">
-            <img src="img/menu_special.jpg" alt="限定メニュー" class="thumb" />
-            <div class="body"><h3>限定メニュー</h3><p>季節のフード＆ドリンク。<em>萌えセレクトLite</em>：15分/1,000円（税込）。</p></div>
-          </article>
-          <article class="card">
-            <img src="img/menu_sweets.jpg" alt="スイーツ" class="thumb" />
-            <div class="body"><h3>スイーツ</h3><p>店内POPと連動。完売時は表示を切替。</p></div>
-          </article>
-          <article class="card">
-            <img src="img/menu_goods.jpg" alt="グッズ" class="thumb" />
-            <div class="body"><h3>グッズ/くじ</h3><p>アクキーくじ、ポ・トロガチャなど。</p></div>
-          </article>
+        <h2 class="sec-title">👑 メイドさん紹介</h2>
+        <div class="mt-12">
+          <a class="btn btn-ghost" href="public.html" target="_blank" rel="noopener">プロフィール一覧（閲覧用）</a>
         </div>
-        <p class="tag mt-12">※ 詳細な価格・注意事項は店内メニュー・最新告知をご確認ください。</p>
-      </div>
-    </section>
-
-    <!-- Cast -->
-    <section id="cast">
-      <div class="container">
-        <h2 class="sec-title">👑 キャスト</h2>
-        <div class="grid cols-4" id="castGrid">
-          <!-- 画像は img/ に配置。例：img/mio.jpg -->
-          <article class="card"><img src="img/mio.jpg" alt="みお" class="thumb" /><div class="body"><h3>みお</h3><p>七代目 / 趣味：◯◯</p></div></article>
-          <article class="card"><img src="img/kiri.jpg" alt="きり" class="thumb" /><div class="body"><h3>きり</h3><p>七代目 / 趣味：◯◯</p></div></article>
-          <article class="card"><img src="img/maro.jpg" alt="まろ" class="thumb" /><div class="body"><h3>まろ</h3><p>七代目 / 茶ボブ固定</p></div></article>
-          <article class="card"><img src="img/nagi.jpg" alt="なぎ" class="thumb" /><div class="body"><h3>なぎ</h3><p>七代目 / ◯◯</p></div></article>
-        </div>
-        <div class="mt-12"><a class="btn btn-ghost" href="public.html" target="_blank" rel="noopener">プロフィール一覧（閲覧用）</a></div>
       </div>
     </section>
 
     <!-- Games / Tools -->
     <section id="games">
       <div class="container">
-        <h2 class="sec-title">🎮 ゲーム / 診断 / ツール</h2>
+        <h2 class="sec-title">🎮 ゲーム / 診断</h2>
         <div class="grid cols-4">
           <a class="qlink" href="#" id="linkQuest">
             <div>🗝️</div>
             <div><strong>ポ・トロクエスト</strong></div>
             <small class="tag">完成版（基準ビルド）</small>
           </a>
-          <a class="qlink" href="#" id="linkJail">
-            <div>🚨</div>
-            <div><strong>脱獄チャレンジ</strong></div>
-            <small class="tag">1/20 成功演出あり</small>
-          </a>
           <a class="qlink" href="#" id="linkMBTI">
             <div>💘</div>
             <div><strong>ご主人様タイプ診断</strong></div>
             <small class="tag">MBTIミニ12問・レースver.</small>
-          </a>
-          <a class="qlink" href="#" id="linkBingo">
-            <div>🔢</div>
-            <div><strong>ビンゴカード</strong></div>
-            <small class="tag">タップでマーキング</small>
           </a>
         </div>
       </div>
@@ -324,13 +211,14 @@
           <div class="card" style="grid-column: span 2;">
             <div class="body">
               <h3>店舗情報</h3>
-              <p>〒000-0000 愛媛県◯◯市◯◯ 0-0-0 ビル 2F（<em>仮</em>）</p>
-              <p>営業時間：平日 18:00–24:00 / 週末 17:00–24:00（例）</p>
-              <p>料金：30分 1,000円飲み放題（キャストドリンク無し / 生ビールOK など）</p>
-              <p class="tag">※ 正式な住所・注意事項は決定後に更新してください。</p>
+              <p>〒790-0012 愛媛県松山市湊町3-7-2 2F</p>
+              <p>営業時間：平日＆祝 18:00–22:00 / 土日 17:00–22:00</p>
+              <p>料金：30分 1,000円(税込) 各種ドリンク飲み放題（生ビール含む）</p>
+              <p class="tag">※放置ゼロ宣言＆キャストドリンク無しで安心♪</p>
             </div>
           </div>
           <div class="card">
+            <img src="https://picsum.photos/seed/potoro-map/800/450" alt="地図のダミー画像" class="thumb" />
             <div class="body">
               <h3>地図</h3>
               <p>Google マップ埋め込み枠（住所確定後に iframe を配置）</p>
@@ -345,10 +233,8 @@
       <div class="container">
         <h2 class="sec-title">📡 公式SNS</h2>
         <div class="sns">
-          <a class="qlink" href="#" aria-label="X / Twitter">🕊️ X</a>
-          <a class="qlink" href="#" aria-label="Instagram">📸 Instagram</a>
-          <a class="qlink" href="#" aria-label="YouTube">▶️ YouTube</a>
-          <a class="qlink" href="#" aria-label="TikTok">🎵 TikTok</a>
+          <a class="qlink" href="https://x.com/po_toro" target="_blank" aria-label="X / Twitter">🕊️ X（@po_toro）</a>
+          <a class="qlink" href="https://www.tiktok.com/@potoro_o" target="_blank" aria-label="TikTok">🎵 TikTok（@potoro_o）</a>
         </div>
       </div>
     </section>
@@ -365,8 +251,7 @@
         <h4>リンク</h4>
         <ul>
           <li><a href="#events">イベント</a></li>
-          <li><a href="#menu">メニュー</a></li>
-          <li><a href="#cast">キャスト</a></li>
+          <li><a href="#maids">メイドさん紹介</a></li>
           <li><a href="#games">ゲーム/診断</a></li>
         </ul>
       </div>
@@ -382,35 +267,107 @@
   </footer>
 
   <script>
-    // 年表示
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // ドロワー
-    const btnMenu = document.getElementById('btnMenu');
-    const drawer = document.getElementById('drawer');
-    const btnClose = document.getElementById('btnClose');
-    const toggleDrawer = (open)=>{
-      drawer.classList.toggle('open', open);
-      drawer.setAttribute('aria-hidden', String(!open));
-      btnMenu.setAttribute('aria-expanded', String(open));
+    // =========================
+    // JSONデータ（ここだけ更新すればOK）
+    // =========================
+    window.PORTAL_DATA = {
+      hero: {
+        image: "img/potro_twi.jpg",
+        caption: "※ 添付いただいた画像を使用中"
+      },
+      news: [
+        { date: "2025-10-19", label: "NEW", text: "ポータルβ版公開。フィードバック歓迎！" },
+        { date: "2025-10-18", label: "",   text: "メイドプロフィール公開修正（画像パス統一）。" },
+        { date: "2025-10-15", label: "",   text: "<strong>萌えセレクトLite</strong> 提供開始（当日限定・滞在中のみ）。" }
+      ],
+      events: [
+        { title: "ハロウィン仮装お給仕", dateText: "10/28(火)〜10/31(金)。先着でお菓子プレゼント（在庫限り）。", image: "https://picsum.photos/seed/potoro-event1/800/450", alt: "イベント画像（ダミー1）", chip: "#ポ・トロ #Halloween" },
+        { title: "6周年記念キャンペーン", dateText: "10/6(月)〜10/31(金)。ゲーム連動の特別景品も！", image: "https://picsum.photos/seed/potoro-event2/800/450", alt: "イベント画像（ダミー2）", chip: "#Anniversary" },
+        { title: "次回予告", dateText: "近日公開。投票・限定メニューほか、続報をお待ちください。", image: "https://picsum.photos/seed/potoro-event3/800/450", alt: "イベント画像（ダミー3）", chip: "#ComingSoon" }
+      ],
+      sns: [
+        { name: "X", icon: "🕊️", href: "https://x.com/po_toro", arialabel: "X / Twitter" },
+        { name: "TikTok", icon: "🎵", href: "https://www.tiktok.com/@potoro_o", arialabel: "TikTok" }
+      ]
     };
-    btnMenu.addEventListener('click',()=>toggleDrawer(true));
-    btnClose.addEventListener('click',()=>toggleDrawer(false));
-    drawer.addEventListener('click', (e)=>{ if(e.target.tagName==='A') toggleDrawer(false); });
 
-    // 外部リンク（必要に応じて差し替え）
-    document.getElementById('linkQuest').href = "quest.html"; // ポ・トロクエスト（完成版）
-    document.getElementById('linkJail').href = "jail.html";  // 脱獄チャレンジ
-    document.getElementById('linkMBTI').href = "mbti-mini.html"; // ご主人様タイプ診断（MBTIミニ12問）
-    document.getElementById('linkBingo').href = "bingo.html"; // ビンゴカード
+    // =========================
+    // レンダリング関数
+    // =========================
+    function escapeHtml(str){ return str.replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[s])); }
 
-    // 簡易：クエリパラメータ ?embed=true のときヘッダー簡略化
-    const params = new URLSearchParams(location.search);
-    if(params.get('embed')==='true'){
-      document.querySelector('header').style.display='none';
-      document.querySelector('footer').style.display='none';
-      document.querySelectorAll('section').forEach(s=>s.style.padding='12px 0');
+    function renderNews(){
+      const list = document.getElementById('newsList');
+      if(!list) return;
+      list.innerHTML = window.PORTAL_DATA.news.map(n => {
+        const label = n.label ? `<span class="label">${escapeHtml(n.label)}</span>` : '';
+        return `<li><time>${escapeHtml(n.date)}</time>${label} ${n.text}</li>`;
+      }).join('');
     }
+
+    function renderEvents(){
+      const grid = document.getElementById('eventsGrid');
+      if(!grid) return;
+      grid.innerHTML = window.PORTAL_DATA.events.map(ev => `
+        <article class="card">
+          <img src="${ev.image}" alt="${escapeHtml(ev.alt||ev.title)}" class="thumb" />
+          <div class="body">
+            <h3>${escapeHtml(ev.title)}</h3>
+            <p>${escapeHtml(ev.dateText)}</p>
+            ${ev.chip ? `<div class="mt-12 chip">${escapeHtml(ev.chip)}</div>` : ''}
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function renderSNS(){
+      const wrap = document.querySelector('#sns .sns');
+      if(!wrap) return;
+      wrap.innerHTML = window.PORTAL_DATA.sns.map(s => `
+        <a class="qlink" href="${s.href}" target="_blank" aria-label="${escapeHtml(s.arialabel||s.name)}">${s.icon} ${escapeHtml(s.name)}</a>
+      `).join('');
+    }
+
+    // 年表示
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
+
+      // ドロワー
+      const btnMenu = document.getElementById('btnMenu');
+      const drawer = document.getElementById('drawer');
+      const btnClose = document.getElementById('btnClose');
+      if(btnMenu && drawer && btnClose){
+        const toggleDrawer = (open)=>{
+          drawer.classList.toggle('open', open);
+          drawer.setAttribute('aria-hidden', String(!open));
+          btnMenu.setAttribute('aria-expanded', String(open));
+        };
+        btnMenu.addEventListener('click',()=>toggleDrawer(true));
+        btnClose.addEventListener('click',()=>toggleDrawer(false));
+        drawer.addEventListener('click', (e)=>{ if(e.target.tagName==='A') toggleDrawer(false); });
+      }
+
+      // 外部リンク（必要に応じて差し替え）
+      const linkQuest = document.getElementById('linkQuest');
+      const linkMBTI = document.getElementById('linkMBTI');
+      if(linkQuest) linkQuest.href = "quest.html";
+      if(linkMBTI) linkMBTI.href = "mbti-mini.html";
+
+      // JSONから描画
+      renderNews();
+      renderEvents();
+      renderSNS();
+
+      // ?embed=true のときヘッダー簡略化
+      const params = new URLSearchParams(location.search);
+      if(params.get('embed')==='true'){
+        const header = document.querySelector('header');
+        const footer = document.querySelector('footer');
+        if(header) header.style.display='none';
+        if(footer) footer.style.display='none';
+        document.querySelectorAll('section').forEach(s=>s.style.padding='12px 0');
+      }
+    });
   </script>
 </body>
 </html>
