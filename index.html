@@ -268,7 +268,17 @@
 
   <script>
     // =========================
-    // JSONデータ（ここだけ更新すればOK）
+    // 設定：Googleスプレッドシート公開CSV
+    // =========================
+    // ★シートを「ウェブに公開」→ CSV で公開し、下記にURLを貼り付けてください。
+    // 例1: https://docs.google.com/spreadsheets/d/XXXXXXXXXXXX/pub?gid=0&single=true&output=csv
+    // 例2: https://docs.google.com/spreadsheets/d/XXXXXXXXXXXX/export?format=csv&gid=0
+    window.PORTAL_CONFIG = {
+      eventsCsvUrl: "" https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pubhtml?gid=365949763&single=true
+    };
+
+    // =========================
+    // JSONデータ（フォールバック/他セクション用）
     // =========================
     window.PORTAL_DATA = {
       hero: {
@@ -280,6 +290,7 @@
         { date: "2025-10-18", label: "",   text: "メイドプロフィール公開修正（画像パス統一）。" },
         { date: "2025-10-15", label: "",   text: "<strong>萌えセレクトLite</strong> 提供開始（当日限定・滞在中のみ）。" }
       ],
+      // ▼CSVが未設定/取得失敗時のフォールバック
       events: [
         { title: "ハロウィン仮装お給仕", dateText: "10/28(火)〜10/31(金)。先着でお菓子プレゼント（在庫限り）。", image: "https://picsum.photos/seed/potoro-event1/800/450", alt: "イベント画像（ダミー1）", chip: "#ポ・トロ #Halloween" },
         { title: "6周年記念キャンペーン", dateText: "10/6(月)〜10/31(金)。ゲーム連動の特別景品も！", image: "https://picsum.photos/seed/potoro-event2/800/450", alt: "イベント画像（ダミー2）", chip: "#Anniversary" },
@@ -292,15 +303,84 @@
     };
 
     // =========================
+    // CSVパーサ（軽量/クォート対応）
+    // =========================
+    function parseCSV(text){
+      const rows = [];
+      let i=0, field='', row=[], inQuotes=false;
+      while(i < text.length){
+        const c = text[i];
+        if(inQuotes){
+          if(c==='"'){
+            if(text[i+1]==='"'){ field+='"'; i+=2; continue; } // エスケープ二重引用符
+            inQuotes=false; i++; continue;
+          }
+          field += c; i++; continue;
+        } else {
+          if(c==='"'){ inQuotes=true; i++; continue; }
+          if(c===','){ row.push(field); field=''; i++; continue; }
+          if(c==='
+' || c==='
+'){ // 行区切り
+            // CRLF/CR対応
+            if(c==='
+' && text[i+1]==='
+') i++;
+            row.push(field); field='';
+            if(row.length>1 || row[0]!=='' ){ rows.push(row); }
+            row=[]; i++; continue;
+          }
+          field += c; i++; continue;
+        }
+      }
+      // 最終フィールド
+      if(field!=='' || row.length){ row.push(field); rows.push(row); }
+      return rows;
+    }
+
+    function csvToObjects(csvText){
+      const rows = parseCSV(csvText).filter(r=>r.length && r.join('').trim()!=='' );
+      if(rows.length===0) return [];
+      const header = rows[0].map(h=>h.trim().toLowerCase());
+      const idx = (name)=> header.indexOf(name);
+      const ti = idx('title'), di = idx('datetext'), ii = idx('image'), ai = idx('alt'), ci = idx('chip');
+      return rows.slice(1).map(r=>({
+        title: r[ti]||'',
+        dateText: r[di]||'',
+        image: r[ii]||'',
+        alt: r[ai]||'',
+        chip: r[ci]||''
+      })).filter(o=>o.title || o.image);
+    }
+
+    async function maybeLoadEventsFromCSV(){
+      const url = (window.PORTAL_CONFIG||{}).eventsCsvUrl;
+      if(!url) return false;
+      try{
+        const res = await fetch(url, { cache: 'no-store' });
+        if(!res.ok) throw new Error('CSV fetch failed');
+        const text = await res.text();
+        const objs = csvToObjects(text);
+        if(objs && objs.length){
+          window.PORTAL_DATA.events = objs;
+          return true;
+        }
+      }catch(e){
+        console.warn('CSV読み込みに失敗しました。フォールバックを使用します。', e);
+      }
+      return false;
+    }
+
+    // =========================
     // レンダリング関数
     // =========================
-    function escapeHtml(str){ return str.replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[s])); }
+    function escapeHtml(str){ return String(str).replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[s])); }
 
     function renderNews(){
       const list = document.getElementById('newsList');
       if(!list) return;
-      list.innerHTML = window.PORTAL_DATA.news.map(n => {
-        const label = n.label ? `<span class="label">${escapeHtml(n.label)}</span>` : '';
+      list.innerHTML = (window.PORTAL_DATA.news||[]).map(n => {
+        const label = n.label ? `<span class=\"label\">${escapeHtml(n.label)}</span>` : '';
         return `<li><time>${escapeHtml(n.date)}</time>${label} ${n.text}</li>`;
       }).join('');
     }
@@ -308,13 +388,13 @@
     function renderEvents(){
       const grid = document.getElementById('eventsGrid');
       if(!grid) return;
-      grid.innerHTML = window.PORTAL_DATA.events.map(ev => `
-        <article class="card">
-          <img src="${ev.image}" alt="${escapeHtml(ev.alt||ev.title)}" class="thumb" />
-          <div class="body">
+      grid.innerHTML = (window.PORTAL_DATA.events||[]).map(ev => `
+        <article class=\"card\">
+          <img src=\"${ev.image}\" alt=\"${escapeHtml(ev.alt||ev.title)}\" class=\"thumb\" />
+          <div class=\"body\">
             <h3>${escapeHtml(ev.title)}</h3>
-            <p>${escapeHtml(ev.dateText)}</p>
-            ${ev.chip ? `<div class="mt-12 chip">${escapeHtml(ev.chip)}</div>` : ''}
+            <p>${escapeHtml(ev.dateText||'')}</p>
+            ${ev.chip ? `<div class=\"mt-12 chip\">${escapeHtml(ev.chip)}</div>` : ''}
           </div>
         </article>
       `).join('');
@@ -323,14 +403,15 @@
     function renderSNS(){
       const wrap = document.querySelector('#sns .sns');
       if(!wrap) return;
-      wrap.innerHTML = window.PORTAL_DATA.sns.map(s => `
-        <a class="qlink" href="${s.href}" target="_blank" aria-label="${escapeHtml(s.arialabel||s.name)}">${s.icon} ${escapeHtml(s.name)}</a>
+      wrap.innerHTML = (window.PORTAL_DATA.sns||[]).map(s => `
+        <a class=\"qlink\" href=\"${s.href}\" target=\"_blank\" aria-label=\"${escapeHtml(s.arialabel||s.name)}\">${s.icon} ${escapeHtml(s.name)}</a>
       `).join('');
     }
 
-    // 年表示
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 年表示
+      const yearEl = document.getElementById('year');
+      if(yearEl) yearEl.textContent = new Date().getFullYear();
 
       // ドロワー
       const btnMenu = document.getElementById('btnMenu');
@@ -347,16 +428,21 @@
         drawer.addEventListener('click', (e)=>{ if(e.target.tagName==='A') toggleDrawer(false); });
       }
 
-      // 外部リンク（必要に応じて差し替え）
+      // 外部リンク
       const linkQuest = document.getElementById('linkQuest');
       const linkMBTI = document.getElementById('linkMBTI');
       if(linkQuest) linkQuest.href = "quest.html";
       if(linkMBTI) linkMBTI.href = "mbti-mini.html";
 
-      // JSONから描画
+      // JSONから先に描画（体感高速化）
       renderNews();
-      renderEvents();
       renderSNS();
+      renderEvents();
+
+      // CSVが設定されていれば上書き描画
+      if(await maybeLoadEventsFromCSV()){
+        renderEvents();
+      }
 
       // ?embed=true のときヘッダー簡略化
       const params = new URLSearchParams(location.search);
