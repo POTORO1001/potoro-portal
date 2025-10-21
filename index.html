@@ -121,8 +121,8 @@
       <div class="container wrap">
         <div>
           <span class="badge" aria-label="最新の更新">🔔 最新情報をチェック</span>
-          <h1 class="headline">ようこそ、PO・TOROへ<br>ご主人さま・お嬢さま♡<br>PO・TOROの入口はここ♡</h1>
-          <p class="sub">イベント、メイドさん紹介、ゲームや各種リンクをこのページに集約しました。<br>ブックマーク推奨です！</p>
+          <h1 class="headline">ようこそ、ご主人さま・お嬢さま。<br>PO・TOROの入口はここ♡</h1>
+          <p class="sub">イベント、メイドさん紹介、ゲームや各種リンクをこのページに集約しました。ブックマーク推奨です！</p>
           <div class="cta">
             <a class="btn btn-primary" href="#events">イベント案内へ</a>
             <a class="btn btn-ghost" href="#games">診断・ゲームで遊ぶ</a>
@@ -134,7 +134,7 @@
         </div>
         <div class="hero-card">
           <img src="img/potro_twi.jpg" alt="PO・TORO キービジュアル" class="thumb" />
-          <div class="mt-12" style="font-size:.9rem;color:#555"></div>
+          <div class="mt-12" style="font-size:.9rem;color:#555">※ 添付いただいた画像（保存名: <code>img/potro_twi.jpg</code>）を使用しています</div>
         </div>
       </div>
     </section>
@@ -154,6 +154,7 @@
       <div class="container">
         <h2 class="sec-title">🎉 イベント</h2>
         <div class="grid cols-3" id="eventsGrid"></div>
+        <div id="eventsStatus" class="tag mt-12" aria-live="polite"></div>
       </div>
     </section>
 
@@ -270,28 +271,22 @@
     // =========================
     // 設定：Googleスプレッドシート公開CSV
     // =========================
-    // ★シートを「ウェブに公開」→ CSV で公開し、下記にURLを貼り付けてください。
-    // 例1: https://docs.google.com/spreadsheets/d/XXXXXXXXXXXX/pub?gid=0&single=true&output=csv
-    // 例2: https://docs.google.com/spreadsheets/d/XXXXXXXXXXXX/export?format=csv&gid=0
     window.PORTAL_CONFIG = {
-      eventsCsvUrl: "" https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pubhtml?gid=365949763&single=true
+      // 公開CSVのURL（Googleシート → ファイル → ウェブに公開 → CSV）
+      eventsCsvUrl: "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=365949763"
     };
 
     // =========================
     // JSONデータ（フォールバック/他セクション用）
     // =========================
     window.PORTAL_DATA = {
-      hero: {
-        image: "img/potro_twi.jpg",
-        caption: "※ 添付いただいた画像を使用中"
-      },
+      hero: { image: "img/potro_twi.jpg", caption: "※ 添付いただいた画像を使用中" },
       news: [
         { date: "2025-10-19", label: "NEW", text: "ポータルβ版公開。フィードバック歓迎！" },
         { date: "2025-10-18", label: "",   text: "メイドプロフィール公開修正（画像パス統一）。" },
         { date: "2025-10-15", label: "",   text: "<strong>萌えセレクトLite</strong> 提供開始（当日限定・滞在中のみ）。" }
       ],
-      // ▼CSVが未設定/取得失敗時のフォールバック
-      events: [
+      events: [ // CSV未設定/失敗時のフォールバック
         { title: "ハロウィン仮装お給仕", dateText: "10/28(火)〜10/31(金)。先着でお菓子プレゼント（在庫限り）。", image: "https://picsum.photos/seed/potoro-event1/800/450", alt: "イベント画像（ダミー1）", chip: "#ポ・トロ #Halloween" },
         { title: "6周年記念キャンペーン", dateText: "10/6(月)〜10/31(金)。ゲーム連動の特別景品も！", image: "https://picsum.photos/seed/potoro-event2/800/450", alt: "イベント画像（ダミー2）", chip: "#Anniversary" },
         { title: "次回予告", dateText: "近日公開。投票・限定メニューほか、続報をお待ちください。", image: "https://picsum.photos/seed/potoro-event3/800/450", alt: "イベント画像（ダミー3）", chip: "#ComingSoon" }
@@ -312,20 +307,15 @@
         const c = text[i];
         if(inQuotes){
           if(c==='"'){
-            if(text[i+1]==='"'){ field+='"'; i+=2; continue; } // エスケープ二重引用符
+            if(text[i+1]==='"'){ field+='"'; i+=2; continue; } // "" → "
             inQuotes=false; i++; continue;
           }
           field += c; i++; continue;
         } else {
           if(c==='"'){ inQuotes=true; i++; continue; }
           if(c===','){ row.push(field); field=''; i++; continue; }
-          if(c==='
-' || c==='
-'){ // 行区切り
-            // CRLF/CR対応
-            if(c==='
-' && text[i+1]==='
-') i++;
+          if(c==='\n' || c==='\r'){
+            if(c==='\r' && text[i+1]==='\n') i++; // CRLF
             row.push(field); field='';
             if(row.length>1 || row[0]!=='' ){ rows.push(row); }
             row=[]; i++; continue;
@@ -333,40 +323,60 @@
           field += c; i++; continue;
         }
       }
-      // 最終フィールド
       if(field!=='' || row.length){ row.push(field); rows.push(row); }
       return rows;
     }
 
     function csvToObjects(csvText){
+      // 先頭BOM除去
+      if(csvText.charCodeAt(0) === 0xFEFF){ csvText = csvText.slice(1); }
       const rows = parseCSV(csvText).filter(r=>r.length && r.join('').trim()!=='' );
       if(rows.length===0) return [];
-      const header = rows[0].map(h=>h.trim().toLowerCase());
-      const idx = (name)=> header.indexOf(name);
-      const ti = idx('title'), di = idx('datetext'), ii = idx('image'), ai = idx('alt'), ci = idx('chip');
+      // ヘッダ標準化
+      const norm = (s)=> String(s||'').replace(/^\uFEFF/u, '').trim().toLowerCase();
+      const header = rows[0].map(norm);
+      // 多言語/別名ヘッダ対応
+      const alias = {
+        title:    ['title','タイトル','件名','イベント名'],
+        datetext: ['datetext','date','日付','期間','date_text'],
+        image:    ['image','画像','img','imageurl','image_url'],
+        alt:      ['alt','代替','代替テキスト','alttext'],
+        chip:     ['chip','タグ','tag','ラベル']
+      };
+      const findIdx = (keys)=>{ for(const k of keys){ const i = header.indexOf(k); if(i!==-1) return i; } return -1; };
+      const ti = findIdx(alias.title);
+      const di = findIdx(alias.datetext);
+      const ii = findIdx(alias.image);
+      const ai = findIdx(alias.alt);
+      const ci = findIdx(alias.chip);
       return rows.slice(1).map(r=>({
-        title: r[ti]||'',
-        dateText: r[di]||'',
-        image: r[ii]||'',
-        alt: r[ai]||'',
-        chip: r[ci]||''
-      })).filter(o=>o.title || o.image);
+        title: ti>-1? r[ti] : '',
+        dateText: di>-1? r[di] : '',
+        image: ii>-1? r[ii] : '',
+        alt: ai>-1? r[ai] : '',
+        chip: ci>-1? r[ci] : ''
+      })).filter(o => (o.title && o.title.trim()) || (o.image && o.image.trim()));
     }
 
     async function maybeLoadEventsFromCSV(){
       const url = (window.PORTAL_CONFIG||{}).eventsCsvUrl;
-      if(!url) return false;
+      const statusEl = document.getElementById('eventsStatus');
+      if(!url){ if(statusEl) statusEl.textContent = 'イベント：ページ内データを表示中（CSV未設定）'; return false; }
       try{
-        const res = await fetch(url, { cache: 'no-store' });
-        if(!res.ok) throw new Error('CSV fetch failed');
+        const res = await fetch(url, { cache: 'no-store', credentials: 'omit' });
+        if(!res.ok){ throw new Error(`CSV fetch failed: ${res.status} ${res.statusText}`); }
         const text = await res.text();
         const objs = csvToObjects(text);
         if(objs && objs.length){
           window.PORTAL_DATA.events = objs;
+          if(statusEl) statusEl.textContent = `イベント：CSVから${objs.length}件を読み込みました`;
           return true;
+        } else {
+          if(statusEl) statusEl.textContent = 'イベント：CSVにデータが見つかりません（ヘッダ/内容をご確認ください）';
         }
       }catch(e){
         console.warn('CSV読み込みに失敗しました。フォールバックを使用します。', e);
+        if(statusEl) statusEl.textContent = 'イベント：CSVの取得に失敗（公開/権限/CORSをご確認ください）';
       }
       return false;
     }
@@ -380,7 +390,7 @@
       const list = document.getElementById('newsList');
       if(!list) return;
       list.innerHTML = (window.PORTAL_DATA.news||[]).map(n => {
-        const label = n.label ? `<span class=\"label\">${escapeHtml(n.label)}</span>` : '';
+        const label = n.label ? `<span class="label">${escapeHtml(n.label)}</span>` : '';
         return `<li><time>${escapeHtml(n.date)}</time>${label} ${n.text}</li>`;
       }).join('');
     }
@@ -389,12 +399,12 @@
       const grid = document.getElementById('eventsGrid');
       if(!grid) return;
       grid.innerHTML = (window.PORTAL_DATA.events||[]).map(ev => `
-        <article class=\"card\">
-          <img src=\"${ev.image}\" alt=\"${escapeHtml(ev.alt||ev.title)}\" class=\"thumb\" />
-          <div class=\"body\">
+        <article class="card">
+          <img src="${ev.image}" alt="${escapeHtml(ev.alt||ev.title)}" class="thumb" />
+          <div class="body">
             <h3>${escapeHtml(ev.title)}</h3>
             <p>${escapeHtml(ev.dateText||'')}</p>
-            ${ev.chip ? `<div class=\"mt-12 chip\">${escapeHtml(ev.chip)}</div>` : ''}
+            ${ev.chip ? `<div class="mt-12 chip">${escapeHtml(ev.chip)}</div>` : ''}
           </div>
         </article>
       `).join('');
@@ -404,9 +414,52 @@
       const wrap = document.querySelector('#sns .sns');
       if(!wrap) return;
       wrap.innerHTML = (window.PORTAL_DATA.sns||[]).map(s => `
-        <a class=\"qlink\" href=\"${s.href}\" target=\"_blank\" aria-label=\"${escapeHtml(s.arialabel||s.name)}\">${s.icon} ${escapeHtml(s.name)}</a>
+        <a class="qlink" href="${s.href}" target="_blank" aria-label="${escapeHtml(s.arialabel||s.name)}">${s.icon} ${escapeHtml(s.name)}</a>
       `).join('');
     }
+
+    // =========================
+    // 開発者用: 最小テスト（コンソール出力）
+    // =========================
+    (function runDevTests(){
+      try{
+        // 1) 改行/カンマ/引用符を含むCSV
+        const csv = [
+          'title,dateText,image,alt,chip',
+          'A,"10/28(火)〜10/31(金), 先着あり",img/a.jpg,代替A,#A',
+          'B,,img/b.jpg,,',
+          'C,"テキストに""二重引用符""",img/c.jpg,代替C,#C'
+        ].join('\n');
+        const rows = parseCSV(csv);
+        console.assert(rows.length === 4, 'rows length');
+        const objs = csvToObjects(csv);
+        console.assert(objs.length === 3, 'objs length');
+        console.assert(objs[0].title === 'A', 'obj[0] title');
+        console.assert(objs[2].dateText.includes('二重引用符'), 'quotes handling');
+
+        // 2) ヘッダ大文字混在 + 日本語ヘッダ
+        const csv2 = [
+          'Title,期間,Image,Alt,Tag',
+          'X,期間テキスト,https://example.com/x.png,代替X,#X'
+        ].join('\n');
+        const o2 = csvToObjects(csv2);
+        console.assert(o2[0].image.includes('example.com'), 'header alias/lowercasing');
+
+        // 3) BOM先頭 + 空行
+        const csv3 = '\uFEFFtitle,dateText\nOnlyTitle,\n\n';
+        const o3 = csvToObjects(csv3);
+        console.assert(o3.length === 1 && o3[0].title === 'OnlyTitle', 'BOM & empty lines');
+
+        // 4) 先頭行だけ/データ無し
+        const csv4 = 'title,dateText,image,alt,chip\n';
+        const o4 = csvToObjects(csv4);
+        console.assert(Array.isArray(o4) && o4.length === 0, 'no data rows');
+
+        console.log('[DEV TESTS] OK');
+      }catch(err){
+        console.error('[DEV TESTS] FAILED', err);
+      }
+    })();
 
     document.addEventListener('DOMContentLoaded', async () => {
       // 年表示
@@ -434,7 +487,7 @@
       if(linkQuest) linkQuest.href = "quest.html";
       if(linkMBTI) linkMBTI.href = "mbti-mini.html";
 
-      // JSONから先に描画（体感高速化）
+      // まずフォールバックで描画（体感高速化）
       renderNews();
       renderSNS();
       renderEvents();
