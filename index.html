@@ -91,6 +91,14 @@
     .lightbox.open{opacity:1;pointer-events:auto}
     .lightbox img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 8px 30px rgba(0,0,0,.5);border-radius:10px}
     .lightbox .close{position:absolute;top:16px;right:16px;background:#fff;border:none;border-radius:999px;font-size:16px;padding:8px 12px;cursor:pointer}
+
+    /* モーダル（規約/プライバシー） */
+    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);z-index:120;opacity:0;pointer-events:none;transition:.2s}
+    .modal.open{opacity:1;pointer-events:auto}
+    .modal .panel{width:min(880px,92vw);max-height:min(80vh,900px);overflow:auto;background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px}
+    .modal .panel h2{margin:.4rem 0 0.6rem;font-size:1.3rem}
+    .modal .close{position:sticky;top:0;margin-left:auto;background:#f6f6f6;border:none;border-radius:999px;padding:8px 12px;cursor:pointer}
+    .modal .body{padding:8px 4px}
   </style>
 </head>
 <body>
@@ -229,14 +237,14 @@
             </div>
           </div>
           <div class="card">
-  <div class="body">
-    <h3>地図</h3>
-    <div style="position:relative;width:100%;padding-top:56.25%;border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.12)">
-      <iframe title="PO・TORO の場所" src="https://www.google.com/maps?q=33.8359588,132.7696145&z=18&output=embed" style="position:absolute;inset:0;border:0;width:100%;height:100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-    </div>
-    <p class="mt-12"><a href="https://www.google.com/maps/place/PO.TORO/@33.8358626,132.7688299,18.58z/data=!4m6!3m5!1s0x354fe5dbb968cdff:0x8b5f6bd36d2edd83!8m2!3d33.8359588!4d132.7696145!16s%2Fg%2F11h7sfhxcy?entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">Google マップで開く</a></p>
-  </div>
-</div>
+            <div class="body">
+              <h3>地図</h3>
+              <div style="position:relative;width:100%;padding-top:56.25%;border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.12)">
+                <iframe title="PO・TORO の場所" src="https://www.google.com/maps?q=33.8359588,132.7696145&z=18&output=embed" style="position:absolute;inset:0;border:0;width:100%;height:100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+              </div>
+              <p class="mt-12"><a href="https://www.google.com/maps/place/PO.TORO/@33.8358626,132.7688299,18.58z/data=!4m6!3m5!1s0x354fe5dbb968cdff:0x8b5f6bd36d2edd83!8m2!3d33.8359588!4d132.7696145!16s%2Fg%2F11h7sfhxcy?entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">Google マップで開く</a></p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -266,14 +274,15 @@
           <li><a href="#events">イベント</a></li>
           <li><a href="#maids">メイドさん紹介</a></li>
           <li><a href="#games">ゲーム/診断</a></li>
+          <li><a href="#" id="openTerms">利用規約</a></li>
+          <li><a href="#" id="openPrivacy">プライバシー</a></li>
         </ul>
       </div>
       <div>
-        <h4>ポリシー</h4>
+        <h4>お問い合わせ</h4>
         <ul>
-          <li><a href="#">利用規約</a></li>
-          <li><a href="#">プライバシー</a></li>
-          <li><a href="#">特定商取引法</a></li>
+          <li><a href="https://x.com/po_toro" target="_blank" rel="noopener">X（@po_toro）</a></li>
+          <li><a href="#access">店舗アクセス</a></li>
         </ul>
       </div>
     </div>
@@ -283,6 +292,41 @@
   <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="画像ビューア">
     <button type="button" class="close" aria-label="閉じる (Esc)">閉じる ✕</button>
     <img id="lightboxImg" alt="拡大画像" />
+  </div>
+
+  <!-- モーダル：利用規約 -->
+  <div id="modalTerms" class="modal" aria-hidden="true" role="dialog" aria-label="利用規約">
+    <div class="panel">
+      <button class="close" data-close="modalTerms" aria-label="閉じる">✕ 閉じる</button>
+      <div class="body">
+        <h2>利用規約</h2>
+        <p>本ウェブサイトおよび関連コンテンツは、concept cafe PO・TORO（以下「当店」）が運営しています。ご利用にあたり、以下の規約に同意いただいたものとみなします。</p>
+        <ul>
+          <li>当店のコンテンツ（画像、文章、動画等）の著作権は当店または正当な権利者に帰属します。無断転載・使用を禁じます。</li>
+          <li>当店は、予告なくサービス内容を変更・中止する場合があります。</li>
+          <li>サイトの利用に関連して発生した損害について、当店は一切の責任を負いません。</li>
+          <li>本規約は必要に応じて改訂される場合があります。最新の内容をご確認ください。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- モーダル：プライバシーポリシー -->
+  <div id="modalPrivacy" class="modal" aria-hidden="true" role="dialog" aria-label="プライバシーポリシー">
+    <div class="panel">
+      <button class="close" data-close="modalPrivacy" aria-label="閉じる">✕ 閉じる</button>
+      <div class="body">
+        <h2>プライバシーポリシー</h2>
+        <p>当店は、お客様の個人情報を適切に取り扱うことをお約束します。</p>
+        <ul>
+          <li>お問い合わせやご予約などの際に取得した個人情報は、応対およびサービス提供の目的のみに使用します。</li>
+          <li>法令に基づく場合を除き、ご本人の同意なく第三者に提供することはありません。</li>
+          <li>当店は取得した個人情報を安全に管理し、漏洩・改ざん・不正アクセス等の防止に努めます。</li>
+          <li>クッキー（Cookie）やアクセス解析ツールを用いる場合がありますが、個人を特定する目的では利用しません。</li>
+          <li>お客様がご自身の情報の開示・訂正・削除を希望される場合は、当店までご連絡ください。</li>
+        </ul>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -411,6 +455,20 @@
       lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); });
       closeBtn.addEventListener('click', closeLightbox);
       window.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && lightbox.classList.contains('open')) closeLightbox(); });
+
+      // 規約/プライバシー モーダル
+      const modalTerms=document.getElementById('modalTerms');
+      const modalPrivacy=document.getElementById('modalPrivacy');
+      const openTerms=document.getElementById('openTerms');
+      const openPrivacy=document.getElementById('openPrivacy');
+      const toggleModal=(el,open)=>{ if(!el) return; el.classList.toggle('open',open); el.setAttribute('aria-hidden', String(!open)); document.body.style.overflow = open? 'hidden':''; };
+      if(openTerms) openTerms.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalTerms,true); });
+      if(openPrivacy) openPrivacy.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalPrivacy,true); });
+      document.querySelectorAll('.modal .close').forEach(btn=>{
+        btn.addEventListener('click',()=>{ const id=btn.getAttribute('data-close'); const el=id? document.getElementById(id) : btn.closest('.modal'); toggleModal(el,false); });
+      });
+      window.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ toggleModal(modalTerms,false); toggleModal(modalPrivacy,false);} });
+      [modalTerms, modalPrivacy].forEach(m=>{ if(m) m.addEventListener('click',(e)=>{ if(e.target===m) toggleModal(m,false); }); });
 
       // ?embed=true 簡略
       const params = new URLSearchParams(location.search);
