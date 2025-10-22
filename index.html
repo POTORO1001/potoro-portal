@@ -30,10 +30,16 @@
     .brand-title .en{font-size:1.05rem}
     .brand-title .jp{font-size:.8rem;color:#666}
     .nav-links{display:flex;gap:14px;align-items:center}
-    .nav-links a{padding:8px 12px;border-radius:999px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.06);font-size:.92rem}
+    .nav-links a{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.96);box-shadow:0 4px 12px rgba(0,0,0,.08);font-size:1rem;font-weight:800;color:#222;border:1px solid #eaeaea;letter-spacing:.02em;text-shadow:0 1px 0 rgba(255,255,255,.7);outline: none}
+    .nav-links a:hover{background:#111;color:#fff;box-shadow:0 6px 16px rgba(0,0,0,.18)}
+    .nav-links a:focus-visible{outline:2px solid #0b69d5;outline-offset:2px}
     .hamburger{display:none;background:#fff;border:none;border-radius:12px;padding:9px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
     .hamburger svg{width:22px;height:22px}
-    @media (max-width:880px){.nav-links{display:none}.hamburger{display:inline-grid}.drawer{position:fixed;inset:0 0 0 auto;width:min(84vw,360px);background:#fff;box-shadow:-20px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:.3s;z-index:60;display:flex;flex-direction:column}.drawer.open{transform:translateX(0)}.drawer .head{display:flex;align-items:center;justify-content:space-between;padding:16px}.drawer a{padding:14px 18px;border-bottom:1px solid #eee}}
+    @media (max-width:880px){.nav-links{display:none}.hamburger{display:inline-grid}.drawer{position:fixed;inset:0 0 0 auto;width:min(84vw,360px);background:#fff;box-shadow:-20px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:.3s;z-index:60;display:flex;flex-direction:column}.drawer.open{transform:translateX(0)}.drawer .head{display:flex;align-items:center;justify-content:space-between;padding:16px}.drawer a{padding:16px 20px;border-bottom:1px solid #eee;font-size:1.05rem;font-weight:800;color:#222;letter-spacing:.02em}}
+
+    @media (prefers-contrast: more){
+      .nav-links a{background:#fff;color:#111;border-color:#dcdcdc;text-shadow:none}
+    }
 
     .hero{position:relative;isolation:isolate}
     .hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;padding:40px 0}
