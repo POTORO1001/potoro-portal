@@ -144,11 +144,11 @@
           </div>
           <div class="hero-card mt-16">
             <strong>お知らせ：</strong>
-            <span class="tag">（例）10/28–10/31 ハロウィン仮装お給仕開催・先着でお菓子プレゼント！</span>
+            <span class="tag">（例）10/28–11/01 ハロウィン仮装お給仕開催・先着でお菓子プレゼント！</span>
           </div>
         </div>
         <div class="hero-card">
-          <img src="img/potro_twi.jpg" alt="PO・TORO キービジュアル" class="thumb hero-kv" />
+          <img src="img/potro_twi.jpg" alt="PO・TORO キービジュアル" class="thumb hero-kv" loading="lazy" />
         </div>
       </div>
     </section>
@@ -229,12 +229,14 @@
             </div>
           </div>
           <div class="card">
-            <img src="https://picsum.photos/seed/potoro-map/800/450" alt="地図のダミー画像" class="thumb" />
-            <div class="body">
-              <h3>地図</h3>
-              <p>Google マップ埋め込み枠（住所確定後に iframe を配置）</p>
-            </div>
-          </div>
+  <div class="body">
+    <h3>地図</h3>
+    <div style="position:relative;width:100%;padding-top:56.25%;border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.12)">
+      <iframe title="PO・TORO の場所" src="https://www.google.com/maps?q=33.8359588,132.7696145&z=18&output=embed" style="position:absolute;inset:0;border:0;width:100%;height:100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    </div>
+    <p class="mt-12"><a href="https://www.google.com/maps/place/PO.TORO/@33.8358626,132.7688299,18.58z/data=!4m6!3m5!1s0x354fe5dbb968cdff:0x8b5f6bd36d2edd83!8m2!3d33.8359588!4d132.7696145!16s%2Fg%2F11h7sfhxcy?entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">Google マップで開く</a></p>
+  </div>
+</div>
         </div>
       </div>
     </section>
@@ -353,7 +355,7 @@
       const g=document.getElementById('eventsGrid'); if(!g) return;
       g.innerHTML=(window.PORTAL_DATA.events||[]).map(e=>`
         <article class="card">
-          <img src="${e.image}" alt="${escapeHtml(e.alt||e.title||'')}" class="thumb" data-full="${e.image}">
+          <img src="${e.image}" alt="${escapeHtml(e.alt||e.title||'')}" class="thumb" data-full="${e.image}" loading="lazy">
           <div class="body">
             <h3>${escapeHtml(e.title||'')}</h3>
             <p>${escapeHtml(e.datetext||'')}</p>
@@ -402,7 +404,10 @@
       const lightbox=document.getElementById('lightbox'); const lightImg=document.getElementById('lightboxImg'); const closeBtn=lightbox.querySelector('.close');
       const openLightbox=(src,alt)=>{ lightImg.src=src; lightImg.alt=alt||'拡大画像'; lightbox.classList.add('open'); lightbox.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; };
       const closeLightbox=()=>{ lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true'); lightImg.removeAttribute('src'); document.body.style.overflow=''; };
-      document.getElementById('eventsGrid').addEventListener('click',(e)=>{ const img=e.target.closest('img'); if(!img) return; openLightbox(img.getAttribute('data-full')||img.src, img.alt); });
+      const eventsGrid=document.getElementById('eventsGrid');
+      if(eventsGrid){
+        eventsGrid.addEventListener('click',(e)=>{ const img=e.target.closest('img'); if(!img) return; openLightbox(img.getAttribute('data-full')||img.src, img.alt); });
+      }
       lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); });
       closeBtn.addEventListener('click', closeLightbox);
       window.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && lightbox.classList.contains('open')) closeLightbox(); });
