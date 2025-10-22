@@ -59,6 +59,8 @@
     @media (max-width:520px){.grid.cols-4,.grid.cols-3{grid-template-columns:1fr}}
     .card{background:#fff;border-radius:18px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
     .card .thumb{aspect-ratio:16/9;background:#f4f4f4;object-fit:cover}
+    /* Hero用：投稿画像をトリミングせず全体表示 */
+    .hero-kv{width:100%;height:auto;object-fit:contain;background:#fff;border-radius:12px}
     .card .body{padding:12px 14px}
     .card h3{margin:.2rem 0 .4rem;font-size:1.05rem}
     .card p{margin:0;color:#555;font-size:.92rem}
@@ -133,7 +135,7 @@
           </div>
         </div>
         <div class="hero-card">
-          <img src="img/potro_twi.jpg" alt="PO・TORO キービジュアル" class="thumb" />
+          <img src="img/potro_twi.jpg" alt="PO・TORO キービジュアル" class="thumb hero-kv" />
           <div class="mt-12" style="font-size:.9rem;color:#555">※ 添付いただいた画像（保存名: <code>img/potro_twi.jpg</code>）を使用しています</div>
         </div>
       </div>
