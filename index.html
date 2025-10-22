@@ -29,16 +29,30 @@
     .brand-title{font-weight:800;letter-spacing:.08em}
     .brand-title .en{font-size:1.05rem}
     .brand-title .jp{font-size:.8rem;color:#666}
+
+    /* ここを強化：視認性の高いナビ */
     .nav-links{display:flex;gap:14px;align-items:center}
-    .nav-links a{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.96);box-shadow:0 4px 12px rgba(0,0,0,.08);font-size:1rem;font-weight:800;color:#222;border:1px solid #eaeaea;letter-spacing:.02em;text-shadow:0 1px 0 rgba(255,255,255,.7);outline: none}
+    .nav-links a{
+      padding:10px 14px;border-radius:999px;
+      background:rgba(255,255,255,.96);
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+      font-size:1rem;font-weight:800;color:#222;
+      border:1px solid #eaeaea;letter-spacing:.02em;
+      text-shadow:0 1px 0 rgba(255,255,255,.7);
+      outline:none
+    }
     .nav-links a:hover{background:#111;color:#fff;box-shadow:0 6px 16px rgba(0,0,0,.18)}
     .nav-links a:focus-visible{outline:2px solid #0b69d5;outline-offset:2px}
+
     .hamburger{display:none;background:#fff;border:none;border-radius:12px;padding:9px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
     .hamburger svg{width:22px;height:22px}
-    @media (max-width:880px){.nav-links{display:none}.hamburger{display:inline-grid}.drawer{position:fixed;inset:0 0 0 auto;width:min(84vw,360px);background:#fff;box-shadow:-20px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:.3s;z-index:60;display:flex;flex-direction:column}.drawer.open{transform:translateX(0)}.drawer .head{display:flex;align-items:center;justify-content:space-between;padding:16px}.drawer a{padding:16px 20px;border-bottom:1px solid #eee;font-size:1.05rem;font-weight:800;color:#222;letter-spacing:.02em}}
-
-    @media (prefers-contrast: more){
-      .nav-links a{background:#fff;color:#111;border-color:#dcdcdc;text-shadow:none}
+    @media (max-width:880px){
+      .nav-links{display:none}
+      .hamburger{display:inline-grid}
+      .drawer{position:fixed;inset:0 0 0 auto;width:min(84vw,360px);background:#fff;box-shadow:-20px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:.3s;z-index:60;display:flex;flex-direction:column}
+      .drawer.open{transform:translateX(0)}
+      .drawer .head{display:flex;align-items:center;justify-content:space-between;padding:16px}
+      .drawer a{padding:16px 20px;border-bottom:1px solid #eee;font-size:1.05rem;font-weight:800;color:#222;letter-spacing:.02em}
     }
 
     .hero{position:relative;isolation:isolate}
@@ -105,9 +119,33 @@
     .modal .panel h2{margin:.4rem 0 0.6rem;font-size:1.3rem}
     .modal .close{position:sticky;top:0;margin-left:auto;background:#f6f6f6;border:none;border-radius:999px;padding:8px 12px;cursor:pointer}
     .modal .body{padding:8px 4px}
+
+    /* アクセシビリティ：キーボードフォーカス/スキップリンク */
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{left:16px;top:12px;width:auto;height:auto;background:#111;color:#fff;padding:10px 12px;border-radius:10px;z-index:1000}
+    :focus-visible{outline:2px solid #0b69d5;outline-offset:2px}
+
+    /* ダークモード対応 */
+    @media (prefers-color-scheme: dark){
+      :root{--ink:#eee}
+      html,body{color:var(--ink);background:linear-gradient(135deg,#3a2440,#183a54)}
+      header{background:rgba(20,20,20,.78)}
+      .nav-links a{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2);text-shadow:none}
+      .nav-links a:hover{background:#fff;color:#111}
+      .card,.qlink,.table{background:#1d1f22;color:#e8e8e8}
+      .table th{background:#232529}
+      .ticker,.hero-card{background:rgba(255,255,255,.08)}
+    }
+
+    /* iOS等の最適化：固定背景を無効化 */
+    @media (max-width:768px){
+      html,body{background-attachment:scroll}
+    }
   </style>
 </head>
 <body>
+  <a href="#news" class="skip-link">本文へスキップ</a>
+
   <header>
     <nav class="nav container" aria-label="Main">
       <div class="brand">
@@ -124,6 +162,7 @@
         <a href="#games">ゲーム/診断</a>
         <a href="#schedule">営業日</a>
         <a href="#access">アクセス</a>
+        <a href="#sns">SNS</a>
       </div>
       <button class="hamburger" id="btnMenu" aria-label="メニューを開く" aria-controls="drawer" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
@@ -158,7 +197,7 @@
           </div>
           <div class="hero-card mt-16">
             <strong>お知らせ：</strong>
-            <span class="tag">工事中！</span>
+            <span class="tag">（例）10/28–11/01 ハロウィン仮装お給仕開催・先着でお菓子プレゼント！</span>
           </div>
         </div>
         <div class="hero-card">
@@ -205,10 +244,12 @@
           <a class="qlink" href="#" id="linkQuest">
             <div>🗝️</div>
             <div><strong>ポ・トロクエスト</strong></div>
+            <small class="tag">完成版（基準ビルド）</small>
           </a>
           <a class="qlink" href="#" id="linkMBTI">
             <div>💘</div>
-            <div><strong>ご主人様タイプ診断</strong></div
+            <div><strong>ご主人様タイプ診断</strong></div>
+            <small class="tag">MBTIミニ12問・レースver.</small>
           </a>
         </div>
       </div>
@@ -269,7 +310,7 @@
     <div class="container foot">
       <div>
         <h4>concept cafe PO・TORO</h4>
-        <p>ご帰宅ありがとうございます。システムやイベントの最新情報は本ポータルからご確認ください。</p>
+        <p>ご帰宅ありがとうございます。イベントや限定メニューの最新情報は本ポータルからご確認ください。</p>
         <div class="copyright">© <span id="year"></span> PO・TORO / concept cafe. All rights reserved.</div>
       </div>
       <div>
@@ -299,7 +340,7 @@
   </div>
 
   <!-- モーダル：利用規約 -->
-  <div id="modalTerms" class="modal" aria-hidden="true" role="dialog" aria-label="利用規約">
+  <div id="modalTerms" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="利用規約">
     <div class="panel">
       <button class="close" data-close="modalTerms" aria-label="閉じる">✕ 閉じる</button>
       <div class="body">
@@ -316,7 +357,7 @@
   </div>
 
   <!-- モーダル：プライバシーポリシー -->
-  <div id="modalPrivacy" class="modal" aria-hidden="true" role="dialog" aria-label="プライバシーポリシー">
+  <div id="modalPrivacy" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="プライバシーポリシー">
     <div class="panel">
       <button class="close" data-close="modalPrivacy" aria-label="閉じる">✕ 閉じる</button>
       <div class="body">
@@ -435,8 +476,17 @@
 
       // ドロワー
       const btnMenu=document.getElementById('btnMenu'); const drawer=document.getElementById('drawer'); const btnClose=document.getElementById('btnClose');
-      if(btnMenu && drawer && btnClose){ const toggleDrawer=(open)=>{drawer.classList.toggle('open',open); drawer.setAttribute('aria-hidden', String(!open)); btnMenu.setAttribute('aria-expanded', String(open));};
-        btnMenu.addEventListener('click',()=>toggleDrawer(true)); btnClose.addEventListener('click',()=>toggleDrawer(false)); drawer.addEventListener('click',(e)=>{ if(e.target.tagName==='A') toggleDrawer(false); }); }
+      if(btnMenu && drawer && btnClose){
+        const toggleDrawer=(open)=>{
+          drawer.classList.toggle('open',open);
+          drawer.setAttribute('aria-hidden', String(!open));
+          btnMenu.setAttribute('aria-expanded', String(open));
+          document.body.style.overflow = open? 'hidden':'';
+        };
+        btnMenu.addEventListener('click',()=>toggleDrawer(true));
+        btnClose.addEventListener('click',()=>toggleDrawer(false));
+        drawer.addEventListener('click',(e)=>{ if(e.target.tagName==='A') toggleDrawer(false); });
+      }
 
       // 外部リンク
       const linkQuest=document.getElementById('linkQuest'); const linkMBTI=document.getElementById('linkMBTI');
