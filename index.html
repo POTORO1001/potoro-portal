@@ -30,7 +30,7 @@
     .brand-title .en{font-size:1.05rem}
     .brand-title .jp{font-size:.8rem;color:#666}
 
-    /* ここを強化：視認性の高いナビ */
+    /* 見やすいナビ */
     .nav-links{display:flex;gap:14px;align-items:center}
     .nav-links a{
       padding:10px 14px;border-radius:999px;
@@ -125,10 +125,10 @@
     .skip-link:focus{left:16px;top:12px;width:auto;height:auto;background:#111;color:#fff;padding:10px 12px;border-radius:10px;z-index:1000}
     :focus-visible{outline:2px solid #0b69d5;outline-offset:2px}
 
-    /* ダークモード対応 */
+    /* ダークモード（背景は上書きしない） */
     @media (prefers-color-scheme: dark){
       :root{--ink:#eee}
-      html,body{color:var(--ink);background:linear-gradient(135deg,#3a2440,#183a54)}
+      html,body{color:var(--ink);} /* 背景グラデは維持 */
       header{background:rgba(20,20,20,.78)}
       .nav-links a{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2);text-shadow:none}
       .nav-links a:hover{background:#fff;color:#111}
@@ -137,10 +137,8 @@
       .ticker,.hero-card{background:rgba(255,255,255,.08)}
     }
 
-    /* iOS等の最適化：固定背景を無効化 */
-    @media (max-width:768px){
-      html,body{background-attachment:scroll}
-    }
+    /* iOS等：固定背景を無効化（パフォーマンス） */
+    @media (max-width:768px){ html,body{background-attachment:scroll} }
   </style>
 </head>
 <body>
@@ -241,15 +239,15 @@
       <div class="container">
         <h2 class="sec-title">🎮 ゲーム / 診断</h2>
         <div class="grid cols-4">
-          <a class="qlink" href="#" id="linkQuest">
+          <a class="qlink" href="https://potoro1001.github.io/potoro-quest/" id="linkQuest" target="_blank" rel="noopener noreferrer">
             <div>🗝️</div>
             <div><strong>ポ・トロクエスト</strong></div>
-            <small class="tag">完成版（基準ビルド）</small>
+            <small class="tag">BOSSがチェキ券を落とすことも…</small>
           </a>
-          <a class="qlink" href="#" id="linkMBTI">
+          <a class="qlink" href="https://potoro1001.github.io/potoro-diagnosis/" id="linkMBTI" target="_blank" rel="noopener noreferrer">
             <div>💘</div>
             <div><strong>ご主人様タイプ診断</strong></div>
-            <small class="tag">MBTIミニ12問・レースver.</small>
+            <small class="tag">貴方はどんなご主人様？</small>
           </a>
         </div>
       </div>
@@ -310,7 +308,7 @@
     <div class="container foot">
       <div>
         <h4>concept cafe PO・TORO</h4>
-        <p>ご帰宅ありがとうございます。イベントや限定メニューの最新情報は本ポータルからご確認ください。</p>
+        <p>ご帰宅ありがとうございます。システムやイベントの最新情報は本ポータルからご確認ください。</p>
         <div class="copyright">© <span id="year"></span> PO・TORO / concept cafe. All rights reserved.</div>
       </div>
       <div>
@@ -487,10 +485,6 @@
         btnClose.addEventListener('click',()=>toggleDrawer(false));
         drawer.addEventListener('click',(e)=>{ if(e.target.tagName==='A') toggleDrawer(false); });
       }
-
-      // 外部リンク
-      const linkQuest=document.getElementById('linkQuest'); const linkMBTI=document.getElementById('linkMBTI');
-      if(linkQuest) linkQuest.href='quest.html'; if(linkMBTI) linkMBTI.href='mbti-mini.html';
 
       // CSV読み込み → 描画
       await maybeLoad(PORTAL_CONFIG.newsCsvUrl,     'news',     'newsStatus',     csvToNewsObjects);
