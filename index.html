@@ -142,13 +142,13 @@
 
     /* 低減動作モード対応 */
     @media (prefers-reduced-motion: reduce){
-      *{scroll-behavior:auto !important;animation:none !important;transition:none !重要}
+      *{scroll-behavior:auto !important;animation:none !important;transition:none !important}
     }
 
     /* ダークモード（背景は上書きしない） */
     @media (prefers-color-scheme: dark){
       :root{--ink:#eee}
-      html,body{color:var(--ink);}
+      html,body{color:var(--ink);} /* 背景グラデは維持 */
       header{background:rgba(20,20,20,.78)}
       .nav-links a{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2);text-shadow:none}
       .nav-links a:hover{background:#fff;color:#111}
@@ -460,45 +460,67 @@
       const rows=parseCSV(csv).filter(r=>r.length && r.join('').trim()!==''); if(!rows.length) return [];
       const h=rows[0].map(normalizeHeader); const idx=(keys)=>{for(const k of keys){const i=h.indexOf(k); if(i!==-1) return i;} return -1;};
       const di=idx(['date','日付','営業日']); const hi=idx(['hours','営業時間','open','openhours']); const ni=idx(['note','メモ','備考','補足']);
-      return rows.slice(1).map(r=>({ date:di>-1?r[di]:'', hours:hi>-1?r[hi]:'', note:ni>-1?r[ni]:'' })).filter(o=>o.date||o.hours||o.note);
+      return rows.slice(1)
+        .map(r=>({ date:di>-1?r[di]:'', hours:hi>-1?r[hi]:'', note:ni>-1?r[ni]:'' }))
+        .filter(o=>o.date||o.hours||o.note)
+        .map(o=>({ date:String(o.date).trim(), hours:String(o.hours).trim(), note:String(o.note).trim() }));
     }
 
-    // ★ 強化版：日付パーサ（曜日・装飾混在やシリアル値にも強い）
+    // ★超頑丈版：全角→半角、曜日除去、ドット区切り、Excel/Sheetsシリアル、不可視文字を正規化
     function parseSheetDateToJsDate(s){
-      const str = String(s || '').trim();
+      const raw = String(s ?? '').trim();
+      if(!raw) return null;
 
-      // Excel通し番号（1899/12/30基準）
-      const n = Number(str);
-      if (!Number.isNaN(n) && n > 20000 && n < 60000) {
-        const base = new Date(Date.UTC(1899, 11, 30));
-        return new Date(base.getTime() + n * 86400000);
+      // 1) Excel/Sheets シリアル（1899-12-30起点）
+      const maybeNum = Number(raw);
+      if(!Number.isNaN(maybeNum) && maybeNum > 20000 && maybeNum < 60000){
+        const base = new Date(Date.UTC(1899,11,30));
+        return new Date(base.getTime() + maybeNum * 86400000);
       }
 
-      // 括弧などを除去して「数字パーツ」を抽出（例: 10/24木, 2025年10月24日, 10-24）
-      const nums = (str.replace(/[()（）]/g, '').match(/\d{1,4}/g) || []).map(Number);
+      // 2) 正規化：全角→半角、不可視/NBSP/全角空白、括弧・曜日、記号の整理
+      const z2h = (t)=>t.replace(/[０-９]/g, d => String.fromCharCode(d.charCodeAt(0)-0xFEE0));
+      let str = z2h(raw)
+        .replace(/\u200B|\u200C|\u200D|\uFEFF/g, '') // ゼロ幅系
+        .replace(/\u00A0|\u3000/g, ' ')              // NBSP / 全角スペース
+        .replace(/[（）\(\)]/g, ' ')                 // 括弧は空白に
+        .replace(/[月火水木金土日]曜?/g, ' ')         // 日本語曜日
+        .replace(/[年\.]/g, '/')                     // 年・ドット→スラッシュ
+        .replace(/月/g, '/')                          // 「月」→スラッシュ
+        .replace(/日/g, ' ')                          // 「日」→空白
+        .replace(/-/g, '/')                           // ハイフン→スラッシュ
+        .replace(/\s+/g, ' ')                        // 連続空白圧縮
+        .trim();
 
-      // 3つ以上の数字があれば [年(任意)/月/日] とみなす
-      if (nums.length >= 3) {
-        const y = nums[0] >= 1000 ? nums[0] : new Date().getFullYear();
-        const m = nums[nums.length - 2];
-        const d = nums[nums.length - 1];
-        if (m >= 1 && m <= 12 && d >= 1 && d <= 31) return new Date(y + '/' + m + '/' + d);
+      // 3) 数字パーツ抽出
+      const parts = str.includes('/') ? str.split('/') : str.split(' ');
+      const nums = parts.map(p => p.trim()).filter(Boolean)
+                        .flatMap(p => p.match(/\d{1,4}/g) || []);
+
+      // 4) [年?/月/日]
+      if(nums.length >= 3){
+        const last = nums.length - 1;
+        const d = Number(nums[last]);
+        const m = Number(nums[last-1]);
+        let y = Number(nums[last-2]);
+        if(!(y >= 1000 && y <= 9999)) y = new Date().getFullYear();
+        if(m>=1 && m<=12 && d>=1 && d<=31) return new Date(`${y}/${m}/${d}`);
       }
 
-      // 2つだけなら [月/日] とみなし、年は今年
-      if (nums.length === 2) {
+      // 5) [月/日] → 今年
+      if(nums.length === 2){
         const y = new Date().getFullYear();
-        const m = nums[0], d = nums[1];
-        if (m >= 1 && m <= 12 && d >= 1 && d <= 31) return new Date(y + '/' + m + '/' + d);
+        const m = Number(nums[0]); const d = Number(nums[1]);
+        if(m>=1 && m<=12 && d>=1 && d<=31) return new Date(`${y}/${m}/${d}`);
       }
 
-      // 従来のパターン（2025年10月24日 / 2025-10-24 / 10/24 など）
-      const m2 = str.replace(/[()（）]/g, '').match(/(\d{1,4})[\/年-]?(\d{1,2})[\/月-]?(\d{1,2})/);
-      if (m2) {
-        const y = m2[1].length === 4 ? Number(m2[1]) : new Date().getFullYear();
-        return new Date(y + '/' + m2[2] + '/' + m2[3]);
+      // 6) 最後の保険
+      const m2 = str.match(/(\d{1,4})[\/ ]?(\d{1,2})[\/ ]?(\d{1,2})/);
+      if(m2){
+        const y = m2[1].length===4 ? Number(m2[1]) : new Date().getFullYear();
+        const m = Number(m2[2]); const d = Number(m2[3]);
+        if(m>=1 && m<=12 && d>=1 && d<=31) return new Date(`${y}/${m}/${d}`);
       }
-
       return null;
     }
 
@@ -545,7 +567,7 @@
         tbody.innerHTML=rows.map(r=>`<tr><td>${escapeHtml((r.date||'').toString())}</td><td>${escapeHtml((r.hours||'').toString())}</td><td>${escapeHtml((r.note||'').toString())}</td></tr>`).join('');
       }
 
-      // ステータス（総件数 / 直近7日件数 / 日付不明件数）
+      // ステータス（総件数 / 直近7日件数 / 日付未解釈件数）
       if(status){ status.textContent = `schedule：CSV ${all.length}件（直近7日 ${inRange.length}件 / 日付未解釈 ${undated.length}件）`; }
     }
 
