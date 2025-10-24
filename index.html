@@ -412,7 +412,7 @@
     </div>
   </div>
 
-  <script defer>
+  <script>
     // =========================
     // 設定：Googleスプレッドシート公開CSV
     // =========================
@@ -428,41 +428,81 @@
     function escapeHtml(str){ return String(str).replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[s])); }
     function normalizeHeader(s){ let t=String(s||''); if(t && t.charCodeAt(0)===0xFEFF) t=t.slice(1); return t.trim().toLowerCase(); }
 
-    // CSVパーサ（カンマ・改行・引用符対応）
+    // ★区切り自動判定（, / ; / TAB）＋空行・コメント(#で始まる)無視、引用対応
     function parseCSV(text){
-      const rows=[]; let i=0, field='', row=[], inQ=false;
-      while(i<text.length){ const c=text[i];
-        if(inQ){ if(c==='"'){ if(text[i+1]==='"'){ field+='"'; i+=2; continue;} inQ=false; i++; continue; } field+=c; i++; continue; }
-        if(c==='"'){ inQ=true; i++; continue; }
-        if(c===','){ row.push(field); field=''; i++; continue; }
-        if(c==='\n'||c==='\r'){ if(c==='\r'&&text[i+1]==='\n') i++; row.push(field); field=''; if(row.length && row.join('').trim()!=='') rows.push(row); row=[]; i++; continue; }
-        field+=c; i++;
+      if(!text) return [];
+      const trimmed = String(text).replace(/^\s+/, '');
+      const firstLine = trimmed.split(/\r\n|\n|\r/, 1)[0] || '';
+      const candidates = [',',';','\t'];
+      let delim = ','; let maxHits = -1;
+      for(const c of candidates){
+        const hits = (firstLine.match(new RegExp(`\\${c}`, 'g'))||[]).length;
+        if(hits > maxHits){ maxHits = hits; delim = c; }
       }
-      if(field!=='' || row.length){ row.push(field); rows.push(row); }
-      return rows;
+      const rows=[]; let i=0, field='', row=[], inQ=false;
+      while(i<trimmed.length){
+        const ch = trimmed[i];
+        if(inQ){
+          if(ch === '"'){
+            if(trimmed[i+1] === '"'){ field+='"'; i+=2; continue; }
+            inQ=false; i++; continue;
+          }
+          field+=ch; i++; continue;
+        }
+        if(ch === '"'){ inQ=true; i++; continue; }
+        if(ch === delim){ row.push(field); field=''; i++; continue; }
+        if(ch === '\n' || ch === '\r'){
+          if(ch === '\r' && trimmed[i+1]==='\n') i++;
+          const joined = row.concat(field).join('').trim();
+          if(joined !== ''){
+            const head = (row[0] ?? field).trim();
+            if(!/^#/.test(head)) rows.push(row.concat(field));
+          }
+          row=[]; field=''; i++; continue;
+        }
+        field+=ch; i++;
+      }
+      if(field!=='' || row.length){ rows.push(row.concat(field)); }
+      return rows.filter(r=> (r.join('').trim()!=='') );
     }
 
     // CSV→オブジェクト
     function csvToNewsObjects(csv){
-      const rows=parseCSV(csv).filter(r=>r.length && r.join('').trim()!==''); if(!rows.length) return [];
+      const rows=parseCSV(csv); if(!rows.length) return [];
       const h=rows[0].map(normalizeHeader); const idx=(keys)=>{for(const k of keys){const i=h.indexOf(k); if(i!==-1) return i;} return -1;};
       const di=idx(['date','日付','掲載日']); const li=idx(['label','ラベル','タグ']); const ti=idx(['text','本文','お知らせ','内容']);
       return rows.slice(1).map(r=>({date:di>-1?r[di]:'', label:li>-1?r[li]:'', text:ti>-1?r[ti]:''})).filter(o=>o.date || o.text);
     }
+
     function csvToEventObjects(csv){
-      const rows=parseCSV(csv).filter(r=>r.length && r.join('').trim()!==''); if(!rows.length) return [];
+      const rows=parseCSV(csv); if(!rows.length) return [];
       const h=rows[0].map(normalizeHeader); const idx=(keys)=>{for(const k of keys){const i=h.indexOf(k); if(i!==-1) return i;} return -1;};
       const ti=idx(['title','タイトル','件名','イベント名']); const di=idx(['datetext','date','日付','期間','date_text']);
       const ii=idx(['image','画像','img','imageurl','image_url']); const ai=idx(['alt','代替','代替テキスト','alttext']); const ci=idx(['chip','タグ','tag','ラベル']);
       return rows.slice(1).map(r=>({ title:ti>-1?r[ti]:'', datetext:di>-1?r[di]:'', image:ii>-1?r[ii]:'', alt:ai>-1?r[ai]:'', chip:ci>-1?r[ci]:'' })).filter(o=> (o.title&&o.title.trim()) || (o.image&&o.image.trim()));
     }
+
+    // ★ヘッダーゆる認識＋トリム
     function csvToScheduleObjects(csv){
-      const rows=parseCSV(csv).filter(r=>r.length && r.join('').trim()!==''); if(!rows.length) return [];
-      const h=rows[0].map(normalizeHeader); const idx=(keys)=>{for(const k of keys){const i=h.indexOf(k); if(i!==-1) return i;} return -1;};
-      const di=idx(['date','日付','営業日']); const hi=idx(['hours','営業時間','open','openhours']); const ni=idx(['note','メモ','備考','補足']);
-      return rows.slice(1)
-        .map(r=>({ date:di>-1?r[di]:'', hours:hi>-1?r[hi]:'', note:ni>-1?r[ni]:'' }))
-        .filter(o=>o.date||o.hours||o.note)
+      const rows=parseCSV(csv);
+      if(!rows.length) return [];
+      let headerRow = rows[0];
+      const looksHeader = (r)=> r && r.length>=2 && r.join('').toLowerCase().includes('date');
+      if(!looksHeader(headerRow)){
+        const idx = rows.findIndex(r=> looksHeader(r));
+        if(idx>0) headerRow = rows[idx];
+      }
+      const h = headerRow.map(s=>{ let t=String(s||''); if(t && t.charCodeAt(0)===0xFEFF) t=t.slice(1); return t.trim().toLowerCase(); });
+      const idx=(keys)=>{ for(const k of keys){ const i=h.indexOf(k); if(i!==-1) return i; } return -1; };
+      let di=idx(['date','日付','営業日']);
+      let hi=idx(['hours','営業時間','open','openhours']);
+      let ni=idx(['note','メモ','備考','補足']);
+      if(di===-1) di=0; if(hi===-1) hi=1; if(ni===-1) ni=2;
+      const startAt = rows.indexOf(headerRow)+1;
+
+      return rows.slice(startAt)
+        .filter(r => r && r.length>0 && r.join('').trim()!=='')
+        .map(r=>({ date: r[di] ?? '', hours: r[hi] ?? '', note: r[ni] ?? '' }))
         .map(o=>({ date:String(o.date).trim(), hours:String(o.hours).trim(), note:String(o.note).trim() }));
     }
 
@@ -470,34 +510,27 @@
     function parseSheetDateToJsDate(s){
       const raw = String(s ?? '').trim();
       if(!raw) return null;
-
-      // 1) Excel/Sheets シリアル（1899-12-30起点）
+      // シリアル
       const maybeNum = Number(raw);
       if(!Number.isNaN(maybeNum) && maybeNum > 20000 && maybeNum < 60000){
         const base = new Date(Date.UTC(1899,11,30));
         return new Date(base.getTime() + maybeNum * 86400000);
       }
-
-      // 2) 正規化：全角→半角、不可視/NBSP/全角空白、括弧・曜日、記号の整理
+      // 正規化
       const z2h = (t)=>t.replace(/[０-９]/g, d => String.fromCharCode(d.charCodeAt(0)-0xFEE0));
       let str = z2h(raw)
-        .replace(/\u200B|\u200C|\u200D|\uFEFF/g, '') // ゼロ幅系
-        .replace(/\u00A0|\u3000/g, ' ')              // NBSP / 全角スペース
-        .replace(/[（）\(\)]/g, ' ')                 // 括弧は空白に
-        .replace(/[月火水木金土日]曜?/g, ' ')         // 日本語曜日
-        .replace(/[年\.]/g, '/')                     // 年・ドット→スラッシュ
-        .replace(/月/g, '/')                          // 「月」→スラッシュ
-        .replace(/日/g, ' ')                          // 「日」→空白
-        .replace(/-/g, '/')                           // ハイフン→スラッシュ
-        .replace(/\s+/g, ' ')                        // 連続空白圧縮
+        .replace(/\u200B|\u200C|\u200D|\uFEFF/g, '')
+        .replace(/\u00A0|\u3000/g, ' ')
+        .replace(/[（）\(\)]/g, ' ')
+        .replace(/[月火水木金土日]曜?/g, ' ')
+        .replace(/[年\.]/g, '/')
+        .replace(/月/g, '/')
+        .replace(/日/g, ' ')
+        .replace(/-/g, '/')
+        .replace(/\s+/g, ' ')
         .trim();
-
-      // 3) 数字パーツ抽出
       const parts = str.includes('/') ? str.split('/') : str.split(' ');
-      const nums = parts.map(p => p.trim()).filter(Boolean)
-                        .flatMap(p => p.match(/\d{1,4}/g) || []);
-
-      // 4) [年?/月/日]
+      const nums = parts.map(p => p.trim()).filter(Boolean).flatMap(p => p.match(/\d{1,4}/g) || []);
       if(nums.length >= 3){
         const last = nums.length - 1;
         const d = Number(nums[last]);
@@ -506,15 +539,11 @@
         if(!(y >= 1000 && y <= 9999)) y = new Date().getFullYear();
         if(m>=1 && m<=12 && d>=1 && d<=31) return new Date(`${y}/${m}/${d}`);
       }
-
-      // 5) [月/日] → 今年
       if(nums.length === 2){
         const y = new Date().getFullYear();
         const m = Number(nums[0]); const d = Number(nums[1]);
         if(m>=1 && m<=12 && d>=1 && d<=31) return new Date(`${y}/${m}/${d}`);
       }
-
-      // 6) 最後の保険
       const m2 = str.match(/(\d{1,4})[\/ ]?(\d{1,2})[\/ ]?(\d{1,2})/);
       if(m2){
         const y = m2[1].length===4 ? Number(m2[1]) : new Date().getFullYear();
@@ -560,21 +589,27 @@
       for(const r of all){ const d=parseSheetDateToJsDate(r.date); if(!d){ undated.push(r); continue; } d.setHours(0,0,0,0); if(d>=today && d<=limit) inRange.push(r); }
 
       let rows=inRange.length? inRange : (all.slice(0,7));
-      // 表示
       if(!rows.length){
         tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
       }else{
         tbody.innerHTML=rows.map(r=>`<tr><td>${escapeHtml((r.date||'').toString())}</td><td>${escapeHtml((r.hours||'').toString())}</td><td>${escapeHtml((r.note||'').toString())}</td></tr>`).join('');
       }
-
-      // ステータス（総件数 / 直近7日件数 / 日付未解釈件数）
       if(status){ status.textContent = `schedule：CSV ${all.length}件（直近7日 ${inRange.length}件 / 日付未解釈 ${undated.length}件）`; }
     }
 
+    // ★ステータスを強化（サイズ＆プレビュー表示）
     async function maybeLoad(url,key,statusId,conv){
       const s=document.getElementById(statusId);
-      try{ const text=await loadCSV(url); window.PORTAL_DATA[key]=(conv?conv(text):[]); s&&(s.textContent=`${key}：CSVから${window.PORTAL_DATA[key].length}件を読み込みました`); return true; }
-      catch(e){ s&&(s.textContent=`${key}：CSV取得に失敗（${e.message}）`); return false; }
+      try{
+        const text=await loadCSV(url);
+        const preview = text.slice(0,120).replace(/\s+/g,' ').trim();
+        window.PORTAL_DATA[key] = (conv? conv(text) : []);
+        if(s){ s.textContent = `${key}：CSV ${window.PORTAL_DATA[key].length}件を読み込み（${text.length} bytes / preview: "${preview}"）`; }
+        return true;
+      }catch(e){
+        if(s){ s.textContent=`${key}：CSV取得に失敗（${e.message}）`; }
+        return false;
+      }
     }
 
     // 初期データホルダ
@@ -595,7 +630,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', async ()=>{
-      // 年表示
       const yearEl=document.getElementById('year'); if(yearEl) yearEl.textContent=new Date().getFullYear();
 
       // ドロワー
