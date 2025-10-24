@@ -17,19 +17,18 @@
   <meta property="og:image" content="img/ogp.jpg" />
   <meta property="og:url" content="https://example.com/" />
   <style>
-    :root{
-      --pink:#f6b7d2;--blue:#a9d6f7;--ink:#333;--card:#ffffffcc;--shadow:0 10px 30px rgba(0,0,0,.12);
-      --bg-angle:135deg;--bg-a:var(--pink);--bg-b:var(--blue);
-    }
+    :root{ --pink:#f6b7d2; --blue:#a9d6f7; --ink:#333; --card:#ffffffcc; --shadow:0 10px 30px rgba(0,0,0,.12); --bg-angle:135deg; --bg-a:var(--pink); --bg-b:var(--blue); }
+    /* iPhone広色域対策：強制sRGB */
     @supports (color: color(srgb 1 1 1)){
       :root{ --pink: color(srgb 0.9647 0.7176 0.8235); --blue: color(srgb 0.6627 0.8392 0.9686); }
-      .btn-primary{background:linear-gradient(135deg,color(srgb 1 0.5059 0.7529),color(srgb 0.5569 0.8235 1));}
+      .btn-primary{ background:linear-gradient(135deg,color(srgb 1 0.5059 0.7529),color(srgb 0.5569 0.8235 1)); }
     }
     *{box-sizing:border-box}
     html,body{margin:0;height:100%;font-family:"-apple-system","BlinkMacSystemFont","Hiragino Kaku Gothic ProN","Noto Sans JP",Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji",sans-serif;color:var(--ink);background:linear-gradient(var(--bg-angle),var(--bg-a),var(--bg-b));background-attachment:fixed;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
     a{color:#0b69d5;text-decoration:none}
     img{max-width:100%;height:auto;display:block}
     .container{width:min(1100px,92vw);margin:0 auto}
+
     header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(10px);background:rgba(255,255,255,.82);box-shadow:0 2px 12px rgba(0,0,0,.08)}
     .nav{display:flex;align-items:center;justify-content:space-between;padding:10px 14px}
     .brand{display:flex;align-items:center;gap:10px}
@@ -38,10 +37,12 @@
     .brand-title{font-weight:800;letter-spacing:.08em}
     .brand-title .en{font-size:1.05rem}
     .brand-title .jp{font-size:.8rem;color:#666}
+
     .nav-links{display:flex;gap:14px;align-items:center}
     .nav-links a{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.98);box-shadow:0 4px 12px rgba(0,0,0,.08);font-size:1rem;font-weight:800;color:#222;border:1px solid #eaeaea;letter-spacing:.02em;outline:none}
     .nav-links a:hover{background:#111;color:#fff;box-shadow:0 6px 16px rgba(0,0,0,.18)}
     .nav-links a:focus-visible{outline:2px solid #0b69d5;outline-offset:2px}
+
     .hamburger{display:none;background:#fff;border:none;border-radius:12px;padding:9px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
     .hamburger svg{width:22px;height:22px}
     @media (max-width:880px){
@@ -52,6 +53,7 @@
       .drawer .head{display:flex;align-items:center;justify-content:space-between;padding:16px}
       .drawer a{padding:16px 20px;border-bottom:1px solid #eee;font-size:1.05rem;font-weight:800;color:#222;letter-spacing:.02em}
     }
+
     .hero{position:relative;isolation:isolate}
     .hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;padding:40px 0}
     .badge{display:inline-flex;gap:8px;align-items:center;background:#fff;border-radius:999px;padding:6px 10px;box-shadow:var(--shadow);font-size:.85rem}
@@ -63,6 +65,7 @@
     .btn-ghost{background:#fff;color:#333}
     .hero-card{background:var(--card);backdrop-filter: blur(8px);padding:14px;border-radius:14px;box-shadow:var(--shadow)}
     .hero-kv{width:100%;height:auto;object-fit:contain;background:#fff;border-radius:12px}
+
     section{padding:34px 0}
     .sec-title{font-weight:900;font-size:1.3rem;margin:0 0 14px 0;display:flex;align-items:center;gap:8px}
     .ticker{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
@@ -70,52 +73,92 @@
     .ticker li{display:flex;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid #eee}
     .ticker time{font-variant-numeric:tabular-nums;color:#666;min-width:7.7em}
     .label{display:inline-block;padding:.2em .6em;border-radius:999px;font-size:.75rem;font-weight:700;color:#fff;background:#ff72b4}
+
     .grid{display:grid;gap:16px}
     .grid.cols-3{grid-template-columns:repeat(3,1fr)}
     .grid.cols-4{grid-template-columns:repeat(4,1fr)}
     @media (max-width:1024px){.grid.cols-4{grid-template-columns:repeat(3,1fr)}}
     @media (max-width:880px){.grid.cols-4,.grid.cols-3{grid-template-columns:repeat(2,1fr)}}
     @media (max-width:520px){.grid.cols-4,.grid.cols-3{grid-template-columns:1fr}}
+
     .card{background:#fff;border-radius:18px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
     .card .thumb{aspect-ratio:16/9;background:#f4f4f4;object-fit:cover}
     .card .body{padding:12px 14px}
     .card h3{margin:.2rem 0 .4rem;font-size:1.05rem}
     .card p{margin:0;color:#555;font-size:.92rem}
     .chip{display:inline-flex;align-items:center;gap:6px;background:#fafafa;border:1px solid #eee;border-radius:999px;padding:4px 8px;font-size:.78rem}
+
     .qlink{display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;text-align:center;background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:18px;min-height:120px}
+
     .table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
     .table th,.table td{padding:12px;border-bottom:1px solid #eee;text-align:left}
     .table th{background:#fafafa}
+
     footer{padding:28px 0;color:#333}
     .foot{display:grid;gap:16px;grid-template-columns:2fr 1fr 1fr}
     .foot h4{margin:.2rem 0 .6rem}
     .sns{display:flex;gap:10px}
     .copyright{margin-top:12px;font-size:.85rem;color:#555}
     @media (max-width:880px){.foot{grid-template-columns:1fr}}
+
     .hidden{display:none}
     .mt-8{margin-top:8px}.mt-12{margin-top:12px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}
     .tag{font-size:.75rem;color:#666}
+
+    /* ライトボックス */
     .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;padding:4vw;z-index:100;opacity:0;pointer-events:none;transition:.2s}
     .lightbox.open{opacity:1;pointer-events:auto}
     .lightbox img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 8px 30px rgba(0,0,0,.5);border-radius:10px}
     .lightbox .close{position:absolute;top:16px;right:16px;background:#fff;border:none;border-radius:999px;font-size:16px;padding:8px 12px;cursor:pointer}
+
+    /* モーダル */
     .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);z-index:120;opacity:0;pointer-events:none;transition:.2s}
     .modal.open{opacity:1;pointer-events:auto}
     .modal .panel{width:min(880px,92vw);max-height:min(80vh,900px);overflow:auto;background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px}
     .modal .panel h2{margin:.4rem 0 0.6rem;font-size:1.3rem}
     .modal .close{position:sticky;top:0;margin-left:auto;background:#f6f6f6;border:none;border-radius:999px;padding:8px 12px;cursor:pointer}
     .modal .body{padding:8px 4px}
+
+    /* アクセシビリティ */
     .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
     .skip-link:focus{left:16px;top:12px;width:auto;height:auto;background:#111;color:#fff;padding:10px 12px;border-radius:10px;z-index:1000}
     :focus-visible{outline:2px solid #0b69d5;outline-offset:2px}
+
     @media (prefers-reduced-motion: reduce){*{scroll-behavior:auto !important;animation:none !important;transition:none !important}}
-    @media (prefers-color-scheme: dark){ :root{--ink:#eee} html,body{color:var(--ink);} header{background:rgba(20,20,20,.78)} .nav-links a{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2);text-shadow:none} .nav-links a:hover{background:#fff;color:#111} .card,.qlink,.table{background:#1d1f22;color:#e8e8e8} .table th{background:#232529} .ticker,.hero-card{background:rgba(255,255,255,.08)} }
+
+    /* ダークモード */
+    @media (prefers-color-scheme: dark){
+      :root{--ink:#eee}
+      html,body{color:var(--ink);} /* 背景グラデは維持 */
+      header{background:rgba(20,20,20,.78)}
+      .nav-links a{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2);text-shadow:none}
+      .nav-links a:hover{background:#fff;color:#111}
+      .card,.qlink,.table{background:#1d1f22;color:#e8e8e8}
+      .table th{background:#232529}
+      .ticker,.hero-card{background:rgba(255,255,255,.08)}
+    }
+
     @media (max-width:768px){ html,body{background-attachment:scroll} }
-    @supports (-webkit-touch-callout: none) { @media (pointer: coarse) { .qlink{background:#fff !important;color:#111 !important;border:1px solid #eee !important;} .qlink strong{color:#111 !important} .qlink .tag{color:#555 !important} .table{background:#fff !important;color:#111 !important;border:1px solid #eee !important} .table th{background:#fafafa !important;color:#111 !important} .table td{color:#111 !important} .card{background:#fff !important;color:#111 !important;border:1px solid #eee !important} .card h3{color:#111 !important} .card p, .card a{color:#222 !important} } }
+
+    /* iPhone Safari：白背景＆可読性アップ（対象エリア） */
+    @supports (-webkit-touch-callout: none) {
+      @media (pointer: coarse) {
+        .qlink{background:#fff !important;color:#111 !important;border:1px solid #eee !important;}
+        .qlink strong{color:#111 !important}
+        .qlink .tag{color:#555 !important}
+        .table{background:#fff !important;color:#111 !important;border:1px solid #eee !important}
+        .table th{background:#fafafa !important;color:#111 !important}
+        .table td{color:#111 !important}
+        .card{background:#fff !important;color:#111 !important;border:1px solid #eee !important}
+        .card h3{color:#111 !important}
+        .card p, .card a{color:#222 !important}
+      }
+    }
   </style>
 </head>
 <body>
   <a href="#news" class="skip-link">本文へスキップ</a>
+
   <header>
     <nav class="nav container" aria-label="Main">
       <div class="brand">
@@ -139,63 +182,236 @@
       </button>
     </nav>
     <div class="drawer" id="drawer" aria-hidden="true" aria-label="サイドメニュー">
-      <div class="head"><div style="font-weight:800">メニュー</div><button id="btnClose" aria-label="閉じる">✕</button></div>
-      <a href="#news">お知らせ</a><a href="#events">イベント</a><a href="#maids">メイドさん紹介</a><a href="#games">ゲーム/診断</a><a href="#schedule">営業日</a><a href="#access">アクセス</a><a href="#sns">SNS</a>
+      <div class="head">
+        <div style="font-weight:800">メニュー</div>
+        <button id="btnClose" aria-label="閉じる">✕</button>
+      </div>
+      <a href="#news">お知らせ</a>
+      <a href="#events">イベント</a>
+      <a href="#maids">メイドさん紹介</a>
+      <a href="#games">ゲーム/診断</a>
+      <a href="#schedule">営業日</a>
+      <a href="#access">アクセス</a>
+      <a href="#sns">SNS</a>
     </div>
   </header>
+
   <main>
+    <!-- Hero -->
     <section class="hero">
       <div class="container wrap">
         <div>
           <span class="badge" aria-label="最新の更新">🔔 最新情報をチェック</span>
           <h1 class="headline">ようこそ、ご主人さま・お嬢さま。<br>PO・TOROの入口はここ♡</h1>
           <p class="sub">イベント、メイドさん紹介、ゲームや各種リンクをこのページに集約しました。ブックマーク推奨です！</p>
-          <div class="cta"><a class="btn btn-primary" href="#events">イベント案内へ</a><a class="btn btn-ghost" href="#games">診断・ゲームで遊ぶ</a></div>
-          <div class="hero-card mt-16" role="status"><strong>お知らせ：</strong><span class="tag">工事中！</span></div>
+          <div class="cta">
+            <a class="btn btn-primary" href="#events">イベント案内へ</a>
+            <a class="btn btn-ghost" href="#games">診断・ゲームで遊ぶ</a>
+          </div>
+          <div class="hero-card mt-16" role="status">
+            <strong>お知らせ：</strong>
+            <span class="tag">工事中！</span>
+          </div>
         </div>
-        <div class="hero-card"><img src="img/potro_twi.jpg" alt="PO・TORO キービジュアル" class="thumb hero-kv" loading="lazy" width="1280" height="720" /></div>
+        <div class="hero-card">
+          <img src="img/potro_twi.jpg" alt="PO・TORO キービジュアル" class="thumb hero-kv" loading="lazy" width="1280" height="720" />
+        </div>
       </div>
     </section>
-    <section id="news"><div class="container"><h2 class="sec-title">🗞️ お知らせ</h2><div class="ticker" aria-live="polite"><ul id="newsList"></ul></div><div id="newsStatus" class="tag mt-12" aria-live="polite"></div></div></section>
-    <section id="events"><div class="container"><h2 class="sec-title">🎉 イベント</h2><div class="grid cols-3" id="eventsGrid"></div><div id="eventsStatus" class="tag mt-12" aria-live="polite"></div></div></section>
-    <section id="maids"><div class="container"><h2 class="sec-title">👑 メイドさん紹介</h2><div class="mt-12"><a class="btn btn-ghost" href="public.html" target="_blank" rel="noopener">プロフィール一覧</a></div></div></section>
-    <section id="games"><div class="container"><h2 class="sec-title">🎮 ゲーム / 診断</h2><div class="grid cols-4"><a class="qlink" href="https://potoro1001.github.io/potoro-quest/" id="linkQuest" target="_blank" rel="noopener noreferrer"><div>💘</div><div><strong>ポ・トロクエスト</strong></div><small class="tag">BOSSがチェキ券を落とすことも…</small></a><a class="qlink" href="https://potoro1001.github.io/potoro-diagnosis/" id="linkMBTI" target="_blank" rel="noopener noreferrer"><div>🗝️</div><div><strong>ご主人様タイプ診断</strong></div><small class="tag">貴方はどんなご主人様？</small></a></div></div></section>
-    <section id="schedule"><div class="container"><h2 class="sec-title">📅 営業スケジュール（直近7日）</h2><table class="table" aria-label="営業日と営業時間"><thead><tr><th>日付</th><th>営業時間</th><th>メモ</th></tr></thead><tbody id="scheduleBody"></tbody></table><div id="scheduleStatus" class="tag mt-12" aria-live="polite"></div></div></section>
-    <section id="access"><div class="container"><h2 class="sec-title">📍 アクセス</h2><div class="grid cols-3"><div class="card" style="grid-column: span 2;"><div class="body"><h3>店舗情報</h3><p>〒790-0012 愛媛県松山市湊町3-7-2 2F</p><p>営業時間：平日＆祝 18:00–22:00 / 土日 17:00–22:00</p><p>料金：30分 1,000円(税込) 各種ドリンク飲み放題（生ビール含む）</p><p class="tag">※放置ゼロ宣言＆キャストドリンク無しで安心♪</p></div></div><div class="card"><div class="body"><h3>地図</h3><div style="position:relative;width:100%;padding-top:56.25%;border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.12)"><iframe title="PO・TORO の場所" src="https://www.google.com/maps?q=33.8359588,132.7696145&z=18&output=embed" style="position:absolute;inset:0;border:0;width:100%;height:100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div><p class="mt-12"><a href="https://www.google.com/maps/place/PO.TORO/@33.8358626,132.7688299,18.58z/data=!4m6!3m5!1s0x354fe5dbb968cdff:0x8b5f6bd36d2edd83!8m2!3d33.8359588!4d132.7696145!16s%2Fg%2F11h7sfhxcy?entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">Google マップで開く</a></p></div></div></div></div></section>
-    <section id="sns"><div class="container"><h2 class="sec-title">📡 公式SNS</h2><div class="sns"><a class="qlink" href="https://x.com/po_toro" target="_blank" aria-label="X / Twitter">🕊️ X（@po_toro）</a><a class="qlink" href="https://www.tiktok.com/@potoro_o" target="_blank" aria-label="TikTok">🎵 TikTok（@potoro_o）</a></div></div></section>
+
+    <!-- News -->
+    <section id="news">
+      <div class="container">
+        <h2 class="sec-title">🗞️ お知らせ</h2>
+        <div class="ticker" aria-live="polite">
+          <ul id="newsList"></ul>
+        </div>
+        <div id="newsStatus" class="tag mt-12" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- Events -->
+    <section id="events">
+      <div class="container">
+        <h2 class="sec-title">🎉 イベント</h2>
+        <div class="grid cols-3" id="eventsGrid"></div>
+        <div id="eventsStatus" class="tag mt-12" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- メイドさん紹介 -->
+    <section id="maids">
+      <div class="container">
+        <h2 class="sec-title">👑 メイドさん紹介</h2>
+        <div class="mt-12">
+          <a class="btn btn-ghost" href="public.html" target="_blank" rel="noopener">プロフィール一覧</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Games / Tools -->
+    <section id="games">
+      <div class="container">
+        <h2 class="sec-title">🎮 ゲーム / 診断</h2>
+        <div class="grid cols-4">
+          <a class="qlink" href="https://potoro1001.github.io/potoro-quest/" id="linkQuest" target="_blank" rel="noopener noreferrer">
+            <div>🗝️</div>
+            <div><strong>ポ・トロクエスト</strong></div>
+            <small class="tag">BOSSがチェキ券を落とすことも…</small>
+          </a>
+          <a class="qlink" href="https://potoro1001.github.io/potoro-diagnosis/" id="linkMBTI" target="_blank" rel="noopener noreferrer">
+            <div>💘</div>
+            <div><strong>ご主人様タイプ診断</strong></div>
+            <small class="tag">貴方はどんなご主人様？</small>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Schedule -->
+    <section id="schedule">
+      <div class="container">
+        <h2 class="sec-title">📅 営業スケジュール（直近7日）</h2>
+        <table class="table" aria-label="営業日と営業時間">
+          <thead><tr><th>日付</th><th>営業時間</th><th>メモ</th></tr></thead>
+          <tbody id="scheduleBody"></tbody>
+        </table>
+        <div id="scheduleStatus" class="tag mt-12" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- Access -->
+    <section id="access">
+      <div class="container">
+        <h2 class="sec-title">📍 アクセス</h2>
+        <div class="grid cols-3">
+          <div class="card" style="grid-column: span 2;">
+            <div class="body">
+              <h3>店舗情報</h3>
+              <p>〒790-0012 愛媛県松山市湊町3-7-2 2F</p>
+              <p>営業時間：平日＆祝 18:00–22:00 / 土日 17:00–22:00</p>
+              <p>料金：30分 1,000円(税込) 各種ドリンク飲み放題（生ビール含む）</p>
+              <p class="tag">※放置ゼロ宣言＆キャストドリンク無しで安心♪</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="body">
+              <h3>地図</h3>
+              <div style="position:relative;width:100%;padding-top:56.25%;border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.12)">
+                <iframe title="PO・TORO の場所" src="https://www.google.com/maps?q=33.8359588,132.7696145&z=18&output=embed" style="position:absolute;inset:0;border:0;width:100%;height:100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+              </div>
+              <p class="mt-12"><a href="https://www.google.com/maps/place/PO.TORO/@33.8358626,132.7688299,18.58z/data=!4m6!3m5!1s0x354fe5dbb968cdff:0x8b5f6bd36d2edd83!8m2!3d33.8359588!4d132.7696145!16s%2Fg%2F11h7sfhxcy?entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">Google マップで開く</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SNS -->
+    <section id="sns">
+      <div class="container">
+        <h2 class="sec-title">📡 公式SNS</h2>
+        <div class="sns">
+          <a class="qlink" href="https://x.com/po_toro" target="_blank" aria-label="X / Twitter">🕊️ X（@po_toro）</a>
+          <a class="qlink" href="https://www.tiktok.com/@potoro_o" target="_blank" aria-label="TikTok">🎵 TikTok（@potoro_o）</a>
+        </div>
+      </div>
+    </section>
   </main>
+
   <footer>
     <div class="container foot">
-      <div><h4>concept cafe PO・TORO</h4><p>ご帰宅ありがとうございます。システムやイベントの最新情報は本ポータルからご確認ください。</p><div class="copyright">© <span id="year"></span> PO・TORO / concept cafe. All rights reserved.</div></div>
-      <div><h4>リンク</h4><ul><li><a href="#events">イベント</a></li><li><a href="#maids">メイドさん紹介</a></li><li><a href="#games">ゲーム/診断</a></li><li><a href="#" id="openTerms">利用規約</a></li><li><a href="#" id="openPrivacy">プライバシー</a></li></ul></div>
-      <div><h4>お問い合わせ</h4><ul><li><a href="https://x.com/po_toro" target="_blank" rel="noopener">X（@po_toro）</a></li><li><a href="#access">店舗アクセス</a></li></ul></div>
+      <div>
+        <h4>concept cafe PO・TORO</h4>
+        <p>ご帰宅ありがとうございます。システムやイベントの最新情報は本ポータルからご確認ください。</p>
+        <div class="copyright">© <span id="year"></span> PO・TORO / concept cafe. All rights reserved.</div>
+      </div>
+      <div>
+        <h4>リンク</h4>
+        <ul>
+          <li><a href="#events">イベント</a></li>
+          <li><a href="#maids">メイドさん紹介</a></li>
+          <li><a href="#games">ゲーム/診断</a></li>
+          <li><a href="#" id="openTerms">利用規約</a></li>
+          <li><a href="#" id="openPrivacy">プライバシー</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>お問い合わせ</h4>
+        <ul>
+          <li><a href="https://x.com/po_toro" target="_blank" rel="noopener">X（@po_toro）</a></li>
+          <li><a href="#access">店舗アクセス</a></li>
+        </ul>
+      </div>
     </div>
   </footer>
-  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="画像ビューア"><button type="button" class="close" aria-label="閉じる (Esc)">閉じる ✕</button><img id="lightboxImg" alt="拡大画像" /></div>
-  <div id="modalTerms" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="利用規約"><div class="panel"><button class="close" data-close="modalTerms" aria-label="閉じる">✕ 閉じる</button><div class="body"><h2>利用規約</h2><p>本ウェブサイトおよび関連コンテンツは、concept cafe PO・TORO（以下「当店」）が運営しています。ご利用にあたり、以下の規約に同意いただいたものとみなします。</p><ul><li>当店のコンテンツ（画像、文章、動画等）の著作権は当店または正当な権利者に帰属します。無断転載・使用を禁じます。</li><li>当店は、予告なくサービス内容を変更・中止する場合があります。</li><li>サイトの利用に関連して発生した損害について、当店は一切の責任を負いません。</li><li>本規約は必要に応じて改訂される場合があります。最新の内容をご確認ください。</li></ul></div></div></div>
-  <div id="modalPrivacy" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="プライバシーポリシー"><div class="panel"><button class="close" data-close="modalPrivacy" aria-label="閉じる">✕ 閉じる</button><div class="body"><h2>プライバシーポリシー</h2><p>当店は、お客様の個人情報を適切に取り扱うことをお約束します。</p><ul><li>お問い合わせやご予約などの際に取得した個人情報は、応対およびサービス提供の目的のみに使用します。</li><li>法令に基づく場合を除き、ご本人の同意なく第三者に提供することはありません。</li><li>当店は取得した個人情報を安全に管理し、漏洩・改ざん・不正アクセス等の防止に努めます。</li><li>クッキー（Cookie）やアクセス解析ツールを用いる場合がありますが、個人を特定する目的では利用しません。</li><li>お客様がご自身の情報の開示・訂正・削除を希望される場合は、当店までご連絡ください。</li></ul></div></div></div>
+
+  <!-- ライトボックス -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="画像ビューア">
+    <button type="button" class="close" aria-label="閉じる (Esc)">閉じる ✕</button>
+    <img id="lightboxImg" alt="拡大画像" />
+  </div>
+
+  <!-- モーダル：利用規約 -->
+  <div id="modalTerms" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="利用規約">
+    <div class="panel">
+      <button class="close" data-close="modalTerms" aria-label="閉じる">✕ 閉じる</button>
+      <div class="body">
+        <h2>利用規約</h2>
+        <p>本ウェブサイトおよび関連コンテンツは、concept cafe PO・TORO（以下「当店」）が運営しています。ご利用にあたり、以下の規約に同意いただいたものとみなします。</p>
+        <ul>
+          <li>当店のコンテンツ（画像、文章、動画等）の著作権は当店または正当な権利者に帰属します。無断転載・使用を禁じます。</li>
+          <li>当店は、予告なくサービス内容を変更・中止する場合があります。</li>
+          <li>サイトの利用に関連して発生した損害について、当店は一切の責任を負いません。</li>
+          <li>本規約は必要に応じて改訂される場合があります。最新の内容をご確認ください。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- モーダル：プライバシー -->
+  <div id="modalPrivacy" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="プライバシーポリシー">
+    <div class="panel">
+      <button class="close" data-close="modalPrivacy" aria-label="閉じる">✕ 閉じる</button>
+      <div class="body">
+        <h2>プライバシーポリシー</h2>
+        <p>当店は、お客様の個人情報を適切に取り扱うことをお約束します。</p>
+        <ul>
+          <li>お問い合わせやご予約などの際に取得した個人情報は、応対およびサービス提供の目的のみに使用します。</li>
+          <li>法令に基づく場合を除き、ご本人の同意なく第三者に提供することはありません。</li>
+          <li>当店は取得した個人情報を安全に管理し、漏洩・改ざん・不正アクセス等の防止に努めます。</li>
+          <li>クッキー（Cookie）やアクセス解析ツールを用いる場合がありますが、個人を特定する目的では利用しません。</li>
+          <li>お客様がご自身の情報の開示・訂正・削除を希望される場合は、当店までご連絡ください。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
   <script>
     // =========================
     // 設定（CSV / GViz フォールバック）
     // =========================
     window.PORTAL_CONFIG = {
-      eventsCsvUrl: "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=365949763",
-      // ★追加：イベントのGVizフォールバック（シート名ベース）
-      eventsCsvUrlAlt: "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_EVENTS.csv",
+      // News: gid 指定 + GViz フォールバック（シート名）
+      newsCsvUrl:    "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1650494358",
+      newsCsvUrlAlt: "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_NEWS.csv",
 
-      newsCsvUrl:   "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1650494358",
+      // Events: gid 指定 + GViz フォールバック
+      eventsCsvUrl:  "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=365949763",
+      eventsCsvUrlAlt:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_EVENTS.csv",
 
+      // Schedule: gid 指定 + GViz フォールバック
       scheduleCsvUrl:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1276825118",
       scheduleCsvUrlAlt:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_schedule.csv"
     };
 
     // =========================
-    // 便利関数
+    // ユーティリティ
     // =========================
     function escapeHtml(str){ return String(str).replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[s])); }
     function normalizeHeader(s){ let t=String(s||''); if(t && t.charCodeAt(0)===0xFEFF) t=t.slice(1); return t.trim().toLowerCase(); }
 
+    // 区切り自動判定＋空行/コメント(#~)スキップ対応のCSVパーサ
     function parseCSV(text){
       if(!text) return [];
       const trimmed = String(text).replace(/^\s+/, '');
@@ -208,41 +424,55 @@
         if(inQ){ if(ch==='"'){ if(trimmed[i+1]==='"'){field+='"'; i+=2; continue;} inQ=false; i++; continue;} field+=ch; i++; continue; }
         if(ch==='"'){ inQ=true; i++; continue; }
         if(ch===delim){ row.push(field); field=''; i++; continue; }
-        if(ch==='\n'||ch==='\r'){ if(ch==='\r'&&trimmed[i+1]=='\n') i++; const joined=row.concat(field).join('').trim(); if(joined!==''){ const head=(row[0]??field).trim(); if(!/^#/.test(head)) rows.push(row.concat(field)); } row=[]; field=''; i++; continue; }
-        field+=ch; i++; }
+        if(ch==='\n'||ch==='\r'){
+          if(ch==='\r'&&trimmed[i+1]=='\n') i++;
+          const joined=row.concat(field).join('').trim();
+          if(joined!==''){
+            const head=(row[0]??field).trim();
+            if(!/^#/.test(head)) rows.push(row.concat(field));
+          }
+          row=[]; field=''; i++; continue;
+        }
+        field+=ch; i++;
+      }
       if(field!==''||row.length){ rows.push(row.concat(field)); }
       return rows.filter(r=> (r.join('').trim()!=='') );
     }
 
-    // CSV→オブジェクト
+    // ===== CSV→オブジェクト =====
+    // News：ヘッダーゆる認識 + 任意の列名に対応
     function csvToNewsObjects(csv){
-      const rows=parseCSV(csv); if(!rows.length) return [];
-      const h=rows[0].map(normalizeHeader); const idx=(keys)=>{for(const k of keys){const i=h.indexOf(k); if(i!==-1) return i;} return -1;};
-      const di=idx(['date','日付','掲載日']); const li=idx(['label','ラベル','タグ']); const ti=idx(['text','本文','お知らせ','内容']);
-      return rows.slice(1).map(r=>({date:di>-1?r[di]:'', label:li>-1?r[li]:'', text:ti>-1?r[ti]:''})).filter(o=>o.date || o.text);
+      const rows = parseCSV(csv);
+      if(!rows.length) return [];
+      const h = rows[0].map(normalizeHeader);
+      const idx = (keys)=>{ for(const k of keys){ const i=h.indexOf(k); if(i!==-1) return i; } return -1; };
+      const di = idx(['date','掲載日','更新日','published','publish_date','day']);
+      const li = idx(['label','ラベル','タグ','category','type']);
+      const ti = idx(['text','本文','お知らせ','内容','body','message','detail','詳細','content']);
+      const startAt = 1; // 1行目はヘッダー前提
+      return rows.slice(startAt)
+        .map(r => ({
+          date: di>-1 ? String(r[di]||'').trim() : '',
+          label:li>-1 ? String(r[li]||'').trim() : '',
+          text: ti>-1 ? String(r[ti]||'').trim() : ''
+        }))
+        .filter(o => o.date || o.text);
     }
 
+    // Events：既存（ゆる認識）
     function csvToEventObjects(csv){
       const rows=parseCSV(csv); if(!rows.length) return [];
-      // ★ヘッダーゆる認識：英日・別表記も拾う
       const h=rows[0].map(normalizeHeader); const idx=(keys)=>{for(const k of keys){const i=h.indexOf(k); if(i!==-1) return i;} return -1;};
       const ti=idx(['title','タイトル','件名','イベント名','name']);
       const di=idx(['datetext','date','日付','期間','date_text','dates']);
       const ii=idx(['image','画像','img','imageurl','image_url','thumbnail','thumb']);
       const ai=idx(['alt','代替','代替テキスト','alttext','alt_text']);
       const ci=idx(['chip','タグ','tag','ラベル','category']);
-      const linki=idx(['link','url','リンク']); // 任意：詳細リンク
-
-      return rows.slice(1).map(r=>({
-        title: ti>-1? r[ti] : '',
-        datetext: di>-1? r[di] : '',
-        image: ii>-1? r[ii] : '',
-        alt: ai>-1? r[ai] : '',
-        chip: ci>-1? r[ci] : '',
-        link: linki>-1? r[linki] : ''
-      })).filter(o=> (String(o.title||'').trim()!=='' || String(o.image||'').trim()!==''));
+      const linki=idx(['link','url','リンク']);
+      return rows.slice(1).map(r=>({ title:ti>-1?r[ti]:'', datetext:di>-1?r[di]:'', image:ii>-1?r[ii]:'', alt:ai>-1?r[ai]:'', chip:ci>-1?r[ci]:'', link:linki>-1?r[linki]:'' })).filter(o=> (String(o.title||'').trim()!=='' || String(o.image||'').trim()!==''));
     }
 
+    // Schedule：既存（ヘッダーゆる認識 + トリム）
     function csvToScheduleObjects(csv){
       const rows=parseCSV(csv); if(!rows.length) return [];
       let headerRow = rows[0];
@@ -253,18 +483,13 @@
       }
       const h = headerRow.map(s=>{ let t=String(s||''); if(t && t.charCodeAt(0)===0xFEFF) t=t.slice(1); return t.trim().toLowerCase(); });
       const idx=(keys)=>{ for(const k of keys){ const i=h.indexOf(k); if(i!==-1) return i; } return -1; };
-      let di=idx(['date','日付','営業日']);
-      let hi=idx(['hours','営業時間','open','openhours']);
-      let ni=idx(['note','メモ','備考','補足']);
+      let di=idx(['date','日付','営業日']); let hi=idx(['hours','営業時間','open','openhours']); let ni=idx(['note','メモ','備考','補足']);
       if(di===-1) di=0; if(hi===-1) hi=1; if(ni===-1) ni=2;
       const startAt = rows.indexOf(headerRow)+1;
-
-      return rows.slice(startAt)
-        .filter(r => r && r.length>0 && r.join('').trim()!=='')
-        .map(r=>({ date: r[di] ?? '', hours: r[hi] ?? '', note: r[ni] ?? '' }))
-        .map(o=>({ date:String(o.date).trim(), hours:String(o.hours).trim(), note:String(o.note).trim() }));
+      return rows.slice(startAt).filter(r => r && r.length>0 && r.join('').trim()!=='').map(r=>({ date: String(r[di]||'').trim(), hours: String(r[hi]||'').trim(), note: String(r[ni]||'').trim() }));
     }
 
+    // ===== 日付パース & 曜日表示 =====
     function parseSheetDateToJsDate(s){
       const raw = String(s ?? '').trim(); if(!raw) return null;
       const maybeNum = Number(raw);
@@ -278,7 +503,6 @@
       const m2 = str.match(/(\d{1,4})[\/ ]?(\d{1,2})[\/ ]?(\d{1,2})/); if(m2){ const y = m2[1].length===4 ? Number(m2[1]) : new Date().getFullYear(); const m = Number(m2[2]); const d = Number(m2[3]); if(m>=1 && m<=12 && d>=1 && d<=31) return new Date(`${y}/${m}/${d}`); }
       return null;
     }
-
     function formatDateJPWithWeekday(rawDateStr){
       const d = parseSheetDateToJsDate(rawDateStr); if(!d) return String(rawDateStr ?? '');
       const wd = ['日','月','火','水','木','金','土'][d.getDay()];
@@ -286,72 +510,134 @@
       return `${y}/${m}/${dd}(${wd})`;
     }
 
+    // ===== fetch + ログ表示（フォールバック対応） =====
     async function loadCSV(url){ const res=await fetch(url+`&cb=${Date.now()}`,{cache:'no-store',credentials:'omit'}); return await res.text(); }
-
     async function maybeLoad(urlOrUrls, key, statusId, conv){
       const s=document.getElementById(statusId); const urls = Array.isArray(urlOrUrls) ? urlOrUrls : [urlOrUrls];
       for(let idx=0; idx<urls.length; idx++){
         const u = urls[idx] + (urls[idx].includes('?')? '&' : '?') + `cb=${Date.now()}`;
-        try{ const text = await loadCSV(u); const preview = text.slice(0,120).replace(/\s+/g,' ').trim(); if(s){ s.textContent = `${key}：try${idx+1} / ${text.length} bytes / preview: "${preview}"`; }
-          if(text.length>0){ window.PORTAL_DATA[key] = conv? conv(text) : []; if(window.PORTAL_DATA[key].length>0 || key!=='schedule') return true; }
+        try{
+          const text = await loadCSV(u);
+          const preview = text.slice(0,120).replace(/\s+/g,' ').trim();
+          if(s){ s.textContent = `${key}：try${idx+1} / ${text.length} bytes / preview: "${preview}"`; }
+          if(text.length>0){
+            window.PORTAL_DATA[key] = conv? conv(text) : [];
+            if(window.PORTAL_DATA[key].length>0 || key!== 'schedule') return true;
+          }
         }catch(e){ if(s){ s.textContent = `${key}：try${idx+1} 失敗 (${e.message})`; } }
       }
       if(!window.PORTAL_DATA[key]) window.PORTAL_DATA[key]=[]; return false;
     }
 
-    // 描画
-    function renderNews(){ const ul=document.getElementById('newsList'); if(!ul) return; const items=(window.PORTAL_DATA.news||[]); if(!items.length){ ul.innerHTML = '<li>現在お知らせはありません。</li>'; return; } ul.innerHTML=items.map(n=>`<li><time>${escapeHtml(n.date||'')}</time> ${n.label?`<span class="label">${escapeHtml(n.label)}</span>`:''} ${n.text||''}</li>`).join(''); }
-
-    function renderEvents(){ const g=document.getElementById('eventsGrid'); if(!g) return; const items=(window.PORTAL_DATA.events||[]);
+    // ===== 描画 =====
+    function renderNews(){
+      const ul=document.getElementById('newsList'); if(!ul) return;
+      const items=(window.PORTAL_DATA.news||[]);
+      if(!items.length){ ul.innerHTML = '<li>現在お知らせはありません。</li>'; return; }
+      ul.innerHTML=items.map(n=>`<li><time>${escapeHtml(n.date||'')}</time> ${n.label?`<span class="label">${escapeHtml(n.label)}</span>`:''} ${n.text||''}</li>`).join('');
+    }
+    function renderEvents(){
+      const g=document.getElementById('eventsGrid'); if(!g) return;
+      const items=(window.PORTAL_DATA.events||[]);
       if(!items.length){ g.innerHTML='<div class="tag">イベントは準備中です。</div>'; return; }
       g.innerHTML=items.map(e=>{
         const img = e.image? `<img src="${e.image}" alt="${escapeHtml(e.alt||e.title||'')}" class="thumb" data-full="${e.image}" loading="lazy">` : '';
-        const title = escapeHtml(e.title||''); const date = escapeHtml(e.datetext||''); const chip = e.chip?`<div class="chip">${escapeHtml(e.chip)}</div>`:'';
-        const cardInner = `<div class="body"><h3>${title}</h3><p>${date}</p>${chip}${e.link?`<p class="mt-8"><a href="${e.link}" target="_blank" rel="noopener">詳細を見る</a></p>`:''}</div>`;
-        return `<article class="card">${img}${cardInner}</article>`;
+        const title = escapeHtml(e.title||'');
+        const date = escapeHtml(e.datetext||'');
+        const chip = e.chip?`<div class="chip">${escapeHtml(e.chip)}</div>`:'';
+        const link = e.link?`<p class="mt-8"><a href="${e.link}" target="_blank" rel="noopener">詳細を見る</a></p>`:'';
+        return `<article class="card">${img}<div class="body"><h3>${title}</h3><p>${date}</p>${chip}${link}</div></article>`;
       }).join('');
     }
-
-    function renderSchedule(){ const tbody=document.getElementById('scheduleBody'); if(!tbody) return; const status=document.getElementById('scheduleStatus'); const all=(window.PORTAL_DATA.schedule||[]);
+    function renderSchedule(){
+      const tbody=document.getElementById('scheduleBody'); if(!tbody) return; const status=document.getElementById('scheduleStatus');
+      const all=(window.PORTAL_DATA.schedule||[]);
       const today=new Date(); today.setHours(0,0,0,0); const limit=new Date(today); limit.setDate(today.getDate()+7);
-      const inRange=[]; const undated=[]; for(const r of all){ const d=parseSheetDateToJsDate(r.date); if(!d){ undated.push(r); continue; } d.setHours(0,0,0,0); if(d>=today && d<=limit) inRange.push(r); }
+      const inRange=[]; const undated=[];
+      for(const r of all){ const d=parseSheetDateToJsDate(r.date); if(!d){ undated.push(r); continue; } d.setHours(0,0,0,0); if(d>=today && d<=limit) inRange.push(r); }
       let rows=inRange.length? inRange : (all.slice(0,7));
-      if(!rows.length){ tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>'; }else{
-        tbody.innerHTML = rows.map(r => { const dateText = formatDateJPWithWeekday(r.date); const hours = String(r.hours || ''); const note = String(r.note  || ''); return `<tr><td>${escapeHtml(dateText)}</td><td>${escapeHtml(hours)}</td><td>${escapeHtml(note)}</td></tr>`; }).join('');
+      if(!rows.length){ tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>'; }
+      else{
+        tbody.innerHTML = rows.map(r => {
+          const dateText = formatDateJPWithWeekday(r.date);
+          const hours    = String(r.hours || '');
+          const note     = String(r.note  || '');
+          return `<tr><td>${escapeHtml(dateText)}</td><td>${escapeHtml(hours)}</td><td>${escapeHtml(note)}</td></tr>`;
+        }).join('');
       }
       if(status){ status.textContent = `schedule：CSV ${all.length}件（直近7日 ${inRange.length}件 / 日付未解釈 ${undated.length}件）`; }
     }
 
-    // 起動
+    // ===== 初期データ =====
     window.PORTAL_DATA={news:[],events:[],schedule:[]};
 
-    function trapFocus(container, first){ const focusables = container.querySelectorAll('a, button, textarea, input, select, [tabindex]:not([tabindex="-1"])'); if(!focusables.length) return; const firstEl=first||focusables[0]; const lastEl=focusables[focusables.length-1]; function onKey(e){ if(e.key==='Tab'){ if(e.shiftKey && document.activeElement===firstEl){ e.preventDefault(); lastEl.focus(); } else if(!e.shiftKey && document.activeElement===lastEl){ e.preventDefault(); firstEl.focus(); } } if(e.key==='Escape'){ container.classList.remove('open'); container.setAttribute('aria-hidden','true'); document.body.style.overflow=''; } } container.addEventListener('keydown', onKey); }
+    function trapFocus(container, first){
+      const focusables = container.querySelectorAll('a, button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
+      if(!focusables.length) return; const firstEl=first||focusables[0]; const lastEl=focusables[focusables.length-1];
+      function onKey(e){
+        if(e.key==='Tab'){
+          if(e.shiftKey && document.activeElement===firstEl){ e.preventDefault(); lastEl.focus(); }
+          else if(!e.shiftKey && document.activeElement===lastEl){ e.preventDefault(); firstEl.focus(); }
+        }
+        if(e.key==='Escape'){ container.classList.remove('open'); container.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+      }
+      container.addEventListener('keydown', onKey);
+    }
 
     document.addEventListener('DOMContentLoaded', async ()=>{
       const yearEl=document.getElementById('year'); if(yearEl) yearEl.textContent=new Date().getFullYear();
-      const btnMenu=document.getElementById('btnMenu'); const drawer=document.getElementById('drawer'); const btnClose=document.getElementById('btnClose'); if(btnMenu && drawer && btnClose){ const toggleDrawer=(open)=>{ drawer.classList.toggle('open',open); drawer.setAttribute('aria-hidden', String(!open)); btnMenu.setAttribute('aria-expanded', String(open)); document.body.style.overflow = open? 'hidden':''; if(open){ drawer.querySelector('a')?.focus(); trapFocus(drawer, drawer.querySelector('a')); } else { btnMenu.focus(); } }; btnMenu.addEventListener('click',()=>toggleDrawer(true)); btnClose.addEventListener('click',()=>toggleDrawer(false)); drawer.addEventListener('click',(e)=>{ if(e.target.tagName==='A') toggleDrawer(false); }); window.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) toggleDrawer(false); }); }
 
-      // CSV読み込み（イベントもフォールバックを試す）
-      await maybeLoad(window.PORTAL_CONFIG.newsCsvUrl, 'news', 'newsStatus', csvToNewsObjects);
-      await maybeLoad([window.PORTAL_CONFIG.eventsCsvUrl, window.PORTAL_CONFIG.eventsCsvUrlAlt], 'events', 'eventsStatus', csvToEventObjects);
-      await maybeLoad([window.PORTAL_CONFIG.scheduleCsvUrl, window.PORTAL_CONFIG.scheduleCsvUrlAlt], 'schedule', 'scheduleStatus', csvToScheduleObjects);
+      const btnMenu=document.getElementById('btnMenu'); const drawer=document.getElementById('drawer'); const btnClose=document.getElementById('btnClose');
+      if(btnMenu && drawer && btnClose){
+        const toggleDrawer=(open)=>{
+          drawer.classList.toggle('open',open);
+          drawer.setAttribute('aria-hidden', String(!open));
+          btnMenu.setAttribute('aria-expanded', String(open));
+          document.body.style.overflow = open? 'hidden':'';
+          if(open){ drawer.querySelector('a')?.focus(); trapFocus(drawer, drawer.querySelector('a')); } else { btnMenu.focus(); }
+        };
+        btnMenu.addEventListener('click',()=>toggleDrawer(true));
+        btnClose.addEventListener('click',()=>toggleDrawer(false));
+        drawer.addEventListener('click',(e)=>{ if(e.target.tagName==='A') toggleDrawer(false); });
+        window.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) toggleDrawer(false); });
+      }
+
+      // 読み込み（すべてフォールバック対応）
+      await maybeLoad([window.PORTAL_CONFIG.newsCsvUrl,    window.PORTAL_CONFIG.newsCsvUrlAlt],    'news',    'newsStatus',    csvToNewsObjects);
+      await maybeLoad([window.PORTAL_CONFIG.eventsCsvUrl,  window.PORTAL_CONFIG.eventsCsvUrlAlt],  'events',  'eventsStatus',  csvToEventObjects);
+      await maybeLoad([window.PORTAL_CONFIG.scheduleCsvUrl,window.PORTAL_CONFIG.scheduleCsvUrlAlt],'schedule','scheduleStatus',csvToScheduleObjects);
+
       renderNews(); renderEvents(); renderSchedule();
 
       // 画像ライトボックス
       const lightbox=document.getElementById('lightbox'); const lightImg=document.getElementById('lightboxImg'); const closeBtn=lightbox.querySelector('.close');
       const openLightbox=(src,alt)=>{ lightImg.src=src; lightImg.alt=alt||'拡大画像'; lightbox.classList.add('open'); lightbox.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; };
       const closeLightbox=()=>{ lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true'); lightImg.removeAttribute('src'); document.body.style.overflow=''; };
-      const eventsGrid=document.getElementById('eventsGrid'); if(eventsGrid){ eventsGrid.addEventListener('click',(e)=>{ const img=e.target.closest('img'); if(!img) return; openLightbox(img.getAttribute('data-full')||img.src, img.alt); }); }
-      lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); }); closeBtn.addEventListener('click', closeLightbox); window.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && lightbox.classList.contains('open')) closeLightbox(); });
+      const eventsGrid=document.getElementById('eventsGrid');
+      if(eventsGrid){ eventsGrid.addEventListener('click',(e)=>{ const img=e.target.closest('img'); if(!img) return; openLightbox(img.getAttribute('data-full')||img.src, img.alt); }); }
+      lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); });
+      closeBtn.addEventListener('click', closeLightbox);
+      window.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && lightbox.classList.contains('open')) closeLightbox(); });
 
-      const modalTerms=document.getElementById('modalTerms'); const modalPrivacy=document.getElementById('modalPrivacy'); const openTerms=document.getElementById('openTerms'); const openPrivacy=document.getElementById('openPrivacy'); const toggleModal=(el,open)=>{ if(!el) return; el.classList.toggle('open',open); el.setAttribute('aria-hidden', String(!open)); document.body.style.overflow = open? 'hidden':''; if(open) trapFocus(el, el.querySelector('.close')); };
-      if(openTerms) openTerms.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalTerms,true); });
+      // モーダル
+      const modalTerms=document.getElementById('modalTerms');
+      const modalPrivacy=document.getElementById('modalPrivacy');
+      const openTerms=document.getElementById('openTerms');
+      const openPrivacy=document.getElementById('openPrivacy');
+      const toggleModal=(el,open)=>{ if(!el) return; el.classList.toggle('open',open); el.setAttribute('aria-hidden', String(!open)); document.body.style.overflow = open? 'hidden':''; if(open) trapFocus(el, el.querySelector('.close')); };
+      if(openTerms)   openTerms.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalTerms,true);   });
       if(openPrivacy) openPrivacy.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalPrivacy,true); });
       document.querySelectorAll('.modal .close').forEach(btn=>{ btn.addEventListener('click',()=>{ const id=btn.getAttribute('data-close'); const el=id? document.getElementById(id) : btn.closest('.modal'); toggleModal(el,false); }); });
       window.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ toggleModal(modalTerms,false); toggleModal(modalPrivacy,false);} });
       [modalTerms, modalPrivacy].forEach(m=>{ if(m) m.addEventListener('click',(e)=>{ if(e.target===m) toggleModal(m,false); }); });
 
-      const params = new URLSearchParams(location.search); if(params.get('embed')==='true'){ const header=document.querySelector('header'); const footer=document.querySelector('footer'); if(header) header.style.display='none'; if(footer) footer.style.display='none'; document.querySelectorAll('section').forEach(s=>s.style.padding='12px 0'); }
+      // ?embed=true 簡略表示
+      const params = new URLSearchParams(location.search);
+      if(params.get('embed')==='true'){
+        const header=document.querySelector('header'); const footer=document.querySelector('footer');
+        if(header) header.style.display='none'; if(footer) footer.style.display='none';
+        document.querySelectorAll('section').forEach(s=>s.style.padding='12px 0');
+      }
     });
   </script>
   <noscript>JavaScriptが無効になっています。最新情報の読み込みや画像ビューアがご利用いただけません。</noscript>
