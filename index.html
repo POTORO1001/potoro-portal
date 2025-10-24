@@ -420,7 +420,7 @@
     window.PORTAL_CONFIG = {
       eventsCsvUrl: "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=365949763",
       newsCsvUrl:   "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1650494358",
-      scheduleCsvUrl:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=0"
+      scheduleCsvUrl:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1276825118"
     };
 
     // =========================
@@ -498,8 +498,26 @@
     }
     function renderSchedule(){
       const tbody=document.getElementById('scheduleBody'); if(!tbody) return;
-      const today=new Date(); today.setHours(0,0,0,0); const limit=new Date(today); limit.setDate(today.getDate()+7);
-      const rows=(window.PORTAL_DATA.schedule||[]).filter(r=>{ const d=parseSheetDateToJsDate(r.date); if(!d) return true; d.setHours(0,0,0,0); return d>=today && d<=limit; });
+      const status=document.getElementById('scheduleStatus');
+      const all=(window.PORTAL_DATA.schedule||[]);
+
+      // 直近7日に絞り込み（日付が取れない行は一旦残す）
+      const today=new Date(); today.setHours(0,0,0,0);
+      const limit=new Date(today); limit.setDate(today.getDate()+7);
+      const inRange=[]; const undated=[];
+      for(const r of all){ const d=parseSheetDateToJsDate(r.date); if(!d){ undated.push(r); continue; } d.setHours(0,0,0,0); if(d>=today && d<=limit) inRange.push(r); }
+
+      let rows=inRange.length? inRange : (all.slice(0,7));
+      // 表示
+      if(!rows.length){
+        tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
+      }else{
+        tbody.innerHTML=rows.map(r=>`<tr><td>${escapeHtml((r.date||'').toString())}</td><td>${escapeHtml((r.hours||'').toString())}</td><td>${escapeHtml((r.note||'').toString())}</td></tr>`).join('');
+      }
+
+      // ステータス（総件数 / 直近7日件数 / 日付不明件数）
+      if(status){ status.textContent = `schedule：CSV ${all.length}件（直近7日 ${inRange.length}件 / 日付未解釈 ${undated.length}件）`; }
+    });
       if(!rows.length){ tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>'; return; }
       tbody.innerHTML=rows.map(r=>`<tr><td>${escapeHtml((r.date||'').toString())}</td><td>${escapeHtml((r.hours||'').toString())}</td><td>${escapeHtml((r.note||'').toString())}</td></tr>`).join('');
     }
