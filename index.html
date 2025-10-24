@@ -27,7 +27,6 @@
         --pink: color(srgb 0.9647 0.7176 0.8235); /* #f6b7d2 */
         --blue: color(srgb 0.6627 0.8392 0.9686); /* #a9d6f7 */
       }
-      /* ボタンのグラデも sRGB で統一（Chrome見え基準） */
       .btn-primary{background:linear-gradient(135deg,color(srgb 1 0.5059 0.7529),color(srgb 0.5569 0.8235 1));}
     }
 
@@ -46,16 +45,8 @@
     .brand-title .en{font-size:1.05rem}
     .brand-title .jp{font-size:.8rem;color:#666}
 
-    /* 見やすいナビ（背景とのコントラスト強化） */
     .nav-links{display:flex;gap:14px;align-items:center}
-    .nav-links a{
-      padding:10px 14px;border-radius:999px;
-      background:rgba(255,255,255,.98);
-      box-shadow:0 4px 12px rgba(0,0,0,.08);
-      font-size:1rem;font-weight:800;color:#222;
-      border:1px solid #eaeaea;letter-spacing:.02em;
-      outline:none
-    }
+    .nav-links a{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.98);box-shadow:0 4px 12px rgba(0,0,0,.08);font-size:1rem;font-weight:800;color:#222;border:1px solid #eaeaea;letter-spacing:.02em;outline:none}
     .nav-links a:hover{background:#111;color:#fff;box-shadow:0 6px 16px rgba(0,0,0,.18)}
     .nav-links a:focus-visible{outline:2px solid #0b69d5;outline-offset:2px}
 
@@ -135,17 +126,12 @@
     .modal .close{position:sticky;top:0;margin-left:auto;background:#f6f6f6;border:none;border-radius:999px;padding:8px 12px;cursor:pointer}
     .modal .body{padding:8px 4px}
 
-    /* アクセシビリティ：キーボードフォーカス/スキップリンク */
     .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
     .skip-link:focus{left:16px;top:12px;width:auto;height:auto;background:#111;color:#fff;padding:10px 12px;border-radius:10px;z-index:1000}
     :focus-visible{outline:2px solid #0b69d5;outline-offset:2px}
 
-    /* 低減動作モード対応 */
-    @media (prefers-reduced-motion: reduce){
-      *{scroll-behavior:auto !important;animation:none !important;transition:none !important}
-    }
+    @media (prefers-reduced-motion: reduce){*{scroll-behavior:auto !important;animation:none !important;transition:none !important}}
 
-    /* ダークモード（背景は上書きしない） */
     @media (prefers-color-scheme: dark){
       :root{--ink:#eee}
       html,body{color:var(--ink);} /* 背景グラデは維持 */
@@ -157,23 +143,17 @@
       .ticker,.hero-card{background:rgba(255,255,255,.08)}
     }
 
-    /* iOS等：固定背景を無効化（パフォーマンス） */
     @media (max-width:768px){ html,body{background-attachment:scroll} }
 
-    /* --- iPhone Safari 向け：指定エリアを常に白背景＆高コントラストに --- */
+    /* --- iPhone Safari 向け：指定エリアを白背景＆高コントラスト --- */
     @supports (-webkit-touch-callout: none) {
       @media (pointer: coarse) {
-        /* ゲームのボタン（.qlink）・SNSボタン（.qlink） */
         .qlink{background:#fff !important;color:#111 !important;border:1px solid #eee !important;}
         .qlink strong{color:#111 !important}
         .qlink .tag{color:#555 !important}
-
-        /* 営業スケジュール（.table） */
         .table{background:#fff !important;color:#111 !important;border:1px solid #eee !important}
         .table th{background:#fafafa !important;color:#111 !important}
         .table td{color:#111 !important}
-
-        /* 店舗情報・地図（.card） */
         .card{background:#fff !important;color:#111 !important;border:1px solid #eee !important}
         .card h3{color:#111 !important}
         .card p, .card a{color:#222 !important}
@@ -222,7 +202,6 @@
   </header>
 
   <main>
-    <!-- Hero -->
     <section class="hero">
       <div class="container wrap">
         <div>
@@ -244,7 +223,6 @@
       </div>
     </section>
 
-    <!-- News -->
     <section id="news">
       <div class="container">
         <h2 class="sec-title">🗞️ お知らせ</h2>
@@ -255,7 +233,6 @@
       </div>
     </section>
 
-    <!-- Events -->
     <section id="events">
       <div class="container">
         <h2 class="sec-title">🎉 イベント</h2>
@@ -264,7 +241,6 @@
       </div>
     </section>
 
-    <!-- メイドさん紹介 -->
     <section id="maids">
       <div class="container">
         <h2 class="sec-title">👑 メイドさん紹介</h2>
@@ -274,7 +250,6 @@
       </div>
     </section>
 
-    <!-- Games / Tools -->
     <section id="games">
       <div class="container">
         <h2 class="sec-title">🎮 ゲーム / 診断</h2>
@@ -293,7 +268,6 @@
       </div>
     </section>
 
-    <!-- Schedule -->
     <section id="schedule">
       <div class="container">
         <h2 class="sec-title">📅 営業スケジュール（直近7日）</h2>
@@ -305,7 +279,6 @@
       </div>
     </section>
 
-    <!-- Access -->
     <section id="access">
       <div class="container">
         <h2 class="sec-title">📍 アクセス</h2>
@@ -332,7 +305,6 @@
       </div>
     </section>
 
-    <!-- SNS -->
     <section id="sns">
       <div class="container">
         <h2 class="sec-title">📡 公式SNS</h2>
@@ -371,13 +343,11 @@
     </div>
   </footer>
 
-  <!-- ライトボックス（全画面画像ビューア） -->
   <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="画像ビューア">
     <button type="button" class="close" aria-label="閉じる (Esc)">閉じる ✕</button>
     <img id="lightboxImg" alt="拡大画像" />
   </div>
 
-  <!-- モーダル：利用規約 -->
   <div id="modalTerms" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="利用規約">
     <div class="panel">
       <button class="close" data-close="modalTerms" aria-label="閉じる">✕ 閉じる</button>
@@ -394,7 +364,6 @@
     </div>
   </div>
 
-  <!-- モーダル：プライバシーポリシー -->
   <div id="modalPrivacy" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="プライバシーポリシー">
     <div class="panel">
       <button class="close" data-close="modalPrivacy" aria-label="閉じる">✕ 閉じる</button>
@@ -420,17 +389,16 @@
       eventsCsvUrl: "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=365949763",
       newsCsvUrl:   "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1650494358",
       scheduleCsvUrl:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1276825118",
-      // ★フォールバック：GViz CSV（タブ名で取得）
       scheduleCsvUrlAlt:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_schedule.csv"
     };
 
     // =========================
-    // 便利関数
+    // ユーティリティ
     // =========================
     function escapeHtml(str){ return String(str).replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[s])); }
     function normalizeHeader(s){ let t=String(s||''); if(t && t.charCodeAt(0)===0xFEFF) t=t.slice(1); return t.trim().toLowerCase(); }
 
-    // ★区切り自動判定（, / ; / TAB）＋空行・コメント(#で始まる)無視、引用対応
+    // 区切り自動判定＋空行/コメント無視
     function parseCSV(text){
       if(!text) return [];
       const trimmed = String(text).replace(/^\s+/, '');
@@ -475,7 +443,6 @@
       const di=idx(['date','日付','掲載日']); const li=idx(['label','ラベル','タグ']); const ti=idx(['text','本文','お知らせ','内容']);
       return rows.slice(1).map(r=>({date:di>-1?r[di]:'', label:li>-1?r[li]:'', text:ti>-1?r[ti]:''})).filter(o=>o.date || o.text);
     }
-
     function csvToEventObjects(csv){
       const rows=parseCSV(csv); if(!rows.length) return [];
       const h=rows[0].map(normalizeHeader); const idx=(keys)=>{for(const k of keys){const i=h.indexOf(k); if(i!==-1) return i;} return -1;};
@@ -484,7 +451,7 @@
       return rows.slice(1).map(r=>({ title:ti>-1?r[ti]:'', datetext:di>-1?r[di]:'', image:ii>-1?r[ii]:'', alt:ai>-1?r[ai]:'', chip:ci>-1?r[ci]:'' })).filter(o=> (o.title&&o.title.trim()) || (o.image&&o.image.trim()));
     }
 
-    // ★ヘッダーゆる認識＋トリム
+    // スケジュール（ヘッダーゆる認識＋トリム）
     function csvToScheduleObjects(csv){
       const rows=parseCSV(csv);
       if(!rows.length) return [];
@@ -508,17 +475,15 @@
         .map(o=>({ date:String(o.date).trim(), hours:String(o.hours).trim(), note:String(o.note).trim() }));
     }
 
-    // ★超頑丈版：全角→半角、曜日除去、ドット区切り、Excel/Sheetsシリアル、不可視文字を正規化
+    // 超頑丈：日付→Date
     function parseSheetDateToJsDate(s){
       const raw = String(s ?? '').trim();
       if(!raw) return null;
-      // シリアル
       const maybeNum = Number(raw);
       if(!Number.isNaN(maybeNum) && maybeNum > 20000 && maybeNum < 60000){
         const base = new Date(Date.UTC(1899,11,30));
         return new Date(base.getTime() + maybeNum * 86400000);
       }
-      // 正規化
       const z2h = (t)=>t.replace(/[０-９]/g, d => String.fromCharCode(d.charCodeAt(0)-0xFEE0));
       let str = z2h(raw)
         .replace(/\u200B|\u200C|\u200D|\uFEFF/g, '')
@@ -555,9 +520,19 @@
       return null;
     }
 
+    // ★曜日つき表示（YYYY/MM/DD(曜)）
+    function formatDateJPWithWeekday(rawDateStr){
+      const d = parseSheetDateToJsDate(rawDateStr);
+      if(!d) return String(rawDateStr ?? '');
+      const wd = ['日','月','火','水','木','金','土'][d.getDay()];
+      const y  = d.getFullYear();
+      const m  = String(d.getMonth()+1).padStart(2,'0');
+      const dd = String(d.getDate()).padStart(2,'0');
+      return `${y}/${m}/${dd}(${wd})`;
+    }
+
     async function loadCSV(url){ const res=await fetch(url+`&cb=${Date.now()}`,{cache:'no-store',credentials:'omit'}); return await res.text(); }
 
-    // ★フォールバックつきローダー
     async function maybeLoad(urlOrUrls, key, statusId, conv){
       const s=document.getElementById(statusId);
       const urls = Array.isArray(urlOrUrls) ? urlOrUrls : [urlOrUrls];
@@ -569,7 +544,7 @@
           if(s){ s.textContent = `${key}：try${idx+1} / ${text.length} bytes / preview: "${preview}"`; }
           if(text.length>0){
             window.PORTAL_DATA[key] = conv? conv(text) : [];
-            if(window.PORTAL_DATA[key].length>0 || key!== 'schedule') return true; // スケジュール以外はここで終了
+            if(window.PORTAL_DATA[key].length>0 || key!== 'schedule') return true;
           }
         }catch(e){ if(s){ s.textContent = `${key}：try${idx+1} 失敗 (${e.message})`; } }
       }
@@ -604,7 +579,6 @@
       const status=document.getElementById('scheduleStatus');
       const all=(window.PORTAL_DATA.schedule||[]);
 
-      // 直近7日に絞り込み（日付が取れない行は一旦残す）
       const today=new Date(); today.setHours(0,0,0,0);
       const limit=new Date(today); limit.setDate(today.getDate()+7);
       const inRange=[]; const undated=[];
@@ -614,15 +588,23 @@
       if(!rows.length){
         tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
       }else{
-        tbody.innerHTML=rows.map(r=>`<tr><td>${escapeHtml((r.date||'').toString())}</td><td>${escapeHtml((r.hours||'').toString())}</td><td>${escapeHtml((r.note||'').toString())}</td></tr>`).join('');
+        tbody.innerHTML = rows.map(r => {
+          const dateText = formatDateJPWithWeekday(r.date);
+          const hours    = String(r.hours || '');
+          const note     = String(r.note  || '');
+          return `<tr>
+            <td>${escapeHtml(dateText)}</td>
+            <td>${escapeHtml(hours)}</td>
+            <td>${escapeHtml(note)}</td>
+          </tr>`;
+        }).join('');
       }
       if(status){ status.textContent = `schedule：CSV ${all.length}件（直近7日 ${inRange.length}件 / 日付未解釈 ${undated.length}件）`; }
     }
 
-    // 初期データホルダ
+    // 初期データ
     window.PORTAL_DATA={news:[],events:[],schedule:[]};
 
-    // フォーカストラップ（簡易）
     function trapFocus(container, first){
       const focusables = container.querySelectorAll('a, button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
       if(!focusables.length) return; const firstEl=first||focusables[0]; const lastEl=focusables[focusables.length-1];
@@ -639,7 +621,6 @@
     document.addEventListener('DOMContentLoaded', async ()=>{
       const yearEl=document.getElementById('year'); if(yearEl) yearEl.textContent=new Date().getFullYear();
 
-      // ドロワー
       const btnMenu=document.getElementById('btnMenu'); const drawer=document.getElementById('drawer'); const btnClose=document.getElementById('btnClose');
       if(btnMenu && drawer && btnClose){
         const toggleDrawer=(open)=>{
@@ -655,13 +636,11 @@
         window.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) toggleDrawer(false); });
       }
 
-      // CSV読み込み → 描画（schedule はフォールバックURLも試す）
       await maybeLoad(window.PORTAL_CONFIG.newsCsvUrl,     'news',     'newsStatus',     csvToNewsObjects);
       await maybeLoad(window.PORTAL_CONFIG.eventsCsvUrl,   'events',   'eventsStatus',   csvToEventObjects);
       await maybeLoad([window.PORTAL_CONFIG.scheduleCsvUrl, window.PORTAL_CONFIG.scheduleCsvUrlAlt], 'schedule', 'scheduleStatus', csvToScheduleObjects);
       renderNews(); renderEvents(); renderSchedule();
 
-      // ライトボックス動作
       const lightbox=document.getElementById('lightbox'); const lightImg=document.getElementById('lightboxImg'); const closeBtn=lightbox.querySelector('.close');
       const openLightbox=(src,alt)=>{ lightImg.src=src; lightImg.alt=alt||'拡大画像'; lightbox.classList.add('open'); lightbox.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; };
       const closeLightbox=()=>{ lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true'); lightImg.removeAttribute('src'); document.body.style.overflow=''; };
@@ -671,21 +650,19 @@
       closeBtn.addEventListener('click', closeLightbox);
       window.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && lightbox.classList.contains('open')) closeLightbox(); });
 
-      // 規約/プライバシー モーダル
       const modalTerms=document.getElementById('modalTerms');
       const modalPrivacy=document.getElementById('modalPrivacy');
       const openTerms=document.getElementById('openTerms');
       const openPrivacy=document.getElementById('openPrivacy');
       const toggleModal=(el,open)=>{ if(!el) return; el.classList.toggle('open',open); el.setAttribute('aria-hidden', String(!open)); document.body.style.overflow = open? 'hidden':''; if(open) trapFocus(el, el.querySelector('.close')); };
       if(openTerms) openTerms.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalTerms,true); });
-      if(openPrivacy) openPrivacy.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalPrivacy,true); });
+      if(openPrivacy) openPrivacy.addEventListener('click', (e)=>{ e.prevent止; toggleModal(modalPrivacy,true); });
       document.querySelectorAll('.modal .close').forEach(btn=>{
         btn.addEventListener('click',()=>{ const id=btn.getAttribute('data-close'); const el=id? document.getElementById(id) : btn.closest('.modal'); toggleModal(el,false); });
       });
       window.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ toggleModal(modalTerms,false); toggleModal(modalPrivacy,false);} });
       [modalTerms, modalPrivacy].forEach(m=>{ if(m) m.addEventListener('click',(e)=>{ if(e.target===m) toggleModal(m,false); }); });
 
-      // ?embed=true 簡略表示
       const params = new URLSearchParams(location.search);
       if(params.get('embed')==='true'){
         const header=document.querySelector('header'); const footer=document.querySelector('footer');
