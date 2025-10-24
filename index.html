@@ -419,7 +419,9 @@
     window.PORTAL_CONFIG = {
       eventsCsvUrl: "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=365949763",
       newsCsvUrl:   "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1650494358",
-      scheduleCsvUrl:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1276825118"
+      scheduleCsvUrl:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1276825118",
+      // ★フォールバック：GViz CSV（タブ名で取得）
+      scheduleCsvUrlAlt:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_schedule.csv"
     };
 
     // =========================
@@ -553,7 +555,27 @@
       return null;
     }
 
-    async function loadCSV(url){ const res=await fetch(url+`&cb=${Date.now()}`,{cache:'no-store',credentials:'omit'}); if(!res.ok) throw new Error(`fetch error ${res.status}`); return await res.text(); }
+    async function loadCSV(url){ const res=await fetch(url+`&cb=${Date.now()}`,{cache:'no-store',credentials:'omit'}); return await res.text(); }
+
+    // ★フォールバックつきローダー
+    async function maybeLoad(urlOrUrls, key, statusId, conv){
+      const s=document.getElementById(statusId);
+      const urls = Array.isArray(urlOrUrls) ? urlOrUrls : [urlOrUrls];
+      for(let idx=0; idx<urls.length; idx++){
+        const u = urls[idx] + (urls[idx].includes('?')? '&' : '?') + `cb=${Date.now()}`;
+        try{
+          const text = await loadCSV(u);
+          const preview = text.slice(0,120).replace(/\s+/g,' ').trim();
+          if(s){ s.textContent = `${key}：try${idx+1} / ${text.length} bytes / preview: "${preview}"`; }
+          if(text.length>0){
+            window.PORTAL_DATA[key] = conv? conv(text) : [];
+            if(window.PORTAL_DATA[key].length>0 || key!== 'schedule') return true; // スケジュール以外はここで終了
+          }
+        }catch(e){ if(s){ s.textContent = `${key}：try${idx+1} 失敗 (${e.message})`; } }
+      }
+      if(!window.PORTAL_DATA[key]) window.PORTAL_DATA[key]=[];
+      return false;
+    }
 
     // 描画
     function renderNews(){
@@ -597,21 +619,6 @@
       if(status){ status.textContent = `schedule：CSV ${all.length}件（直近7日 ${inRange.length}件 / 日付未解釈 ${undated.length}件）`; }
     }
 
-    // ★ステータスを強化（サイズ＆プレビュー表示）
-    async function maybeLoad(url,key,statusId,conv){
-      const s=document.getElementById(statusId);
-      try{
-        const text=await loadCSV(url);
-        const preview = text.slice(0,120).replace(/\s+/g,' ').trim();
-        window.PORTAL_DATA[key] = (conv? conv(text) : []);
-        if(s){ s.textContent = `${key}：CSV ${window.PORTAL_DATA[key].length}件を読み込み（${text.length} bytes / preview: "${preview}"）`; }
-        return true;
-      }catch(e){
-        if(s){ s.textContent=`${key}：CSV取得に失敗（${e.message}）`; }
-        return false;
-      }
-    }
-
     // 初期データホルダ
     window.PORTAL_DATA={news:[],events:[],schedule:[]};
 
@@ -648,10 +655,10 @@
         window.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) toggleDrawer(false); });
       }
 
-      // CSV読み込み → 描画
-      await maybeLoad(PORTAL_CONFIG.newsCsvUrl,     'news',     'newsStatus',     csvToNewsObjects);
-      await maybeLoad(PORTAL_CONFIG.eventsCsvUrl,   'events',   'eventsStatus',   csvToEventObjects);
-      await maybeLoad(PORTAL_CONFIG.scheduleCsvUrl, 'schedule', 'scheduleStatus', csvToScheduleObjects);
+      // CSV読み込み → 描画（schedule はフォールバックURLも試す）
+      await maybeLoad(window.PORTAL_CONFIG.newsCsvUrl,     'news',     'newsStatus',     csvToNewsObjects);
+      await maybeLoad(window.PORTAL_CONFIG.eventsCsvUrl,   'events',   'eventsStatus',   csvToEventObjects);
+      await maybeLoad([window.PORTAL_CONFIG.scheduleCsvUrl, window.PORTAL_CONFIG.scheduleCsvUrlAlt], 'schedule', 'scheduleStatus', csvToScheduleObjects);
       renderNews(); renderEvents(); renderSchedule();
 
       // ライトボックス動作
