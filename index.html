@@ -19,13 +19,11 @@
   <style>
     :root{
       --pink:#f6b7d2;--blue:#a9d6f7;--ink:#333;--card:#ffffffcc;--shadow:0 10px 30px rgba(0,0,0,.12);
-      /* 背景グラデの調整点（ご要望に応じて前版の色味に戻せます） */
       --bg-angle:135deg;--bg-a:var(--pink);--bg-b:var(--blue);
     }
     /* 強制sRGB（iPhone/Safariの広色域での色差を抑える） */
     @supports (color: color(srgb 1 1 1)){
       :root{
-        /* 既存の --pink / --blue を sRGB 明示に置き換え */
         --pink: color(srgb 0.9647 0.7176 0.8235); /* #f6b7d2 */
         --blue: color(srgb 0.6627 0.8392 0.9686); /* #a9d6f7 */
       }
@@ -144,13 +142,13 @@
 
     /* 低減動作モード対応 */
     @media (prefers-reduced-motion: reduce){
-      *{scroll-behavior:auto !important;animation:none !important;transition:none !important}
+      *{scroll-behavior:auto !important;animation:none !important;transition:none !重要}
     }
 
     /* ダークモード（背景は上書きしない） */
     @media (prefers-color-scheme: dark){
       :root{--ink:#eee}
-      html,body{color:var(--ink);} /* 背景グラデは維持 */
+      html,body{color:var(--ink);}
       header{background:rgba(20,20,20,.78)}
       .nav-links a{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2);text-shadow:none}
       .nav-links a:hover{background:#fff;color:#111}
@@ -161,26 +159,27 @@
 
     /* iOS等：固定背景を無効化（パフォーマンス） */
     @media (max-width:768px){ html,body{background-attachment:scroll} }
+
     /* --- iPhone Safari 向け：指定エリアを常に白背景＆高コントラストに --- */
-  @supports (-webkit-touch-callout: none) {
-    @media (pointer: coarse) {
-      /* ゲームのボタン（.qlink）・SNSボタン（.qlink） */
-      .qlink{background:#fff !important;color:#111 !important;border:1px solid #eee !important;}
-      .qlink strong{color:#111 !important}
-      .qlink .tag{color:#555 !important}
+    @supports (-webkit-touch-callout: none) {
+      @media (pointer: coarse) {
+        /* ゲームのボタン（.qlink）・SNSボタン（.qlink） */
+        .qlink{background:#fff !important;color:#111 !important;border:1px solid #eee !important;}
+        .qlink strong{color:#111 !important}
+        .qlink .tag{color:#555 !important}
 
-      /* 営業スケジュール（.table） */
-      .table{background:#fff !important;color:#111 !important;border:1px solid #eee !important}
-      .table th{background:#fafafa !important;color:#111 !important}
-      .table td{color:#111 !important}
+        /* 営業スケジュール（.table） */
+        .table{background:#fff !important;color:#111 !important;border:1px solid #eee !important}
+        .table th{background:#fafafa !important;color:#111 !important}
+        .table td{color:#111 !important}
 
-      /* 店舗情報・地図（.card） */
-      .card{background:#fff !important;color:#111 !important;border:1px solid #eee !important}
-      .card h3{color:#111 !important}
-      .card p, .card a{color:#222 !important}
+        /* 店舗情報・地図（.card） */
+        .card{background:#fff !important;color:#111 !important;border:1px solid #eee !important}
+        .card h3{color:#111 !important}
+        .card p, .card a{color:#222 !important}
+      }
     }
-  }
-</style>
+  </style>
 </head>
 <body>
   <a href="#news" class="skip-link">本文へスキップ</a>
@@ -464,44 +463,43 @@
       return rows.slice(1).map(r=>({ date:di>-1?r[di]:'', hours:hi>-1?r[hi]:'', note:ni>-1?r[ni]:'' })).filter(o=>o.date||o.hours||o.note);
     }
 
-   function parseSheetDateToJsDate(s){
-  const str = String(s || '').trim();
+    // ★ 強化版：日付パーサ（曜日・装飾混在やシリアル値にも強い）
+    function parseSheetDateToJsDate(s){
+      const str = String(s || '').trim();
 
-  // Excel通し番号（1899/12/30基準）
-  const n = Number(str);
-  if (!Number.isNaN(n) && n > 20000 && n < 60000) {
-    const base = new Date(Date.UTC(1899, 11, 30));
-    return new Date(base.getTime() + n * 86400000);
-  }
+      // Excel通し番号（1899/12/30基準）
+      const n = Number(str);
+      if (!Number.isNaN(n) && n > 20000 && n < 60000) {
+        const base = new Date(Date.UTC(1899, 11, 30));
+        return new Date(base.getTime() + n * 86400000);
+      }
 
-  // 括弧などを除去して「数字パーツ」を抽出
-  const nums = (str.replace(/[()（）]/g, '').match(/\d{1,4}/g) || []).map(Number);
+      // 括弧などを除去して「数字パーツ」を抽出（例: 10/24木, 2025年10月24日, 10-24）
+      const nums = (str.replace(/[()（）]/g, '').match(/\d{1,4}/g) || []).map(Number);
 
-  // 3つ以上の数字があれば [年(任意)/月/日] とみなす
-  if (nums.length >= 3) {
-    const y = nums[0] >= 1000 ? nums[0] : new Date().getFullYear();
-    const m = nums[nums.length - 2];
-    const d = nums[nums.length - 1];
-    if (m >= 1 && m <= 12 && d >= 1 && d <= 31) return new Date(y + '/' + m + '/' + d);
-  }
+      // 3つ以上の数字があれば [年(任意)/月/日] とみなす
+      if (nums.length >= 3) {
+        const y = nums[0] >= 1000 ? nums[0] : new Date().getFullYear();
+        const m = nums[nums.length - 2];
+        const d = nums[nums.length - 1];
+        if (m >= 1 && m <= 12 && d >= 1 && d <= 31) return new Date(y + '/' + m + '/' + d);
+      }
 
-  // 2つだけなら [月/日] とみなし、年は今年
-  if (nums.length === 2) {
-    const y = new Date().getFullYear();
-    const m = nums[0], d = nums[1];
-    if (m >= 1 && m <= 12 && d >= 1 && d <= 31) return new Date(y + '/' + m + '/' + d);
-  }
+      // 2つだけなら [月/日] とみなし、年は今年
+      if (nums.length === 2) {
+        const y = new Date().getFullYear();
+        const m = nums[0], d = nums[1];
+        if (m >= 1 && m <= 12 && d >= 1 && d <= 31) return new Date(y + '/' + m + '/' + d);
+      }
 
-  // 従来のパターン（2025年10月24日 / 2025-10-24 / 10/24 など）
-  const m2 = str.replace(/[()（）]/g, '').match(/(\d{1,4})[\/年-]?(\d{1,2})[\/月-]?(\d{1,2})/);
-  if (m2) {
-    const y = m2[1].length === 4 ? Number(m2[1]) : new Date().getFullYear();
-    return new Date(y + '/' + m2[2] + '/' + m2[3]);
-  }
+      // 従来のパターン（2025年10月24日 / 2025-10-24 / 10/24 など）
+      const m2 = str.replace(/[()（）]/g, '').match(/(\d{1,4})[\/年-]?(\d{1,2})[\/月-]?(\d{1,2})/);
+      if (m2) {
+        const y = m2[1].length === 4 ? Number(m2[1]) : new Date().getFullYear();
+        return new Date(y + '/' + m2[2] + '/' + m2[3]);
+      }
 
-  return null;
-}
-
+      return null;
     }
 
     async function loadCSV(url){ const res=await fetch(url+`&cb=${Date.now()}`,{cache:'no-store',credentials:'omit'}); if(!res.ok) throw new Error(`fetch error ${res.status}`); return await res.text(); }
@@ -549,9 +547,6 @@
 
       // ステータス（総件数 / 直近7日件数 / 日付不明件数）
       if(status){ status.textContent = `schedule：CSV ${all.length}件（直近7日 ${inRange.length}件 / 日付未解釈 ${undated.length}件）`; }
-    });
-      if(!rows.length){ tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>'; return; }
-      tbody.innerHTML=rows.map(r=>`<tr><td>${escapeHtml((r.date||'').toString())}</td><td>${escapeHtml((r.hours||'').toString())}</td><td>${escapeHtml((r.note||'').toString())}</td></tr>`).join('');
     }
 
     async function maybeLoad(url,key,statusId,conv){
