@@ -161,7 +161,26 @@
 
     /* iOS等：固定背景を無効化（パフォーマンス） */
     @media (max-width:768px){ html,body{background-attachment:scroll} }
-  </style>
+    /* --- iPhone Safari 向け：指定エリアを常に白背景＆高コントラストに --- */
+  @supports (-webkit-touch-callout: none) {
+    @media (pointer: coarse) {
+      /* ゲームのボタン（.qlink）・SNSボタン（.qlink） */
+      .qlink{background:#fff !important;color:#111 !important;border:1px solid #eee !important;}
+      .qlink strong{color:#111 !important}
+      .qlink .tag{color:#555 !important}
+
+      /* 営業スケジュール（.table） */
+      .table{background:#fff !important;color:#111 !important;border:1px solid #eee !important}
+      .table th{background:#fafafa !important;color:#111 !important}
+      .table td{color:#111 !important}
+
+      /* 店舗情報・地図（.card） */
+      .card{background:#fff !important;color:#111 !important;border:1px solid #eee !important}
+      .card h3{color:#111 !important}
+      .card p, .card a{color:#222 !important}
+    }
+  }
+</style>
 </head>
 <body>
   <a href="#news" class="skip-link">本文へスキップ</a>
@@ -570,4 +589,3 @@
   <noscript>JavaScriptが無効になっています。最新情報の読み込みや画像ビューアがご利用いただけません。</noscript>
 </body>
 </html>
-
