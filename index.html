@@ -1,224 +1,221 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PO・TORO 公式ポータル</title>
-  <meta name="description" content="concept cafe PO・TORO（ポ・トロ）の総合ポータル。最新イベント、メイドさん紹介、アクセス、各種コンテンツへの入口。" />
-  <meta name="format-detection" content="telephone=no" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="PO・TORO 公式ポータル" />
-  <meta property="og:description" content="concept cafe PO・TORO（ポ・トロ）の最新情報とリンク集。" />
-  <meta property="og:image" content="img/ogp.jpg" />
-  <meta property="og:url" content="https://example.com" />
-  <link rel="icon" href="img/favicon.png" />
-  <style>
-    :root{--pink:#f6b7d2;--blue:#a9d6f7;--ink:#333;--card:#ffffffcc;--shadow:0 10px 30px rgba(0,0,0,.12)}
-    *{box-sizing:border-box}
-    html,body{margin:0;height:100%;font-family:"-apple-system","BlinkMacSystemFont","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;color:var(--ink);background:linear-gradient(135deg,var(--pink),var(--blue));background-attachment: fixed}
-    a{color:#0b69d5;text-decoration:none}
-    img{max-width:100%;height:auto;display:block}
-    .container{width:min(1100px,92vw);margin:0 auto}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PO・TORO 公式ポータル</title>
 
-    header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(10px);background:rgba(255,255,255,.75);box-shadow:0 2px 12px rgba(0,0,0,.08)}
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:10px 14px}
-    .brand{display:flex;align-items:center;gap:10px}
-    .brand-logo{width:40px;height:40px;border-radius:50%;background:radial-gradient(circle at 30% 30%, #fff, #ffe2ee 60%, #ffd3ea 100%);display:grid;place-items:center;box-shadow:var(--shadow)}
-    .brand-logo span{font-weight:900;color:#ff5ea8}
-    .brand-title .en{font-size:1.05rem}
-    .brand-title .jp{font-size:.8rem;color:#666}
-
-    .nav-links{display:flex;gap:14px;align-items:center}
-    .nav-links a{
-      padding:10px 14px;border-radius:999px;
-      background:rgba(255,255,255,.96);
-      box-shadow:0 4px 12px rgba(0,0,0,.08);
-      font-size:1rem;font-weight:800;color:#222;
-      border:1px solid #eaeaea;
-    }
-
-    .hero{position:relative;isolation:isolate}
-    .hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;padding:40px 0}
-    .hero-card{background:var(--card);padding:14px;border-radius:14px;box-shadow:var(--shadow)}
-
-    .badge{display:inline-flex;gap:8px;align-items:center;background:#fff;border-radius:999px;padding:6px 10px;box-shadow:var(--shadow)}
-    .headline{font-size:clamp(1.6rem,4vw,2.6rem);margin:.4rem 0 .2rem;font-weight:900}
-    .sub{color:#444;margin:.2rem 0 1rem}
-    .cta{display:flex;gap:10px}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:14px;border:none;font-weight:700;cursor:pointer;box-shadow:var(--shadow)}
-    .btn-primary{background:linear-gradient(135deg,#ff81c0,#8ed2ff);color:#fff}
-    .btn-ghost{background:#fff;color:#333}
-
-    section{padding:34px 0}
-    .sec-title{font-weight:900;font-size:1.3rem;margin:0 0 14px 0}
-
-    .grid{display:grid;gap:16px}
-    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
-
-    .card{background:#fff;border-radius:18px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
-    .card .thumb{aspect-ratio:16/9;object-fit:cover}
-    .card .body{padding:12px}
-
-    footer{padding:28px 0}
-    .foot{display:grid;gap:16px;grid-template-columns:2fr 1fr 1fr}
-
-    /* STATUS → hidden by default */
-    #newsStatus,#eventsStatus,#scheduleStatus{display:none!important;color:#d63384;font-weight:700;margin-top:8px;font-size:.85rem;text-align:center}
-  </style>
+<style>
+:root{--ink:#333;--card:#ffffffcc;--shadow:0 10px 30px rgba(0,0,0,.12)}
+html,body{margin:0;font-family:"Noto Sans JP",sans-serif;background:linear-gradient(135deg,#f6b7d2,#a9d6f7);background-attachment:fixed}
+img{max-width:100%;display:block}
+.container{width:min(1100px,92vw);margin:0 auto}
+section{padding:34px 0}
+.sec-title{font-weight:900;font-size:1.3rem;margin:0 0 14px}
+/* STATUS（失敗/0件時のみ表示） */
+#newsStatus,#eventsStatus,#scheduleStatus{
+  display:none!important;color:#d63384;text-align:center;
+  margin-top:12px;font-weight:700;font-size:.9rem
+}
+.card{background:#fff;border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.card .body{padding:12px}
+.grid{display:grid;gap:16px}
+.grid.cols-3{grid-template-columns:repeat(3,1fr)}
+</style>
 </head>
 
 <body>
-
-<header>
-  <nav class="nav container">
-    <div class="brand">
-      <div class="brand-logo"><span>PT</span></div>
-      <div class="brand-title">
-        <div class="en">concept cafe PO・TORO</div>
-        <div class="jp">ポ・トロ 公式ポータル</div>
-      </div>
-    </div>
-    <div class="nav-links">
+<header style="position:sticky;top:0;background:#ffffffcc;padding:12px 0;backdrop-filter:blur(6px)">
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;font-weight:900">
+    <div>concept cafe PO・TORO</div>
+    <nav style="display:flex;gap:12px">
       <a href="#news">お知らせ</a>
       <a href="#events">イベント</a>
-      <a href="#maids">メイドさん紹介</a>
-      <a href="#games">ゲーム</a>
+      <a href="#maids">メイド</a>
       <a href="#schedule">営業日</a>
-      <a href="#access">アクセス</a>
-      <a href="#sns">SNS</a>
-    </div>
-  </nav>
+    </nav>
+  </div>
 </header>
 
 <main>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="container wrap">
+  <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center">
     <div>
-      <span class="badge">🔔 最新情報</span>
-      <h1 class="headline">ようこそ♡ PO・TOROの入口です</h1>
-      <p class="sub">イベント、メイド紹介、ゲーム、全部ここ。</p>
-      <div class="cta">
-        <a class="btn btn-primary" href="#events">イベントへ</a>
-        <a class="btn btn-ghost" href="#games">遊ぶ</a>
-      </div>
-      <div class="hero-card mt-16"><strong>お知らせ：</strong>工事中！</div>
+      <h1 style="font-size:2rem;font-weight:900;margin:.3em 0">ようこそ♡ PO・TOROへ</h1>
+      <p>イベント・メイドさん紹介・ゲームへの入り口です！</p>
     </div>
-
-    <!-- ✅ HERO画像クリックでXへ -->
-    <div class="hero-card">
+    <div class="card">
       <a href="https://x.com/po_toro" target="_blank" rel="noopener">
-        <img src="img/potro_twi.jpg" alt="PO・TORO キービジュアル（クリックでXへ）" class="thumb hero-kv" width="1280" height="720">
+        <img src="img/potro_twi.jpg" alt="PO・TORO キービジュアル（クリックでXへ）">
       </a>
     </div>
-
   </div>
 </section>
 
 <!-- 🗞️ お知らせ -->
 <section id="news">
-  <div class="container">
-    <h2 class="sec-title">🗞️ お知らせ</h2>
-    <ul id="newsList"></ul>
-    <div id="newsStatus"></div>
-  </div>
+ <div class="container">
+  <h2 class="sec-title">🗞️ お知らせ</h2>
+  <ul id="newsList"></ul>
+  <div id="newsStatus"></div>
+ </div>
 </section>
 
 <!-- 🎉 イベント -->
 <section id="events">
-  <div class="container">
-    <h2 class="sec-title">🎉 イベント</h2>
-    <div class="grid cols-3" id="eventsGrid"></div>
-    <div id="eventsStatus"></div>
-  </div>
+ <div class="container">
+  <h2 class="sec-title">🎉 イベント</h2>
+  <div class="grid cols-3" id="eventsGrid"></div>
+  <div id="eventsStatus"></div>
+ </div>
 </section>
 
-<!-- 👑 メイドさん紹介 -->
+<!-- 👑 メイド -->
 <section id="maids">
-  <div class="container">
-    <h2 class="sec-title">👑 メイドさん紹介</h2>
-    <div class="grid cols-3">
-      <article class="card">
-        <img src="img/potro_cafe_maiddemo_final.png" class="thumb" alt="メイドプロフィールへ" loading="lazy">
-        <div class="body">
-          <h3>メイドさん紹介</h3>
-          <p>PO♡TOROのメイドさんたち</p>
-          <a class="btn btn-ghost" href="https://potoro1001.github.io/potoro-profile-public/" target="_blank" rel="noopener">プロフィール一覧を見る</a>
-        </div>
-      </article>
-    </div>
+ <div class="container">
+  <h2 class="sec-title">👑 メイドさん紹介</h2>
+  <div class="grid cols-3">
+    <article class="card">
+      <img src="img/potro_cafe_maiddemo_final.png" alt="メイド紹介">
+      <div class="body">
+        <h3>メイドさん一覧</h3>
+        <a href="https://potoro1001.github.io/potoro-profile-public/" target="_blank" rel="noopener">→ プロフィールへ</a>
+      </div>
+    </article>
   </div>
+ </div>
 </section>
 
-<!-- 🎮 ゲーム -->
-<section id="games">
-  <div class="container">
-    <h2 class="sec-title">🎮 ゲーム / 診断</h2>
-    <div class="grid cols-3">
-      <a class="card" href="https://potoro1001.github.io/potoro-quest/" target="_blank">
-        <div class="body">ポ・トロクエスト</div>
-      </a>
-      <a class="card" href="https://potoro1001.github.io/potoro-diagnosis/" target="_blank">
-        <div class="body">ご主人様タイプ診断</div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- 📅 営業スケジュール -->
+<!-- 📅 スケジュール -->
 <section id="schedule">
-  <div class="container">
-    <h2 class="sec-title">📅 営業スケジュール（直近）</h2>
-    <table class="table" aria-label="営業日と営業時間">
-      <thead><tr><th>日付</th><th>営業時間</th><th>メモ</th></tr></thead>
-      <tbody id="scheduleBody"></tbody>
-    </table>
-    <div id="scheduleStatus"></div>
-  </div>
+ <div class="container">
+   <h2 class="sec-title">📅 営業スケジュール（直近7日）</h2>
+   <table style="width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden">
+     <thead><tr><th>日付</th><th>営業時間</th><th>メモ</th></tr></thead>
+     <tbody id="scheduleBody"></tbody>
+   </table>
+   <div id="scheduleStatus"></div>
+ </div>
 </section>
 
-<!-- ※ スクリプト（簡略版のみ：CSV成功時はステータス非表示／0件のみ♡文言） -->
+</main>
+
+
+
 <script>
-const readyMsg = "ただいま準備中です♡ もう少しお待ちください！";
+// ✅ CSV設定
+const CONFIG = {
+  news:    "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1650494358",
+  events:  "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=365949763",
+  schedule:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1276825118"
+};
 
-function showStatus(id,msg){
-  const el=document.getElementById(id);
-  el.textContent=msg;
-  el.style.display="block";
+// ✅ 準備中メッセージ
+const MSG_READY = "ただいま準備中です♡ もう少しお待ちください！";
+
+// ✅ HTMLエスケープ
+const esc=s=>String(s||"").replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));
+
+// ✅ CSV読込
+async function loadCSV(url){
+  const res = await fetch(url+"&t="+Date.now());
+  if(!res.ok) throw new Error(res.status);
+  return await res.text();
 }
 
-function hideStatus(id){
-  const el=document.getElementById(id);
-  el.textContent="";
-  el.style.display="none";
+// ✅ CSV → 配列
+function parseCSV(txt){
+  return txt.split(/\r?\n/).map(r=>r.split(","));
 }
 
-/* ダミーデータ → 実運用時はCSV取得コードに置き換え */
-document.addEventListener("DOMContentLoaded",()=>{
-  // ✅例）お知らせ成功（3件）
-  document.getElementById("newsList").innerHTML = `
-    <li>2025/10/24(金) 🎀 ポータル公開</li>
-    <li>2025/10/26(日) 🎀 海月さん生誕</li>
-    <li>2025/10/26(日) 🎀 新情報公開</li>
-  `;
-  hideStatus("newsStatus");
+// ✅ 日付→曜日付加
+function fmtDateJP(s){
+  const m=s.match(/(\d{1,2})[\/月.-](\d{1,2})/);
+  if(!m) return s;
+  const [_,M,D]=m;
+  const y=new Date().getFullYear();
+  const dt=new Date(`${y}/${M}/${D}`);
+  const wd=["日","月","火","水","木","金","土"][dt.getDay()];
+  return `${M}/${D}(${wd})`;
+}
 
-  // ✅イベントが無い場合
-  const events = [];
-  const grid = document.getElementById("eventsGrid");
-  if(events.length===0){
-    showStatus("eventsStatus",readyMsg);
+// ✅ お知らせ描画
+async function renderNews(){
+  try{
+    const csv=await loadCSV(CONFIG.news);
+    const rows=parseCSV(csv).slice(1).filter(r=>r[0]||r[2]);
+    if(rows.length===0){
+      newsStatus.textContent=MSG_READY;
+      newsStatus.style.display="block";
+      return;
+    }
+    newsList.innerHTML = rows.map(r=>{
+      return `<li><time>${esc(r[0])}</time> ${esc(r[2])}</li>`;
+    }).join("");
+    newsStatus.style.display="none";
+  }catch(e){
+    newsStatus.textContent="読み込みに失敗しました…";
+    newsStatus.style.display="block";
   }
+}
 
-  // ✅スケジュール成功例（0件ではない）
-  document.getElementById("scheduleBody").innerHTML = `
-    <tr><td>2025/10/25(土)</td><td>18:00–22:00</td><td>通常営業</td></tr>
-  `;
-  hideStatus("scheduleStatus");
+// ✅ イベント描画
+async function renderEvents(){
+  try{
+    const csv=await loadCSV(CONFIG.events);
+    const rows=parseCSV(csv).slice(1).filter(r=>r[0]||r[2]);
+    if(rows.length===0){
+      eventsStatus.textContent=MSG_READY;
+      eventsStatus.style.display="block";
+      return;
+    }
+    eventsGrid.innerHTML = rows.map(r=>{
+      return `<article class="card"><img src="${r[2]}" alt=""><div class="body"><h3>${esc(r[0])}</h3><p>${esc(r[1])}</p></div></article>`;
+    }).join("");
+    eventsStatus.style.display="none";
+  }catch{
+    eventsStatus.textContent="読み込みに失敗しました…";
+    eventsStatus.style.display="block";
+  }
+}
+
+// ✅ スケジュール描画（直近7日間）
+async function renderSchedule(){
+  try{
+    const csv=await loadCSV(CONFIG.schedule);
+    const rows=parseCSV(csv).slice(1);
+    const today=new Date(); today.setHours(0,0,0,0);
+    const limit=new Date(today); limit.setDate(limit.getDate()+7);
+    const list=rows.filter(r=>{
+      const d=new Date(r[0]); d.setHours(0,0,0,0);
+      return d>=today && d<=limit;
+    });
+
+    if(list.length===0){
+      scheduleStatus.textContent=MSG_READY;
+      scheduleStatus.style.display="block";
+      scheduleBody.innerHTML="";
+      return;
+    }
+
+    scheduleBody.innerHTML = list.map(r=>
+      `<tr><td>${fmtDateJP(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`
+    ).join("");
+    scheduleStatus.style.display="none";
+  }catch{
+    scheduleStatus.textContent="読み込みに失敗しました…";
+    scheduleStatus.style.display="block";
+  }
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  renderNews();
+  renderEvents();
+  renderSchedule();
 });
 </script>
 
-</main>
 </body>
 </html>
