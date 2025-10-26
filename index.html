@@ -104,6 +104,8 @@
     .hidden{display:none}
     .mt-8{margin-top:8px}.mt-12{margin-top:12px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}
     .tag{font-size:.75rem;color:#666}
+    /* ステータスメッセージは通常非表示（失敗時のみ表示） */
+    #newsStatus,#eventsStatus,#scheduleStatus{display:none !important;}
 
     /* ライトボックス */
     .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;padding:4vw;z-index:100;opacity:0;pointer-events:none;transition:.2s}
@@ -226,7 +228,7 @@
         <div class="ticker" aria-live="polite">
           <ul id="newsList"></ul>
         </div>
-        <div id="newsStatus" class="tag mt-12" aria-live="polite"></div>
+        <div id="newsStatus" class="tag mt-12" aria-live="polite" style="display:none"></div>
       </div>
     </section>
 
@@ -520,17 +522,31 @@
     // ===== fetch + ログ表示（フォールバック対応） =====
     async function loadCSV(url){ const res=await fetch(url+`&cb=${Date.now()}`,{cache:'no-store',credentials:'omit'}); return await res.text(); }
     async function maybeLoad(urlOrUrls, key, statusId, conv){
-      const s=document.getElementById(statusId); const urls = Array.isArray(urlOrUrls) ? urlOrUrls : [urlOrUrls];
+      const s = document.getElementById(statusId);
+      if(s){ s.style.display='none'; s.textContent=''; }
+      const urls = Array.isArray(urlOrUrls) ? urlOrUrls : [urlOrUrls];
+      let lastError = null;
       for(let idx=0; idx<urls.length; idx++){
         const u = urls[idx] + (urls[idx].includes('?')? '&' : '?') + `cb=${Date.now()}`;
         try{
           const text = await loadCSV(u);
-          const preview = text.slice(0,120).replace(/\s+/g,' ').trim();
-          if(s){ s.textContent = `${key}：try${idx+1} / ${text.length} bytes / preview: "${preview}"`; }
-          if(text.length>0){
+          if(text && text.length>0){
             window.PORTAL_DATA[key] = conv? conv(text) : [];
-            if(window.PORTAL_DATA[key].length>0 || key!== 'schedule') return true;
+            if(window.PORTAL_DATA[key].length>0){
+              // 成功：ステータスは非表示のまま
+              return true;
+            }
           }
+        }catch(e){ lastError = e; }
+      }
+      // 失敗時のみメッセージ表示
+      if(s){
+        s.textContent = `${key}：データの読み込みに失敗しました。時間をおいて再度お試しください。`;
+        s.style.display = 'inline-block';
+      }
+      if(!window.PORTAL_DATA[key]) window.PORTAL_DATA[key] = [];
+      return false;
+    }
         }catch(e){ if(s){ s.textContent = `${key}：try${idx+1} 失敗 (${e.message})`; } }
       }
       if(!window.PORTAL_DATA[key]) window.PORTAL_DATA[key]=[]; return false;
@@ -558,19 +574,24 @@
     }
     function renderSchedule(){
       const tbody=document.getElementById('scheduleBody'); if(!tbody) return; const status=document.getElementById('scheduleStatus');
+      if(status){ status.textContent=''; status.style.display='none'; }
       const all=(window.PORTAL_DATA.schedule||[]);
       const today=new Date(); today.setHours(0,0,0,0); const limit=new Date(today); limit.setDate(today.getDate()+7);
       const inRange=[]; const undated=[];
       for(const r of all){ const d=parseSheetDateToJsDate(r.date); if(!d){ undated.push(r); continue; } d.setHours(0,0,0,0); if(d>=today && d<=limit) inRange.push(r); }
       let rows=inRange.length? inRange : (all.slice(0,7));
-      if(!rows.length){ tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>'; }
-      else{
+      if(!rows.length){
+        tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
+        if(status){ status.textContent='schedule：データが見つかりませんでした'; status.style.display='inline-block'; }
+      } else {
         tbody.innerHTML = rows.map(r => {
           const dateText = formatDateJPWithWeekday(r.date);
           const hours    = String(r.hours || '');
           const note     = String(r.note  || '');
           return `<tr><td>${escapeHtml(dateText)}</td><td>${escapeHtml(hours)}</td><td>${escapeHtml(note)}</td></tr>`;
         }).join('');
+      }
+    }).join('');
       }
       if(status){ status.textContent = `schedule：CSV ${all.length}件（直近7日 ${inRange.length}件 / 日付未解釈 ${undated.length}件）`; }
     }
