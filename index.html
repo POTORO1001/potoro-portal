@@ -5,28 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PO・TORO 公式ポータル</title>
   <meta name="description" content="concept cafe PO・TORO（ポ・トロ）の総合ポータル。最新イベント、メイドさん紹介、アクセス、各種コンテンツへの入口をひとまとめ。" />
-  <meta name="format-detection" content="telephone=no" />
   <meta name="theme-color" content="#f6b7d2" />
   <link rel="icon" href="img/favicon.png" />
-  <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
-  <link rel="canonical" href="https://example.com/" />
-  <!-- OGP -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="PO・TORO 公式ポータル" />
-  <meta property="og:description" content="concept cafe PO・TORO（ポ・トロ）の最新情報とリンク集。" />
-  <meta property="og:image" content="img/ogp.jpg" />
-  <meta property="og:url" content="https://example.com/" />
   <style>
-    :root{ --pink:#f6b7d2; --blue:#a9d6f7; --ink:#333; --card:#ffffffcc; --shadow:0 10px 30px rgba(0,0,0,.12); --bg-angle:135deg; --bg-a:var(--pink); --bg-b:var(--blue); }
-    @supports (color: color(srgb 1 1 1)){
-      :root{ --pink: color(srgb 0.9647 0.7176 0.8235); --blue: color(srgb 0.6627 0.8392 0.9686); }
-      .btn-primary{ background:linear-gradient(135deg,color(srgb 1 0.5059 0.7529),color(srgb 0.5569 0.8235 1)); }
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;height:100%;font-family:"-apple-system","BlinkMacSystemFont","Hiragino Kaku Gothic ProN","Noto Sans JP",Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji",sans-serif;color:var(--ink);background:linear-gradient(var(--bg-angle),var(--bg-a),var(--bg-b));background-attachment:fixed;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-/* 省略していません → (ここまで元のまま) */
+    :root{--pink:#f6b7d2;--blue:#a9d6f7;--ink:#333;--card:#ffffffcc;--shadow:0 10px 30px rgba(0,0,0,.12);}
+    html,body{margin:0;font-family:"Noto Sans JP",sans-serif;color:var(--ink);
+      background:linear-gradient(135deg,var(--pink),var(--blue));background-attachment:fixed}
+    a{color:#0b69d5;text-decoration:none}
+    img{max-width:100%;display:block}
 
-    /* Games/診断 カードUI（新規追加） */
+    header{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);box-shadow:0 2px 10px rgba(0,0,0,.08)}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:10px 14px}
+    .brand{font-weight:900;letter-spacing:.05em;color:#ff5ea8}
+    .nav-links{display:flex;gap:14px}
+    .nav-links a{padding:8px 12px;border-radius:999px;background:#fff;box-shadow:0 3px 10px rgba(0,0,0,.08)}
+    .nav-links a:hover{background:#111;color:#fff}
+
+    .container{width:min(1100px,92vw);margin:0 auto;padding:24px 0}
+    h2.sec-title{font-weight:900;font-size:1.3rem;margin:0 0 14px}
+
+    /* ---- ゲーム/診断カード ---- */
     .app-card{position:relative;display:block;aspect-ratio:16/9;border-radius:18px;overflow:hidden;
       box-shadow:var(--shadow);background:#f4f4f4 center/cover no-repeat;
       transition:transform .18s ease, box-shadow .18s ease;}
@@ -34,58 +32,99 @@
     .app-card .labelbar{position:absolute;left:0;right:0;bottom:0;
       background:linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0));
       color:#fff;padding:10px 12px;font-weight:900;letter-spacing:.02em;}
-    @media (prefers-reduced-motion: reduce){
-      .app-card{transition:none}
-      .app-card:hover{transform:none}
-    }
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
       clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 
+    .grid{display:grid;gap:16px}
+    .grid.cols-4{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+    footer{padding:28px 0;color:#555;text-align:center}
   </style>
 </head>
 <body>
+  <header>
+    <nav class="nav container">
+      <div class="brand">PO・TORO</div>
+      <div class="nav-links">
+        <a href="#news">お知らせ</a>
+        <a href="#events">イベント</a>
+        <a href="#maids">メイドさん</a>
+        <a href="#games">ゲーム/診断</a>
+        <a href="#schedule">営業日</a>
+        <a href="#access">アクセス</a>
+      </div>
+    </nav>
+  </header>
 
-<!-- --- header領域そのまま --- -->
+  <main>
+    <section id="hero" class="container">
+      <h1>ようこそ、ご主人さま・お嬢さま♡</h1>
+      <p>PO・TOROの公式ポータルです。最新情報やイベント、メイドさん紹介はこちらから。</p>
+    </section>
 
-<main>
+    <section id="news" class="container">
+      <h2 class="sec-title">🗞️ お知らせ</h2>
+      <div id="newsList">ただいま準備中です♡ もう少しお待ちください！</div>
+    </section>
 
-<!-- Hero そのまま -->
+    <section id="events" class="container">
+      <h2 class="sec-title">🎉 イベント</h2>
+      <div id="eventsGrid">ただいま準備中です♡</div>
+    </section>
 
-<!-- News そのまま -->
-
-<!-- Events そのまま -->
-
-<!-- メイドさん紹介 そのまま -->
-
-<!-- Games / Tools 👉差し替え済み -->
-<section id="games">
-  <div class="container">
-    <h2 class="sec-title">🎮 ゲーム / 診断</h2>
-    <div class="grid cols-4">
-      <!-- ポ・トロクエスト（B画像） -->
-      <a class="app-card" href="https://potoro1001.github.io/potoro-quest/"
-         target="_blank" rel="noopener"
-         style="background-image:url('img/hero-quest-card.png')">
-        <span class="sr-only">ポ・トロクエスト</span>
-        <div class="labelbar">ポ・トロクエスト</div>
+    <section id="maids" class="container">
+      <h2 class="sec-title">👑 メイドさん紹介</h2>
+      <a href="https://potoro1001.github.io/potoro-profile-public/" target="_blank" rel="noopener">
+        <img src="img/potro_cafe_maiddemo_final.png" alt="メイドさん紹介" />
       </a>
+    </section>
 
-      <!-- ご主人様タイプ診断（A画像） -->
-      <a class="app-card" href="https://potoro1001.github.io/potoro-diagnosis/"
-         target="_blank" rel="noopener"
-         style="background-image:url('img/hero-diagnosis-card.png')">
-        <span class="sr-only">ご主人様タイプ診断</span>
-        <div class="labelbar">ご主人様タイプ診断</div>
-      </a>
+    <section id="games" class="container">
+      <h2 class="sec-title">🎮 ゲーム / 診断</h2>
+      <div class="grid cols-4">
+        <!-- ポ・トロクエスト -->
+        <a class="app-card" href="https://potoro1001.github.io/potoro-quest/" target="_blank" rel="noopener"
+           style="background-image:url('img/hero-quest-card.png')">
+          <span class="sr-only">ポ・トロクエスト</span>
+          <div class="labelbar">ポ・トロクエスト</div>
+        </a>
+
+        <!-- ご主人様タイプ診断 -->
+        <a class="app-card" href="https://potoro1001.github.io/potoro-diagnosis/" target="_blank" rel="noopener"
+           style="background-image:url('img/hero-diagnosis-card.png')">
+          <span class="sr-only">ご主人様タイプ診断</span>
+          <div class="labelbar">ご主人様タイプ診断</div>
+        </a>
+      </div>
+    </section>
+
+    <section id="schedule" class="container">
+      <h2 class="sec-title">📅 営業スケジュール</h2>
+      <div>ただいま準備中です♡</div>
+    </section>
+
+    <section id="access" class="container">
+      <h2 class="sec-title">📍 アクセス</h2>
+      <p>〒790-0012 愛媛県松山市湊町3-7-2 2F</p>
+      <iframe title="PO・TORO の場所"
+        src="https://www.google.com/maps?q=33.8359588,132.7696145&z=18&output=embed"
+        style="border:0;width:100%;height:300px" loading="lazy"></iframe>
+    </section>
+
+    <section id="sns" class="container">
+      <h2 class="sec-title">📡 公式SNS</h2>
+      <p><a href="https://x.com/po_toro" target="_blank">🕊️ X（@po_toro）</a></p>
+      <p><a href="https://www.tiktok.com/@potoro_o" target="_blank">🎵 TikTok（@potoro_o）</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> PO・TORO / concept cafe.</p>
     </div>
-  </div>
-</section>
+  </footer>
 
-<!-- Schedule以下、全て元のまま -->
-
-</main>
-
-<!-- footer & script すべて元のまま -->
-
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
