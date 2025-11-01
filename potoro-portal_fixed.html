@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PO・TORO 公式ポータル（修正版）</title>
+  <meta name="description" content="concept cafe PO・TORO（ポ・トロ）の総合ポータル修正版。iPhoneでお知らせ背景透過を修正。" />
+  <style>
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+      margin: 0; padding: 2rem;
+      background: linear-gradient(135deg, #f6b7d2, #a9d6f7);
+    }
+    h1 { color: #ff5ea8; }
+    .ticker {
+      background-color: #fff !important;
+      color: #000 !important;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      padding: 1rem;
+      margin-top: 2rem;
+      max-width: 600px;
+    }
+    .ticker li {
+      list-style: none;
+      background-color: #fff !important;
+      color: #000 !important;
+      border-bottom: 1px solid #eee;
+      padding: 8px 0;
+    }
+    @media (prefers-color-scheme: dark) {
+      .ticker, .ticker li {
+        background-color: #fff !important;
+        color: #000 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>PO・TORO ポータル（iPhone背景修正版）</h1>
+  <p>このHTMLは「お知らせ」背景が白・文字が黒で固定されるようにしたテスト版です。</p>
+
+  <ul class="ticker">
+    <li><time>2025/11/01</time> お知らせのサンプルです。</li>
+    <li><time>2025/11/02</time> iPhoneでも背景が透けません。</li>
+  </ul>
+</body>
+</html>
