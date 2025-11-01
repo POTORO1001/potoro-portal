@@ -167,6 +167,27 @@
         .card p, .card a{color:#222 !important}
       }
     }
+    /* ============================
+   📱 iPhone対策：お知らせの背景透過防止
+   ============================ */
+.ticker {
+  background-color: #fff !important;
+  color: #000 !important;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+.ticker li {
+  background-color: #fff !important;
+  color: #000 !important;
+  border-bottom: 1px solid #eee;
+}
+@media (prefers-color-scheme: dark) {
+  .ticker, .ticker li {
+    background-color: #fff !important;
+    color: #000 !important;
+  }
+}
+
   </style>
 </head>
 <body>
