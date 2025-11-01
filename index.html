@@ -167,8 +167,9 @@
         .card p, .card a{color:#222 !important}
       }
     }
-    /* ============================
-   📱 iPhone対策：お知らせの背景透過防止
+
+/* ============================
+   📱 iPhone対策：お知らせ・バッジ・ヒーローカード透過防止
    ============================ */
 .ticker {
   background-color: #fff !important;
@@ -181,13 +182,23 @@
   color: #000 !important;
   border-bottom: 1px solid #eee;
 }
+.badge {
+  background: #fff !important;
+  color: #000 !important;
+}
+.hero-card {
+  background: #fff !important;
+  color: #000 !important;
+  border: 1px solid #eee;
+  box-shadow: 0 10px 30px rgba(0,0,0,.12);
+  border-radius: 14px;
+}
 @media (prefers-color-scheme: dark) {
-  .ticker, .ticker li {
+  .ticker, .ticker li, .badge, .hero-card {
     background-color: #fff !important;
     color: #000 !important;
   }
 }
-
   </style>
 </head>
 <body>
