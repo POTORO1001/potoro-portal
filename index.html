@@ -292,6 +292,20 @@ body.is-intro-playing {
     </div>
   </header>
 
+  <!-- 📸 チェキ撮影動画オーバーレイ -->
+<div id="chekiVideoOverlay" class="intro-video-overlay intro-hidden" aria-label="チェキ撮影動画">
+  <video id="chekiVideoEl"
+    src="video/cheki.mp4"
+    playsinline
+    webkit-playsinline
+    muted
+    autoplay
+    preload="auto">
+    お使いの端末では動画を再生できません。
+  </video>
+  <button type="button" id="chekiSkip" class="intro-skip-btn">スキップ</button>
+</div>
+
   <main>
     <!-- Hero -->
     <section class="hero">
@@ -773,6 +787,43 @@ body.is-intro-playing {
     }
 
     document.addEventListener('DOMContentLoaded', async ()=>{
+      // ===== チェキ動画再生（X画像クリック時） =====
+const chekiOverlay = document.getElementById('chekiVideoOverlay');
+const chekiVideo = document.getElementById('chekiVideoEl');
+const chekiSkip = document.getElementById('chekiSkip');
+const twiImage = document.querySelector('img[src="img/potro_twi.jpg"]');
+
+function closeCheki() {
+  if (!chekiOverlay) return;
+  chekiOverlay.classList.add('intro-hidden');
+  document.body.classList.remove('is-intro-playing');
+  if (chekiVideo && !chekiVideo.paused) {
+    chekiVideo.pause();
+  }
+}
+
+function openCheki() {
+  if (!chekiOverlay) return;
+  chekiOverlay.classList.remove('intro-hidden');
+  document.body.classList.add('is-intro-playing');
+  chekiVideo.currentTime = 0;
+  chekiVideo.play().catch(()=>{});
+}
+
+if (chekiVideo) {
+  chekiVideo.addEventListener('ended', closeCheki);
+  chekiVideo.addEventListener('error', closeCheki);
+}
+if (chekiSkip) {
+  chekiSkip.addEventListener('click', closeCheki);
+}
+if (twiImage) {
+  twiImage.addEventListener('click', (e)=>{
+    e.preventDefault(); // 既存リンクを無効化
+    openCheki();
+  });
+}
+
   // ===== オープニング動画制御 =====
   const intro = document.getElementById('introVideo');
   const introVideo = document.getElementById('introVideoEl');
