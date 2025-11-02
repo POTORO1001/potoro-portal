@@ -235,6 +235,25 @@ body.is-intro-playing {
   </style>
 </head>
 <body>
+  <body>
+  <!-- オープニング動画 -->
+  <div id="introVideo" class="intro-video-overlay" aria-label="オープニング動画">
+    <video id="introVideoEl"
+      src="video/opening.mp4"
+      playsinline
+      webkit-playsinline
+      muted
+      autoplay
+      preload="auto">
+      <!-- 動画が再生できないときのフォールバック -->
+      お使いの端末では動画を再生できません。
+    </video>
+    <button type="button" id="introSkip" class="intro-skip-btn">スキップ</button>
+  </div>
+
+  <a href="#news" class="skip-link">本文へスキップ</a>
+  ...
+
   <a href="#news" class="skip-link">本文へスキップ</a>
 
   <header>
@@ -755,7 +774,45 @@ body.is-intro-playing {
     }
 
     document.addEventListener('DOMContentLoaded', async ()=>{
-      const yearEl=document.getElementById('year'); if(yearEl) yearEl.textContent=new Date().getFullYear();
+      document.addEventListener('DOMContentLoaded', async ()=>{
+  // ===== オープニング動画制御 =====
+  const intro = document.getElementById('introVideo');
+  const introVideo = document.getElementById('introVideoEl');
+  const introSkip = document.getElementById('introSkip');
+
+  // 最初はスクロールさせない
+  if (intro) {
+    document.body.classList.add('is-intro-playing');
+  }
+
+  // 動画が終わったら閉じる
+  function closeIntro() {
+    if (!intro) return;
+    intro.classList.add('intro-hidden');
+    document.body.classList.remove('is-intro-playing');
+    // 再生止める
+    if (introVideo && !introVideo.paused) {
+      introVideo.pause();
+    }
+  }
+
+  if (introVideo) {
+    // 再生が終わったとき
+    introVideo.addEventListener('ended', closeIntro);
+    // 念のためエラーでも閉じる
+    introVideo.addEventListener('error', closeIntro);
+  }
+
+  // スキップボタン
+  if (introSkip) {
+    introSkip.addEventListener('click', closeIntro);
+  }
+
+  // ===== ここからはあなたが元々書いていた処理 =====
+  const yearEl=document.getElementById('year'); if(yearEl) yearEl.textContent=new Date().getFullYear();
+  ...
+  // 以降は既存のCSV読み込み・モーダルなどそのまま
+});
 
       const btnMenu=document.getElementById('btnMenu'); const drawer=document.getElementById('drawer'); const btnClose=document.getElementById('btnClose');
       if(btnMenu && drawer && btnClose){
