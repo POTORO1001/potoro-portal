@@ -111,7 +111,7 @@
     .mt-8{margin-top:8px}.mt-12{margin-top:12px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}
     .tag{font-size:.75rem;color:#666}
 
-    /* 「開発ログのみ非表示」：可視テキストは非表示、DOMには残す（アクセシブルに） */
+    /* 「開発ログのみ非表示」 */
     .devlog{
       position:absolute !important;
       width:1px!important;height:1px!important;
@@ -169,7 +169,7 @@
     }
 
 /* ============================
-   📱 iPhone対策：お知らせ・バッジ・ヒーローカード透過防止
+   📱 iPhone対策
    ============================ */
 .ticker {
   background-color: #fff !important;
@@ -233,37 +233,98 @@ body.is-intro-playing {
   overflow: hidden;
 }
 
-/* ▼現在配布中グッズセクション用スタイル */
+/* ▼現在配布中グッズセクション用スタイル（かわいめ） */
 #goods-distribution {
   text-align: center;
-  background: linear-gradient(180deg, #fff0fa 0%, #fdfcff 100%);
-  padding: 50px 15px;
-  border-radius: 20px;
-  box-shadow: 0 0 12px rgba(255, 182, 193, 0.45);
+  background: linear-gradient(180deg, #fff5fb 0%, #fffefd 50%, #f4f9ff 100%);
+  padding: 40px 16px 46px;
+  border-radius: 24px;
+  box-shadow: 0 14px 40px rgba(255, 164, 191, 0.45);
   margin: 40px auto;
   max-width: 1100px;
 }
 #goods-distribution h2 {
-  font-size: 1.9rem;
-  color: #ff66aa;
-  margin-bottom: 15px;
-  font-family: "Zen Maru Gothic", system-ui, -apple-system, BlinkMacSystemFont, "Yu Gothic", sans-serif;
+  font-size: 1.7rem;
+  color: #ff6fae;
+  margin-bottom: 10px;
+  letter-spacing: .03em;
+}
+#goods-distribution h2::before{
+  content:"";
+  display:inline-block;
+  width:20px;
+  height:20px;
+  margin-right:6px;
+  background:url("img/icon-goods.svg") no-repeat center/contain;
 }
 #goods-distribution .section-lead {
   font-size: 0.95rem;
-  color: #555;
-  margin-bottom: 25px;
+  color: #666;
+  margin-bottom: 22px;
   line-height: 1.7;
 }
-#goods-distribution .spreadsheet-container {
-  width: 100%;
-  overflow: hidden;
-  border-radius: 14px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+.table-goods {
+  margin-top: 8px;
+  border-radius: 18px;
 }
-#goods-distribution .spreadsheet-container iframe {
-  border: none;
-  display: block;
+.table-goods thead th {
+  background: linear-gradient(90deg, #ffe0f0, #e8f3ff);
+  color: #553344;
+  font-size: .85rem;
+  border-bottom: none;
+}
+.table-goods tbody tr:nth-child(even){
+  background-color:#fff9fd;
+}
+.table-goods tbody tr:hover{
+  background-color:#fff0fb;
+}
+.table-goods td {
+  font-size: .9rem;
+  vertical-align: middle;
+}
+.table-goods .goods-name {
+  font-weight: 800;
+  color: #ff4fa3;
+}
+.table-goods .event-name {
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid #ffd3eb;
+  font-size:.8rem;
+}
+.table-goods .event-name::before{
+  content:"★";
+  font-size:.8rem;
+}
+.table-goods .date-text {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.table-goods .date-text span{
+  display:inline-block;
+}
+.table-goods .date-text span + span::before{
+  content:" ～ ";
+  color:#999;
+}
+.table-goods .note {
+  color:#777;
+  font-size:.82rem;
+}
+@media (max-width:640px){
+  #goods-distribution{
+    padding:30px 10px 34px;
+    margin:24px auto;
+  }
+  .table-goods th:nth-child(4),
+  .table-goods td:nth-child(4){
+    display:none; /* スマホは備考列を隠してスッキリ */
+  }
 }
   </style>
 </head>
@@ -277,7 +338,6 @@ body.is-intro-playing {
       muted
       autoplay
       preload="auto">
-      <!-- 動画が再生できないときのフォールバック -->
       お使いの端末では動画を再生できません。
     </video>
     <button type="button" id="introSkip" class="intro-skip-btn">スキップ</button>
@@ -326,18 +386,18 @@ body.is-intro-playing {
   </header>
 
   <!-- 📸 チェキ撮影動画オーバーレイ -->
-<div id="chekiVideoOverlay" class="intro-video-overlay intro-hidden" aria-label="チェキ撮影動画">
-  <video id="chekiVideoEl"
-    src="video/cheki.mp4"
-    playsinline
-    webkit-playsinline
-    muted
-    autoplay
-    preload="auto">
-    お使いの端末では動画を再生できません。
-  </video>
-  <button type="button" id="chekiSkip" class="intro-skip-btn">スキップ</button>
-</div>
+  <div id="chekiVideoOverlay" class="intro-video-overlay intro-hidden" aria-label="チェキ撮影動画">
+    <video id="chekiVideoEl"
+      src="video/cheki.mp4"
+      playsinline
+      webkit-playsinline
+      muted
+      autoplay
+      preload="auto">
+      お使いの端末では動画を再生できません。
+    </video>
+    <button type="button" id="chekiSkip" class="intro-skip-btn">スキップ</button>
+  </div>
 
   <main>
     <!-- Hero -->
@@ -368,7 +428,6 @@ body.is-intro-playing {
         <div class="ticker" aria-live="polite">
           <ul id="newsList"></ul>
         </div>
-        <!-- 開発ログのみ非表示 -->
         <div id="newsStatus" class="tag devlog" aria-live="polite"></div>
       </div>
     </section>
@@ -378,7 +437,6 @@ body.is-intro-playing {
       <div class="container">
         <h2 class="sec-title">🎉 イベント</h2>
         <div class="grid cols-3" id="eventsGrid"></div>
-        <!-- 開発ログのみ非表示 -->
         <div id="eventsStatus" class="tag devlog" aria-live="polite"></div>
       </div>
     </section>
@@ -388,57 +446,54 @@ body.is-intro-playing {
       <div class="container">
         <h2>🎁 現在、下記グッズを配布中でございます</h2>
         <p class="section-lead">
-          店舗にてお渡ししている各種グッズの在庫状況・配布条件などをリアルタイムで更新しております。<br>
-          ご来店前のご参考にどうぞ♡
+          店舗にてお渡ししている各種グッズの配布状況です。<br>
+          なくなり次第終了となる場合がございますので、お早めのご帰宅をおすすめしております♡
         </p>
-        <div class="spreadsheet-container">
-          <iframe 
-            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pubhtml?gid=681304800&amp;single=true&amp;widget=true&amp;headers=false"
-            width="100%"
-            height="600"
-            frameborder="0"
-            loading="lazy">
-          </iframe>
-        </div>
+        <table class="table table-goods" aria-label="現在配布中のグッズ一覧">
+          <thead>
+            <tr>
+              <th>配布開始日</th>
+              <th>イベント名</th>
+              <th>グッズ名</th>
+              <th>配布終了日</th>
+            </tr>
+          </thead>
+          <tbody id="goodsBody"></tbody>
+        </table>
+        <div id="goodsStatus" class="tag devlog" aria-live="polite"></div>
       </div>
     </section>
 
-  <!-- メイドさん紹介 -->
-<section id="maids">
-  <div class="container">
-    <h2 class="sec-title">👑 メイドさん紹介</h2>
-    <div class="grid cols-2" style="align-items:start">
-      
-      <!-- 左：メイドプロフィール一覧 -->
-      <article class="card">
-        <img src="img/potro_cafe_maiddemo_final.png" alt="メイドさん紹介" class="thumb" loading="lazy">
-        <div class="body">
-          <h3>メイドさん紹介</h3>
-          <p>PO♡TOROのメイドさんたち</p>
-          <a class="btn btn-ghost" href="https://potoro1001.github.io/potoro-profile-public/" target="_blank" rel="noopener noreferrer">プロフィール一覧を見る</a>
+    <!-- メイドさん紹介 -->
+    <section id="maids">
+      <div class="container">
+        <h2 class="sec-title">👑 メイドさん紹介</h2>
+        <div class="grid cols-2" style="align-items:start">
+          <article class="card">
+            <img src="img/potro_cafe_maiddemo_final.png" alt="メイドさん紹介" class="thumb" loading="lazy">
+            <div class="body">
+              <h3>メイドさん紹介</h3>
+              <p>PO♡TOROのメイドさんたち</p>
+              <a class="btn btn-ghost" href="https://potoro1001.github.io/potoro-profile-public/" target="_blank" rel="noopener noreferrer">プロフィール一覧を見る</a>
+            </div>
+          </article>
+          <article class="card">
+            <img src="img/uniforms_thumbnail.jpg" alt="PO・TORO 歴代メイド服紹介" class="thumb" loading="lazy">
+            <div class="body">
+              <h3>歴代メイド服紹介</h3>
+              <p>初代から六代目までのメイド服をご紹介♡</p>
+              <a class="btn btn-ghost" href="uniforms.html" target="_blank" rel="noopener noreferrer">歴代メイド服を見る</a>
+            </div>
+          </article>
         </div>
-      </article>
-
-      <!-- 右：歴代メイド服紹介 -->
-      <article class="card">
-        <img src="img/uniforms_thumbnail.jpg" alt="PO・TORO 歴代メイド服紹介" class="thumb" loading="lazy">
-        <div class="body">
-          <h3>歴代メイド服紹介</h3>
-          <p>初代から六代目までのメイド服をご紹介♡</p>
-          <a class="btn btn-ghost" href="uniforms.html" target="_blank" rel="noopener noreferrer">歴代メイド服を見る</a>
-        </div>
-      </article>
-
-    </div>
-  </div>
-</section>
+      </div>
+    </section>
 
     <!-- Games / Tools -->
     <section id="games">
       <div class="container">
         <h2 class="sec-title">🎮 ゲーム / 診断 / 講義</h2>
         <div class="grid cols-4">
-          <!-- ポトロクエスト：カード付き（B / 文字なし） -->
           <article class="card">
             <img src="img/hero-quest-card.png" alt="ポ・トロクエスト キービジュアル" class="thumb" loading="lazy" width="1280" height="720">
             <div class="body">
@@ -448,27 +503,25 @@ body.is-intro-playing {
             </div>
           </article>
 
-          <!-- ご主人様タイプ診断：カード付き（A / 文字なし） -->
           <article class="card">
-           <img src="img/hero-diagnosis-card.png" alt="ご主人様タイプ診断 キービジュアル" class="thumb" loading="lazy" width="1280" height="720">
+            <img src="img/hero-diagnosis-card.png" alt="ご主人様タイプ診断 キービジュアル" class="thumb" loading="lazy" width="1280" height="720">
             <div class="body">
               <h3>ご主人様タイプ診断</h3>
               <p class="tag">MBTIミニ12問で性格診断</p>
               <a class="btn btn-ghost" href="https://potoro1001.github.io/potoro-diagnosis/" id="linkMBTI" target="_blank" rel="noopener noreferrer">診断する</a>
             </div>
           </article>
-  
-    <!-- 萌えセレクト講義：カード付き -->
-<article class="card">
-  <img src="img/moeselect_thumbnail.jpg" alt="萌えセレクト講義 キービジュアル" class="thumb" loading="lazy" width="1280" height="720">
-  <div class="body">
-    <h3>萌えセレクト講義</h3>
-    <p class="tag">講義形式で学ぶ「萌え」の極意</p>
-    <a class="btn btn-ghost" href="https://potoro1001.github.io/potoro-moeselect/" target="_blank" rel="noopener noreferrer">受講する</a>
-  </div>
-</article>
- </div>
-  </div>
+
+          <article class="card">
+            <img src="img/moeselect_thumbnail.jpg" alt="萌えセレクト講義 キービジュアル" class="thumb" loading="lazy" width="1280" height="720">
+            <div class="body">
+              <h3>萌えセレクト講義</h3>
+              <p class="tag">講義形式で学ぶ「萌え」の極意</p>
+              <a class="btn btn-ghost" href="https://potoro1001.github.io/potoro-moeselect/" target="_blank" rel="noopener noreferrer">受講する</a>
+            </div>
+          </article>
+        </div>
+      </div>
     </section>
 
     <!-- Schedule -->
@@ -479,7 +532,6 @@ body.is-intro-playing {
           <thead><tr><th>日付</th><th>営業時間</th><th>メモ</th></tr></thead>
           <tbody id="scheduleBody"></tbody>
         </table>
-        <!-- 開発ログのみ非表示 -->
         <div id="scheduleStatus" class="tag devlog" aria-live="polite"></div>
       </div>
     </section>
@@ -511,52 +563,47 @@ body.is-intro-playing {
       </div>
     </section>
 
-   <!-- SNS -->
-<section id="sns">
-  <div class="container">
-    <h2 class="sec-title">📡 公式SNS</h2>
-
-    <!-- 2枚のSNSカード -->
-    <div class="grid cols-3">
-      <!-- X（旧Twitter） -->
-      <article class="card">
-        <img src="img/hero-sns-x.png" alt="PO・TORO 公式X（旧Twitter）" class="thumb" loading="lazy" width="1280" height="720">
-        <div class="body">
-          <h3>X（旧Twitter）</h3>
-          <p class="tag">@po_toro</p>
-          <a class="btn btn-ghost" href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer" aria-label="X（@po_toro）へ">Xを開く</a>
+    <!-- SNS -->
+    <section id="sns">
+      <div class="container">
+        <h2 class="sec-title">📡 公式SNS</h2>
+        <div class="grid cols-3">
+          <article class="card">
+            <img src="img/hero-sns-x.png" alt="PO・TORO 公式X（旧Twitter）" class="thumb" loading="lazy" width="1280" height="720">
+            <div class="body">
+              <h3>X（旧Twitter）</h3>
+              <p class="tag">@po_toro</p>
+              <a class="btn btn-ghost" href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer" aria-label="X（@po_toro）へ">Xを開く</a>
+            </div>
+          </article>
+          <article class="card">
+            <img src="img/hero-sns-tiktok.png" alt="PO・TORO 公式TikTok" class="thumb" loading="lazy" width="1280" height="720">
+            <div class="body">
+              <h3>TikTok</h3>
+              <p class="tag">@potoro_o</p>
+              <a class="btn btn-ghost" href="https://www.tiktok.com/@potoro_o" target="_blank" rel="noopener noreferrer" aria-label="TikTok（@potoro_o）へ">TikTokを開く</a>
+            </div>
+          </article>
         </div>
-      </article>
+      </div>
+    </section>
 
-      <!-- TikTok -->
-      <article class="card">
-        <img src="img/hero-sns-tiktok.png" alt="PO・TORO 公式TikTok" class="thumb" loading="lazy" width="1280" height="720">
-        <div class="body">
-          <h3>TikTok</h3>
-          <p class="tag">@potoro_o</p>
-          <a class="btn btn-ghost" href="https://www.tiktok.com/@potoro_o" target="_blank" rel="noopener noreferrer" aria-label="TikTok（@potoro_o）へ">TikTokを開く</a>
+    <!-- Recruit -->
+    <section id="recruit">
+      <div class="container">
+        <h2 class="sec-title">👗 メイドさん募集</h2>
+        <div class="grid cols-1">
+          <article class="card">
+            <img src="img/recruit_banner.jpg" alt="メイドさん募集中" class="thumb" loading="lazy">
+            <div class="body">
+              <h3>メイドさん募集中</h3>
+              <p>PO・TOROでは一緒に働くメイドさんを募集しています。未経験の方も大歓迎♡</p>
+              <a class="btn btn-ghost" href="https://jp.indeed.com/job/%E3%83%A1%E3%82%A4%E3%83%89%E3%82%AB%E3%83%95%E3%82%A7%E3%82%B3%E3%83%B3%E3%82%BB%E3%83%97%E3%83%88%E3%82%AB%E3%83%95%E3%82%A7%E3%83%9B%E3%83%BC%E3%83%AB%E3%82%B9%E3%82%BF%E3%83%83%E3%83%95-3ad4b6a67e32b85c" target="_blank" rel="noopener noreferrer">応募ページへ</a>
+            </div>
+          </article>
         </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- Recruit -->
-<section id="recruit">
-  <div class="container">
-    <h2 class="sec-title">👗 メイドさん募集</h2>
-    <div class="grid cols-1">
-      <article class="card">
-        <img src="img/recruit_banner.jpg" alt="メイドさん募集中" class="thumb" loading="lazy">
-        <div class="body">
-          <h3>メイドさん募集中</h3>
-          <p>PO・TOROでは一緒に働くメイドさんを募集しています。未経験の方も大歓迎♡</p>
-          <a class="btn btn-ghost" href="https://jp.indeed.com/job/%E3%83%A1%E3%82%A4%E3%83%89%E3%82%AB%E3%83%95%E3%82%A7%E3%82%B3%E3%83%B3%E3%82%BB%E3%83%97%E3%83%88%E3%82%AB%E3%83%95%E3%82%A7%E3%83%9B%E3%83%BC%E3%83%AB%E3%82%B9%E3%82%BF%E3%83%83%E3%83%95-3ad4b6a67e32b85c" target="_blank" rel="noopener noreferrer">応募ページへ</a>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -637,7 +684,10 @@ body.is-intro-playing {
       eventsCsvUrl:  "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=365949763",
       eventsCsvUrlAlt:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_EVENTS.csv",
       scheduleCsvUrl:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1276825118",
-      scheduleCsvUrlAlt:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_schedule.csv"
+      scheduleCsvUrlAlt:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_schedule.csv",
+      // ▼グッズ配布：PORTAL_GOODS.csv
+      goodsCsvUrl:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pub?gid=681304800&single=true&output=csv",
+      goodsCsvUrlAlt:"https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pub?gid=681304800&single=true&output=csv"
     };
 
     // =========================
@@ -646,7 +696,6 @@ body.is-intro-playing {
     function escapeHtml(str){ return String(str).replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[s])); }
     function normalizeHeader(s){ let t=String(s||''); if(t && t.charCodeAt(0)===0xFEFF) t=t.slice(1); return t.trim().toLowerCase(); }
 
-    // タイムアウト付きfetch（拡張機能介入・ハング対策）
     async function fetchTextWithTimeout(url, ms=10000){
       const controller = new AbortController();
       const id = setTimeout(()=>controller.abort(), ms);
@@ -661,18 +710,27 @@ body.is-intro-playing {
       }
     }
 
-    // 区切り自動判定＋空行/コメント(#~)スキップ対応のCSVパーサ
+    // CSVパーサ
     function parseCSV(text){
       if(!text) return [];
       const trimmed = String(text).replace(/^\s+/, '');
       const firstLine = trimmed.split(/\r\n|\n|\r/, 1)[0] || '';
       const candidates = [',',';','\t'];
       let delim = ','; let maxHits = -1;
-      for(const c of candidates){ const hits = (firstLine.match(new RegExp(`\\${c}`, 'g'))||[]).length; if(hits>maxHits){maxHits=hits; delim=c;} }
+      for(const c of candidates){
+        const hits = (firstLine.match(new RegExp("\\\\"+c, 'g'))||[]).length;
+        if(hits>maxHits){maxHits=hits; delim=c;}
+      }
       const rows=[]; let i=0, field='', row=[], inQ=false;
       while(i<trimmed.length){
         const ch=trimmed[i];
-        if(inQ){ if(ch==='"'){ if(trimmed[i+1]==='"'){field+='"'; i+=2; continue;} inQ=false; i++; continue;} field+=ch; i++; continue; }
+        if(inQ){
+          if(ch==='"'){
+            if(trimmed[i+1]==='"'){field+='"'; i+=2; continue;}
+            inQ=false; i++; continue;
+          }
+          field+=ch; i++; continue;
+        }
         if(ch==='"'){ inQ=true; i++; continue; }
         if(ch===delim){ row.push(field); field=''; i++; continue; }
         if(ch==='\n'||ch==='\r'){
@@ -699,23 +757,36 @@ body.is-intro-playing {
       const di = idx(['date','掲載日','更新日','published','publish_date','day']);
       const li = idx(['label','ラベル','タグ','category','type']);
       const ti = idx(['text','本文','お知らせ','内容','body','message','detail','詳細','content']);
-      const startAt = 1; // 1行目はヘッダー前提
+      const startAt = 1;
       return rows.slice(startAt)
-        .map(r => ({ date: di>-1 ? String(r[di]||'').trim() : '', label:li>-1 ? String(r[li]||'').trim() : '', text: ti>-1 ? String(r[ti]||'').trim() : '' }))
+        .map(r => ({
+          date: di>-1 ? String(r[di]||'').trim() : '',
+          label:li>-1 ? String(r[li]||'').trim() : '',
+          text: ti>-1 ? String(r[ti]||'').trim() : ''
+        }))
         .filter(o => o.date || o.text);
     }
+
     function csvToEventObjects(csv){
       const rows=parseCSV(csv); if(!rows.length) return [];
-      const h=rows[0].map(normalizeHeader); const idx=(keys)=>{for(const k of keys){const i=h.indexOf(k); if(i!==-1) return i;} return -1;};
+      const h=rows[0].map(normalizeHeader);
+      const idx=(keys)=>{for(const k of keys){const i=h.indexOf(k); if(i!==-1) return i;} return -1;};
       const ti=idx(['title','タイトル','件名','イベント名','name']);
       const di=idx(['datetext','date','日付','期間','date_text','dates']);
       const ii=idx(['image','画像','img','imageurl','image_url','thumbnail','thumb']);
       const ai=idx(['alt','代替','代替テキスト','alttext','alt_text']);
       const ci=idx(['chip','タグ','tag','ラベル','category']);
       const linki=idx(['link','url','リンク']);
-      return rows.slice(1).map(r=>({ title:ti>-1?r[ti]:'', datetext:di>-1?r[di]:'', image:ii>-1?r[ii]:'', alt:ai>-1?r[ai]:'', chip:ci>-1?r[ci]:'', link:linki>-1?r[linki]:'' }))
-        .filter(o=> (String(o.title||'').trim()!=='' || String(o.image||'').trim()!==''));
+      return rows.slice(1).map(r=>({
+        title:ti>-1?r[ti]:'',
+        datetext:di>-1?r[di]:'',
+        image:ii>-1?r[ii]:'',
+        alt:ai>-1?r[ai]:'',
+        chip:ci>-1?r[ci]:'',
+        link:linki>-1?r[linki]:''
+      })).filter(o=> (String(o.title||'').trim()!=='' || String(o.image||'').trim()!=='' ));
     }
+
     function csvToScheduleObjects(csv){
       const rows=parseCSV(csv); if(!rows.length) return [];
       let headerRow = rows[0];
@@ -731,29 +802,85 @@ body.is-intro-playing {
       const startAt = rows.indexOf(headerRow)+1;
       return rows.slice(startAt)
         .filter(r => r && r.length>0 && r.join('').trim()!=='')
-        .map(r=>({ date: String(r[di]||'').trim(), hours: String(r[hi]||'').trim(), note: String(r[ni]||'').trim() }));
+        .map(r=>({
+          date: String(r[di]||'').trim(),
+          hours: String(r[hi]||'').trim(),
+          note: String(r[ni]||'').trim()
+        }));
+    }
+
+    // ▼グッズ配布
+    function csvToGoodsObjects(csv){
+      const rows = parseCSV(csv);
+      if(!rows.length) return [];
+      const h = rows[0].map(s=>{
+        let t = String(s||'');
+        if(t && t.charCodeAt(0)===0xFEFF) t=t.slice(1);
+        return t.trim();
+      });
+      const idx = (keys)=> {
+        for(const k of keys){
+          const i = h.indexOf(k);
+          if(i!==-1) return i;
+          const li = h.indexOf(k.toLowerCase());
+          if(li!==-1) return li;
+        }
+        return -1;
+      };
+      const startIdx = idx(['配布開始日','start','start_date']);
+      const eventIdx = idx(['イベント名','event','event_name','title']);
+      const nameIdx  = idx(['グッズ名','name','goods','goods_name']);
+      const endIdx   = idx(['配布終了日','end','end_date']);
+      const noteIdx  = idx(['備考','メモ','note','remarks']);
+
+      return rows.slice(1)
+        .map(r=>({
+          start: startIdx>-1 ? String(r[startIdx]||'').trim() : '',
+          event: eventIdx>-1 ? String(r[eventIdx]||'').trim() : '',
+          name:  nameIdx>-1  ? String(r[nameIdx] ||'').trim() : '',
+          end:   endIdx>-1   ? String(r[endIdx]  ||'').trim() : '',
+          note:  noteIdx>-1  ? String(r[noteIdx] ||'').trim() : ''
+        }))
+        .filter(o => o.start || o.event || o.name || o.end || o.note);
     }
 
     // ===== 日付パース & 曜日表示 =====
     function parseSheetDateToJsDate(s){
-      const raw = String(s ?? '').trim(); if(!raw) return null;
+      const raw = String(s ?? '').trim();
+      if(!raw) return null;
       const maybeNum = Number(raw);
       if(!Number.isNaN(maybeNum) && maybeNum > 20000 && maybeNum < 60000){
         const base = new Date(Date.UTC(1899,11,30));
         return new Date(base.getTime() + maybeNum * 86400000);
       }
       const z2h = (t)=>t.replace(/[０-９]/g, d => String.fromCharCode(d.charCodeAt(0)-0xFEE0));
-      let str = z2h(raw).replace(/\u200B|\u200C|\u200D|\uFEFF/g, '').replace(/\u00A0|\u3000/g, ' ').replace(/[（）\(\)]/g, ' ').replace(/[月火水木金土日]曜?/g, ' ').replace(/[年\.]/g, '/').replace(/月/g, '/').replace(/日/g, ' ').replace(/-/g, '/').replace(/\s+/g, ' ').trim();
+      let str = z2h(raw)
+        .replace(/\u200B|\u200C|\u200D|\uFEFF/g, '')
+        .replace(/\u00A0|\u3000/g, ' ')
+        .replace(/[（）\(\)]/g, ' ')
+        .replace(/[月火水木金土日]曜?/g, ' ')
+        .replace(/[年\.]/g, '/')
+        .replace(/月/g, '/')
+        .replace(/日/g, ' ')
+        .replace(/-/g, '/')
+        .replace(/\s+/g, ' ')
+        .trim();
+
       const parts = str.includes('/') ? str.split('/') : str.split(' ');
       const nums = parts.map(p => p.trim()).filter(Boolean).flatMap(p => p.match(/\d{1,4}/g) || []);
+
       if(nums.length >= 3){
         const last = nums.length - 1;
-        const d = Number(nums[last]); const m = Number(nums[last-1]); let y = Number(nums[last-2]);
+        const d = Number(nums[last]);
+        const m = Number(nums[last-1]);
+        let y = Number(nums[last-2]);
         if(!(y >= 1000 && y <= 9999)) y = new Date().getFullYear();
         if(m>=1 && m<=12 && d>=1 && d<=31) return new Date(`${y}/${m}/${d}`);
       }
       if(nums.length === 2){
-        const y = new Date().getFullYear(); const m = Number(nums[0]); const d = Number(nums[1]);
+        const y = new Date().getFullYear();
+        const m = Number(nums[0]);
+        const d = Number(nums[1]);
         if(m>=1 && m<=12 && d>=1 && d<=31) return new Date(`${y}/${m}/${d}`);
       }
       const m2 = str.match(/(\d{1,4})[\/ ]?(\d{1,2})[\/ ]?(\d{1,2})/);
@@ -764,14 +891,17 @@ body.is-intro-playing {
       }
       return null;
     }
+
     function formatDateJPWithWeekday(rawDateStr){
-      const d = parseSheetDateToJsDate(rawDateStr); if(!d) return String(rawDateStr ?? '');
+      const d = parseSheetDateToJsDate(rawDateStr);
+      if(!d) return String(rawDateStr ?? '');
       const wd = ['日','月','火','水','木','金','土'][d.getDay()];
-      const y  = d.getFullYear(); const m  = String(d.getMonth()+1).padStart(2,'0'); const dd = String(d.getDate()).padStart(2,'0');
+      const y  = d.getFullYear();
+      const m  = String(d.getMonth()+1).padStart(2,'0');
+      const dd = String(d.getDate()).padStart(2,'0');
       return `${y}/${m}/${dd}(${wd})`;
     }
 
-    // ===== フォールバック読込（両方試す）
     async function tryLoadCSV(primaryUrl, altUrl){
       try{
         return await fetchTextWithTimeout(primaryUrl, 10000);
@@ -788,13 +918,22 @@ body.is-intro-playing {
     function renderNews(){
       const ul=document.getElementById('newsList'); if(!ul) return;
       const items=(window.PORTAL_DATA.news||[]);
-      if(!items.length){ ul.innerHTML = '<li>現在お知らせはありません。</li>'; return; }
-      ul.innerHTML=items.map(n=>`<li><time>${escapeHtml(n.date||'')}</time> ${n.label?`<span class="label">${escapeHtml(n.label)}</span>`:''} ${n.text||''}</li>`).join('');
+      if(!items.length){
+        ul.innerHTML = '<li>現在お知らせはありません。</li>';
+        return;
+      }
+      ul.innerHTML=items.map(n=>
+        `<li><time>${escapeHtml(n.date||'')}</time> ${n.label?`<span class="label">${escapeHtml(n.label)}</span>`:''} ${n.text||''}</li>`
+      ).join('');
     }
+
     function renderEvents(){
       const g=document.getElementById('eventsGrid'); if(!g) return;
       const items=(window.PORTAL_DATA.events||[]);
-      if(!items.length){ g.innerHTML='<div class="tag">イベントは準備中です。</div>'; return; }
+      if(!items.length){
+        g.innerHTML='<div class="tag">イベントは準備中です。</div>';
+        return;
+      }
       g.innerHTML=items.map(e=>{
         const img = e.image? `<img src="${e.image}" alt="${escapeHtml(e.alt||e.title||'')}" class="thumb" data-full="${e.image}" loading="lazy">` : '';
         const title = escapeHtml(e.title||'');
@@ -804,15 +943,24 @@ body.is-intro-playing {
         return `<article class="card">${img}<div class="body"><h3>${title}</h3><p>${date}</p>${chip}${link}</div></article>`;
       }).join('');
     }
+
     function renderSchedule(){
-      const tbody=document.getElementById('scheduleBody'); if(!tbody) return; const status=document.getElementById('scheduleStatus');
+      const tbody=document.getElementById('scheduleBody'); if(!tbody) return;
+      const status=document.getElementById('scheduleStatus');
       const all=(window.PORTAL_DATA.schedule||[]);
-      const today=new Date(); today.setHours(0,0,0,0); const limit=new Date(today); limit.setDate(today.getDate()+7);
+      const today=new Date(); today.setHours(0,0,0,0);
+      const limit=new Date(today); limit.setDate(today.getDate()+7);
       const inRange=[]; const undated=[];
-      for(const r of all){ const d=parseSheetDateToJsDate(r.date); if(!d){ undated.push(r); continue; } d.setHours(0,0,0,0); if(d>=today && d<=limit) inRange.push(r); }
+      for(const r of all){
+        const d=parseSheetDateToJsDate(r.date);
+        if(!d){ undated.push(r); continue; }
+        d.setHours(0,0,0,0);
+        if(d>=today && d<=limit) inRange.push(r);
+      }
       let rows=inRange.length? inRange : (all.slice(0,7));
-      if(!rows.length){ tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>'; }
-      else{
+      if(!rows.length){
+        tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
+      } else {
         tbody.innerHTML = rows.map(r => {
           const dateText = formatDateJPWithWeekday(r.date);
           const hours    = String(r.hours || '');
@@ -820,108 +968,155 @@ body.is-intro-playing {
           return `<tr><td>${escapeHtml(dateText)}</td><td>${escapeHtml(hours)}</td><td>${escapeHtml(note)}</td></tr>`;
         }).join('');
       }
-      if(status){ status.textContent = `schedule：CSV ${all.length}件（直近7日 ${inRange.length}件 / 日付未解釈 ${undated.length}件）`; }
+      if(status){
+        status.textContent = `schedule：CSV ${all.length}件（直近7日 ${inRange.length}件 / 日付未解釈 ${undated.length}件）`;
+      }
+    }
+
+    // ▼グッズ配布レンダリング
+    function renderGoods(){
+      const tbody=document.getElementById('goodsBody'); if(!tbody) return;
+      const status=document.getElementById('goodsStatus');
+      const list=(window.PORTAL_DATA.goods||[]);
+      if(!list.length){
+        tbody.innerHTML = '<tr><td colspan="4">現在表示できるグッズ情報はありません。</td></tr>';
+      }else{
+        tbody.innerHTML = list.map(g=>{
+          const start = g.start ? formatDateJPWithWeekday(g.start) : '';
+          const end   = g.end   ? formatDateJPWithWeekday(g.end)   : '';
+          const event = g.event || '';
+          const name  = g.name  || '';
+          const note  = g.note  || '';
+          return `
+            <tr>
+              <td class="date-text">
+                ${start ? `<span>${escapeHtml(start)}</span>` : ''}
+              </td>
+              <td>
+                ${event ? `<span class="event-name">${escapeHtml(event)}</span>` : ''}
+              </td>
+              <td>
+                <div class="goods-name">${escapeHtml(name)}</div>
+                ${note ? `<div class="note">${escapeHtml(note)}</div>` : ''}
+              </td>
+              <td class="date-text">
+                ${end ? `<span>${escapeHtml(end)}</span>` : ''}
+              </td>
+            </tr>`;
+        }).join('');
+      }
+      if(status){
+        status.textContent = `goods：CSV ${list.length}件`;
+      }
     }
 
     // ===== 初期データ =====
-    window.PORTAL_DATA={news:[],events:[],schedule:[]};
+    window.PORTAL_DATA={news:[],events:[],schedule:[],goods:[]};
 
     function trapFocus(container, first){
       const focusables = container.querySelectorAll('a, button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
-      if(!focusables.length) return; const firstEl=first||focusables[0]; const lastEl=focusables[focusables.length-1];
+      if(!focusables.length) return;
+      const firstEl=first||focusables[0]; const lastEl=focusables[focusables.length-1];
       function onKey(e){
         if(e.key==='Tab'){
-          if(e.shiftKey && document.activeElement===firstEl){ e.preventDefault(); lastEl.focus(); }
-          else if(!e.shiftKey && document.activeElement===lastEl){ e.preventDefault(); firstEl.focus(); }
+          if(e.shiftKey && document.activeElement===firstEl){
+            e.preventDefault(); lastEl.focus();
+          } else if(!e.shiftKey && document.activeElement===lastEl){
+            e.preventDefault(); firstEl.focus();
+          }
         }
-        if(e.key==='Escape'){ container.classList.remove('open'); container.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+        if(e.key==='Escape'){
+          container.classList.remove('open');
+          container.setAttribute('aria-hidden','true');
+          document.body.style.overflow='';
+        }
       }
       container.addEventListener('keydown', onKey);
     }
 
     document.addEventListener('DOMContentLoaded', async ()=>{
       // ===== チェキ動画再生（X画像クリック時） =====
-const chekiOverlay = document.getElementById('chekiVideoOverlay');
-const chekiVideo = document.getElementById('chekiVideoEl');
-const chekiSkip = document.getElementById('chekiSkip');
-const twiImage = document.querySelector('img[src="img/potro_twi.jpg"]');
+      const chekiOverlay = document.getElementById('chekiVideoOverlay');
+      const chekiVideo = document.getElementById('chekiVideoEl');
+      const chekiSkip = document.getElementById('chekiSkip');
+      const twiImage = document.querySelector('img[src="img/potro_twi.jpg"]');
 
-function closeCheki() {
-  if (!chekiOverlay) return;
-  chekiOverlay.classList.add('intro-hidden');
-  document.body.classList.remove('is-intro-playing');
-  if (chekiVideo && !chekiVideo.paused) {
-    chekiVideo.pause();
-  }
-}
+      function closeCheki() {
+        if (!chekiOverlay) return;
+        chekiOverlay.classList.add('intro-hidden');
+        document.body.classList.remove('is-intro-playing');
+        if (chekiVideo && !chekiVideo.paused) {
+          chekiVideo.pause();
+        }
+      }
 
-function openCheki() {
-  if (!chekiOverlay) return;
-  chekiOverlay.classList.remove('intro-hidden');
-  document.body.classList.add('is-intro-playing');
-  chekiVideo.currentTime = 0;
-  chekiVideo.play().catch(()=>{});
-}
+      function openCheki() {
+        if (!chekiOverlay) return;
+        chekiOverlay.classList.remove('intro-hidden');
+        document.body.classList.add('is-intro-playing');
+        chekiVideo.currentTime = 0;
+        chekiVideo.play().catch(()=>{});
+      }
 
-if (chekiVideo) {
-  chekiVideo.addEventListener('ended', closeCheki);
-  chekiVideo.addEventListener('error', closeCheki);
-}
-if (chekiSkip) {
-  chekiSkip.addEventListener('click', closeCheki);
-}
-if (twiImage) {
-  twiImage.addEventListener('click', (e)=>{
-    e.preventDefault(); // 既存リンクを無効化
-    openCheki();
-  });
-}
+      if (chekiVideo) {
+        chekiVideo.addEventListener('ended', closeCheki);
+        chekiVideo.addEventListener('error', closeCheki);
+      }
+      if (chekiSkip) {
+        chekiSkip.addEventListener('click', closeCheki);
+      }
+      if (twiImage) {
+        twiImage.addEventListener('click', (e)=>{
+          e.preventDefault();
+          openCheki();
+        });
+      }
 
-  // ===== オープニング動画制御 =====
-  const intro = document.getElementById('introVideo');
-  const introVideo = document.getElementById('introVideoEl');
-  const introSkip = document.getElementById('introSkip');
+      // ===== オープニング動画制御 =====
+      const intro = document.getElementById('introVideo');
+      const introVideo = document.getElementById('introVideoEl');
+      const introSkip = document.getElementById('introSkip');
 
-  // 最初はスクロールさせない
-  if (intro) {
-    document.body.classList.add('is-intro-playing');
-  }
+      if (intro) {
+        document.body.classList.add('is-intro-playing');
+      }
 
-  // 動画が終わったら閉じる
-  function closeIntro() {
-    if (!intro) return;
-    intro.classList.add('intro-hidden');
-    document.body.classList.remove('is-intro-playing');
-    // 再生止める
-    if (introVideo && !introVideo.paused) {
-      introVideo.pause();
-    }
-  }
+      function closeIntro() {
+        if (!intro) return;
+        intro.classList.add('intro-hidden');
+        document.body.classList.remove('is-intro-playing');
+        if (introVideo && !introVideo.paused) {
+          introVideo.pause();
+        }
+      }
 
-  if (introVideo) {
-    // 再生が終わったとき
-    introVideo.addEventListener('ended', closeIntro);
-    // 念のためエラーでも閉じる
-    introVideo.addEventListener('error', closeIntro);
-  }
+      if (introVideo) {
+        introVideo.addEventListener('ended', closeIntro);
+        introVideo.addEventListener('error', closeIntro);
+      }
 
-  // スキップボタン
-  if (introSkip) {
-    introSkip.addEventListener('click', closeIntro);
-  }
+      if (introSkip) {
+        introSkip.addEventListener('click', closeIntro);
+      }
 
-  // ===== ここからはあなたが元々書いていた処理 =====
-  const yearEl=document.getElementById('year'); if(yearEl) yearEl.textContent=new Date().getFullYear();
-  // 以降は既存のCSV読み込み・モーダルなどそのまま
+      const yearEl=document.getElementById('year');
+      if(yearEl) yearEl.textContent=new Date().getFullYear();
 
-      const btnMenu=document.getElementById('btnMenu'); const drawer=document.getElementById('drawer'); const btnClose=document.getElementById('btnClose');
+      const btnMenu=document.getElementById('btnMenu');
+      const drawer=document.getElementById('drawer');
+      const btnClose=document.getElementById('btnClose');
       if(btnMenu && drawer && btnClose){
         const toggleDrawer=(open)=>{
           drawer.classList.toggle('open',open);
           drawer.setAttribute('aria-hidden', String(!open));
           btnMenu.setAttribute('aria-expanded', String(open));
           document.body.style.overflow = open? 'hidden':'';
-          if(open){ drawer.querySelector('a')?.focus(); trapFocus(drawer, drawer.querySelector('a')); } else { btnMenu.focus(); }
+          if(open){
+            drawer.querySelector('a')?.focus();
+            trapFocus(drawer, drawer.querySelector('a'));
+          } else {
+            btnMenu.focus();
+          }
         };
         btnMenu.addEventListener('click',()=>toggleDrawer(true));
         btnClose.addEventListener('click',()=>toggleDrawer(false));
@@ -929,7 +1124,7 @@ if (twiImage) {
         window.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) toggleDrawer(false); });
       }
 
-      // === データ読込（プライマリ→フォールバック、タイムアウト＆キャッシュバスター付き）
+      // === データ読込
       try {
         const newsCsv = await tryLoadCSV(window.PORTAL_CONFIG.newsCsvUrl, window.PORTAL_CONFIG.newsCsvUrlAlt);
         window.PORTAL_DATA.news = newsCsv ? csvToNewsObjects(newsCsv) : [];
@@ -945,14 +1140,42 @@ if (twiImage) {
         window.PORTAL_DATA.schedule = scheduleCsv ? csvToScheduleObjects(scheduleCsv) : [];
       } catch(e){ window.PORTAL_DATA.schedule = []; }
 
-      renderNews(); renderEvents(); renderSchedule();
+      // ▼グッズ配布CSV
+      try {
+        const goodsCsv = await tryLoadCSV(window.PORTAL_CONFIG.goodsCsvUrl, window.PORTAL_CONFIG.goodsCsvUrlAlt);
+        window.PORTAL_DATA.goods = goodsCsv ? csvToGoodsObjects(goodsCsv) : [];
+      } catch(e){ window.PORTAL_DATA.goods = []; }
+
+      renderNews();
+      renderEvents();
+      renderSchedule();
+      renderGoods();
 
       // 画像ライトボックス
-      const lightbox=document.getElementById('lightbox'); const lightImg=document.getElementById('lightboxImg'); const closeBtn=lightbox.querySelector('.close');
-      const openLightbox=(src,alt)=>{ lightImg.src=src; lightImg.alt=alt||'拡大画像'; lightbox.classList.add('open'); lightbox.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; };
-      const closeLightbox=()=>{ lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true'); lightImg.removeAttribute('src'); document.body.style.overflow=''; };
+      const lightbox=document.getElementById('lightbox');
+      const lightImg=document.getElementById('lightboxImg');
+      const closeBtn=lightbox.querySelector('.close');
+      const openLightbox=(src,alt)=>{
+        lightImg.src=src;
+        lightImg.alt=alt||'拡大画像';
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden','false');
+        document.body.style.overflow='hidden';
+      };
+      const closeLightbox=()=>{
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden','true');
+        lightImg.removeAttribute('src');
+        document.body.style.overflow='';
+      };
       const eventsGrid=document.getElementById('eventsGrid');
-      if(eventsGrid){ eventsGrid.addEventListener('click',(e)=>{ const img=e.target.closest('img'); if(!img) return; openLightbox(img.getAttribute('data-full')||img.src, img.alt); }); }
+      if(eventsGrid){
+        eventsGrid.addEventListener('click',(e)=>{
+          const img=e.target.closest('img');
+          if(!img) return;
+          openLightbox(img.getAttribute('data-full')||img.src, img.alt);
+        });
+      }
       lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); });
       closeBtn.addEventListener('click', closeLightbox);
       window.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && lightbox.classList.contains('open')) closeLightbox(); });
@@ -962,18 +1185,39 @@ if (twiImage) {
       const modalPrivacy=document.getElementById('modalPrivacy');
       const openTerms=document.getElementById('openTerms');
       const openPrivacy=document.getElementById('openPrivacy');
-      const toggleModal=(el,open)=>{ if(!el) return; el.classList.toggle('open',open); el.setAttribute('aria-hidden', String(!open)); document.body.style.overflow = open? 'hidden':''; if(open) trapFocus(el, el.querySelector('.close')); };
+      const toggleModal=(el,open)=>{
+        if(!el) return;
+        el.classList.toggle('open',open);
+        el.setAttribute('aria-hidden', String(!open));
+        document.body.style.overflow = open? 'hidden':'';
+        if(open) trapFocus(el, el.querySelector('.close'));
+      };
       if(openTerms)   openTerms.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalTerms,true);   });
       if(openPrivacy) openPrivacy.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalPrivacy,true); });
-      document.querySelectorAll('.modal .close').forEach(btn=>{ btn.addEventListener('click',()=>{ const id=btn.getAttribute('data-close'); const el=id? document.getElementById(id) : btn.closest('.modal'); toggleModal(el,false); }); });
-      window.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ toggleModal(modalTerms,false); toggleModal(modalPrivacy,false);} });
-      [modalTerms, modalPrivacy].forEach(m=>{ if(m) m.addEventListener('click',(e)=>{ if(e.target===m) toggleModal(m,false); }); });
+      document.querySelectorAll('.modal .close').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          const id=btn.getAttribute('data-close');
+          const el=id? document.getElementById(id) : btn.closest('.modal');
+          toggleModal(el,false);
+        });
+      });
+      window.addEventListener('keydown',(e)=>{
+        if(e.key==='Escape'){
+          toggleModal(modalTerms,false);
+          toggleModal(modalPrivacy,false);
+        }
+      });
+      [modalTerms, modalPrivacy].forEach(m=>{
+        if(m) m.addEventListener('click',(e)=>{ if(e.target===m) toggleModal(m,false); });
+      });
 
       // ?embed=true 簡略表示
       const params = new URLSearchParams(location.search);
       if(params.get('embed')==='true'){
-        const header=document.querySelector('header'); const footer=document.querySelector('footer');
-        if(header) header.style.display='none'; if(footer) footer.style.display='none';
+        const header=document.querySelector('header');
+        const footer=document.querySelector('footer');
+        if(header) header.style.display='none';
+        if(footer) footer.style.display='none';
         document.querySelectorAll('section').forEach(s=>s.style.padding='12px 0');
       }
     });
