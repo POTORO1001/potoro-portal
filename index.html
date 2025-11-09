@@ -232,6 +232,39 @@
 body.is-intro-playing {
   overflow: hidden;
 }
+
+/* ▼現在配布中グッズセクション用スタイル */
+#goods-distribution {
+  text-align: center;
+  background: linear-gradient(180deg, #fff0fa 0%, #fdfcff 100%);
+  padding: 50px 15px;
+  border-radius: 20px;
+  box-shadow: 0 0 12px rgba(255, 182, 193, 0.45);
+  margin: 40px auto;
+  max-width: 1100px;
+}
+#goods-distribution h2 {
+  font-size: 1.9rem;
+  color: #ff66aa;
+  margin-bottom: 15px;
+  font-family: "Zen Maru Gothic", system-ui, -apple-system, BlinkMacSystemFont, "Yu Gothic", sans-serif;
+}
+#goods-distribution .section-lead {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 25px;
+  line-height: 1.7;
+}
+#goods-distribution .spreadsheet-container {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+#goods-distribution .spreadsheet-container iframe {
+  border: none;
+  display: block;
+}
   </style>
 </head>
 <body>
@@ -347,6 +380,26 @@ body.is-intro-playing {
         <div class="grid cols-3" id="eventsGrid"></div>
         <!-- 開発ログのみ非表示 -->
         <div id="eventsStatus" class="tag devlog" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- 現在配布中グッズ（イベントの下、メイドさん紹介の上） -->
+    <section id="goods-distribution" class="content-section">
+      <div class="container">
+        <h2>🎁 現在、下記グッズを配布中でございます</h2>
+        <p class="section-lead">
+          店舗にてお渡ししている各種グッズの在庫状況・配布条件などをリアルタイムで更新しております。<br>
+          ご来店前のご参考にどうぞ♡
+        </p>
+        <div class="spreadsheet-container">
+          <iframe 
+            src="https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/pubhtml?widget=true&amp;headers=false"
+            width="100%"
+            height="600"
+            frameborder="0"
+            loading="lazy">
+          </iframe>
+        </div>
       </div>
     </section>
 
@@ -590,7 +643,7 @@ body.is-intro-playing {
     // =========================
     // ユーティリティ
     // =========================
-    function escapeHtml(str){ return String(str).replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[s])); }
+    function escapeHtml(str){ return String(str).replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt','>':'&gt;'}[s])); }
     function normalizeHeader(s){ let t=String(s||''); if(t && t.charCodeAt(0)===0xFEFF) t=t.slice(1); return t.trim().toLowerCase(); }
 
     // タイムアウト付きfetch（拡張機能介入・ハング対策）
