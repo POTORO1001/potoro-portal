@@ -168,62 +168,183 @@
       }
     }
 
-    /* ============================
-       📱 iPhone対策
-       ============================ */
-    .ticker { background-color:#fff !important; color:#000 !important; border-radius:14px; box-shadow:0 10px 30px rgba(0,0,0,.12); }
-    .ticker li { background-color:#fff !important; color:#000 !important; border-bottom:1px solid #eee; }
-    .badge { background:#fff !important; color:#000 !important; }
-    .hero-card { background:#fff !important; color:#000 !important; border:1px solid #eee; box-shadow:0 10px 30px rgba(0,0,0,.12); border-radius:14px; }
-    @media (prefers-color-scheme: dark) {
-      .ticker, .ticker li, .badge, .hero-card { background-color:#fff !important; color:#000 !important; }
-    }
+/* ============================
+   📱 iPhone対策
+   ============================ */
+.ticker {
+  background-color: #fff !important;
+  color: #000 !important;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+.ticker li {
+  background-color: #fff !important;
+  color: #000 !important;
+  border-bottom: 1px solid #eee;
+}
+.badge {
+  background: #fff !important;
+  color: #000 !important;
+}
+.hero-card {
+  background: #fff !important;
+  color: #000 !important;
+  border: 1px solid #eee;
+  box-shadow: 0 10px 30px rgba(0,0,0,.12);
+  border-radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  .ticker, .ticker li, .badge, .hero-card {
+    background-color: #fff !important;
+    color: #000 !important;
+  }
+}
 
     /* ===== オープニング動画オーバーレイ ===== */
-    .intro-video-overlay {
-      position: fixed; inset: 0; background: #000; z-index: 9999;
-      display: flex; justify-content: center; align-items: center;
-    }
-    .intro-video-overlay video { width: 100%; height: 100%; object-fit: cover; }
-    .intro-skip-btn {
-      position: absolute; top: 14px; right: 14px;
-      background: rgba(255,255,255,.9); border: none; border-radius: 999px;
-      padding: 8px 14px; font-weight: 700; cursor: pointer;
-    }
-    .intro-hidden { display: none !important; }
-    body.is-intro-playing { overflow: hidden; }
+.intro-video-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.intro-video-overlay video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.intro-skip-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(255,255,255,.9);
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.intro-hidden {
+  display: none !important;
+}
+body.is-intro-playing {
+  overflow: hidden;
+}
 
-    /* ▼現在配布中グッズセクション用スタイル（かわいめ） */
-    #goods-distribution { text-align:center; background: linear-gradient(180deg,#fff5fb 0%,#fffefd 50%,#f4f9ff 100%); padding:40px 16px 46px; border-radius:24px; box-shadow:0 14px 40px rgba(255,164,191,0.45); margin:40px auto; max-width:1100px; }
-    #goods-distribution h2 { font-size:1.7rem; color:#ff6fae; margin-bottom:10px; letter-spacing:.03em; }
-    #goods-distribution h2::before{ content:""; display:inline-block; width:20px; height:20px; margin-right:6px; background:url("img/icon-goods.svg") no-repeat center/contain; }
-    #goods-distribution .section-lead { font-size:0.95rem; color:#666; margin-bottom:22px; line-height:1.7; }
-    .table-goods { margin-top:8px; border-radius:18px; }
-    .table-goods thead th { background: linear-gradient(90deg,#ffe0f0,#e8f3ff); color:#553344; font-size:.85rem; border-bottom:none; }
-    .table-goods tbody tr:nth-child(even){ background-color:#fff9fd; }
-    .table-goods tbody tr:hover{ background-color:#fff0fb; }
-    .table-goods td { font-size:.9rem; vertical-align:middle; }
-    .table-goods .goods-name { font-weight:800; color:#ff4fa3; }
-    .table-goods .event-name { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-radius:999px; background:#fff; border:1px solid #ffd3eb; font-size:.8rem; }
-    .table-goods .event-name::before{ content:"★"; font-size:.8rem; }
-    .table-goods .date-text { font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .table-goods .date-text span{ display:inline-block; }
-    .table-goods .date-text span + span::before{ content:" ～ "; color:#999; }
-    .table-goods .note { color:#777; font-size:.82rem; }
-    @media (max-width:640px){
-      #goods-distribution{ padding:30px 10px 34px; margin:24px auto; }
-      .table-goods th:nth-child(4), .table-goods td:nth-child(4){ display:none; }
-    }
+/* ▼現在配布中グッズセクション用スタイル（かわいめ） */
+#goods-distribution {
+  text-align: center;
+  background: linear-gradient(180deg, #fff5fb 0%, #fffefd 50%, #f4f9ff 100%);
+  padding: 40px 16px 46px;
+  border-radius: 24px;
+  box-shadow: 0 14px 40px rgba(255, 164, 191, 0.45);
+  margin: 40px auto;
+  max-width: 1100px;
+}
+#goods-distribution h2 {
+  font-size: 1.7rem;
+  color: #ff6fae;
+  margin-bottom: 10px;
+  letter-spacing: .03em;
+}
+#goods-distribution h2::before{
+  content:"";
+  display:inline-block;
+  width:20px;
+  height:20px;
+  margin-right:6px;
+  background:url("img/icon-goods.svg") no-repeat center/contain;
+}
+#goods-distribution .section-lead {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 22px;
+  line-height: 1.7;
+}
+.table-goods {
+  margin-top: 8px;
+  border-radius: 18px;
+}
+.table-goods thead th {
+  background: linear-gradient(90deg, #ffe0f0, #e8f3ff);
+  color: #553344;
+  font-size: .85rem;
+  border-bottom: none;
+}
+.table-goods tbody tr:nth-child(even){
+  background-color:#fff9fd;
+}
+.table-goods tbody tr:hover{
+  background-color:#fff0fb;
+}
+.table-goods td {
+  font-size: .9rem;
+  vertical-align: middle;
+}
+.table-goods .goods-name {
+  font-weight: 800;
+  color: #ff4fa3;
+}
+.table-goods .event-name {
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid #ffd3eb;
+  font-size:.8rem;
+}
+.table-goods .event-name::before{
+  content:"★";
+  font-size:.8rem;
+}
+.table-goods .date-text {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.table-goods .date-text span{
+  display:inline-block;
+}
+.table-goods .date-text span + span::before{
+  content:" ～ ";
+  color:#999;
+}
+.table-goods .note {
+  color:#777;
+  font-size:.82rem;
+}
+@media (max-width:640px){
+  #goods-distribution{
+    padding:30px 10px 34px;
+    margin:24px auto;
+  }
+  .table-goods th:nth-child(4),
+  .table-goods td:nth-child(4){
+    display:none; /* スマホは備考列を隠してスッキリ */
+  }
+}
   </style>
 </head>
 <body>
   <!-- オープニング動画 -->
   <div id="introVideo" class="intro-video-overlay" aria-label="オープニング動画">
-    <video id="introVideoEl" src="video/opening.mp4" playsinline webkit-playsinline muted autoplay preload="auto">
+    <video id="introVideoEl"
+      src="video/opening.mp4"
+      playsinline
+      webkit-playsinline
+      muted
+      autoplay
+      preload="auto">
       お使いの端末では動画を再生できません。
     </video>
     <button type="button" id="introSkip" class="intro-skip-btn">スキップ</button>
   </div>
+
+  <a href="#news" class="skip-link">本文へスキップ</a>
+  ...
 
   <a href="#news" class="skip-link">本文へスキップ</a>
 
@@ -246,11 +367,7 @@
         <a href="#sns">SNS</a>
       </div>
       <button class="hamburger" id="btnMenu" aria-label="メニューを開く" aria-controls="drawer" aria-expanded="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
     </nav>
     <div class="drawer" id="drawer" aria-hidden="true" aria-label="サイドメニュー">
@@ -270,7 +387,13 @@
 
   <!-- 📸 チェキ撮影動画オーバーレイ -->
   <div id="chekiVideoOverlay" class="intro-video-overlay intro-hidden" aria-label="チェキ撮影動画">
-    <video id="chekiVideoEl" src="video/cheki.mp4" playsinline webkit-playsinline muted autoplay preload="auto">
+    <video id="chekiVideoEl"
+      src="video/cheki.mp4"
+      playsinline
+      webkit-playsinline
+      muted
+      autoplay
+      preload="auto">
       お使いの端末では動画を再生できません。
     </video>
     <button type="button" id="chekiSkip" class="intro-skip-btn">スキップ</button>
@@ -294,29 +417,22 @@
           </div>
         </div>
         <div class="hero-card">
-          <a href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer" aria-label="X（@po_toro）へのリンク">
-            <img src="img/potro_twi.jpg" alt="PO・TORO キービジュアル（クリックでXへ）" class="thumb hero-kv" loading="lazy" width="1280" height="720" />
-          </a>
+          <a href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer" aria-label="X（@po_toro）へのリンク"><img src="img/potro_twi.jpg" alt="PO・TORO キービジュアル（クリックでXへ）" class="thumb hero-kv" loading="lazy" width="1280" height="720" /></a>
         </div>
       </div>
     </section>
 
     <div style="text-align: center; padding: 40px 20px; background: #FFF9EE;">
-      <h2 style="color: #FC0FC0; margin-bottom: 20px;">
-        <p style="font-size: 35px; margin: 10px 0;">
-          <strong>❣料金システム❣</strong>
-        </p>
-        <p style="font-size: 25px; margin: 10px 0;">
-          <strong>料金：</strong>30分1,000円（税込)
-        </p>
-        <p style="font-size: 25px; margin: 10px 0;">
-          <strong>🥤各種ドリンク飲み放題🥤</strong>
-        </p>
-        <p style="font-size: 25px; margin: 10px 0;">
-          <strong>🍺生ビールも飲み放題🍺</strong>
-        </p>
-      </h2>
-    </div>
+  <h2 style="color: #FC0FC0; margin-bottom: 20px;">
+    <p style="font-size: 35px; margin: 10px 0;">
+    <strong>❣料金システム❣
+  <p style="font-size: 25px; margin: 10px 0;">
+    <strong>料金：</strong>30分1,000円（税込)
+    <p style="font-size: 25px; margin: 10px 0;">
+    </strong>🥤各種ドリンク飲み放題🥤</p>
+     <p style="font-size: 25px; margin: 10px 0;">
+    <strong>🍺生ビールも飲み放題🍺</p>
+</div>
 
     <!-- News -->
     <section id="news">
@@ -338,7 +454,7 @@
       </div>
     </section>
 
-    <!-- 現在配布中グッズ -->
+    <!-- 現在配布中グッズ（イベントの下、メイドさん紹介の上） -->
     <section id="goods-distribution" class="content-section">
       <div class="container">
         <h2>🎁 現在、下記グッズを配布中でございます</h2>
@@ -352,7 +468,6 @@
               <th>配布開始日</th>
               <th>イベント名</th>
               <th>グッズ名</th>
-              <th>配布終了日</th>
             </tr>
           </thead>
           <tbody id="goodsBody"></tbody>
@@ -391,7 +506,6 @@
       <div class="container">
         <h2 class="sec-title">🎮 ゲーム / 診断 / 講義</h2>
         <div class="grid cols-4">
-
           <article class="card">
             <img src="img/hero-quest-card.png" alt="ポ・トロクエスト キービジュアル" class="thumb" loading="lazy" width="1280" height="720">
             <div class="body">
@@ -418,18 +532,6 @@
               <a class="btn btn-ghost" href="https://potoro1001.github.io/potoro-moeselect/" target="_blank" rel="noopener noreferrer">受講する</a>
             </div>
           </article>
-
-          <!-- ✅ 追加：麻雀システムHP（ここから） -->
-          <article class="card">
-            <img src="img/hero-mahjong-card.png" alt="メイドさんと楽しむ健全麻雀" class="thumb" loading="lazy" width="1280" height="720">
-            <div class="body">
-              <h3>🀄 健全麻雀システム</h3>
-              <p class="tag">全自動麻雀卓 × メイドさん同卓</p>
-              <a class="btn btn-ghost" href="mahjong/index.html" target="_blank" rel="noopener noreferrer">ご利用案内を見る</a>
-            </div>
-          </article>
-          <!-- ✅ 追加：麻雀システムHP（ここまで） -->
-
         </div>
       </div>
     </section>
@@ -445,7 +547,7 @@
         <div id="scheduleStatus" class="tag devlog" aria-live="polite"></div>
       </div>
     </section>
-
+    
     <!-- Access -->
     <section id="access">
       <div class="container">
@@ -466,4 +568,682 @@
               <div style="position:relative;width:100%;padding-top:56.25%;border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.12)">
                 <iframe title="PO・TORO の場所" src="https://www.google.com/maps?q=33.8359588,132.7696145&z=18&output=embed" style="position:absolute;inset:0;border:0;width:100%;height:100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
               </div>
-              <p class="mt-12"><a href="https://www.google.com/maps/place/PO.TORO/@33.8358626,132.7688299,18.58z" target="_blank" rel="noopener noreferrer">Google マップで開く_
+              <p class="mt-12"><a href="https://www.google.com/maps/place/PO.TORO/@33.8358626,132.7688299,18.58z" target="_blank" rel="noopener noreferrer">Google マップで開く</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SNS -->
+    <section id="sns">
+      <div class="container">
+        <h2 class="sec-title">📡 公式SNS</h2>
+        <div class="grid cols-3">
+          <article class="card">
+            <img src="img/hero-sns-x.png" alt="PO・TORO 公式X（旧Twitter）" class="thumb" loading="lazy" width="1280" height="720">
+            <div class="body">
+              <h3>X（旧Twitter）</h3>
+              <p class="tag">@po_toro</p>
+              <a class="btn btn-ghost" href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer" aria-label="X（@po_toro）へ">Xを開く</a>
+            </div>
+          </article>
+          <article class="card">
+            <img src="img/hero-sns-tiktok.png" alt="PO・TORO 公式TikTok" class="thumb" loading="lazy" width="1280" height="720">
+            <div class="body">
+              <h3>TikTok</h3>
+              <p class="tag">@potoro_o</p>
+              <a class="btn btn-ghost" href="https://www.tiktok.com/@potoro_o" target="_blank" rel="noopener noreferrer" aria-label="TikTok（@potoro_o）へ">TikTokを開く</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recruit -->
+    <section id="recruit">
+      <div class="container">
+        <h2 class="sec-title">👗 メイドさん募集</h2>
+        <div class="grid cols-1">
+          <article class="card">
+            <img src="img/recruit_banner.jpg" alt="メイドさん募集中" class="thumb" loading="lazy">
+            <div class="body">
+              <h3>メイドさん募集中</h3>
+              <p>PO・TOROでは一緒に働くメイドさんを募集しています。未経験の方も大歓迎♡</p>
+              <a class="btn btn-ghost" href="https://jp.indeed.com/job/%E3%83%A1%E3%82%A4%E3%83%89%E3%82%AB%E3%83%95%E3%82%A7%E3%82%B3%E3%83%B3%E3%82%BB%E3%83%97%E3%83%88%E3%82%AB%E3%83%95%E3%82%A7%E3%83%9B%E3%83%BC%E3%83%AB%E3%82%B9%E3%82%BF%E3%83%83%E3%83%95-3ad4b6a67e32b85c" target="_blank" rel="noopener noreferrer">応募ページへ</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot">
+      <div>
+        <h4>concept cafe PO・TORO</h4>
+        <p>ご帰宅ありがとうございます。システムやイベントの最新情報は本ポータルからご確認ください。</p>
+        <div style="text-align: center; padding: 20px; background: #2c3e50;">
+  <a href="tel:089-909-5211" 
+     style="display: inline-block; font-size: 24px; color: #fff; 
+            text-decoration: none; padding: 15px 30px; 
+            background: #3498db; border-radius: 8px;">
+    📞 089-909-5211
+  </a>
+</div>
+        <div class="copyright">© <span id="year"></span> PO・TORO / concept cafe. All rights reserved.</div>
+      </div>
+      <div>
+        <h4>リンク</h4>
+        <ul>
+          <li><a href="#events">イベント</a></li>
+          <li><a href="#maids">メイドさん紹介</a></li>
+          <li><a href="#games">ゲーム/診断</a></li>
+          <li><a href="#" id="openTerms">利用規約</a></li>
+          <li><a href="#" id="openPrivacy">プライバシー</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>お問い合わせ</h4>
+        <ul>
+          <li><a href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">X（@po_toro）</a></li>
+          <li><a href="#access">店舗アクセス</a></li>
+        </ul>
+        
+      </div>
+      
+    </div>
+  </footer>
+
+  <!-- ライトボックス -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="画像ビューア">
+    <button type="button" class="close" aria-label="閉じる (Esc)">閉じる ✕</button>
+    <img id="lightboxImg" alt="拡大画像" />
+  </div>
+
+  <!-- モーダル：利用規約 -->
+  <div id="modalTerms" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="利用規約">
+    <div class="panel">
+      <button class="close" data-close="modalTerms" aria-label="閉じる">✕ 閉じる</button>
+      <div class="body">
+        <h2>利用規約</h2>
+        <p>本ウェブサイトおよび関連コンテンツは、concept cafe PO・TORO（以下「当店」）が運営しています。ご利用にあたり、以下の規約に同意いただいたものとみなします。</p>
+        <ul>
+          <li>当店のコンテンツ（画像、文章、動画等）の著作権は当店または正当な権利者に帰属します。無断転載・使用を禁じます。</li>
+          <li>当店は、予告なくサービス内容を変更・中止する場合があります。</li>
+          <li>サイトの利用に関連して発生した損害について、当店は一切の責任を負いません。</li>
+          <li>本規約は必要に応じて改訂される場合があります。最新の内容をご確認ください。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- モーダル：プライバシー -->
+  <div id="modalPrivacy" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="プライバシーポリシー">
+    <div class="panel">
+      <button class="close" data-close="modalPrivacy" aria-label="閉じる">✕ 閉じる</button>
+      <div class="body">
+        <h2>プライバシーポリシー</h2>
+        <p>当店は、お客様の個人情報を適切に取り扱うことをお約束します。</p>
+        <ul>
+          <li>お問い合わせやご予約などの際に取得した個人情報は、応対およびサービス提供の目的のみに使用します。</li>
+          <li>法令に基づく場合を除き、ご本人の同意なく第三者に提供することはありません。</li>
+          <li>当店は取得した個人情報を安全に管理し、漏洩・改ざん・不正アクセス等の防止に努めます。</li>
+          <li>クッキー（Cookie）やアクセス解析ツールを用いる場合がありますが、個人を特定する目的では利用しません。</li>
+          <li>お客様がご自身の情報の開示・訂正・削除を希望される場合は、当店までご連絡ください。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================
+    // 設定（CSV / GViz フォールバック）
+    // =========================
+    window.PORTAL_CONFIG = {
+      newsCsvUrl:    "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1650494358",
+      newsCsvUrlAlt: "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_NEWS.csv",
+      eventsCsvUrl:  "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=365949763",
+      eventsCsvUrlAlt:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_EVENTS.csv",
+      scheduleCsvUrl:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1276825118",
+      scheduleCsvUrlAlt:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_schedule.csv",
+      // ▼グッズ配布：PORTAL_GOODS.csv
+      goodsCsvUrl:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pub?gid=681304800&single=true&output=csv",
+      goodsCsvUrlAlt:"https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pub?gid=681304800&single=true&output=csv"
+    };
+
+    // =========================
+    // ユーティリティ
+    // =========================
+    function escapeHtml(str){ return String(str).replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[s])); }
+    function normalizeHeader(s){ let t=String(s||''); if(t && t.charCodeAt(0)===0xFEFF) t=t.slice(1); return t.trim().toLowerCase(); }
+
+    async function fetchTextWithTimeout(url, ms=10000){
+      const controller = new AbortController();
+      const id = setTimeout(()=>controller.abort(), ms);
+      try{
+        const res = await fetch(url + (url.includes('?') ? '&' : '?') + 'cb=' + Date.now(), {
+          cache: 'no-store', credentials: 'omit', signal: controller.signal
+        });
+        if(!res.ok) throw new Error('HTTP ' + res.status);
+        return await res.text();
+      } finally {
+        clearTimeout(id);
+      }
+    }
+
+    // CSVパーサ
+    function parseCSV(text){
+      if(!text) return [];
+      const trimmed = String(text).replace(/^\s+/, '');
+      const firstLine = trimmed.split(/\r\n|\n|\r/, 1)[0] || '';
+      const candidates = [',',';','\t'];
+      let delim = ','; let maxHits = -1;
+      for(const c of candidates){
+        const hits = (firstLine.match(new RegExp("\\\\"+c, 'g'))||[]).length;
+        if(hits>maxHits){maxHits=hits; delim=c;}
+      }
+      const rows=[]; let i=0, field='', row=[], inQ=false;
+      while(i<trimmed.length){
+        const ch=trimmed[i];
+        if(inQ){
+          if(ch==='"'){
+            if(trimmed[i+1]==='"'){field+='"'; i+=2; continue;}
+            inQ=false; i++; continue;
+          }
+          field+=ch; i++; continue;
+        }
+        if(ch==='"'){ inQ=true; i++; continue; }
+        if(ch===delim){ row.push(field); field=''; i++; continue; }
+        if(ch==='\n'||ch==='\r'){
+          if(ch==='\r'&&trimmed[i+1]=='\n') i++;
+          const joined=row.concat(field).join('').trim();
+          if(joined!==''){
+            const head=(row[0]??field).trim();
+            if(!/^#/.test(head)) rows.push(row.concat(field));
+          }
+          row=[]; field=''; i++; continue;
+        }
+        field+=ch; i++;
+      }
+      if(field!==''||row.length){ rows.push(row.concat(field)); }
+      return rows.filter(r=> (r.join('').trim()!=='') );
+    }
+
+    // ===== CSV→オブジェクト =====
+    function csvToNewsObjects(csv){
+      const rows = parseCSV(csv);
+      if(!rows.length) return [];
+      const h = rows[0].map(normalizeHeader);
+      const idx = (keys)=>{ for(const k of keys){ const i=h.indexOf(k); if(i!==-1) return i; } return -1; };
+      const di = idx(['date','掲載日','更新日','published','publish_date','day']);
+      const li = idx(['label','ラベル','タグ','category','type']);
+      const ti = idx(['text','本文','お知らせ','内容','body','message','detail','詳細','content']);
+      const startAt = 1;
+      return rows.slice(startAt)
+        .map(r => ({
+          date: di>-1 ? String(r[di]||'').trim() : '',
+          label:li>-1 ? String(r[li]||'').trim() : '',
+          text: ti>-1 ? String(r[ti]||'').trim() : ''
+        }))
+        .filter(o => o.date || o.text);
+    }
+
+    function csvToEventObjects(csv){
+      const rows=parseCSV(csv); if(!rows.length) return [];
+      const h=rows[0].map(normalizeHeader);
+      const idx=(keys)=>{for(const k of keys){const i=h.indexOf(k); if(i!==-1) return i;} return -1;};
+      const ti=idx(['title','タイトル','件名','イベント名','name']);
+      const di=idx(['datetext','date','日付','期間','date_text','dates']);
+      const ii=idx(['image','画像','img','imageurl','image_url','thumbnail','thumb']);
+      const ai=idx(['alt','代替','代替テキスト','alttext','alt_text']);
+      const ci=idx(['chip','タグ','tag','ラベル','category']);
+      const linki=idx(['link','url','リンク']);
+      return rows.slice(1).map(r=>({
+        title:ti>-1?r[ti]:'',
+        datetext:di>-1?r[di]:'',
+        image:ii>-1?r[ii]:'',
+        alt:ai>-1?r[ai]:'',
+        chip:ci>-1?r[ci]:'',
+        link:linki>-1?r[linki]:''
+      })).filter(o=> (String(o.title||'').trim()!=='' || String(o.image||'').trim()!=='' ));
+    }
+
+    function csvToScheduleObjects(csv){
+      const rows=parseCSV(csv); if(!rows.length) return [];
+      let headerRow = rows[0];
+      const looksHeader = (r)=> r && r.length>=2 && r.join('').toLowerCase().includes('date');
+      if(!looksHeader(headerRow)){
+        const idx = rows.findIndex(r=> looksHeader(r));
+        if(idx>0) headerRow = rows[idx];
+      }
+      const h = headerRow.map(s=>{ let t=String(s||''); if(t && t.charCodeAt(0)===0xFEFF) t=t.slice(1); return t.trim().toLowerCase(); });
+      const idx=(keys)=>{ for(const k of keys){ const i=h.indexOf(k); if(i!==-1) return i; } return -1; };
+      let di=idx(['date','日付','営業日']); let hi=idx(['hours','営業時間','open','openhours']); let ni=idx(['note','メモ','備考','補足']);
+      if(di===-1) di=0; if(hi===-1) hi=1; if(ni===-1) ni=2;
+      const startAt = rows.indexOf(headerRow)+1;
+      return rows.slice(startAt)
+        .filter(r => r && r.length>0 && r.join('').trim()!=='')
+        .map(r=>({
+          date: String(r[di]||'').trim(),
+          hours: String(r[hi]||'').trim(),
+          note: String(r[ni]||'').trim()
+        }));
+    }
+
+    // ▼グッズ配布
+    function csvToGoodsObjects(csv){
+      const rows = parseCSV(csv);
+      if(!rows.length) return [];
+      const h = rows[0].map(s=>{
+        let t = String(s||'');
+        if(t && t.charCodeAt(0)===0xFEFF) t=t.slice(1);
+        return t.trim();
+      });
+      const idx = (keys)=> {
+        for(const k of keys){
+          const i = h.indexOf(k);
+          if(i!==-1) return i;
+          const li = h.indexOf(k.toLowerCase());
+          if(li!==-1) return li;
+        }
+        return -1;
+      };
+      const startIdx = idx(['配布開始日','start','start_date']);
+      const eventIdx = idx(['イベント名','event','event_name','title']);
+      const nameIdx  = idx(['グッズ名','name','goods','goods_name']);
+      const endIdx   = idx(['配布終了日','end','end_date']);
+      const noteIdx  = idx(['備考','メモ','note','remarks']);
+
+      return rows.slice(1)
+        .map(r=>({
+          start: startIdx>-1 ? String(r[startIdx]||'').trim() : '',
+          event: eventIdx>-1 ? String(r[eventIdx]||'').trim() : '',
+          name:  nameIdx>-1  ? String(r[nameIdx] ||'').trim() : '',
+          end:   endIdx>-1   ? String(r[endIdx]  ||'').trim() : '',
+          note:  noteIdx>-1  ? String(r[noteIdx] ||'').trim() : ''
+        }))
+        .filter(o => o.start || o.event || o.name || o.end || o.note);
+    }
+
+    // ===== 日付パース & 曜日表示 =====
+    function parseSheetDateToJsDate(s){
+      const raw = String(s ?? '').trim();
+      if(!raw) return null;
+      const maybeNum = Number(raw);
+      if(!Number.isNaN(maybeNum) && maybeNum > 20000 && maybeNum < 60000){
+        const base = new Date(Date.UTC(1899,11,30));
+        return new Date(base.getTime() + maybeNum * 86400000);
+      }
+      const z2h = (t)=>t.replace(/[０-９]/g, d => String.fromCharCode(d.charCodeAt(0)-0xFEE0));
+      let str = z2h(raw)
+        .replace(/\u200B|\u200C|\u200D|\uFEFF/g, '')
+        .replace(/\u00A0|\u3000/g, ' ')
+        .replace(/[（）\(\)]/g, ' ')
+        .replace(/[月火水木金土日]曜?/g, ' ')
+        .replace(/[年\.]/g, '/')
+        .replace(/月/g, '/')
+        .replace(/日/g, ' ')
+        .replace(/-/g, '/')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      const parts = str.includes('/') ? str.split('/') : str.split(' ');
+      const nums = parts.map(p => p.trim()).filter(Boolean).flatMap(p => p.match(/\d{1,4}/g) || []);
+
+      if(nums.length >= 3){
+        const last = nums.length - 1;
+        const d = Number(nums[last]);
+        const m = Number(nums[last-1]);
+        let y = Number(nums[last-2]);
+        if(!(y >= 1000 && y <= 9999)) y = new Date().getFullYear();
+        if(m>=1 && m<=12 && d>=1 && d<=31) return new Date(`${y}/${m}/${d}`);
+      }
+      if(nums.length === 2){
+        const y = new Date().getFullYear();
+        const m = Number(nums[0]);
+        const d = Number(nums[1]);
+        if(m>=1 && m<=12 && d>=1 && d<=31) return new Date(`${y}/${m}/${d}`);
+      }
+      const m2 = str.match(/(\d{1,4})[\/ ]?(\d{1,2})[\/ ]?(\d{1,2})/);
+      if(m2){
+        const y = m2[1].length===4 ? Number(m2[1]) : new Date().getFullYear();
+        const m = Number(m2[2]); const d = Number(m2[3]);
+        if(m>=1 && m<=12 && d>=1 && d<=31) return new Date(`${y}/${m}/${d}`);
+      }
+      return null;
+    }
+
+    function formatDateJPWithWeekday(rawDateStr){
+      const d = parseSheetDateToJsDate(rawDateStr);
+      if(!d) return String(rawDateStr ?? '');
+      const wd = ['日','月','火','水','木','金','土'][d.getDay()];
+      const y  = d.getFullYear();
+      const m  = String(d.getMonth()+1).padStart(2,'0');
+      const dd = String(d.getDate()).padStart(2,'0');
+      return `${y}/${m}/${dd}(${wd})`;
+    }
+
+    async function tryLoadCSV(primaryUrl, altUrl){
+      try{
+        return await fetchTextWithTimeout(primaryUrl, 10000);
+      }catch(e){
+        try{
+          return await fetchTextWithTimeout(altUrl, 10000);
+        }catch(e2){
+          return '';
+        }
+      }
+    }
+
+    // ===== 描画 =====
+    function renderNews(){
+      const ul=document.getElementById('newsList'); if(!ul) return;
+      const items=(window.PORTAL_DATA.news||[]);
+      if(!items.length){
+        ul.innerHTML = '<li>現在お知らせはありません。</li>';
+        return;
+      }
+      ul.innerHTML=items.map(n=>
+        `<li><time>${escapeHtml(n.date||'')}</time> ${n.label?`<span class="label">${escapeHtml(n.label)}</span>`:''} ${n.text||''}</li>`
+      ).join('');
+    }
+
+    function renderEvents(){
+      const g=document.getElementById('eventsGrid'); if(!g) return;
+      const items=(window.PORTAL_DATA.events||[]);
+      if(!items.length){
+        g.innerHTML='<div class="tag">イベントは準備中です。</div>';
+        return;
+      }
+      g.innerHTML=items.map(e=>{
+        const img = e.image? `<img src="${e.image}" alt="${escapeHtml(e.alt||e.title||'')}" class="thumb" data-full="${e.image}" loading="lazy">` : '';
+        const title = escapeHtml(e.title||'');
+        const date = escapeHtml(e.datetext||'');
+        const chip = e.chip?`<div class="chip">${escapeHtml(e.chip)}</div>`:'';
+        const link = e.link?`<p class="mt-8"><a href="${e.link}" target="_blank" rel="noopener noreferrer">詳細を見る</a></p>`:'';
+        return `<article class="card">${img}<div class="body"><h3>${title}</h3><p>${date}</p>${chip}${link}</div></article>`;
+      }).join('');
+    }
+
+    function renderSchedule(){
+      const tbody=document.getElementById('scheduleBody'); if(!tbody) return;
+      const status=document.getElementById('scheduleStatus');
+      const all=(window.PORTAL_DATA.schedule||[]);
+      const today=new Date(); today.setHours(0,0,0,0);
+      const limit=new Date(today); limit.setDate(today.getDate()+7);
+      const inRange=[]; const undated=[];
+      for(const r of all){
+        const d=parseSheetDateToJsDate(r.date);
+        if(!d){ undated.push(r); continue; }
+        d.setHours(0,0,0,0);
+        if(d>=today && d<=limit) inRange.push(r);
+      }
+      let rows=inRange.length? inRange : (all.slice(0,7));
+      if(!rows.length){
+        tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
+      } else {
+        tbody.innerHTML = rows.map(r => {
+          const dateText = formatDateJPWithWeekday(r.date);
+          const hours    = String(r.hours || '');
+          const note     = String(r.note  || '');
+          return `<tr><td>${escapeHtml(dateText)}</td><td>${escapeHtml(hours)}</td><td>${escapeHtml(note)}</td></tr>`;
+        }).join('');
+      }
+      if(status){
+        status.textContent = `schedule：CSV ${all.length}件（直近7日 ${inRange.length}件 / 日付未解釈 ${undated.length}件）`;
+      }
+    }
+
+    // ▼グッズ配布レンダリング
+    function renderGoods(){
+      const tbody=document.getElementById('goodsBody'); if(!tbody) return;
+      const status=document.getElementById('goodsStatus');
+      const list=(window.PORTAL_DATA.goods||[]);
+      if(!list.length){
+        tbody.innerHTML = '<tr><td colspan="4">現在表示できるグッズ情報はありません。</td></tr>';
+      }else{
+        tbody.innerHTML = list.map(g=>{
+          const start = g.start ? formatDateJPWithWeekday(g.start) : '';
+          const end   = g.end   ? formatDateJPWithWeekday(g.end)   : '';
+          const event = g.event || '';
+          const name  = g.name  || '';
+          const note  = g.note  || '';
+          return `
+            <tr>
+              <td class="date-text">
+                ${start ? `<span>${escapeHtml(start)}</span>` : ''}
+              </td>
+              <td>
+                ${event ? `<span class="event-name">${escapeHtml(event)}</span>` : ''}
+              </td>
+              <td>
+                <div class="goods-name">${escapeHtml(name)}</div>
+                ${note ? `<div class="note">${escapeHtml(note)}</div>` : ''}
+              </td>
+              <td class="date-text">
+                ${end ? `<span>${escapeHtml(end)}</span>` : ''}
+              </td>
+            </tr>`;
+        }).join('');
+      }
+      if(status){
+        status.textContent = `goods：CSV ${list.length}件`;
+      }
+    }
+
+    // ===== 初期データ =====
+    window.PORTAL_DATA={news:[],events:[],schedule:[],goods:[]};
+
+    function trapFocus(container, first){
+      const focusables = container.querySelectorAll('a, button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
+      if(!focusables.length) return;
+      const firstEl=first||focusables[0]; const lastEl=focusables[focusables.length-1];
+      function onKey(e){
+        if(e.key==='Tab'){
+          if(e.shiftKey && document.activeElement===firstEl){
+            e.preventDefault(); lastEl.focus();
+          } else if(!e.shiftKey && document.activeElement===lastEl){
+            e.preventDefault(); firstEl.focus();
+          }
+        }
+        if(e.key==='Escape'){
+          container.classList.remove('open');
+          container.setAttribute('aria-hidden','true');
+          document.body.style.overflow='';
+        }
+      }
+      container.addEventListener('keydown', onKey);
+    }
+
+    document.addEventListener('DOMContentLoaded', async ()=>{
+      // ===== チェキ動画再生（X画像クリック時） =====
+      const chekiOverlay = document.getElementById('chekiVideoOverlay');
+      const chekiVideo = document.getElementById('chekiVideoEl');
+      const chekiSkip = document.getElementById('chekiSkip');
+      const twiImage = document.querySelector('img[src="img/potro_twi.jpg"]');
+
+      function closeCheki() {
+        if (!chekiOverlay) return;
+        chekiOverlay.classList.add('intro-hidden');
+        document.body.classList.remove('is-intro-playing');
+        if (chekiVideo && !chekiVideo.paused) {
+          chekiVideo.pause();
+        }
+      }
+
+      function openCheki() {
+        if (!chekiOverlay) return;
+        chekiOverlay.classList.remove('intro-hidden');
+        document.body.classList.add('is-intro-playing');
+        chekiVideo.currentTime = 0;
+        chekiVideo.play().catch(()=>{});
+      }
+
+      if (chekiVideo) {
+        chekiVideo.addEventListener('ended', closeCheki);
+        chekiVideo.addEventListener('error', closeCheki);
+      }
+      if (chekiSkip) {
+        chekiSkip.addEventListener('click', closeCheki);
+      }
+      if (twiImage) {
+        twiImage.addEventListener('click', (e)=>{
+          e.preventDefault();
+          openCheki();
+        });
+      }
+
+      // ===== オープニング動画制御 =====
+      const intro = document.getElementById('introVideo');
+      const introVideo = document.getElementById('introVideoEl');
+      const introSkip = document.getElementById('introSkip');
+
+      if (intro) {
+        document.body.classList.add('is-intro-playing');
+      }
+
+      function closeIntro() {
+        if (!intro) return;
+        intro.classList.add('intro-hidden');
+        document.body.classList.remove('is-intro-playing');
+        if (introVideo && !introVideo.paused) {
+          introVideo.pause();
+        }
+      }
+
+      if (introVideo) {
+        introVideo.addEventListener('ended', closeIntro);
+        introVideo.addEventListener('error', closeIntro);
+      }
+
+      if (introSkip) {
+        introSkip.addEventListener('click', closeIntro);
+      }
+
+      const yearEl=document.getElementById('year');
+      if(yearEl) yearEl.textContent=new Date().getFullYear();
+
+      const btnMenu=document.getElementById('btnMenu');
+      const drawer=document.getElementById('drawer');
+      const btnClose=document.getElementById('btnClose');
+      if(btnMenu && drawer && btnClose){
+        const toggleDrawer=(open)=>{
+          drawer.classList.toggle('open',open);
+          drawer.setAttribute('aria-hidden', String(!open));
+          btnMenu.setAttribute('aria-expanded', String(open));
+          document.body.style.overflow = open? 'hidden':'';
+          if(open){
+            drawer.querySelector('a')?.focus();
+            trapFocus(drawer, drawer.querySelector('a'));
+          } else {
+            btnMenu.focus();
+          }
+        };
+        btnMenu.addEventListener('click',()=>toggleDrawer(true));
+        btnClose.addEventListener('click',()=>toggleDrawer(false));
+        drawer.addEventListener('click',(e)=>{ if(e.target.tagName==='A') toggleDrawer(false); });
+        window.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) toggleDrawer(false); });
+      }
+
+      // === データ読込
+      try {
+        const newsCsv = await tryLoadCSV(window.PORTAL_CONFIG.newsCsvUrl, window.PORTAL_CONFIG.newsCsvUrlAlt);
+        window.PORTAL_DATA.news = newsCsv ? csvToNewsObjects(newsCsv) : [];
+      } catch(e){ window.PORTAL_DATA.news = []; }
+
+      try {
+        const eventsCsv = await tryLoadCSV(window.PORTAL_CONFIG.eventsCsvUrl, window.PORTAL_CONFIG.eventsCsvUrlAlt);
+        window.PORTAL_DATA.events = eventsCsv ? csvToEventObjects(eventsCsv) : [];
+      } catch(e){ window.PORTAL_DATA.events = []; }
+
+      try {
+        const scheduleCsv = await tryLoadCSV(window.PORTAL_CONFIG.scheduleCsvUrl, window.PORTAL_CONFIG.scheduleCsvUrlAlt);
+        window.PORTAL_DATA.schedule = scheduleCsv ? csvToScheduleObjects(scheduleCsv) : [];
+      } catch(e){ window.PORTAL_DATA.schedule = []; }
+
+      // ▼グッズ配布CSV
+      try {
+        const goodsCsv = await tryLoadCSV(window.PORTAL_CONFIG.goodsCsvUrl, window.PORTAL_CONFIG.goodsCsvUrlAlt);
+        window.PORTAL_DATA.goods = goodsCsv ? csvToGoodsObjects(goodsCsv) : [];
+      } catch(e){ window.PORTAL_DATA.goods = []; }
+
+      renderNews();
+      renderEvents();
+      renderSchedule();
+      renderGoods();
+
+      // 画像ライトボックス
+      const lightbox=document.getElementById('lightbox');
+      const lightImg=document.getElementById('lightboxImg');
+      const closeBtn=lightbox.querySelector('.close');
+      const openLightbox=(src,alt)=>{
+        lightImg.src=src;
+        lightImg.alt=alt||'拡大画像';
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden','false');
+        document.body.style.overflow='hidden';
+      };
+      const closeLightbox=()=>{
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden','true');
+        lightImg.removeAttribute('src');
+        document.body.style.overflow='';
+      };
+      const eventsGrid=document.getElementById('eventsGrid');
+      if(eventsGrid){
+        eventsGrid.addEventListener('click',(e)=>{
+          const img=e.target.closest('img');
+          if(!img) return;
+          openLightbox(img.getAttribute('data-full')||img.src, img.alt);
+        });
+      }
+      lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); });
+      closeBtn.addEventListener('click', closeLightbox);
+      window.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && lightbox.classList.contains('open')) closeLightbox(); });
+
+      // モーダル
+      const modalTerms=document.getElementById('modalTerms');
+      const modalPrivacy=document.getElementById('modalPrivacy');
+      const openTerms=document.getElementById('openTerms');
+      const openPrivacy=document.getElementById('openPrivacy');
+      const toggleModal=(el,open)=>{
+        if(!el) return;
+        el.classList.toggle('open',open);
+        el.setAttribute('aria-hidden', String(!open));
+        document.body.style.overflow = open? 'hidden':'';
+        if(open) trapFocus(el, el.querySelector('.close'));
+      };
+      if(openTerms)   openTerms.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalTerms,true);   });
+      if(openPrivacy) openPrivacy.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalPrivacy,true); });
+      document.querySelectorAll('.modal .close').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          const id=btn.getAttribute('data-close');
+          const el=id? document.getElementById(id) : btn.closest('.modal');
+          toggleModal(el,false);
+        });
+      });
+      window.addEventListener('keydown',(e)=>{
+        if(e.key==='Escape'){
+          toggleModal(modalTerms,false);
+          toggleModal(modalPrivacy,false);
+        }
+      });
+      [modalTerms, modalPrivacy].forEach(m=>{
+        if(m) m.addEventListener('click',(e)=>{ if(e.target===m) toggleModal(m,false); });
+      });
+
+      // ?embed=true 簡略表示
+      const params = new URLSearchParams(location.search);
+      if(params.get('embed')==='true'){
+        const header=document.querySelector('header');
+        const footer=document.querySelector('footer');
+        if(header) header.style.display='none';
+        if(footer) footer.style.display='none';
+        document.querySelectorAll('section').forEach(s=>s.style.padding='12px 0');
+      }
+    });
+  </script>
+  <noscript>JavaScriptが無効になっています。最新情報の読み込みや画像ビューアがご利用いただけません。</noscript>
+</body>
+</html>
