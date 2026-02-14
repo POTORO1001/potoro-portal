@@ -11,10 +11,11 @@
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/" />
 
   <!--
-    ポトロポータル｜チェキカード差し替え Ver1.1
+    ポトロポータル｜チェキカード差し替え Ver1.2
     - Hero右カード画像を img/potro_twi.jpg に変更
     - 文章と「Xへ」リンクを削除
     - カードクリックで cheki.mp4 を再生（オーバーレイ）
+    - グッズCSVのヘッダーゆらぎ対応（②）＋列位置フォールバック（③）を追加
   -->
 
   <!-- OGP -->
@@ -236,9 +237,7 @@
     /* =========================
        Quick top cards (麻雀追加)
     ========================= */
-    .quick{
-      padding:10px 0 26px;
-    }
+    .quick{ padding:10px 0 26px; }
     .quick-grid{
       display:grid; gap:14px;
       grid-template-columns:repeat(4,1fr);
@@ -351,9 +350,7 @@
     .event-link a:hover{text-decoration:underline}
 
     /* featured: 先頭1件を大きく */
-    .featured{
-      grid-column: span 2;
-    }
+    .featured{ grid-column: span 2; }
     .featured .thumb{aspect-ratio: 21/10}
     @media (max-width:880px){
       .featured{grid-column:auto}
@@ -472,8 +469,8 @@
     body.is-intro-playing { overflow: hidden; }
 
     /* ▼現在配布中グッズセクション用スタイル（かわいめ） */
-    #goods-distribution {
-      text-align: center;
+    #goods-distribution{
+      text-align:center;
       background: linear-gradient(180deg, #fff5fb 0%, #fffefd 50%, #f4f9ff 100%);
       padding: 40px 16px 46px;
       border-radius: 24px;
@@ -482,7 +479,7 @@
       max-width: 1100px;
       border:1px solid rgba(255,255,255,.8);
     }
-    #goods-distribution h2 {
+    #goods-distribution h2{
       font-size: 1.7rem;
       color: #ff6fae;
       margin-bottom: 10px;
@@ -497,18 +494,15 @@
       background:url("img/icon-goods.svg") no-repeat center/contain;
       vertical-align:-3px;
     }
-    #goods-distribution .section-lead {
+    #goods-distribution .section-lead{
       font-size: 0.95rem;
       color: #666;
       margin-bottom: 22px;
       line-height: 1.7;
       font-weight: 800;
     }
-    .table-goods {
-      margin-top: 8px;
-      border-radius: 18px;
-    }
-    .table-goods thead th {
+    .table-goods{ margin-top: 8px; border-radius: 18px; }
+    .table-goods thead th{
       background: linear-gradient(90deg, #ffe0f0, #e8f3ff);
       color: #553344;
       font-size: .85rem;
@@ -516,18 +510,18 @@
     }
     .table-goods tbody tr:nth-child(even){ background-color:#fff9fd; }
     .table-goods tbody tr:hover{ background-color:#fff0fb; }
-    .table-goods td { font-size: .9rem; vertical-align: middle; }
-    .table-goods .goods-name { font-weight: 1000; color: #ff4fa3; }
-    .table-goods .event-name {
+    .table-goods td{ font-size: .9rem; vertical-align: middle; }
+    .table-goods .goods-name{ font-weight: 1000; color: #ff4fa3; }
+    .table-goods .event-name{
       display:inline-flex; align-items:center; gap:4px;
       padding:3px 8px; border-radius:999px;
       background:#fff; border:1px solid #ffd3eb;
       font-size:.8rem; font-weight: 1000;
     }
     .table-goods .event-name::before{ content:"★"; font-size:.8rem; }
-    .table-goods .date-text { font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 900; }
+    .table-goods .date-text{ font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 900; }
     .table-goods .date-text span{ display:inline-block; }
-    .table-goods .note { color:#777; font-size:.82rem; font-weight: 800; }
+    .table-goods .note{ color:#777; font-size:.82rem; font-weight: 800; }
 
     @media (max-width:640px){
       #goods-distribution{ padding:30px 10px 34px; margin:24px auto; }
@@ -640,17 +634,16 @@
           </div>
         </div>
 
-        <!-- Hero 右：チェキカード（差し替え対象） -->
+        <!-- Hero 右：チェキカード -->
         <div class="hero-visual cheki-card reveal"
              role="button" tabindex="0"
              aria-label="チェキ動画を再生">
           <img src="img/potro_twi.jpg" alt="チェキ動画カード" loading="lazy" width="1280" height="960">
-          <!-- 文章と「Xへ」を削除（cap自体を削除） -->
         </div>
       </div>
     </section>
 
-    <!-- Quick導線（麻雀カード追加：要望③） -->
+    <!-- Quick導線 -->
     <section class="quick">
       <div class="container">
         <div class="quick-grid">
@@ -672,7 +665,6 @@
             <p>プロフィール一覧はこちら♡</p>
           </a>
 
-          <!-- ★追加：麻雀導線（TOP） -->
           <a class="qcard reveal" href="https://potoro1001.github.io/potoro-mahjong/" target="_blank" rel="noopener noreferrer">
             <div class="top">
               <div class="ico">🀄</div>
@@ -694,7 +686,7 @@
       </div>
     </section>
 
-    <!-- 料金（旧：インライン装飾 → ブランド統一カード） -->
+    <!-- 料金 -->
     <section id="pricing">
       <div class="container reveal">
         <h2 class="sec-title">❣ 料金システム ❣</h2>
@@ -725,7 +717,7 @@
       </div>
     </section>
 
-    <!-- Events（大型カード化：要望②） -->
+    <!-- Events -->
     <section id="events">
       <div class="container reveal">
         <h2 class="sec-title">🎉 イベント</h2>
@@ -734,7 +726,7 @@
       </div>
     </section>
 
-    <!-- 現在配布中グッズ（イベントの下、メイドさん紹介の上） -->
+    <!-- 現在配布中グッズ -->
     <section id="goods-distribution" class="content-section reveal">
       <div class="container">
         <h2>🎁 現在、下記グッズを配布中でございます</h2>
@@ -757,13 +749,12 @@
       </div>
     </section>
 
-    <!-- メイドさん紹介（カード一覧化：要望①） -->
+    <!-- メイドさん紹介 -->
     <section id="maids">
       <div class="container reveal">
         <h2 class="sec-title">👑 メイドさん紹介</h2>
 
         <div class="grid cols-3" style="align-items:start">
-
           <article class="card">
             <img src="img/potro_cafe_maiddemo_final.png" alt="メイドさんプロフィール一覧" class="thumb" loading="lazy" width="1280" height="720">
             <div class="body">
@@ -790,7 +781,6 @@
               <a class="btn btn-ghost mt-12" href="https://xn--pckua2a7gp15o89zb.com/jbn/161ab3df92e8edd79020e422936454ff" target="_blank" rel="noopener noreferrer">応募ページへ</a>
             </div>
           </article>
-
         </div>
 
         <div class="tag mt-16">※さらに「メイド個別カード（名前/誕生日/世代）」まで出す場合は、プロフィールJSON/CSVをこのページに読み込ませれば“完全一覧化”できます。</div>
@@ -909,7 +899,7 @@
       </div>
     </section>
 
-    <!-- Recruit（既存：残す） -->
+    <!-- Recruit -->
     <section id="recruit">
       <div class="container reveal">
         <h2 class="sec-title">👗 メイドさん募集</h2>
@@ -1140,31 +1130,74 @@
         }));
     }
 
-    // ▼グッズ配布
+    // ▼グッズ配布（②ヘッダーゆらぎ対応＋③フォールバック）
     function csvToGoodsObjects(csv){
       const rows = parseCSV(csv);
       if(!rows.length) return [];
-      const h = rows[0].map(s=>{
-        let t = String(s||'');
-        if(t && t.charCodeAt(0)===0xFEFF) t=t.slice(1);
-        return t.trim();
-      });
-      const idx = (keys)=> {
+
+      // ヘッダー候補行を探す（「配布」「グッズ」「イベント」「start」などを含む行）
+      const scoreHeader = (r)=>{
+        const line = (r||[]).map(c=>normalizeHeader(c)).join(',');
+        let s = 0;
+        if(line.includes('配布')) s += 3;
+        if(line.includes('グッズ')) s += 2;
+        if(line.includes('イベント')) s += 2;
+        if(line.includes('start')) s += 1;
+        if(line.includes('end')) s += 1;
+        return s;
+      };
+
+      let headerRow = rows[0];
+      let headerIndex = 0;
+      let bestScore = scoreHeader(headerRow);
+
+      // 先頭10行くらいまで見て最もヘッダーっぽい行を採用
+      for(let i=1; i<Math.min(rows.length, 10); i++){
+        const sc = scoreHeader(rows[i]);
+        if(sc > bestScore){
+          bestScore = sc;
+          headerRow = rows[i];
+          headerIndex = i;
+        }
+      }
+
+      // ヘッダー正規化（小文字・空白除去・BOM除去は normalizeHeader が担当）
+      const h = headerRow.map(normalizeHeader);
+
+      const idx = (keys)=>{
         for(const k of keys){
-          const i = h.indexOf(k);
-          if(i!==-1) return i;
-          const li = h.indexOf(String(k).toLowerCase());
-          if(li!==-1) return li;
+          const kk = normalizeHeader(k);
+          const i = h.indexOf(kk);
+          if(i !== -1) return i;
         }
         return -1;
       };
-      const startIdx = idx(['配布開始日','start','start_date']);
-      const eventIdx = idx(['イベント名','event','event_name','title']);
-      const nameIdx  = idx(['グッズ名','name','goods','goods_name']);
-      const endIdx   = idx(['配布終了日','end','end_date']);
-      const noteIdx  = idx(['備考','メモ','note','remarks']);
 
-      return rows.slice(1)
+      // ②：ヘッダーゆらぎ（同義語）を広めに許容
+      let startIdx = idx(['配布開始日','開始日','配布開始','start','startdate','start_date','from','配布開始日付']);
+      let eventIdx = idx(['イベント名','イベント','event','eventname','event_name','title','企画名']);
+      let nameIdx  = idx(['グッズ名','グッズ','配布物','goods','goodsname','goods_name','name','item','品名']);
+      let endIdx   = idx(['配布終了日','終了日','配布終了','end','enddate','end_date','to','配布終了日付']);
+      let noteIdx  = idx(['備考','メモ','note','remarks','補足']);
+
+      // ③：ヘッダーが合わない/無い場合のフォールバック（列位置で拾う）
+      // 期待：開始日, イベント名, グッズ名, 終了日, 備考
+      const fallbackByPosition = ()=>{
+        if(startIdx === -1) startIdx = 0;
+        if(eventIdx === -1) eventIdx = 1;
+        if(nameIdx  === -1) nameIdx  = 2;
+        if(endIdx   === -1) endIdx   = 3;
+        if(noteIdx  === -1) noteIdx  = 4; // 無ければ空でもOK
+      };
+
+      // 主要3列（開始/イベント/グッズ）が全部見つからないならフォールバック発動
+      const foundCore = (startIdx !== -1) || (eventIdx !== -1) || (nameIdx !== -1);
+      if(!foundCore) fallbackByPosition();
+
+      // データ開始行：ヘッダー行の次から
+      const startAt = headerIndex + 1;
+
+      return rows.slice(startAt)
         .map(r=>({
           start: startIdx>-1 ? String(r[startIdx]||'').trim() : '',
           event: eventIdx>-1 ? String(r[eventIdx]||'').trim() : '',
@@ -1411,7 +1444,7 @@
       // reveal準備
       setupReveal();
 
-      // ===== チェキ動画再生（差し替えカードクリック） =====
+      // ===== チェキ動画再生（カードクリック） =====
       const chekiOverlay = document.getElementById('chekiVideoOverlay');
       const chekiVideo = document.getElementById('chekiVideoEl');
       const chekiSkip = document.getElementById('chekiSkip');
@@ -1439,7 +1472,6 @@
       }
       if (chekiSkip) chekiSkip.addEventListener('click', closeCheki);
 
-      // ★Hero右カード（.cheki-card）をクリックで再生
       const chekiCard = document.querySelector('.cheki-card');
       if(chekiCard){
         chekiCard.addEventListener('click', (e)=>{
