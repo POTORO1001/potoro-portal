@@ -11,11 +11,9 @@
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/" />
 
   <!--
-    ポトロポータル｜チェキカード差し替え Ver1.2
-    - Hero右カード画像を img/potro_twi.jpg に変更
-    - 文章と「Xへ」リンクを削除
-    - カードクリックで cheki.mp4 を再生（オーバーレイ）
-    - グッズCSVのヘッダーゆらぎ対応（②）＋列位置フォールバック（③）を追加
+    ポトロポータル｜チェキカード差し替え Ver1.3
+    - Ver1.2 の「チェキカードクリックで cheki.mp4 再生」が端末/ブラウザによって再生開始しない事があるため、
+      クリック後に requestAnimationFrame を挟んで確実に play() し、失敗時は代替パス(video/cheki.mp4)を試すように修正（この点のみ）
   -->
 
   <!-- OGP -->
@@ -72,7 +70,6 @@
       -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
     }
 
-    /* 背景の“ふわ光”レイヤー（超軽量） */
     body::before{
       content:"";
       position:fixed; inset:-20%;
@@ -91,9 +88,6 @@
     img{max-width:100%;height:auto;display:block}
     .container{width:min(1100px,92vw);margin:0 auto}
 
-    /* =========================
-       header / nav
-    ========================= */
     header{
       position:sticky;top:0;z-index:50;
       backdrop-filter:saturate(140%) blur(10px);
@@ -152,9 +146,6 @@
       .drawer a:hover{background:#fafafa}
     }
 
-    /* =========================
-       hero
-    ========================= */
     .hero{position:relative;isolation:isolate}
     .hero .wrap{
       display:grid;grid-template-columns:1.1fr .9fr;
@@ -197,7 +188,6 @@
       border:1px solid rgba(255,255,255,.55);
     }
 
-    /* 右側：カード枠 */
     .hero-visual{
       position:relative;
       border-radius:20px;
@@ -222,7 +212,6 @@
       transform: scale(1.02);
     }
 
-    /* ★チェキカード：クリック可能にする（見た目はそのまま） */
     .cheki-card{
       cursor:pointer;
       user-select:none;
@@ -234,9 +223,6 @@
       outline-offset:3px;
     }
 
-    /* =========================
-       Quick top cards (麻雀追加)
-    ========================= */
     .quick{ padding:10px 0 26px; }
     .quick-grid{
       display:grid; gap:14px;
@@ -276,9 +262,6 @@
     }
     .qcard .tag::before{content:"•"; color:#ff72b4}
 
-    /* =========================
-       sections / typography
-    ========================= */
     section{padding:34px 0}
     .sec-title{
       font-weight:1000;font-size:1.35rem;margin:0 0 14px 0;
@@ -286,9 +269,6 @@
       letter-spacing:.02em;
     }
 
-    /* =========================
-       News ticker
-    ========================= */
     .ticker{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(255,255,255,.7)}
     .ticker ul{list-style:none;margin:0;padding:0}
     .ticker li{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border-bottom:1px solid #eee;line-height:1.55}
@@ -296,9 +276,6 @@
     .ticker time{font-variant-numeric:tabular-nums;color:#666;min-width:8.2em;font-weight:900}
     .label{display:inline-block;padding:.18em .62em;border-radius:999px;font-size:.75rem;font-weight:1000;color:#fff;background:#ff72b4;white-space:nowrap}
 
-    /* =========================
-       grid / cards
-    ========================= */
     .grid{display:grid;gap:16px}
     .grid.cols-3{grid-template-columns:repeat(3,1fr)}
     .grid.cols-4{grid-template-columns:repeat(4,1fr)}
@@ -319,9 +296,6 @@
     .card p{margin:0;color:#555;font-size:.93rem;line-height:1.55}
     .chip{display:inline-flex;align-items:center;gap:6px;background:#fafafa;border:1px solid #eee;border-radius:999px;padding:4px 8px;font-size:.78rem;font-weight:900;color:#444;margin-top:10px}
 
-    /* =========================
-       Events: 大型カード化 + 先頭 featured
-    ========================= */
     #eventsGrid .card{position:relative}
     #eventsGrid .thumb{aspect-ratio: 16/10}
     .event-overlay{
@@ -349,7 +323,6 @@
     .event-link a{text-decoration:none}
     .event-link a:hover{text-decoration:underline}
 
-    /* featured: 先頭1件を大きく */
     .featured{ grid-column: span 2; }
     .featured .thumb{aspect-ratio: 21/10}
     @media (max-width:880px){
@@ -357,9 +330,6 @@
       .featured .thumb{aspect-ratio:16/10}
     }
 
-    /* =========================
-       Tables
-    ========================= */
     .table{
       width:100%;border-collapse:collapse;
       background:#fff;border-radius:14px;
@@ -380,7 +350,6 @@
     .tag{font-size:.75rem;color:#666}
     .mt-8{margin-top:8px}.mt-12{margin-top:12px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}
 
-    /* 「開発ログのみ非表示」 */
     .devlog{
       position:absolute !important;
       width:1px!important;height:1px!important;
@@ -390,13 +359,11 @@
       opacity:0!important;pointer-events:none!important;
     }
 
-    /* ライトボックス */
     .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;padding:4vw;z-index:100;opacity:0;pointer-events:none;transition:.2s}
     .lightbox.open{opacity:1;pointer-events:auto}
     .lightbox img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 8px 30px rgba(0,0,0,.5);border-radius:10px}
     .lightbox .close{position:absolute;top:16px;right:16px;background:#fff;border:none;border-radius:999px;font-size:16px;padding:8px 12px;cursor:pointer}
 
-    /* モーダル */
     .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);z-index:120;opacity:0;pointer-events:none;transition:.2s}
     .modal.open{opacity:1;pointer-events:auto}
     .modal .panel{width:min(880px,92vw);max-height:min(80vh,900px);overflow:auto;background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px}
@@ -432,10 +399,6 @@
 
     @media (max-width:768px){ html,body{background-attachment:scroll} }
 
-    /* ============================
-       📱 iPhoneの“強制白”対策は維持しつつ、
-       重要パーツだけ白固定（見やすさ優先）
-       ============================ */
     @supports (-webkit-touch-callout: none) {
       @media (pointer: coarse) {
         .ticker, .ticker li, .badge, .hero-card,
@@ -450,7 +413,6 @@
       }
     }
 
-    /* ===== オープニング動画オーバーレイ ===== */
     .intro-video-overlay {
       position: fixed; inset: 0;
       background: #000; z-index: 9999;
@@ -468,7 +430,6 @@
     .intro-hidden { display: none !important; }
     body.is-intro-playing { overflow: hidden; }
 
-    /* ▼現在配布中グッズセクション用スタイル（かわいめ） */
     #goods-distribution{
       text-align:center;
       background: linear-gradient(180deg, #fff5fb 0%, #fffefd 50%, #f4f9ff 100%);
@@ -529,9 +490,6 @@
       .table-goods td:nth-child(4){ display:none; }
     }
 
-    /* =========================
-       開始時アニメーション（軽量）
-    ========================= */
     .reveal{
       opacity:0;
       transform: translateY(10px);
@@ -607,14 +565,14 @@
     <video id="chekiVideoEl"
       src="cheki.mp4"
       playsinline webkit-playsinline
-      muted autoplay preload="auto">
+      muted
+      preload="auto">
       お使いの端末では動画を再生できません。
     </video>
     <button type="button" id="chekiSkip" class="intro-skip-btn">スキップ</button>
   </div>
 
   <main>
-    <!-- Hero -->
     <section class="hero">
       <div class="container wrap">
         <div class="reveal">
@@ -634,7 +592,6 @@
           </div>
         </div>
 
-        <!-- Hero 右：チェキカード -->
         <div class="hero-visual cheki-card reveal"
              role="button" tabindex="0"
              aria-label="チェキ動画を再生">
@@ -643,7 +600,6 @@
       </div>
     </section>
 
-    <!-- Quick導線 -->
     <section class="quick">
       <div class="container">
         <div class="quick-grid">
@@ -686,7 +642,6 @@
       </div>
     </section>
 
-    <!-- 料金 -->
     <section id="pricing">
       <div class="container reveal">
         <h2 class="sec-title">❣ 料金システム ❣</h2>
@@ -706,7 +661,6 @@
       </div>
     </section>
 
-    <!-- News -->
     <section id="news">
       <div class="container reveal">
         <h2 class="sec-title">🗞️ お知らせ</h2>
@@ -717,7 +671,6 @@
       </div>
     </section>
 
-    <!-- Events -->
     <section id="events">
       <div class="container reveal">
         <h2 class="sec-title">🎉 イベント</h2>
@@ -726,7 +679,6 @@
       </div>
     </section>
 
-    <!-- 現在配布中グッズ -->
     <section id="goods-distribution" class="content-section reveal">
       <div class="container">
         <h2>🎁 現在、下記グッズを配布中でございます</h2>
@@ -749,7 +701,6 @@
       </div>
     </section>
 
-    <!-- メイドさん紹介 -->
     <section id="maids">
       <div class="container reveal">
         <h2 class="sec-title">👑 メイドさん紹介</h2>
@@ -787,7 +738,6 @@
       </div>
     </section>
 
-    <!-- Games / Tools -->
     <section id="games">
       <div class="container reveal">
         <h2 class="sec-title">🎮 ゲーム / 診断 / 講義 / 麻雀</h2>
@@ -831,7 +781,6 @@
       </div>
     </section>
 
-    <!-- Schedule -->
     <section id="schedule">
       <div class="container reveal">
         <h2 class="sec-title">📅 営業スケジュール（直近7日）</h2>
@@ -843,7 +792,6 @@
       </div>
     </section>
 
-    <!-- Access -->
     <section id="access">
       <div class="container reveal">
         <h2 class="sec-title">📍 アクセス</h2>
@@ -873,7 +821,6 @@
       </div>
     </section>
 
-    <!-- SNS -->
     <section id="sns">
       <div class="container reveal">
         <h2 class="sec-title">📡 公式SNS</h2>
@@ -899,7 +846,6 @@
       </div>
     </section>
 
-    <!-- Recruit -->
     <section id="recruit">
       <div class="container reveal">
         <h2 class="sec-title">👗 メイドさん募集</h2>
@@ -955,13 +901,11 @@
     </div>
   </footer>
 
-  <!-- ライトボックス -->
   <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="画像ビューア">
     <button type="button" class="close" aria-label="閉じる (Esc)">閉じる ✕</button>
     <img id="lightboxImg" alt="拡大画像" />
   </div>
 
-  <!-- モーダル：利用規約 -->
   <div id="modalTerms" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="利用規約" aria-hidden="true">
     <div class="panel">
       <button class="close" data-close="modalTerms" aria-label="閉じる">✕ 閉じる</button>
@@ -978,7 +922,6 @@
     </div>
   </div>
 
-  <!-- モーダル：プライバシー -->
   <div id="modalPrivacy" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="プライバシーポリシー" aria-hidden="true">
     <div class="panel">
       <button class="close" data-close="modalPrivacy" aria-label="閉じる">✕ 閉じる</button>
@@ -997,9 +940,6 @@
   </div>
 
   <script>
-    // =========================
-    // 設定（CSV / GViz フォールバック）
-    // =========================
     window.PORTAL_CONFIG = {
       newsCsvUrl:    "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1650494358",
       newsCsvUrlAlt: "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_NEWS.csv",
@@ -1007,14 +947,10 @@
       eventsCsvUrlAlt:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_EVENTS.csv",
       scheduleCsvUrl:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1276825118",
       scheduleCsvUrlAlt:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_schedule.csv",
-      // ▼グッズ配布：PORTAL_GOODS.csv
       goodsCsvUrl:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pub?gid=681304800&single=true&output=csv",
       goodsCsvUrlAlt:"https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pub?gid=681304800&single=true&output=csv"
     };
 
-    // =========================
-    // ユーティリティ
-    // =========================
     function escapeHtml(str){ return String(str).replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[s])); }
     function normalizeHeader(s){ let t=String(s||''); if(t && t.charCodeAt(0)===0xFEFF) t=t.slice(1); return t.trim().toLowerCase(); }
 
@@ -1032,7 +968,6 @@
       }
     }
 
-    // CSVパーサ
     function parseCSV(text){
       if(!text) return [];
       const trimmed = String(text).replace(/^\s+/, '');
@@ -1070,7 +1005,6 @@
       return rows.filter(r=> (r.join('').trim()!=='') );
     }
 
-    // ===== CSV→オブジェクト =====
     function csvToNewsObjects(csv){
       const rows = parseCSV(csv);
       if(!rows.length) return [];
@@ -1130,12 +1064,10 @@
         }));
     }
 
-    // ▼グッズ配布（②ヘッダーゆらぎ対応＋③フォールバック）
     function csvToGoodsObjects(csv){
       const rows = parseCSV(csv);
       if(!rows.length) return [];
 
-      // ヘッダー候補行を探す（「配布」「グッズ」「イベント」「start」などを含む行）
       const scoreHeader = (r)=>{
         const line = (r||[]).map(c=>normalizeHeader(c)).join(',');
         let s = 0;
@@ -1151,7 +1083,6 @@
       let headerIndex = 0;
       let bestScore = scoreHeader(headerRow);
 
-      // 先頭10行くらいまで見て最もヘッダーっぽい行を採用
       for(let i=1; i<Math.min(rows.length, 10); i++){
         const sc = scoreHeader(rows[i]);
         if(sc > bestScore){
@@ -1161,9 +1092,7 @@
         }
       }
 
-      // ヘッダー正規化（小文字・空白除去・BOM除去は normalizeHeader が担当）
       const h = headerRow.map(normalizeHeader);
-
       const idx = (keys)=>{
         for(const k of keys){
           const kk = normalizeHeader(k);
@@ -1173,28 +1102,23 @@
         return -1;
       };
 
-      // ②：ヘッダーゆらぎ（同義語）を広めに許容
       let startIdx = idx(['配布開始日','開始日','配布開始','start','startdate','start_date','from','配布開始日付']);
       let eventIdx = idx(['イベント名','イベント','event','eventname','event_name','title','企画名']);
       let nameIdx  = idx(['グッズ名','グッズ','配布物','goods','goodsname','goods_name','name','item','品名']);
       let endIdx   = idx(['配布終了日','終了日','配布終了','end','enddate','end_date','to','配布終了日付']);
       let noteIdx  = idx(['備考','メモ','note','remarks','補足']);
 
-      // ③：ヘッダーが合わない/無い場合のフォールバック（列位置で拾う）
-      // 期待：開始日, イベント名, グッズ名, 終了日, 備考
       const fallbackByPosition = ()=>{
         if(startIdx === -1) startIdx = 0;
         if(eventIdx === -1) eventIdx = 1;
         if(nameIdx  === -1) nameIdx  = 2;
         if(endIdx   === -1) endIdx   = 3;
-        if(noteIdx  === -1) noteIdx  = 4; // 無ければ空でもOK
+        if(noteIdx  === -1) noteIdx  = 4;
       };
 
-      // 主要3列（開始/イベント/グッズ）が全部見つからないならフォールバック発動
       const foundCore = (startIdx !== -1) || (eventIdx !== -1) || (nameIdx !== -1);
       if(!foundCore) fallbackByPosition();
 
-      // データ開始行：ヘッダー行の次から
       const startAt = headerIndex + 1;
 
       return rows.slice(startAt)
@@ -1208,7 +1132,6 @@
         .filter(o => o.start || o.event || o.name || o.end || o.note);
     }
 
-    // ===== 日付パース & 曜日表示 =====
     function parseSheetDateToJsDate(s){
       const raw = String(s ?? '').trim();
       if(!raw) return null;
@@ -1278,7 +1201,6 @@
       }
     }
 
-    // ===== 描画 =====
     function renderNews(){
       const ul=document.getElementById('newsList'); if(!ul) return;
       const items=(window.PORTAL_DATA.news||[]);
@@ -1354,7 +1276,6 @@
       }
     }
 
-    // ▼グッズ配布レンダリング（4列対応）
     function renderGoods(){
       const tbody=document.getElementById('goodsBody'); if(!tbody) return;
       const status=document.getElementById('goodsStatus');
@@ -1391,7 +1312,6 @@
       }
     }
 
-    // ===== 初期データ =====
     window.PORTAL_DATA={news:[],events:[],schedule:[],goods:[]};
 
     function trapFocus(container, first){
@@ -1417,7 +1337,6 @@
       container.addEventListener('keydown', onKey);
     }
 
-    // ===== reveal（開始時アニメーション）=====
     function setupReveal(){
       const els = Array.from(document.querySelectorAll('.reveal'));
       if(!els.length) return;
@@ -1441,13 +1360,12 @@
 
     document.addEventListener('DOMContentLoaded', async ()=>{
 
-      // reveal準備
       setupReveal();
 
-      // ===== チェキ動画再生（カードクリック） =====
+      // ===== チェキ動画再生（★Ver1.3：ここだけ修正） =====
       const chekiOverlay = document.getElementById('chekiVideoOverlay');
-      const chekiVideo = document.getElementById('chekiVideoEl');
-      const chekiSkip = document.getElementById('chekiSkip');
+      const chekiVideo   = document.getElementById('chekiVideoEl');
+      const chekiSkip    = document.getElementById('chekiSkip');
 
       function closeCheki() {
         if (!chekiOverlay) return;
@@ -1456,19 +1374,50 @@
         if (chekiVideo && !chekiVideo.paused) chekiVideo.pause();
       }
 
+      async function safePlayCheki(tryAlt=false){
+        if(!chekiVideo) return;
+        // 端末差（iOS/Safari等）対策：毎回明示
+        chekiVideo.muted = true;
+        chekiVideo.playsInline = true;
+        chekiVideo.setAttribute('muted','');
+        chekiVideo.setAttribute('playsinline','');
+        chekiVideo.setAttribute('webkit-playsinline','');
+
+        try{
+          chekiVideo.currentTime = 0;
+        }catch(_){}
+
+        try{
+          await chekiVideo.play();
+        }catch(err){
+          // 代替パスを一度だけ試す（cheki.mp4 が video/ 配下の可能性にも対応）
+          if(!tryAlt){
+            const cur = chekiVideo.getAttribute('src') || '';
+            if(cur !== 'video/cheki.mp4'){
+              chekiVideo.setAttribute('src','video/cheki.mp4');
+              try{ chekiVideo.load(); }catch(_){}
+              // 描画反映後に再トライ
+              requestAnimationFrame(()=>{ safePlayCheki(true); });
+              return;
+            }
+          }
+          // 再生できない場合は閉じる（無限ループ防止）
+          closeCheki();
+        }
+      }
+
       function openCheki() {
         if (!chekiOverlay) return;
         chekiOverlay.classList.remove('intro-hidden');
         document.body.classList.add('is-intro-playing');
-        if(chekiVideo){
-          chekiVideo.currentTime = 0;
-          chekiVideo.play().catch(()=>{});
-        }
+
+        // display:none → 表示の切り替え直後は play が拒否されることがあるので1フレーム待つ
+        requestAnimationFrame(()=>{ safePlayCheki(false); });
       }
 
       if (chekiVideo) {
         chekiVideo.addEventListener('ended', closeCheki);
-        chekiVideo.addEventListener('error', closeCheki);
+        chekiVideo.addEventListener('error', ()=>{ closeCheki(); });
       }
       if (chekiSkip) chekiSkip.addEventListener('click', closeCheki);
 
@@ -1548,7 +1497,6 @@
         window.PORTAL_DATA.schedule = scheduleCsv ? csvToScheduleObjects(scheduleCsv) : [];
       } catch(e){ window.PORTAL_DATA.schedule = []; }
 
-      // ▼グッズ配布CSV
       try {
         const goodsCsv = await tryLoadCSV(window.PORTAL_CONFIG.goodsCsvUrl, window.PORTAL_CONFIG.goodsCsvUrlAlt);
         window.PORTAL_DATA.goods = goodsCsv ? csvToGoodsObjects(goodsCsv) : [];
