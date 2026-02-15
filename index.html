@@ -14,6 +14,7 @@
     ポトロポータル｜チェキカード差し替え Ver1.3
     - Ver1.2 の「チェキカードクリックで cheki.mp4 再生」が端末/ブラウザによって再生開始しない事があるため、
       クリック後に requestAnimationFrame を挟んで確実に play() し、失敗時は代替パス(video/cheki.mp4)を試すように修正（この点のみ）
+    - Ver1.4（今回）：B対応「本日の営業時間」をヒーローに自動表示（scheduleCSVから当日抽出）
   -->
 
   <!-- OGP -->
@@ -586,9 +587,21 @@
             <a class="btn btn-ghost" href="#maids">メイドさんへ会いに行く</a>
           </div>
 
-          <div class="hero-card mt-16" role="status">
-            <strong><a href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">最新のお給仕予定表はコチラ♡</a></strong>
-            <div class="tag mt-8">※X（@po_toro）で随時更新しています</div>
+          <!-- ★Ver1.4：本日の営業時間を自動表示 -->
+          <div class="hero-card mt-16" role="status" aria-live="polite">
+            <div id="todayHoursBox">
+              <div style="font-weight:1000;font-size:1.05rem">
+                📅 本日の営業時間：<span id="todayHoursText">読み込み中…</span>
+              </div>
+              <div class="tag mt-8" id="todayHoursNote">※最新のお給仕予定表はXでもご確認いただけます</div>
+
+              <div class="mt-12" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+                <a class="btn btn-ghost" href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">
+                  X（@po_toro）で最新を見る♡
+                </a>
+                <a class="btn btn-primary" href="#access">お屋敷へ行く</a>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1247,6 +1260,37 @@
       }).join('');
     }
 
+    function renderTodayHours(){
+      const textEl = document.getElementById('todayHoursText');
+      const noteEl = document.getElementById('todayHoursNote');
+      if(!textEl) return;
+
+      const all = (window.PORTAL_DATA.schedule || []);
+      const today = new Date(); today.setHours(0,0,0,0);
+
+      let found = null;
+      for(const r of all){
+        const d = parseSheetDateToJsDate(r.date);
+        if(!d) continue;
+        d.setHours(0,0,0,0);
+        if(d.getTime() === today.getTime()){
+          found = r;
+          break;
+        }
+      }
+
+      if(found && String(found.hours || '').trim()){
+        textEl.textContent = String(found.hours).trim();
+        if(noteEl){
+          const memo = String(found.note || '').trim();
+          noteEl.textContent = memo ? `メモ：${memo}` : '※ご主人さま・お嬢さまのご帰宅お待ちしております♡';
+        }
+      }else{
+        textEl.textContent = '未登録（最新はXをご確認ください）';
+        if(noteEl) noteEl.textContent = '※スケジュールが未更新の場合があります。X（@po_toro）をご確認ください。';
+      }
+    }
+
     function renderSchedule(){
       const tbody=document.getElementById('scheduleBody'); if(!tbody) return;
       const status=document.getElementById('scheduleStatus');
@@ -1274,6 +1318,9 @@
       if(status){
         status.textContent = `schedule：CSV ${all.length}件（直近7日 ${inRange.length}件 / 日付未解釈 ${undated.length}件）`;
       }
+
+      // ★Ver1.4：ヒーローに本日の営業時間を反映
+      renderTodayHours();
     }
 
     function renderGoods(){
@@ -1376,32 +1423,26 @@
 
       async function safePlayCheki(tryAlt=false){
         if(!chekiVideo) return;
-        // 端末差（iOS/Safari等）対策：毎回明示
         chekiVideo.muted = true;
         chekiVideo.playsInline = true;
         chekiVideo.setAttribute('muted','');
         chekiVideo.setAttribute('playsinline','');
         chekiVideo.setAttribute('webkit-playsinline','');
 
-        try{
-          chekiVideo.currentTime = 0;
-        }catch(_){}
+        try{ chekiVideo.currentTime = 0; }catch(_){}
 
         try{
           await chekiVideo.play();
         }catch(err){
-          // 代替パスを一度だけ試す（cheki.mp4 が video/ 配下の可能性にも対応）
           if(!tryAlt){
             const cur = chekiVideo.getAttribute('src') || '';
             if(cur !== 'video/cheki.mp4'){
               chekiVideo.setAttribute('src','video/cheki.mp4');
               try{ chekiVideo.load(); }catch(_){}
-              // 描画反映後に再トライ
               requestAnimationFrame(()=>{ safePlayCheki(true); });
               return;
             }
           }
-          // 再生できない場合は閉じる（無限ループ防止）
           closeCheki();
         }
       }
@@ -1410,8 +1451,6 @@
         if (!chekiOverlay) return;
         chekiOverlay.classList.remove('intro-hidden');
         document.body.classList.add('is-intro-playing');
-
-        // display:none → 表示の切り替え直後は play が拒否されることがあるので1フレーム待つ
         requestAnimationFrame(()=>{ safePlayCheki(false); });
       }
 
