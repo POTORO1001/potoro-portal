@@ -11,10 +11,11 @@
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/" />
 
   <!--
-    ポトロポータル｜チェキカード差し替え Ver1.3
-    - Ver1.2 の「チェキカードクリックで cheki.mp4 再生」が端末/ブラウザによって再生開始しない事があるため、
-      クリック後に requestAnimationFrame を挟んで確実に play() し、失敗時は代替パス(video/cheki.mp4)を試すように修正（この点のみ）
-    - Ver1.4（今回）：B対応「本日の営業時間」をヒーローに自動表示（scheduleCSVから当日抽出）
+    ポトロポータル｜予約導線1本化 Ver1.4
+    - ヒーローに「本日の営業時間」表示（スケジュールCSVから当日分を抽出）
+    - 「ご予約はDM（大きい固定ボタン）」を本日の営業時間の下に設置（主導線を1本化）
+    - 「初めての方へ（料金/システム/注意）」ミニモーダルを追加（ワンタップ表示）
+    - 既存の Ver1.3（チェキ再生安定化）は維持
   -->
 
   <!-- OGP -->
@@ -167,7 +168,7 @@
     }
     .sub{color:#444;margin:.2rem 0 1rem;line-height:1.7}
 
-    .cta{display:flex;flex-wrap:wrap;gap:10px}
+    .cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
     .btn{
       display:inline-flex;align-items:center;gap:8px;
       padding:12px 16px;border-radius:14px;
@@ -180,6 +181,67 @@
     .btn:active{transform:translateY(0)}
     .btn-primary{background:linear-gradient(135deg,#ff81c0,#8ed2ff);color:#fff}
     .btn-ghost{background:#fff;color:#333;border:1px solid #eee}
+
+    /* ===== 予約導線（ヒーローで主導線を1本化） ===== */
+    .today-box{
+      margin-top:12px;
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(255,255,255,.7);
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      padding:12px 12px;
+    }
+    .today-row{
+      display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+    }
+    .today-left{
+      display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+      font-weight:1000;
+    }
+    .today-pill{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;
+      background:linear-gradient(135deg, rgba(255,121,166,.18), rgba(127,201,255,.18));
+      border:1px solid rgba(255,121,166,.18);
+      color:#333;
+      font-size:.86rem;
+      white-space:nowrap;
+    }
+    .today-hours{
+      font-variant-numeric:tabular-nums;
+      font-weight:1000;
+      color:#222;
+      font-size:1.02rem;
+    }
+    .btn-reserve{
+      padding:14px 18px;
+      border-radius:16px;
+      font-size:1.05rem;
+      letter-spacing:.02em;
+      box-shadow:0 16px 34px rgba(255, 120, 170, .32);
+      border:1px solid rgba(255,255,255,.4);
+      width:100%;
+      justify-content:center;
+    }
+    .reserve-stack{display:grid;gap:10px;margin-top:10px}
+    .reserve-subactions{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+      font-weight:900;
+    }
+    .reserve-subactions a,
+    .reserve-subactions button{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:9px 12px;border-radius:999px;
+      background:rgba(255,255,255,.95);
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 6px 14px rgba(0,0,0,.08);
+      text-decoration:none;color:#222;
+      cursor:pointer;
+      font-weight:1000;
+    }
+    .reserve-subactions a:hover,
+    .reserve-subactions button:hover{transform:translateY(-1px);text-decoration:none}
+    .reserve-note{color:#555;font-size:.86rem;font-weight:900;line-height:1.6}
 
     .hero-card{
       background:var(--card);
@@ -372,6 +434,29 @@
     .modal .close{position:sticky;top:0;margin-left:auto;background:#f6f6f6;border:none;border-radius:999px;padding:8px 12px;cursor:pointer;font-weight:900}
     .modal .body{padding:8px 4px}
 
+    /* 初めての方へ：ミニモーダルの見た目 */
+    .mini-grid{display:grid;gap:12px}
+    .mini-card{
+      border:1px solid #eee;
+      border-radius:14px;
+      padding:12px 12px;
+      background:linear-gradient(180deg, #fff, #fff7fb);
+    }
+    .mini-card h3{margin:.1rem 0 .5rem;font-size:1.05rem;font-weight:1000}
+    .mini-card ul{margin:.3rem 0 0; padding-left:18px; color:#444; line-height:1.65; font-weight:800}
+    .mini-kv{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+      margin-top:8px;
+    }
+    .mini-kv .kv{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;
+      background:rgba(255,121,166,.12);
+      border:1px solid rgba(255,121,166,.18);
+      font-weight:1000;color:#333;
+      white-space:nowrap;
+    }
+
     .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
     .skip-link:focus{left:16px;top:12px;width:auto;height:auto;background:#111;color:#fff;padding:10px 12px;border-radius:10px;z-index:1000}
     :focus-visible{outline:2px solid #0b69d5;outline-offset:2px}
@@ -386,16 +471,21 @@
       header{background:rgba(20,20,20,.78)}
       .nav-links a{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2);text-shadow:none}
       .nav-links a:hover{background:#fff;color:#111}
-      .card,.qcard,.table,.ticker,.hero-card{background:rgba(29,31,34,.92);color:#e8e8e8}
+      .card,.qcard,.table,.ticker,.hero-card,.today-box{background:rgba(29,31,34,.92);color:#e8e8e8}
       .table th{background:#232529}
       .ticker li{border-bottom-color:#2b2d31}
       .ticker time{color:#bdbdbd}
-      .sub,.card p,.qcard p{color:#cfcfcf}
+      .sub,.card p,.qcard p,.reserve-note{color:#cfcfcf}
       .event-overlay{background:rgba(29,31,34,.92); border-color:rgba(255,255,255,.12)}
       .pill.date{background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#e8e8e8}
       .modal .panel{background:#1d1f22;color:#e8e8e8}
       .modal .close{background:#2a2c31;color:#e8e8e8}
       a{color:#7fc9ff}
+      .today-hours{color:#fff}
+      .reserve-subactions a,.reserve-subactions button{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.18)}
+      .mini-card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+      .mini-card ul{color:#e6e6e6}
+      .mini-kv .kv{background:rgba(255,121,166,.16);border-color:rgba(255,121,166,.22);color:#fff}
     }
 
     @media (max-width:768px){ html,body{background-attachment:scroll} }
@@ -403,12 +493,12 @@
     @supports (-webkit-touch-callout: none) {
       @media (pointer: coarse) {
         .ticker, .ticker li, .badge, .hero-card,
-        .qcard, .card, .table{
+        .qcard, .card, .table,.today-box{
           background:#fff !important;
           color:#111 !important;
           border:1px solid #eee !important;
         }
-        .ticker time, .tag, .sub, .card p, .qcard p{color:#444 !important}
+        .ticker time, .tag, .sub, .card p, .qcard p,.reserve-note{color:#444 !important}
         .event-overlay{background:rgba(255,255,255,.92) !important; color:#111 !important; border:1px solid #eee !important}
         .pill.date{background:#fff !important; color:#111 !important; border:1px solid #eee !important}
       }
@@ -581,27 +671,40 @@
           <h1 class="headline">ようこそ、ご主人さま・お嬢さま。<br>PO・TOROの入口はここ♡</h1>
           <p class="sub">イベント、メイドさん紹介、ゲームや各種リンクをこのページに集約しました。ブックマーク推奨です！</p>
 
-          <div class="cta">
-            <a class="btn btn-primary" href="#events">イベント案内へ</a>
-            <a class="btn btn-primary" href="#games">診断・ゲームで遊ぶ</a>
-            <a class="btn btn-ghost" href="#maids">メイドさんへ会いに行く</a>
-          </div>
-
-          <!-- ★Ver1.4：本日の営業時間を自動表示 -->
-          <div class="hero-card mt-16" role="status" aria-live="polite">
-            <div id="todayHoursBox">
-              <div style="font-weight:1000;font-size:1.05rem">
-                📅 本日の営業時間：<span id="todayHoursText">読み込み中…</span>
+          <!-- ★ 予約導線：本日の営業時間 → 予約ボタン（固定） -->
+          <div class="today-box" role="status" aria-live="polite">
+            <div class="today-row">
+              <div class="today-left">
+                <span class="today-pill">🕒 本日の営業時間</span>
+                <span class="today-hours" id="todayHours">読込中…</span>
               </div>
-              <div class="tag mt-8" id="todayHoursNote">※最新のお給仕予定表はXでもご確認いただけます</div>
+              <a href="#schedule" class="tag" style="font-weight:1000">営業日一覧を見る →</a>
+            </div>
 
-              <div class="mt-12" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-                <a class="btn btn-ghost" href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">
-                  X（@po_toro）で最新を見る♡
-                </a>
-                <a class="btn btn-primary" href="#access">お屋敷へ行く</a>
+            <div class="reserve-stack">
+              <a class="btn btn-primary btn-reserve" id="reserveBtn"
+                 href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer"
+                 aria-label="XのDMで予約する（PO・TORO公式Xへ）">
+                💌 ご予約はDM
+              </a>
+
+              <div class="reserve-subactions">
+                <button type="button" id="openFirst" aria-label="初めての方へ（料金/システム/注意）を開く">
+                  🫖 初めての方へ
+                </button>
+                <a href="#pricing" aria-label="料金システムを見る">💴 料金を見る</a>
+                <a href="#access" aria-label="アクセスを見る">📍 アクセス</a>
+              </div>
+
+              <div class="reserve-note">
+                ※DM予約の際は「ご希望日時／人数／お名前（呼び名）／ご要望（推し・初回など）」を送ってください♡
               </div>
             </div>
+          </div>
+
+          <div class="hero-card mt-16" role="status">
+            <strong><a href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">最新のお給仕予定表はコチラ♡</a></strong>
+            <div class="tag mt-8">※X（@po_toro）で随時更新しています</div>
           </div>
         </div>
 
@@ -919,6 +1022,56 @@
     <img id="lightboxImg" alt="拡大画像" />
   </div>
 
+  <!-- 初めての方へ（ミニモーダル） -->
+  <div id="modalFirst" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="初めての方へ" aria-hidden="true">
+    <div class="panel">
+      <button class="close" data-close="modalFirst" aria-label="閉じる">✕ 閉じる</button>
+      <div class="body">
+        <h2>初めての方へ（料金 / システム / 注意）</h2>
+
+        <div class="mini-grid">
+          <div class="mini-card">
+            <h3>💴 料金</h3>
+            <div class="mini-kv">
+              <span class="kv">30分 1,000円（税込）</span>
+              <span class="kv">ドリンク飲み放題</span>
+              <span class="kv">生ビールもOK</span>
+            </div>
+            <ul>
+              <li>延長は30分単位でご案内します。</li>
+              <li>料金の詳細は「料金システム」欄もご確認ください。</li>
+            </ul>
+          </div>
+
+          <div class="mini-card">
+            <h3>🫖 システム</h3>
+            <ul>
+              <li>「放置ゼロ宣言」：ご案内が途切れないように運営しています。</li>
+              <li>「キャストドリンク無し」：分かりやすい料金で安心して楽しめます。</li>
+              <li>混雑時はお席のご案内にお時間をいただく場合があります。</li>
+            </ul>
+          </div>
+
+          <div class="mini-card">
+            <h3>⚠️ 注意（やさしくお願い）</h3>
+            <ul>
+              <li>撮影やSNS投稿は、店内ルール・キャストの希望に沿ってお願いします。</li>
+              <li>他のお客様の映り込みにはご配慮ください。</li>
+              <li>困ったことがあれば、すぐにスタッフへお声がけください。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+          <a class="btn btn-primary" href="#pricing" data-close="modalFirst" style="text-decoration:none">料金を見る</a>
+          <a class="btn btn-ghost" href="#access" data-close="modalFirst" style="text-decoration:none">アクセスを見る</a>
+        </div>
+
+        <p class="tag mt-12">※内容は運用に合わせて更新してください（ここは“ミニ説明”として最短で迷いを消す設計です）。</p>
+      </div>
+    </div>
+  </div>
+
   <div id="modalTerms" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="利用規約" aria-hidden="true">
     <div class="panel">
       <button class="close" data-close="modalTerms" aria-label="閉じる">✕ 閉じる</button>
@@ -961,7 +1114,14 @@
       scheduleCsvUrl:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=1276825118",
       scheduleCsvUrlAlt:"https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_schedule.csv",
       goodsCsvUrl:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pub?gid=681304800&single=true&output=csv",
-      goodsCsvUrlAlt:"https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pub?gid=681304800&single=true&output=csv"
+      goodsCsvUrlAlt:"https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pub?gid=681304800&single=true&output=csv",
+
+      /* 予約導線：必要ならここを差し替え（予約フォームURLがある場合など） */
+      reserve: {
+        mode: "x_dm",                 // "x_dm" or "form"
+        xProfileUrl: "https://x.com/po_toro",
+        formUrl: ""                   // 例: "https://example.com/reserve"
+      }
     };
 
     function escapeHtml(str){ return String(str).replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[s])); }
@@ -1260,37 +1420,6 @@
       }).join('');
     }
 
-    function renderTodayHours(){
-      const textEl = document.getElementById('todayHoursText');
-      const noteEl = document.getElementById('todayHoursNote');
-      if(!textEl) return;
-
-      const all = (window.PORTAL_DATA.schedule || []);
-      const today = new Date(); today.setHours(0,0,0,0);
-
-      let found = null;
-      for(const r of all){
-        const d = parseSheetDateToJsDate(r.date);
-        if(!d) continue;
-        d.setHours(0,0,0,0);
-        if(d.getTime() === today.getTime()){
-          found = r;
-          break;
-        }
-      }
-
-      if(found && String(found.hours || '').trim()){
-        textEl.textContent = String(found.hours).trim();
-        if(noteEl){
-          const memo = String(found.note || '').trim();
-          noteEl.textContent = memo ? `メモ：${memo}` : '※ご主人さま・お嬢さまのご帰宅お待ちしております♡';
-        }
-      }else{
-        textEl.textContent = '未登録（最新はXをご確認ください）';
-        if(noteEl) noteEl.textContent = '※スケジュールが未更新の場合があります。X（@po_toro）をご確認ください。';
-      }
-    }
-
     function renderSchedule(){
       const tbody=document.getElementById('scheduleBody'); if(!tbody) return;
       const status=document.getElementById('scheduleStatus');
@@ -1318,9 +1447,6 @@
       if(status){
         status.textContent = `schedule：CSV ${all.length}件（直近7日 ${inRange.length}件 / 日付未解釈 ${undated.length}件）`;
       }
-
-      // ★Ver1.4：ヒーローに本日の営業時間を反映
-      renderTodayHours();
     }
 
     function renderGoods(){
@@ -1356,6 +1482,61 @@
       }
       if(status){
         status.textContent = `goods：CSV ${list.length}件`;
+      }
+    }
+
+    /* ★ ヒーローに「本日の営業時間」を表示 */
+    function sameYMD(a,b){
+      return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
+    }
+
+    function renderTodayHours(){
+      const el = document.getElementById('todayHours');
+      if(!el) return;
+
+      const all = (window.PORTAL_DATA.schedule || []);
+      const today = new Date(); today.setHours(0,0,0,0);
+
+      let hit = null;
+      for(const r of all){
+        const d = parseSheetDateToJsDate(r.date);
+        if(!d) continue;
+        d.setHours(0,0,0,0);
+        if(sameYMD(d, today)){
+          hit = r;
+          break;
+        }
+      }
+
+      if(hit){
+        const hours = String(hit.hours || '').trim();
+        const note  = String(hit.note  || '').trim();
+        const dateText = formatDateJPWithWeekday(hit.date);
+        el.textContent = hours ? `${dateText}  ${hours}` : `${dateText}  （営業時間は店頭/DMでご確認ください）`;
+        if(note){
+          el.setAttribute('title', note);
+        }
+      }else{
+        el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
+      }
+
+      // 予約ボタンのリンク（フォームがあるなら切替可能）
+      const btn = document.getElementById('reserveBtn');
+      if(btn){
+        const cfg = window.PORTAL_CONFIG.reserve || {};
+        if(cfg.mode === "form" && cfg.formUrl){
+          btn.href = cfg.formUrl;
+          btn.target = "_blank";
+          btn.rel = "noopener noreferrer";
+          btn.setAttribute('aria-label','予約フォームを開く');
+          btn.textContent = "📝 予約フォーム";
+        }else{
+          btn.href = cfg.xProfileUrl || "https://x.com/po_toro";
+          btn.target = "_blank";
+          btn.rel = "noopener noreferrer";
+          btn.setAttribute('aria-label','XのDMで予約する（PO・TORO公式Xへ）');
+          btn.textContent = "💌 ご予約はDM";
+        }
       }
     }
 
@@ -1409,7 +1590,7 @@
 
       setupReveal();
 
-      // ===== チェキ動画再生（★Ver1.3：ここだけ修正） =====
+      // ===== チェキ動画再生（Ver1.3） =====
       const chekiOverlay = document.getElementById('chekiVideoOverlay');
       const chekiVideo   = document.getElementById('chekiVideoEl');
       const chekiSkip    = document.getElementById('chekiSkip');
@@ -1546,6 +1727,9 @@
       renderSchedule();
       renderGoods();
 
+      // ★ 本日の営業時間（ヒーロー）
+      renderTodayHours();
+
       // 画像ライトボックス
       const lightbox=document.getElementById('lightbox');
       const lightImg=document.getElementById('lightboxImg');
@@ -1581,8 +1765,12 @@
       // モーダル
       const modalTerms=document.getElementById('modalTerms');
       const modalPrivacy=document.getElementById('modalPrivacy');
+      const modalFirst=document.getElementById('modalFirst');
+
       const openTerms=document.getElementById('openTerms');
       const openPrivacy=document.getElementById('openPrivacy');
+      const openFirst=document.getElementById('openFirst');
+
       const toggleModal=(el,open)=>{
         if(!el) return;
         el.classList.toggle('open',open);
@@ -1590,8 +1778,11 @@
         document.body.style.overflow = open? 'hidden':'';
         if(open) trapFocus(el, el.querySelector('.close'));
       };
+
       if(openTerms)   openTerms.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalTerms,true);   });
       if(openPrivacy) openPrivacy.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalPrivacy,true); });
+      if(openFirst)   openFirst.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalFirst,true); });
+
       document.querySelectorAll('.modal .close').forEach(btn=>{
         btn.addEventListener('click',()=>{
           const id=btn.getAttribute('data-close');
@@ -1599,13 +1790,20 @@
           toggleModal(el,false);
         });
       });
+
+      // モーダル内の data-close を付けたリンク（移動しつつ閉じる）
+      document.querySelectorAll('[data-close="modalFirst"]').forEach(a=>{
+        a.addEventListener('click', ()=> toggleModal(modalFirst,false));
+      });
+
       window.addEventListener('keydown',(e)=>{
         if(e.key==='Escape'){
           toggleModal(modalTerms,false);
           toggleModal(modalPrivacy,false);
+          toggleModal(modalFirst,false);
         }
       });
-      [modalTerms, modalPrivacy].forEach(m=>{
+      [modalTerms, modalPrivacy, modalFirst].forEach(m=>{
         if(m) m.addEventListener('click',(e)=>{ if(e.target===m) toggleModal(m,false); });
       });
 
