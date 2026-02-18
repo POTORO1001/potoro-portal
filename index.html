@@ -1658,7 +1658,7 @@
       /* ★ 修正：Dateオブジェクトは専用フォーマッタで表示する */
       const todayLabel = formatDateObjJPWithWeekday(today);
 
-      if(dtEl) dtEl.textContent = todayLabel ? `（${todayLabel}）` : '';
+      if(dtEl) dtEl.textContent = todayLabel ? `${todayLabel}` : '';
 
       const list = all.filter(r=>{
         const name = String(r.maid_name || '').trim();
