@@ -1648,11 +1648,14 @@
       if(dtEl) dtEl.textContent = todayLabel ? `（${todayLabel}）` : '';
 
       const list = all.filter(r=>{
-        const d = parseSheetDateToJsDate(r.date);
-        if(!d) return false;
-        d.setHours(0,0,0,0);
-        return sameYMD(d, today);
-      });
+  const name = String(r.maid_name || '').trim();
+  if(!name) return false; // ★ maid_nameが空なら表示しない
+
+  const d = parseSheetDateToJsDate(r.date);
+  if(!d) return false;
+  d.setHours(0,0,0,0);
+  return sameYMD(d, today);
+});
 
       if(!list.length){
         wrap.innerHTML = `<span class="maids-fallback">本日の出勤情報は未登録です（DMでご確認ください）</span>`;
