@@ -11,11 +11,11 @@
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/" />
 
   <!--
-    ポトロポータル｜予約導線1本化 Ver1.4
-    - ヒーローに「本日の営業時間」表示（スケジュールCSVから当日分を抽出）
-    - 「ご予約はDM（大きい固定ボタン）」を本日の営業時間の下に設置（主導線を1本化）
-    - 「初めての方へ（料金/システム/注意）」ミニモーダルを追加（ワンタップ表示）
-    - 既存の Ver1.3（チェキ再生安定化）は維持
+    ポトロポータル｜予約導線1本化 Ver1.5（本日の出勤メイド表示）
+    - Ver1.4（予約導線1本化/初めての方へミニモーダル/チェキ再生安定化）を維持
+    - ★ 追加：本日の出勤メイド（PORTAL_today_maids.csv）を読み込み、ヒーローに表示
+      シート列: date / maid_name / maid_time / maid_note
+      シート名: PORTAL_today_maids.csv
   -->
 
   <!-- OGP -->
@@ -213,6 +213,46 @@
       color:#222;
       font-size:1.02rem;
     }
+
+    /* ★ Ver1.5：本日の出勤メイド */
+    .today-maids{
+      margin-top:10px;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,.06);
+      background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,247,251,.95));
+      padding:10px 10px;
+    }
+    .today-maids-head{
+      display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+      font-weight:1000;
+      color:#222;
+      margin-bottom:8px;
+    }
+    .maids-pill{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;
+      background:rgba(255,255,255,.95);
+      border:1px solid rgba(255,121,166,.18);
+      box-shadow:0 6px 14px rgba(0,0,0,.08);
+      font-weight:1000;
+      color:#222;
+      line-height:1.2;
+      white-space:nowrap;
+    }
+    .maids-pill .subtxt{
+      font-size:.78rem;
+      font-weight:900;
+      color:#666;
+    }
+    .maids-wrap{
+      display:flex;flex-wrap:wrap;gap:8px;
+    }
+    .maids-fallback{
+      font-weight:900;
+      color:#555;
+      font-size:.92rem;
+    }
+
     .btn-reserve{
       padding:14px 18px;
       border-radius:16px;
@@ -486,6 +526,10 @@
       .mini-card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
       .mini-card ul{color:#e6e6e6}
       .mini-kv .kv{background:rgba(255,121,166,.16);border-color:rgba(255,121,166,.22);color:#fff}
+      .today-maids{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+      .maids-pill{background:rgba(255,255,255,.08);border-color:rgba(255,121,166,.22);color:#fff}
+      .maids-pill .subtxt{color:#d7d7d7}
+      .maids-fallback{color:#d7d7d7}
     }
 
     @media (max-width:768px){ html,body{background-attachment:scroll} }
@@ -501,6 +545,10 @@
         .ticker time, .tag, .sub, .card p, .qcard p,.reserve-note{color:#444 !important}
         .event-overlay{background:rgba(255,255,255,.92) !important; color:#111 !important; border:1px solid #eee !important}
         .pill.date{background:#fff !important; color:#111 !important; border:1px solid #eee !important}
+        .today-maids{background:#fff !important; color:#111 !important; border:1px solid #eee !important}
+        .maids-pill{background:#fff !important; color:#111 !important; border:1px solid rgba(255,121,166,.20) !important}
+        .maids-pill .subtxt{color:#555 !important}
+        .maids-fallback{color:#444 !important}
       }
     }
 
@@ -681,6 +729,18 @@
               <a href="#schedule" class="tag" style="font-weight:1000">営業日一覧を見る →</a>
             </div>
 
+            <!-- ★ Ver1.5：本日の出勤メイド -->
+            <div class="today-maids" aria-label="本日の出勤メイド">
+              <div class="today-maids-head">
+                <span class="today-pill">👑 本日の出勤メイド</span>
+                <span class="tag" id="todayMaidsDate" style="font-weight:1000"></span>
+              </div>
+              <div class="maids-wrap" id="todayMaidsWrap">
+                <span class="maids-fallback" id="todayMaidsFallback">読み込み中…</span>
+              </div>
+              <div class="tag mt-8" id="todayMaidsStatus" aria-live="polite"></div>
+            </div>
+
             <div class="reserve-stack">
               <a class="btn btn-primary btn-reserve" id="reserveBtn"
                  href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer"
@@ -697,7 +757,7 @@
               </div>
 
               <div class="reserve-note">
-                ※DM予約の際は「ご予約名(ハンドルネーム)/ご予約ご希望の日時と利用時間／セレクト希望メイドさんのお名前／」を送ってください♡
+                ※DM予約の際は「ご予約名(ハンドルネーム)/ご利用ご希望の日時と利用時間／セレクト希望メイドさんのお名前／」を送ってください♡
               </div>
             </div>
           </div>
@@ -1116,6 +1176,13 @@
       goodsCsvUrl:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pub?gid=681304800&single=true&output=csv",
       goodsCsvUrlAlt:"https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pub?gid=681304800&single=true&output=csv",
 
+      /* ★ Ver1.5：本日の出勤メイド（PORTAL_today_maids.csv）
+         - 可能なら todayMaidsCsvUrl の gid を todayシートのgidに差し替えてください
+         - もしgidが分からなくても、Alt（sheet指定）で読めることが多いです
+      */
+      todayMaidsCsvUrl:     "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=0",
+      todayMaidsCsvUrlAlt:  "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_today_maids.csv",
+
       /* 予約導線：必要ならここを差し替え（予約フォームURLがある場合など） */
       reserve: {
         mode: "x_dm",                 // "x_dm" or "form"
@@ -1303,6 +1370,33 @@
           note:  noteIdx>-1  ? String(r[noteIdx] ||'').trim() : ''
         }))
         .filter(o => o.start || o.event || o.name || o.end || o.note);
+    }
+
+    // ★ Ver1.5：today maids
+    function csvToTodayMaidsObjects(csv){
+      const rows = parseCSV(csv);
+      if(!rows.length) return [];
+      const h = rows[0].map(normalizeHeader);
+      const idx = (keys)=>{ for(const k of keys){ const i=h.indexOf(normalizeHeader(k)); if(i!==-1) return i; } return -1; };
+
+      let di = idx(['date','日付','day']);
+      let ni = idx(['maid_name','name','メイド','メイド名']);
+      let ti = idx(['maid_time','time','時間','勤務時間']);
+      let mi = idx(['maid_note','note','メモ','備考','補足']);
+
+      if(di===-1) di=0;
+      if(ni===-1) ni=1;
+      if(ti===-1) ti=2;
+      if(mi===-1) mi=3;
+
+      return rows.slice(1)
+        .map(r=>({
+          date: String(r[di]||'').trim(),
+          maid_name: String(r[ni]||'').trim(),
+          maid_time: String(r[ti]||'').trim(),
+          maid_note: String(r[mi]||'').trim()
+        }))
+        .filter(o => o.date || o.maid_name || o.maid_time || o.maid_note);
     }
 
     function parseSheetDateToJsDate(s){
@@ -1540,7 +1634,54 @@
       }
     }
 
-    window.PORTAL_DATA={news:[],events:[],schedule:[],goods:[]};
+    // ★ Ver1.5：本日の出勤メイド描画
+    function renderTodayMaids(){
+      const wrap = document.getElementById('todayMaidsWrap');
+      const fb   = document.getElementById('todayMaidsFallback');
+      const dtEl = document.getElementById('todayMaidsDate');
+      const stEl = document.getElementById('todayMaidsStatus');
+      if(!wrap) return;
+
+      const all = (window.PORTAL_DATA.todayMaids || []);
+      const today = new Date(); today.setHours(0,0,0,0);
+      const todayLabel = formatDateJPWithWeekday(today);
+      if(dtEl) dtEl.textContent = todayLabel ? `（${todayLabel}）` : '';
+
+      const list = all.filter(r=>{
+        const d = parseSheetDateToJsDate(r.date);
+        if(!d) return false;
+        d.setHours(0,0,0,0);
+        return sameYMD(d, today);
+      });
+
+      if(!list.length){
+        wrap.innerHTML = `<span class="maids-fallback">本日の出勤情報は未登録です（DMでご確認ください）</span>`;
+        if(stEl) stEl.textContent = `today_maids：該当 0件 / CSV ${all.length}件`;
+        return;
+      }
+
+      // 表示ルール：
+      // - maid_name を基本に表示
+      // - maid_note があれば（note）を優先で付与
+      // - noteが無く、maid_time が全員同じでない場合や空でない場合は（time）を付与
+      const times = list.map(x=>String(x.maid_time||'').trim()).filter(Boolean);
+      const uniqueTimes = Array.from(new Set(times));
+      const showTimeByDefault = uniqueTimes.length > 1;
+
+      const pills = list.map(r=>{
+        const name = String(r.maid_name||'').trim();
+        const time = String(r.maid_time||'').trim();
+        const note = String(r.maid_note||'').trim();
+        const sub  = note ? note : (showTimeByDefault && time ? time : '');
+        const subHtml = sub ? ` <span class="subtxt">(${escapeHtml(sub)})</span>` : '';
+        return `<span class="maids-pill">${escapeHtml(name || '—')}${subHtml}</span>`;
+      }).join('');
+
+      wrap.innerHTML = pills;
+      if(stEl) stEl.textContent = `today_maids：該当 ${list.length}件 / CSV ${all.length}件`;
+    }
+
+    window.PORTAL_DATA={news:[],events:[],schedule:[],goods:[],todayMaids:[]};
 
     function trapFocus(container, first){
       const focusables = container.querySelectorAll('a, button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
@@ -1722,6 +1863,12 @@
         window.PORTAL_DATA.goods = goodsCsv ? csvToGoodsObjects(goodsCsv) : [];
       } catch(e){ window.PORTAL_DATA.goods = []; }
 
+      // ★ Ver1.5：today maids
+      try{
+        const todayCsv = await tryLoadCSV(window.PORTAL_CONFIG.todayMaidsCsvUrl, window.PORTAL_CONFIG.todayMaidsCsvUrlAlt);
+        window.PORTAL_DATA.todayMaids = todayCsv ? csvToTodayMaidsObjects(todayCsv) : [];
+      }catch(e){ window.PORTAL_DATA.todayMaids = []; }
+
       renderNews();
       renderEvents();
       renderSchedule();
@@ -1729,6 +1876,9 @@
 
       // ★ 本日の営業時間（ヒーロー）
       renderTodayHours();
+
+      // ★ 本日の出勤メイド（ヒーロー）
+      renderTodayMaids();
 
       // 画像ライトボックス
       const lightbox=document.getElementById('lightbox');
