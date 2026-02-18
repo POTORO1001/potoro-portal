@@ -11,10 +11,10 @@
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/" />
 
   <!--
-    ポトロポータル｜予約導線1本化 Ver1.6（本日の出勤メイド：表示調整）
-    - Ver1.5 をベースに、以下を修正：
-      ①「本日の出勤メイド」右側の日付表示の()を削除（表示フォーマット変更）
-      ②「today_maids：該当 7件 / CSV 10件」デバッグ表示を非表示（CSS + JSで確実に非表示）
+    ポトロポータル｜予約導線1本化 Ver1.7（理念統合版）
+    - Ver1.6 をベースに、以下を更新：
+      ①「初めての方へ」モーダルの理念（放置ゼロ宣言 / キャストドリンク制度）を“確定文”で完全統一
+      ② 放置ゼロ宣言に「おそばで見守りながら、心を込めてお給仕」＋「はじめて/常連の区別なし」の一文を統合
   -->
 
   <!-- OGP -->
@@ -496,35 +496,16 @@
       white-space:nowrap;
     }
 
-    /* ★追加：理念カード内の見出し */
-    .mini-philo{
-      margin:10px 0 0;
-      padding:10px 10px;
-      border-radius:12px;
-      background:rgba(255,255,255,.85);
-      border:1px solid rgba(255,121,166,.14);
-    }
-    .mini-philo h4{
-      margin:0 0 6px;
-      font-size:.98rem;
-      font-weight:1000;
-      letter-spacing:.01em;
-      display:flex;
-      gap:8px;
-      align-items:center;
-    }
-    .mini-philo p{
+    /* ★ Ver1.7：理念（長文）を読みやすく */
+    .mini-card .policy{
       margin:0;
       color:#444;
       line-height:1.75;
       font-weight:800;
-      font-size:.92rem;
     }
-    .mini-philo .muted{
-      margin-top:6px;
-      color:#666;
-      font-size:.86rem;
-      font-weight:800;
+    .mini-card .policy strong{
+      font-weight:1000;
+      color:#ff4fa3;
     }
 
     .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
@@ -560,13 +541,8 @@
       .maids-pill{background:rgba(255,255,255,.08);border-color:rgba(255,121,166,.22);color:#fff}
       .maids-pill .subtxt{color:#d7d7d7}
       .maids-fallback{color:#d7d7d7}
-
-      .mini-philo{
-        background:rgba(255,255,255,.06);
-        border-color:rgba(255,255,255,.14);
-      }
-      .mini-philo p{color:#e6e6e6}
-      .mini-philo .muted{color:#cfcfcf}
+      .mini-card .policy{color:#e6e6e6}
+      .mini-card .policy strong{color:#ff81c0}
     }
 
     @media (max-width:768px){ html,body{background-attachment:scroll} }
@@ -586,14 +562,6 @@
         .maids-pill{background:#fff !important; color:#111 !important; border:1px solid rgba(255,121,166,.20) !important}
         .maids-pill .subtxt{color:#555 !important}
         .maids-fallback{color:#444 !important}
-
-        .mini-philo{
-          background:#fff !important;
-          color:#111 !important;
-          border:1px solid #eee !important;
-        }
-        .mini-philo p{color:#111 !important}
-        .mini-philo .muted{color:#444 !important}
       }
     }
 
@@ -878,7 +846,7 @@
             <div>
               <div style="font-size:1.35rem;font-weight:1000;color:#ff4fa3">料金：30分 1,000円（税込）</div>
               <div class="tag mt-8">🥤各種ドリンク飲み放題 / 🍺生ビールも飲み放題</div>
-              <div class="tag mt-8">※放置ゼロ宣言＆キャストドリンク制度なしで安心♪</div>
+              <div class="tag mt-8">※放置ゼロ宣言＆キャストドリンク無しで安心♪</div>
             </div>
             <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap">
               <a class="btn btn-primary" href="#access">お屋敷へ行く</a>
@@ -1030,7 +998,7 @@
               <p>〒790-0012 愛媛県松山市湊町3-7-2 2F</p>
               <p>営業時間：平日＆祝 18:00–22:00 / 土日 17:00–22:00</p>
               <p>料金：30分 1,000円(税込) 各種ドリンク飲み放題（生ビール含む）</p>
-              <p class="tag">※放置ゼロ宣言＆キャストドリンク制度なしで安心♪</p>
+              <p class="tag">※放置ゼロ宣言＆キャストドリンク無しで安心♪</p>
             </div>
           </div>
 
@@ -1142,30 +1110,6 @@
         <h2>初めての方へ（料金 / システム / 注意）</h2>
 
         <div class="mini-grid">
-
-          <!-- ★追加：理念（統一完成版） -->
-          <div class="mini-card">
-            <h3>🧭 理念（ポ・トロのお約束）</h3>
-
-            <div class="mini-philo" aria-label="放置ゼロ宣言">
-              <h4>👑 「放置ゼロ宣言」</h4>
-              <p>
-                ご主人様・お嬢様に心地よくお過ごしいただけるよう、常に目を配り、途切れることのないよう心を込めてお給仕しております。
-              </p>
-              <p class="muted">ご不安なことやご不明な点がございましたら、どうぞお気軽にメイドへお声がけくださいませ。</p>
-            </div>
-
-            <div class="mini-philo" aria-label="キャストドリンク制度はございません" style="margin-top:10px;">
-              <h4>🍹 「キャストドリンク制度はございません」</h4>
-              <p>
-                ポ・トロでは、メイドはご主人様・お嬢様にお仕えする存在であるという考えを大切にしております。
-              </p>
-              <p class="muted">
-                そのためキャストドリンクという制度は設けておらず、見返りのためではなく、ご主人様・お嬢様に安心して楽しんでいただけるよう、心を込めてお給仕しております。
-              </p>
-            </div>
-          </div>
-
           <div class="mini-card">
             <h3>💴 料金</h3>
             <div class="mini-kv">
@@ -1179,13 +1123,21 @@
             </ul>
           </div>
 
-          <!-- ★更新：システム欄（表現を統一） -->
           <div class="mini-card">
-            <h3>🫖 システム</h3>
+            <h3>🫖 システム（理念）</h3>
             <ul>
-              <li>ご予約は基本「XのDM」で承っております（ご希望の日時/利用時間/セレクト希望メイドさんのお名前をお送りください）。</li>
+              <li class="policy">
+                <strong>「放置ゼロ宣言」</strong><br>
+                ポ・トロでは、ご主人様・お嬢様にとって、メイドとの会話のひとときこそが、かけがえのない大切な時間であると考えております。<br>
+                ご帰宅いただいたすべてのご主人様・お嬢様が、メイドとお話しできずにお時間を過ごされることのないよう、常におそばで見守りながら、心を込めてお給仕しております。<br>
+                はじめてのご主人様・お嬢様も、いつもお越しくださるご主人様・お嬢様も、すべての方に心を込めてお給仕しております。
+              </li>
+              <li class="policy">
+                <strong>「キャストドリンク制度はございません」</strong><br>
+                ポ・トロでは、メイドはご主人様・お嬢様にお仕えする存在であるという考えを大切にしております。<br>
+                そのためキャストドリンクという制度は設けておらず、見返りのためではなく、ご主人様・お嬢様に安心して楽しんでいただけるよう、心を込めてお給仕しております。
+              </li>
               <li>混雑時はお席のご案内にお時間をいただく場合があります。</li>
-              <li>はじめての方も安心して楽しめるよう、分かりやすいご案内を心がけております。</li>
             </ul>
           </div>
 
