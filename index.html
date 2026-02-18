@@ -11,12 +11,10 @@
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/" />
 
   <!--
-    ポトロポータル｜予約導線1本化 Ver1.5（本日の出勤メイド表示）
-    - Ver1.4（予約導線1本化/初めての方へミニモーダル/チェキ再生安定化）を維持
-    - ★ 追加：本日の出勤メイド（PORTAL_today_maids.csv）を読み込み、ヒーローに表示
-      シート列: date / maid_name / maid_time / maid_note
-      シート名: PORTAL_today_maids.csv
-    - ★ 修正：Dateオブジェクトの曜日表示を安全に（todayMaidsDateの表示崩れ対策）
+    ポトロポータル｜予約導線1本化 Ver1.6（本日の出勤メイド：表示調整）
+    - Ver1.5 をベースに、以下を修正：
+      ①「本日の出勤メイド」右側の日付表示の()を削除（表示フォーマット変更）
+      ②「today_maids：該当 7件 / CSV 10件」デバッグ表示を非表示（CSS + JSで確実に非表示）
   -->
 
   <!-- OGP -->
@@ -639,6 +637,13 @@
       opacity:1;
       transform: translateY(0);
     }
+
+    /* =========================
+       ★ Ver1.6 追加修正
+       ========================= */
+
+    /* ② today_maids デバッグ表示を非表示 */
+    #todayMaidsStatus{ display:none !important; }
   </style>
 </head>
 
@@ -1177,18 +1182,14 @@
       goodsCsvUrl:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pub?gid=681304800&single=true&output=csv",
       goodsCsvUrlAlt:"https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pub?gid=681304800&single=true&output=csv",
 
-      /* ★ Ver1.5：本日の出勤メイド（PORTAL_today_maids.csv）
-         - 可能なら todayMaidsCsvUrl の gid を todayシートのgidに差し替えてください
-         - もしgidが分からなくても、Alt（sheet指定）で読めることが多いです
-      */
+      /* ★ Ver1.5：本日の出勤メイド（PORTAL_today_maids.csv） */
       todayMaidsCsvUrl:     "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=0",
       todayMaidsCsvUrlAlt:  "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_today_maids.csv",
 
-      /* 予約導線：必要ならここを差し替え（予約フォームURLがある場合など） */
       reserve: {
-        mode: "x_dm",                 // "x_dm" or "form"
+        mode: "x_dm",
         xProfileUrl: "https://x.com/po_toro",
-        formUrl: ""                   // 例: "https://example.com/reserve"
+        formUrl: ""
       }
     };
 
@@ -1373,7 +1374,6 @@
         .filter(o => o.start || o.event || o.name || o.end || o.note);
     }
 
-    // ★ Ver1.5：today maids
     function csvToTodayMaidsObjects(csv){
       const rows = parseCSV(csv);
       if(!rows.length) return [];
@@ -1457,14 +1457,14 @@
       return `${y}/${m}/${dd}(${wd})`;
     }
 
-    /* ★ 追加：Dateオブジェクト用の安全な表示（todayMaidsDate崩れ対策） */
-    function formatDateObjJPWithWeekday(d){
+    /* ★ Ver1.6：()なし表記（右側日付の()を削除） */
+    function formatDateObjJPNoParen(d){
       if(!(d instanceof Date) || isNaN(d)) return '';
       const wd = ['日','月','火','水','木','金','土'][d.getDay()];
       const y  = d.getFullYear();
       const m  = String(d.getMonth()+1).padStart(2,'0');
       const dd = String(d.getDate()).padStart(2,'0');
-      return `${y}/${m}/${dd}(${wd})`;
+      return `${y}/${m}/${dd} ${wd}`;
     }
 
     async function tryLoadCSV(primaryUrl, altUrl){
@@ -1590,7 +1590,6 @@
       }
     }
 
-    /* ★ ヒーローに「本日の営業時間」を表示 */
     function sameYMD(a,b){
       return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
     }
@@ -1625,7 +1624,6 @@
         el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
       }
 
-      // 予約ボタンのリンク（フォームがあるなら切替可能）
       const btn = document.getElementById('reserveBtn');
       if(btn){
         const cfg = window.PORTAL_CONFIG.reserve || {};
@@ -1645,7 +1643,6 @@
       }
     }
 
-    // ★ Ver1.5：本日の出勤メイド描画
     function renderTodayMaids(){
       const wrap = document.getElementById('todayMaidsWrap');
       const dtEl = document.getElementById('todayMaidsDate');
@@ -1655,14 +1652,13 @@
       const all = (window.PORTAL_DATA.todayMaids || []);
       const today = new Date(); today.setHours(0,0,0,0);
 
-      /* ★ 修正：Dateオブジェクトは専用フォーマッタで表示する */
-      const todayLabel = formatDateObjJPWithWeekday(today);
-
+      /* ① 右側日付：()を使わず「YYYY/MM/DD 曜」表記 */
+      const todayLabel = formatDateObjJPNoParen(today);
       if(dtEl) dtEl.textContent = todayLabel ? `${todayLabel}` : '';
 
       const list = all.filter(r=>{
         const name = String(r.maid_name || '').trim();
-        if(!name) return false; // ★ maid_nameが空なら表示しない
+        if(!name) return false;
 
         const d = parseSheetDateToJsDate(r.date);
         if(!d) return false;
@@ -1676,10 +1672,6 @@
         return;
       }
 
-      // 表示ルール：
-      // - maid_name を基本に表示
-      // - maid_note があれば（note）を優先で付与
-      // - noteが無く、maid_time が全員同じでない場合や空でない場合は（time）を付与
       const times = list.map(x=>String(x.maid_time||'').trim()).filter(Boolean);
       const uniqueTimes = Array.from(new Set(times));
       const showTimeByDefault = uniqueTimes.length > 1;
@@ -1694,7 +1686,13 @@
       }).join('');
 
       wrap.innerHTML = pills;
-      if(stEl) stEl.textContent = `today_maids：該当 ${list.length}件 / CSV ${all.length}件`;
+
+      /* ② デバッグ表示：CSSで非表示だが、JSでも確実に消す */
+      if(stEl){
+        stEl.textContent = `today_maids：該当 ${list.length}件 / CSV ${all.length}件`;
+        stEl.style.display = 'none';
+        stEl.setAttribute('aria-hidden','true');
+      }
     }
 
     window.PORTAL_DATA={news:[],events:[],schedule:[],goods:[],todayMaids:[]};
@@ -1879,7 +1877,6 @@
         window.PORTAL_DATA.goods = goodsCsv ? csvToGoodsObjects(goodsCsv) : [];
       } catch(e){ window.PORTAL_DATA.goods = []; }
 
-      // ★ Ver1.5：today maids
       try{
         const todayCsv = await tryLoadCSV(window.PORTAL_CONFIG.todayMaidsCsvUrl, window.PORTAL_CONFIG.todayMaidsCsvUrlAlt);
         window.PORTAL_DATA.todayMaids = todayCsv ? csvToTodayMaidsObjects(todayCsv) : [];
@@ -1890,10 +1887,7 @@
       renderSchedule();
       renderGoods();
 
-      // ★ 本日の営業時間（ヒーロー）
       renderTodayHours();
-
-      // ★ 本日の出勤メイド（ヒーロー）
       renderTodayMaids();
 
       // 画像ライトボックス
@@ -1957,7 +1951,6 @@
         });
       });
 
-      // モーダル内の data-close を付けたリンク（移動しつつ閉じる）
       document.querySelectorAll('[data-close="modalFirst"]').forEach(a=>{
         a.addEventListener('click', ()=> toggleModal(modalFirst,false));
       });
