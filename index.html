@@ -496,6 +496,37 @@
       white-space:nowrap;
     }
 
+    /* ★追加：理念カード内の見出し */
+    .mini-philo{
+      margin:10px 0 0;
+      padding:10px 10px;
+      border-radius:12px;
+      background:rgba(255,255,255,.85);
+      border:1px solid rgba(255,121,166,.14);
+    }
+    .mini-philo h4{
+      margin:0 0 6px;
+      font-size:.98rem;
+      font-weight:1000;
+      letter-spacing:.01em;
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .mini-philo p{
+      margin:0;
+      color:#444;
+      line-height:1.75;
+      font-weight:800;
+      font-size:.92rem;
+    }
+    .mini-philo .muted{
+      margin-top:6px;
+      color:#666;
+      font-size:.86rem;
+      font-weight:800;
+    }
+
     .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
     .skip-link:focus{left:16px;top:12px;width:auto;height:auto;background:#111;color:#fff;padding:10px 12px;border-radius:10px;z-index:1000}
     :focus-visible{outline:2px solid #0b69d5;outline-offset:2px}
@@ -529,6 +560,13 @@
       .maids-pill{background:rgba(255,255,255,.08);border-color:rgba(255,121,166,.22);color:#fff}
       .maids-pill .subtxt{color:#d7d7d7}
       .maids-fallback{color:#d7d7d7}
+
+      .mini-philo{
+        background:rgba(255,255,255,.06);
+        border-color:rgba(255,255,255,.14);
+      }
+      .mini-philo p{color:#e6e6e6}
+      .mini-philo .muted{color:#cfcfcf}
     }
 
     @media (max-width:768px){ html,body{background-attachment:scroll} }
@@ -548,6 +586,14 @@
         .maids-pill{background:#fff !important; color:#111 !important; border:1px solid rgba(255,121,166,.20) !important}
         .maids-pill .subtxt{color:#555 !important}
         .maids-fallback{color:#444 !important}
+
+        .mini-philo{
+          background:#fff !important;
+          color:#111 !important;
+          border:1px solid #eee !important;
+        }
+        .mini-philo p{color:#111 !important}
+        .mini-philo .muted{color:#444 !important}
       }
     }
 
@@ -832,7 +878,7 @@
             <div>
               <div style="font-size:1.35rem;font-weight:1000;color:#ff4fa3">料金：30分 1,000円（税込）</div>
               <div class="tag mt-8">🥤各種ドリンク飲み放題 / 🍺生ビールも飲み放題</div>
-              <div class="tag mt-8">※放置ゼロ宣言＆キャストドリンク無しで安心♪</div>
+              <div class="tag mt-8">※放置ゼロ宣言＆キャストドリンク制度なしで安心♪</div>
             </div>
             <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap">
               <a class="btn btn-primary" href="#access">お屋敷へ行く</a>
@@ -984,7 +1030,7 @@
               <p>〒790-0012 愛媛県松山市湊町3-7-2 2F</p>
               <p>営業時間：平日＆祝 18:00–22:00 / 土日 17:00–22:00</p>
               <p>料金：30分 1,000円(税込) 各種ドリンク飲み放題（生ビール含む）</p>
-              <p class="tag">※放置ゼロ宣言＆キャストドリンク無しで安心♪</p>
+              <p class="tag">※放置ゼロ宣言＆キャストドリンク制度なしで安心♪</p>
             </div>
           </div>
 
@@ -1096,6 +1142,30 @@
         <h2>初めての方へ（料金 / システム / 注意）</h2>
 
         <div class="mini-grid">
+
+          <!-- ★追加：理念（統一完成版） -->
+          <div class="mini-card">
+            <h3>🧭 理念（ポ・トロのお約束）</h3>
+
+            <div class="mini-philo" aria-label="放置ゼロ宣言">
+              <h4>👑 「放置ゼロ宣言」</h4>
+              <p>
+                ご主人様・お嬢様に心地よくお過ごしいただけるよう、常に目を配り、途切れることのないよう心を込めてお給仕しております。
+              </p>
+              <p class="muted">ご不安なことやご不明な点がございましたら、どうぞお気軽にメイドへお声がけくださいませ。</p>
+            </div>
+
+            <div class="mini-philo" aria-label="キャストドリンク制度はございません" style="margin-top:10px;">
+              <h4>🍹 「キャストドリンク制度はございません」</h4>
+              <p>
+                ポ・トロでは、メイドはご主人様・お嬢様にお仕えする存在であるという考えを大切にしております。
+              </p>
+              <p class="muted">
+                そのためキャストドリンクという制度は設けておらず、見返りのためではなく、ご主人様・お嬢様に安心して楽しんでいただけるよう、心を込めてお給仕しております。
+              </p>
+            </div>
+          </div>
+
           <div class="mini-card">
             <h3>💴 料金</h3>
             <div class="mini-kv">
@@ -1109,12 +1179,13 @@
             </ul>
           </div>
 
+          <!-- ★更新：システム欄（表現を統一） -->
           <div class="mini-card">
             <h3>🫖 システム</h3>
             <ul>
-              <li>「放置ゼロ宣言」：ご主人様・お嬢様に心地よくお過ごしいただけるよう、おそばで見守りながら、心を込めてお給仕しております。</li>
-              <li>「キャストドリンク無し」：分かりやすい料金で安心して楽しめます。</li>
+              <li>ご予約は基本「XのDM」で承っております（ご希望の日時/利用時間/セレクト希望メイドさんのお名前をお送りください）。</li>
               <li>混雑時はお席のご案内にお時間をいただく場合があります。</li>
+              <li>はじめての方も安心して楽しめるよう、分かりやすいご案内を心がけております。</li>
             </ul>
           </div>
 
