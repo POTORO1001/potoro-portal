@@ -16,6 +16,7 @@
     - ★ 追加：本日の出勤メイド（PORTAL_today_maids.csv）を読み込み、ヒーローに表示
       シート列: date / maid_name / maid_time / maid_note
       シート名: PORTAL_today_maids.csv
+    - ★ 修正：Dateオブジェクトの曜日表示を安全に（todayMaidsDateの表示崩れ対策）
   -->
 
   <!-- OGP -->
@@ -1456,6 +1457,16 @@
       return `${y}/${m}/${dd}(${wd})`;
     }
 
+    /* ★ 追加：Dateオブジェクト用の安全な表示（todayMaidsDate崩れ対策） */
+    function formatDateObjJPWithWeekday(d){
+      if(!(d instanceof Date) || isNaN(d)) return '';
+      const wd = ['日','月','火','水','木','金','土'][d.getDay()];
+      const y  = d.getFullYear();
+      const m  = String(d.getMonth()+1).padStart(2,'0');
+      const dd = String(d.getDate()).padStart(2,'0');
+      return `${y}/${m}/${dd}(${wd})`;
+    }
+
     async function tryLoadCSV(primaryUrl, altUrl){
       try{
         return await fetchTextWithTimeout(primaryUrl, 10000);
@@ -1637,25 +1648,27 @@
     // ★ Ver1.5：本日の出勤メイド描画
     function renderTodayMaids(){
       const wrap = document.getElementById('todayMaidsWrap');
-      const fb   = document.getElementById('todayMaidsFallback');
       const dtEl = document.getElementById('todayMaidsDate');
       const stEl = document.getElementById('todayMaidsStatus');
       if(!wrap) return;
 
       const all = (window.PORTAL_DATA.todayMaids || []);
       const today = new Date(); today.setHours(0,0,0,0);
-      const todayLabel = formatDateJPWithWeekday(today);
+
+      /* ★ 修正：Dateオブジェクトは専用フォーマッタで表示する */
+      const todayLabel = formatDateObjJPWithWeekday(today);
+
       if(dtEl) dtEl.textContent = todayLabel ? `（${todayLabel}）` : '';
 
       const list = all.filter(r=>{
-  const name = String(r.maid_name || '').trim();
-  if(!name) return false; // ★ maid_nameが空なら表示しない
+        const name = String(r.maid_name || '').trim();
+        if(!name) return false; // ★ maid_nameが空なら表示しない
 
-  const d = parseSheetDateToJsDate(r.date);
-  if(!d) return false;
-  d.setHours(0,0,0,0);
-  return sameYMD(d, today);
-});
+        const d = parseSheetDateToJsDate(r.date);
+        if(!d) return false;
+        d.setHours(0,0,0,0);
+        return sameYMD(d, today);
+      });
 
       if(!list.length){
         wrap.innerHTML = `<span class="maids-fallback">本日の出勤情報は未登録です（DMでご確認ください）</span>`;
