@@ -11,10 +11,11 @@
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/" />
 
   <!--
-    ポトロポータル｜予約導線1本化 Ver1.7（理念統合版）
-    - Ver1.6 をベースに、以下を更新：
-      ①「初めての方へ」モーダルの理念（放置ゼロ宣言 / キャストドリンク制度）を“確定文”で完全統一
-      ② 放置ゼロ宣言に「おそばで見守りながら、心を込めてお給仕」＋「はじめて/常連の区別なし」の一文を統合
+    ポトロポータル｜予約導線1本化 Ver1.8（iPhoneヒーローロゴ上配置）
+    - Ver1.7（理念統合版）をベースに、以下を更新：
+      ① iPhone表示（<=768px）でヒーロー右側ロゴ（hero-visual）を“上”に移動
+         → .hero .wrap を grid から flex(column) に切替
+         → .hero-visual を order:-1 で最上部へ
   -->
 
   <!-- OGP -->
@@ -153,6 +154,31 @@
       gap:22px;align-items:center;
       padding:44px 0 14px;
     }
+
+    /* =========================
+       ★ Ver1.8：iPhoneでロゴ（hero-visual）を上へ
+       - 768px以下で .hero .wrap を flex(column) に切替
+       - .hero-visual を order:-1 で最上部へ
+       ========================= */
+    @media (max-width:768px){
+      .hero .wrap{
+        display:flex;
+        flex-direction:column;
+        gap:16px;
+        padding:26px 0 12px;
+      }
+      .hero-visual{
+        order:-1;
+        width:100%;
+        max-width:520px;
+        margin:0 auto;
+      }
+      .hero .wrap > .reveal{
+        order:0;
+        width:100%;
+      }
+    }
+
     .badge{
       display:inline-flex;gap:8px;align-items:center;
       background:#fff;border-radius:999px;
