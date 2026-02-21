@@ -16,6 +16,10 @@
       ① iPhone表示（<=768px）でヒーロー右側ロゴ（hero-visual）を“上”に移動
          → .hero .wrap を grid から flex(column) に切替
          → .hero-visual を order:-1 で最上部へ
+
+    ★ 追加修正（今回）
+      - フッター電話番号下の文言（.tag）が iPhone向け強制CSSで #444 に上書きされ、濃い背景で見えなくなる問題を修正
+      - 電話ブロックを .foot-call として例外扱い（常に白系で可読）
   -->
 
   <!-- OGP -->
@@ -157,8 +161,6 @@
 
     /* =========================
        ★ Ver1.8：iPhoneでロゴ（hero-visual）を上へ
-       - 768px以下で .hero .wrap を flex(column) に切替
-       - .hero-visual を order:-1 で最上部へ
        ========================= */
     @media (max-width:768px){
       .hero .wrap{
@@ -573,6 +575,39 @@
 
     @media (max-width:768px){ html,body{background-attachment:scroll} }
 
+    /* =========================
+       ★ フッター電話ブロック（今回の修正）
+       - iPhone向け強制CSSの .tag {color:#444 !important} に負けないように例外化
+       ========================= */
+    .foot-call{
+      text-align:center;
+      padding:18px;
+      background: rgba(17,17,17,.85);
+      border-radius:18px;
+      box-shadow: var(--shadow);
+      border:1px solid rgba(255,255,255,.12);
+      margin-top:12px;
+    }
+    .foot-call a.foot-tel{
+      display:inline-block;
+      font-size:20px;
+      color:#fff;
+      text-decoration:none;
+      padding:14px 22px;
+      background:linear-gradient(135deg,#ff81c0,#8ed2ff);
+      border-radius:14px;
+      font-weight:1000;
+      box-shadow:0 14px 30px rgba(0,0,0,.22);
+    }
+    .foot-call .foot-tel-note{
+      color: rgba(255,255,255,.88);
+      margin-top:10px;
+      font-weight:900;
+      font-size:.82rem;
+      letter-spacing:.01em;
+    }
+
+    /* 既存：iPhone等で白背景強制の互換CSS */
     @supports (-webkit-touch-callout: none) {
       @media (pointer: coarse) {
         .ticker, .ticker li, .badge, .hero-card,
@@ -588,6 +623,20 @@
         .maids-pill{background:#fff !important; color:#111 !important; border:1px solid rgba(255,121,166,.20) !important}
         .maids-pill .subtxt{color:#555 !important}
         .maids-fallback{color:#444 !important}
+
+        /* ★ 今回の例外：フッター電話ブロックはダークのまま＆文字は白で固定 */
+        .foot-call{
+          background: rgba(17,17,17,.88) !important;
+          border-color: rgba(255,255,255,.14) !important;
+          color:#fff !important;
+        }
+        .foot-call .foot-tel-note{
+          color: rgba(255,255,255,.88) !important;
+        }
+        .foot-call a.foot-tel{
+          color:#fff !important;
+          text-decoration:none !important;
+        }
       }
     }
 
@@ -1091,12 +1140,12 @@
         <h4>concept cafe PO・TORO</h4>
         <p>ご帰宅ありがとうございます。システムやイベントの最新情報は本ポータルからご確認ください。</p>
 
-        <div style="text-align:center; padding: 18px; background: rgba(17,17,17,.85); border-radius: 18px; box-shadow: var(--shadow); border:1px solid rgba(255,255,255,.12); margin-top:12px">
-          <a href="tel:089-909-5211"
-            style="display:inline-block;font-size:20px;color:#fff;text-decoration:none;padding:14px 22px;background:linear-gradient(135deg,#ff81c0,#8ed2ff);border-radius:14px;font-weight:1000;box-shadow:0 14px 30px rgba(0,0,0,.22)">
+        <!-- ★ 修正：電話ブロックをクラス化して可読性を担保 -->
+        <div class="foot-call">
+          <a href="tel:089-909-5211" class="foot-tel" aria-label="電話をかける：089-909-5211">
             📞 089-909-5211
           </a>
-          <div class="tag" style="color:rgba(255,255,255,.85); margin-top:10px">お電話でのお問い合わせはこちら</div>
+          <div class="foot-tel-note">お電話でのお問い合わせはこちら</div>
         </div>
 
         <div class="copyright">© <span id="year"></span> PO・TORO / concept cafe. All rights reserved.</div>
