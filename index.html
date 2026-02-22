@@ -20,6 +20,10 @@
     ★ 追加修正（今回）
       - フッター電話番号下の文言（.tag）が iPhone向け強制CSSで #444 に上書きされ、濃い背景で見えなくなる問題を修正
       - 電話ブロックを .foot-call として例外扱い（常に白系で可読）
+
+    ★ Ver1.9（今回の実装）
+      ⑤ 料金ブロックに「滞在イメージ（目安）」を追加（60/90/120分）
+      ⑧ 初めての方へモーダルに「来店の流れ」「支払い/撮影（OKなこと中心）」を追加
   -->
 
   <!-- OGP -->
@@ -536,6 +540,14 @@
       color:#ff4fa3;
     }
 
+    /* =========================
+       ★ 追加：初めての方へ補助テキスト
+       ========================= */
+    .mini-muted{
+      color:#666;
+      font-weight:800;
+    }
+
     .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
     .skip-link:focus{left:16px;top:12px;width:auto;height:auto;background:#111;color:#fff;padding:10px 12px;border-radius:10px;z-index:1000}
     :focus-visible{outline:2px solid #0b69d5;outline-offset:2px}
@@ -571,6 +583,9 @@
       .maids-fallback{color:#d7d7d7}
       .mini-card .policy{color:#e6e6e6}
       .mini-card .policy strong{color:#ff81c0}
+
+      /* ★ 追加：mini-muted（ダーク時） */
+      .mini-muted{color:#d0d0d0}
     }
 
     @media (max-width:768px){ html,body{background-attachment:scroll} }
@@ -725,6 +740,62 @@
     .reveal.is-in{
       opacity:1;
       transform: translateY(0);
+    }
+
+    /* =========================
+       ★ 追加：滞在イメージ（料金目安）
+       ========================= */
+    .stay-estimate{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,.06);
+      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,247,251,.94));
+    }
+    .stay-estimate-title{
+      font-weight:1000;
+      color:#222;
+      font-size:.95rem;
+      margin-bottom:8px;
+      letter-spacing:.01em;
+    }
+    .stay-estimate-pills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+    }
+    .stay-pill{
+      display:inline-flex;
+      align-items:baseline;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.95);
+      border:1px solid rgba(255,121,166,.20);
+      box-shadow:0 6px 14px rgba(0,0,0,.08);
+      font-weight:1000;
+      color:#222;
+      font-size:.9rem;
+    }
+    .stay-pill b{
+      font-variant-numeric: tabular-nums;
+      font-weight:1000;
+      color:#ff4fa3;
+    }
+    .stay-estimate-note{
+      margin-top:8px;
+      font-size:.82rem;
+      font-weight:900;
+      color:#555;
+      line-height:1.6;
+    }
+
+    @media (prefers-color-scheme: dark){
+      .stay-estimate{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+      .stay-estimate-title{color:#fff}
+      .stay-pill{background:rgba(255,255,255,.08);border-color:rgba(255,121,166,.22);color:#fff}
+      .stay-estimate-note{color:#d7d7d7}
     }
 
     /* =========================
@@ -920,6 +991,18 @@
           <div style="display:grid;gap:10px;grid-template-columns:1.2fr .8fr;align-items:center">
             <div>
               <div style="font-size:1.35rem;font-weight:1000;color:#ff4fa3">料金：30分 1,000円（税込）</div>
+
+              <!-- ★ 追加：滞在イメージ（目安） -->
+              <div class="stay-estimate mt-12" aria-label="滞在イメージ（目安料金）">
+                <div class="stay-estimate-title">⏱ 滞在イメージ（目安）</div>
+                <div class="stay-estimate-pills" role="list">
+                  <span class="stay-pill" role="listitem">60分：<b>2,000円</b></span>
+                  <span class="stay-pill" role="listitem">90分：<b>3,000円</b></span>
+                  <span class="stay-pill" role="listitem">120分：<b>4,000円</b></span>
+                </div>
+                <div class="tag stay-estimate-note">※延長は30分単位です（上記は滞在時間の目安としてご覧ください）</div>
+              </div>
+
               <div class="tag mt-8">🥤各種ドリンク飲み放題 / 🍺生ビールも飲み放題</div>
               <div class="tag mt-8">※放置ゼロ宣言＆キャストドリンク無しで安心♪</div>
             </div>
@@ -1223,6 +1306,35 @@
               <li>混雑時はお席のご案内にお時間をいただく場合があります。</li>
               <li>困ったことがあれば、お近くのメイドさんへお声がけください。</li>
             </ul>
+          </div>
+
+          <!-- ★ 追加：来店の流れ（3ステップ） -->
+          <div class="mini-card">
+            <h3>🧭 来店の流れ（3ステップ）</h3>
+            <ul>
+              <li><strong>DMで予約</strong>（ご予約名 / 日時 / 利用時間 / セレクト希望）</li>
+              <li><strong>ご来店</strong>（到着したらメイドがお迎えします♡）</li>
+              <li><strong>お席ご案内</strong>（システム説明 → お給仕スタート）</li>
+            </ul>
+            <div class="mini-kv">
+              <span class="kv">はじめてでも安心</span>
+              <span class="kv">不明点はDMでOK</span>
+            </div>
+          </div>
+
+          <!-- ★ 追加：支払い・撮影（OKなこと中心） -->
+          <div class="mini-card">
+            <h3>💳 お支払い・📷 撮影について</h3>
+            <ul>
+              <li><strong>お支払い方法</strong>：<span class="mini-muted">（例）現金 / カード / 各種QR</span></li>
+              <li class="mini-muted">※実際の対応可否は、当日のご案内にてご確認ください。</li>
+              <li><strong>撮影</strong>：<span class="mini-muted">店内ルールに沿ってご案内します</span></li>
+              <li class="mini-muted">例：撮影OK範囲・SNS投稿可否・他のお客様の映り込み配慮 など</li>
+            </ul>
+            <div class="mini-kv">
+              <span class="kv">ルールはその場で案内</span>
+              <span class="kv">安心して楽しめます♡</span>
+            </div>
           </div>
         </div>
 
