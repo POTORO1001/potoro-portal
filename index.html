@@ -24,6 +24,10 @@
     ★ Ver1.9（今回の実装）
       ⑤ 料金ブロックに「滞在イメージ（目安）」を追加（60/90/120分）
       ⑧ 初めての方へモーダルに「来店の流れ」「支払い/撮影（OKなこと中心）」を追加
+
+    ★ Ver1.9.1（今回のバグ修正）
+      - renderTodayMaids() 周辺の参照エラー（stEl未定義）でJSが停止し、動画後に操作不能になる問題を修正
+      - CSS内のはみ出し行を除去
   -->
 
   <!-- OGP -->
@@ -276,20 +280,14 @@
       color:#666;
     }
     .maids-wrap{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-}
-
-.maid-name{
-  font-weight:900;
-}
-
-.maid-time{
-  color:#ff4fa3;
-  font-weight:900;
-}
-      display:flex;flex-wrap:wrap;gap:8px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .maid-name{ font-weight:900; }
+    .maid-time{
+      color:#ff4fa3;
+      font-weight:900;
     }
     .maids-fallback{
       font-weight:900;
@@ -1281,21 +1279,21 @@
         <h2>初めての方へ</h2>
 
         <div class="mini-card">
-            <h3>🫖 ポ・トロのお約束（理念）</h3>
-            <ul>
-              <li class="policy">
-                <strong>「放置ゼロ宣言」</strong><br>
-                ポ・トロでは、ご主人様・お嬢様にとって、メイドさんとの会話のひとときこそが、かけがえのない大切な時間であると考えております。<br>
-                ご帰宅いただいたすべてのご主人様・お嬢様が、メイドさんとお話しできずにお時間を過ごされることのないよう、常におそばで見守りながら、心を込めてお給仕しております。<br>
-                はじめてのご主人様・お嬢様も、いつもお越しくださるご主人様・お嬢様も、すべての方に心を込めてお給仕しております。
-              </li>
-              <li class="policy">
-                <strong>「キャストドリンク制度はございません」</strong><br>
-                ポ・トロでは、メイドさんはご主人様・お嬢様にお仕えする存在であるという考えを大切にしております。<br>
-                そのためキャストドリンクという制度は設けておらず、見返りのためではなく、ご主人様・お嬢様に安心して楽しんでいただけるよう、心を込めてお給仕しております。
-              </li>
-            </ul>
-          </div>
+          <h3>🫖 ポ・トロのお約束（理念）</h3>
+          <ul>
+            <li class="policy">
+              <strong>「放置ゼロ宣言」</strong><br>
+              ポ・トロでは、ご主人様・お嬢様にとって、メイドさんとの会話のひとときこそが、かけがえのない大切な時間であると考えております。<br>
+              ご帰宅いただいたすべてのご主人様・お嬢様が、メイドさんとお話しできずにお時間を過ごされることのないよう、常におそばで見守りながら、心を込めてお給仕しております。<br>
+              はじめてのご主人様・お嬢様も、いつもお越しくださるご主人様・お嬢様も、すべての方に心を込めてお給仕しております。
+            </li>
+            <li class="policy">
+              <strong>「キャストドリンク制度はございません」</strong><br>
+              ポ・トロでは、メイドさんはご主人様・お嬢様にお仕えする存在であるという考えを大切にしております。<br>
+              そのためキャストドリンクという制度は設けておらず、見返りのためではなく、ご主人様・お嬢様に安心して楽しんでいただけるよう、心を込めてお給仕しております。
+            </li>
+          </ul>
+        </div>
 
         <div class="mini-grid">
           <div class="mini-card">
@@ -1326,7 +1324,7 @@
             </div>
           </div>
 
-         <div class="mini-card">
+          <div class="mini-card">
             <h3>⚠️ 注意</h3>
             <ul>
               <li>撮影やSNS投稿は、お屋敷ルールに沿ってお願いします。</li>
@@ -1335,6 +1333,7 @@
               <li>困ったことがあれば、お近くのメイドさんへお声がけください。</li>
             </ul>
           </div>
+        </div>
 
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
           <a class="btn btn-primary" href="#pricing" data-close="modalFirst" style="text-decoration:none">料金を見る</a>
@@ -1849,89 +1848,51 @@
       }
     }
 
+    /* =========================
+       ★ 修正済み：renderTodayMaids（stEl未定義で止まる問題を解消）
+       ========================= */
     function renderTodayMaids(){
+      const wrap = document.getElementById('todayMaidsWrap');
+      const dtEl = document.getElementById('todayMaidsDate');
+      const stEl = document.getElementById('todayMaidsStatus'); // ★ ここで宣言
 
-  const wrap =
-    document.getElementById('todayMaidsWrap');
+      if(!wrap) return;
 
-  const dtEl =
-    document.getElementById('todayMaidsDate');
+      const all = (window.PORTAL_DATA.todayMaids || []);
+      const today = new Date();
+      today.setHours(0,0,0,0);
 
-  if(!wrap) return;
+      const todayLabel = formatDateObjJPNoParen(today);
+      if(dtEl) dtEl.textContent = todayLabel;
 
-  const all =
-    (window.PORTAL_DATA.todayMaids || []);
+      const list = all.filter(r=>{
+        const name = String(r.maid_name||'').trim();
+        if(!name) return false;
 
-  const today = new Date();
+        const d = parseSheetDateToJsDate(r.date);
+        if(!d) return false;
 
-  today.setHours(0,0,0,0);
+        d.setHours(0,0,0,0);
+        return sameYMD(d,today);
+      });
 
-  const todayLabel =
-    formatDateObjJPNoParen(today);
+      if(!list.length){
+        wrap.innerHTML = `<span class="maids-fallback">本日の出勤情報は未登録です</span>`;
+      }else{
+        const html = list.map(r=>{
+          const name = escapeHtml(r.maid_name);
+          const time = escapeHtml(r.maid_note || r.maid_time || '');
+          return `
+            <div class="maids-pill">
+              <span class="maid-name">${name}</span>
+              <span class="maid-time">${time}</span>
+            </div>
+          `;
+        }).join('');
+        wrap.innerHTML = html;
+      }
 
-  if(dtEl)
-    dtEl.textContent = todayLabel;
-
-  const list =
-    all.filter(r=>{
-
-      const name =
-        String(r.maid_name||'').trim();
-
-      if(!name) return false;
-
-      const d =
-        parseSheetDateToJsDate(r.date);
-
-      if(!d) return false;
-
-      d.setHours(0,0,0,0);
-
-      return sameYMD(d,today);
-
-    });
-
-  if(!list.length){
-
-    wrap.innerHTML =
-      `<span class="maids-fallback">
-      本日の出勤情報は未登録です
-      </span>`;
-
-    return;
-
-  }
-
-  const html =
-    list.map(r=>{
-
-      const name =
-        escapeHtml(r.maid_name);
-
-      const time =
-        escapeHtml(r.maid_note || r.maid_time || '');
-
-      return `
-        <div class="maids-pill">
-
-          <span class="maid-name">
-            ${name}
-          </span>
-
-          <span class="maid-time">
-            ${time}
-          </span>
-
-        </div>
-      `;
-
-    }).join('');
-
-  wrap.innerHTML = html;
-
-}
-
-      /* ② デバッグ表示：CSSで非表示だが、JSでも確実に消す */
+      // デバッグ表示（CSSで非表示だが、JSでも確実に消す）
       if(stEl){
         stEl.textContent = `today_maids：該当 ${list.length}件 / CSV ${all.length}件`;
         stEl.style.display = 'none';
@@ -1986,7 +1947,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', async ()=>{
-
       setupReveal();
 
       // ===== チェキ動画再生（Ver1.3） =====
