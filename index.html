@@ -1837,48 +1837,86 @@
     }
 
     function renderTodayMaids(){
-      const wrap = document.getElementById('todayMaidsWrap');
-      const dtEl = document.getElementById('todayMaidsDate');
-      const stEl = document.getElementById('todayMaidsStatus');
-      if(!wrap) return;
 
-      const all = (window.PORTAL_DATA.todayMaids || []);
-      const today = new Date(); today.setHours(0,0,0,0);
+  const wrap =
+    document.getElementById('todayMaidsWrap');
 
-      /* ① 右側日付：()を使わず「YYYY/MM/DD 曜」表記 */
-      const todayLabel = formatDateObjJPNoParen(today);
-      if(dtEl) dtEl.textContent = todayLabel ? `${todayLabel}` : '';
+  const dtEl =
+    document.getElementById('todayMaidsDate');
 
-      const list = all.filter(r=>{
-        const name = String(r.maid_name || '').trim();
-        if(!name) return false;
+  if(!wrap) return;
 
-        const d = parseSheetDateToJsDate(r.date);
-        if(!d) return false;
-        d.setHours(0,0,0,0);
-        return sameYMD(d, today);
-      });
+  const all =
+    (window.PORTAL_DATA.todayMaids || []);
 
-      if(!list.length){
-        wrap.innerHTML = `<span class="maids-fallback">本日の出勤情報は未登録です（DMでご確認ください）</span>`;
-        if(stEl) stEl.textContent = `today_maids：該当 0件 / CSV ${all.length}件`;
-        return;
-      }
+  const today = new Date();
 
-      const times = list.map(x=>String(x.maid_time||'').trim()).filter(Boolean);
-      const uniqueTimes = Array.from(new Set(times));
-      const showTimeByDefault = uniqueTimes.length > 1;
+  today.setHours(0,0,0,0);
 
-      const pills = list.map(r=>{
-        const name = String(r.maid_name||'').trim();
-        const time = String(r.maid_time||'').trim();
-        const note = String(r.maid_note||'').trim();
-        const sub  = note ? note : (showTimeByDefault && time ? time : '');
-        const subHtml = sub ? ` <span class="subtxt">(${escapeHtml(sub)})</span>` : '';
-        return `<span class="maids-pill">${escapeHtml(name || '—')}${subHtml}</span>`;
-      }).join('');
+  const todayLabel =
+    formatDateObjJPNoParen(today);
 
-      wrap.innerHTML = pills;
+  if(dtEl)
+    dtEl.textContent = todayLabel;
+
+  const list =
+    all.filter(r=>{
+
+      const name =
+        String(r.maid_name||'').trim();
+
+      if(!name) return false;
+
+      const d =
+        parseSheetDateToJsDate(r.date);
+
+      if(!d) return false;
+
+      d.setHours(0,0,0,0);
+
+      return sameYMD(d,today);
+
+    });
+
+  if(!list.length){
+
+    wrap.innerHTML =
+      `<span class="maids-fallback">
+      本日の出勤情報は未登録です
+      </span>`;
+
+    return;
+
+  }
+
+  const html =
+    list.map(r=>{
+
+      const name =
+        escapeHtml(r.maid_name);
+
+      const time =
+        escapeHtml(r.maid_note || r.maid_time || '');
+
+      return `
+        <div class="maids-pill">
+
+          <span class="maid-name">
+            ${name}
+          </span>
+
+          <span class="maid-time">
+            ${time}
+          </span>
+
+        </div>
+      `;
+
+    }).join('');
+
+  wrap.innerHTML = html;
+
+}
 
       /* ② デバッグ表示：CSSで非表示だが、JSでも確実に消す */
       if(stEl){
