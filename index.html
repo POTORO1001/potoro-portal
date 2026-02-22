@@ -28,6 +28,11 @@
     ★ Ver1.9.1（今回のバグ修正）
       - renderTodayMaids() 周辺の参照エラー（stEl未定義）でJSが停止し、動画後に操作不能になる問題を修正
       - CSS内のはみ出し行を除去
+
+    ★ Ver1.10（今回の追加）
+      - X内ブラウザ（in-app）で開いた場合に「ブラウザで開く / このまま見る」を案内できるモーダルを追加
+      - 「URLをコピー」「共有（対応端末）」ボタンで外部ブラウザへ誘導（※サイト側から“強制でSafari/Chrome”は不可のため）
+      - 次回以降表示しない（localStorage）対応、?open=browser で案内スキップ対応
   -->
 
   <!-- OGP -->
@@ -325,6 +330,41 @@
     .reserve-subactions button:hover{transform:translateY(-1px);text-decoration:none}
     .reserve-note{color:#555;font-size:.86rem;font-weight:900;line-height:1.6}
 
+    /* ★ Ver1.10：外部ブラウザ誘導（小さめ） */
+    .mini-open-browser{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      margin-top:10px;
+      padding:10px 10px;
+      border-radius:14px;
+      background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,247,251,.92));
+      border:1px solid rgba(0,0,0,.06);
+    }
+    .mini-open-browser .txt{
+      font-size:.86rem;
+      font-weight:1000;
+      color:#333;
+      line-height:1.5;
+    }
+    .mini-open-browser .btnline{
+      display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+    }
+    .mini-open-browser .sbtn{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.08);
+      background:#fff;
+      box-shadow:0 6px 14px rgba(0,0,0,.08);
+      font-weight:1000;
+      cursor:pointer;
+      text-decoration:none;
+      color:#222;
+    }
+
     .hero-card{
       background:var(--card);
       backdrop-filter: blur(10px);
@@ -559,6 +599,52 @@
       font-weight:800;
     }
 
+    /* =========================
+       ★ Ver1.10：ブラウザで開く案内モーダル
+       ========================= */
+    .browser-grid{display:grid;gap:12px}
+    .browser-card{
+      border:1px solid #eee;
+      border-radius:14px;
+      padding:12px 12px;
+      background:linear-gradient(180deg,#fff,#fff7fb);
+    }
+    .browser-card h3{margin:.1rem 0 .4rem;font-size:1.05rem;font-weight:1000}
+    .browser-card p{margin:.3rem 0 0;color:#444;line-height:1.7;font-weight:800}
+    .browser-actions{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:12px;
+    }
+    .browser-actions .btn{padding:11px 14px;border-radius:14px}
+    .browser-small{
+      font-size:.82rem;
+      color:#555;
+      font-weight:900;
+      line-height:1.6;
+      margin-top:10px;
+    }
+    .browser-check{
+      display:flex; gap:8px; align-items:center; margin-top:10px;
+      font-weight:900; color:#333; font-size:.86rem;
+    }
+    .browser-toast{
+      position:fixed; left:50%; bottom:18px;
+      transform:translateX(-50%);
+      background:rgba(17,17,17,.92);
+      color:#fff;
+      padding:10px 12px;
+      border-radius:999px;
+      box-shadow:0 14px 34px rgba(0,0,0,.25);
+      font-weight:900;
+      z-index:140;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .18s var(--ease), transform .18s var(--ease);
+    }
+    .browser-toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(-2px);
+    }
+
     .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
     .skip-link:focus{left:16px;top:12px;width:auto;height:auto;background:#111;color:#fff;padding:10px 12px;border-radius:10px;z-index:1000}
     :focus-visible{outline:2px solid #0b69d5;outline-offset:2px}
@@ -594,9 +680,14 @@
       .maids-fallback{color:#d7d7d7}
       .mini-card .policy{color:#e6e6e6}
       .mini-card .policy strong{color:#ff81c0}
-
-      /* ★ 追加：mini-muted（ダーク時） */
       .mini-muted{color:#d0d0d0}
+
+      /* Ver1.10 dark */
+      .mini-open-browser{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+      .mini-open-browser .txt{color:#e8e8e8}
+      .mini-open-browser .sbtn{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff}
+      .browser-card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+      .browser-card p,.browser-small,.browser-check{color:#e6e6e6}
     }
 
     @media (max-width:768px){ html,body{background-attachment:scroll} }
@@ -663,6 +754,15 @@
           color:#fff !important;
           text-decoration:none !important;
         }
+
+        /* Ver1.10 互換CSS：外部ブラウザ案内も読みやすく */
+        .mini-open-browser{
+          background:#fff !important;
+          border:1px solid #eee !important;
+          color:#111 !important;
+        }
+        .mini-open-browser .txt{color:#111 !important}
+        .mini-open-browser .sbtn{background:#fff !important;color:#111 !important;border:1px solid #eee !important}
       }
     }
 
@@ -931,10 +1031,24 @@
                 </button>
                 <a href="#pricing" aria-label="料金システムを見る">💴 料金を見る</a>
                 <a href="#access" aria-label="アクセスを見る">📍 アクセス</a>
+                <!-- ★ Ver1.10：外部ブラウザ案内をいつでも出せる -->
+                <button type="button" id="openBrowserChoice" aria-label="ブラウザで開く案内を開く">🌐 ブラウザで開く</button>
               </div>
 
               <div class="reserve-note">
                 ※DM予約の際は「ご予約名(ハンドルネーム)/ご利用ご希望の日時と利用時間／セレクト希望メイドさんのお名前／」を送ってください♡
+              </div>
+
+              <!-- ★ Ver1.10：X内ブラウザ検知時の軽い案内（常設。表示はJSで制御） -->
+              <div class="mini-open-browser" id="inAppHint" style="display:none" aria-label="外部ブラウザ推奨">
+                <div class="txt">
+                  📌 X内ブラウザだと、動画や表示が不安定になることがあります。<br>
+                  <span class="tag" style="font-weight:1000">よろしければ「ブラウザで開く（おすすめ）」をご利用ください♡</span>
+                </div>
+                <div class="btnline">
+                  <button type="button" class="sbtn" id="btnBrowserRecommend">🌐 ブラウザで開く</button>
+                  <button type="button" class="sbtn" id="btnCopyUrlMini">🔗 URLをコピー</button>
+                </div>
               </div>
             </div>
           </div>
@@ -1196,6 +1310,9 @@
               <h3>X（旧Twitter）</h3>
               <p class="tag">@po_toro</p>
               <a class="btn btn-ghost mt-12" href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer" aria-label="X（@po_toro）へ">Xを開く</a>
+              <button type="button" class="btn btn-primary mt-12" id="openBrowserChoice2" style="background:linear-gradient(135deg,#ff81c0,#8ed2ff);color:#fff;border:none">
+                🌐 ブラウザで開く案内
+              </button>
             </div>
           </article>
 
@@ -1343,6 +1460,49 @@
     </div>
   </div>
 
+  <!-- ★ Ver1.10：ブラウザで開く案内モーダル -->
+  <div id="modalBrowser" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="ブラウザで開く案内" aria-hidden="true">
+    <div class="panel">
+      <button class="close" data-close="modalBrowser" aria-label="閉じる">✕ 閉じる</button>
+      <div class="body">
+        <h2>🌐 ブラウザで開く（おすすめ）</h2>
+
+        <div class="browser-grid">
+          <div class="browser-card">
+            <h3>なぜおすすめ？</h3>
+            <p>
+              X内ブラウザ（アプリ内表示）だと、<strong>動画が止まる / 表示が崩れる / 外部リンクが不安定</strong>になることがあります。<br>
+              Safari / Chromeで開くと安定しやすいです♡
+            </p>
+          </div>
+
+          <div class="browser-card">
+            <h3>開き方（カンタン）</h3>
+            <p id="browserHowText">
+              右上の「…」から <strong>“ブラウザで開く”</strong> を選んでください♡
+            </p>
+
+            <div class="browser-actions">
+              <button type="button" class="btn btn-primary" id="btnShareUrl">📤 共有で開く</button>
+              <button type="button" class="btn btn-ghost" id="btnCopyUrl">🔗 URLをコピー</button>
+              <button type="button" class="btn btn-ghost" id="btnContinueHere">このまま見る</button>
+            </div>
+
+            <div class="browser-small">
+              ※「共有で開く」は端末の共有メニューを出します（対応端末のみ）。<br>
+              ※URLをコピーしたら、Safari/Chromeに貼り付けて開いてください。
+            </div>
+
+            <label class="browser-check">
+              <input type="checkbox" id="chkDontShowBrowser" />
+              次回からこの案内を表示しない
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="modalTerms" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="利用規約" aria-hidden="true">
     <div class="panel">
       <button class="close" data-close="modalTerms" aria-label="閉じる">✕ 閉じる</button>
@@ -1375,6 +1535,8 @@
       </div>
     </div>
   </div>
+
+  <div id="browserToast" class="browser-toast" role="status" aria-live="polite"></div>
 
   <script>
     window.PORTAL_CONFIG = {
@@ -1946,6 +2108,112 @@
       els.forEach(el=>io.observe(el));
     }
 
+    /* =========================
+       ★ Ver1.10：X内ブラウザ検知＆案内
+       ========================= */
+    function getUA(){ return String(navigator.userAgent || ''); }
+    function isIOS(){ return /iPhone|iPad|iPod/i.test(getUA()); }
+    function isAndroid(){ return /Android/i.test(getUA()); }
+
+    function isXInAppBrowser(){
+      const ua = getUA();
+      // 代表例：Twitter for iPhone / TwitterAndroid / X (アプリ内WebView)
+      // （100%ではないが、実運用では十分効きます）
+      return /Twitter/i.test(ua) || /TwitterAndroid/i.test(ua) || /\bX\b/i.test(ua) && /Mobile/i.test(ua);
+    }
+
+    function getHowToText(){
+      if(isIOS()){
+        return '（iPhoneの場合）右上の「…」→「ブラウザで開く」または共有からSafariで開いてください♡';
+      }
+      if(isAndroid()){
+        return '（Androidの場合）右上の「…」→「ブラウザで開く」または共有からChromeで開いてください♡';
+      }
+      return '右上の「…」→「ブラウザで開く」から外部ブラウザで開くのがおすすめです♡';
+    }
+
+    function showToast(msg){
+      const t = document.getElementById('browserToast');
+      if(!t) return;
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'), 1600);
+    }
+
+    async function copyUrlToClipboard(){
+      const url = location.href;
+      try{
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          await navigator.clipboard.writeText(url);
+          showToast('URLをコピーしました♡');
+          return true;
+        }
+      }catch(e){}
+      // fallback
+      try{
+        const ta = document.createElement('textarea');
+        ta.value = url;
+        ta.setAttribute('readonly','');
+        ta.style.position='fixed';
+        ta.style.left='-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        if(ok){ showToast('URLをコピーしました♡'); return true; }
+      }catch(e){}
+      showToast('コピーできませんでした…（手動でURLをコピーしてください）');
+      return false;
+    }
+
+    async function shareUrl(){
+      const url = location.href;
+      if(navigator.share){
+        try{
+          await navigator.share({ title: document.title, text: 'PO・TORO 公式ポータル', url });
+          return true;
+        }catch(e){
+          return false;
+        }
+      }
+      return false;
+    }
+
+    function toggleModal(el, open){
+      if(!el) return;
+      el.classList.toggle('open', open);
+      el.setAttribute('aria-hidden', String(!open));
+      document.body.style.overflow = open? 'hidden':'';
+      if(open) trapFocus(el, el.querySelector('.close'));
+    }
+
+    function shouldSkipBrowserGuide(){
+      const params = new URLSearchParams(location.search);
+      if(params.get('open') === 'browser') return true;
+      try{
+        return localStorage.getItem('potoro_skip_browser_guide') === '1';
+      }catch(e){
+        return false;
+      }
+    }
+
+    function openBrowserGuide(){
+      const modal = document.getElementById('modalBrowser');
+      const how = document.getElementById('browserHowText');
+      if(how) how.textContent = getHowToText();
+      toggleModal(modal, true);
+    }
+
+    function applyInAppHintVisibility(){
+      const hint = document.getElementById('inAppHint');
+      if(!hint) return;
+      if(isXInAppBrowser() && !shouldSkipBrowserGuide()){
+        hint.style.display = '';
+      }else{
+        hint.style.display = 'none';
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', async ()=>{
       setupReveal();
 
@@ -2026,6 +2294,12 @@
         intro.classList.add('intro-hidden');
         document.body.classList.remove('is-intro-playing');
         if (introVideo && !introVideo.paused) introVideo.pause();
+
+        // ★ Ver1.10：イントロ後に案内（X内ブラウザ検知時）
+        if(isXInAppBrowser() && !shouldSkipBrowserGuide()){
+          // いきなり出すと圧が強いので、ほんの少し遅らせる
+          setTimeout(()=>openBrowserGuide(), 380);
+        }
       }
 
       if (introVideo) {
@@ -2130,18 +2404,11 @@
       const modalTerms=document.getElementById('modalTerms');
       const modalPrivacy=document.getElementById('modalPrivacy');
       const modalFirst=document.getElementById('modalFirst');
+      const modalBrowser=document.getElementById('modalBrowser');
 
       const openTerms=document.getElementById('openTerms');
       const openPrivacy=document.getElementById('openPrivacy');
       const openFirst=document.getElementById('openFirst');
-
-      const toggleModal=(el,open)=>{
-        if(!el) return;
-        el.classList.toggle('open',open);
-        el.setAttribute('aria-hidden', String(!open));
-        document.body.style.overflow = open? 'hidden':'';
-        if(open) trapFocus(el, el.querySelector('.close'));
-      };
 
       if(openTerms)   openTerms.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalTerms,true);   });
       if(openPrivacy) openPrivacy.addEventListener('click', (e)=>{ e.preventDefault(); toggleModal(modalPrivacy,true); });
@@ -2164,9 +2431,10 @@
           toggleModal(modalTerms,false);
           toggleModal(modalPrivacy,false);
           toggleModal(modalFirst,false);
+          toggleModal(modalBrowser,false);
         }
       });
-      [modalTerms, modalPrivacy, modalFirst].forEach(m=>{
+      [modalTerms, modalPrivacy, modalFirst, modalBrowser].forEach(m=>{
         if(m) m.addEventListener('click',(e)=>{ if(e.target===m) toggleModal(m,false); });
       });
 
@@ -2178,6 +2446,61 @@
         if(header) header.style.display='none';
         if(footer) footer.style.display='none';
         document.querySelectorAll('section').forEach(s=>s.style.padding='12px 0');
+      }
+
+      // =========================
+      // ★ Ver1.10：ブラウザ案内のイベント
+      // =========================
+      applyInAppHintVisibility();
+
+      const btnOpenBrowserChoice = document.getElementById('openBrowserChoice');
+      const btnOpenBrowserChoice2 = document.getElementById('openBrowserChoice2');
+      const btnBrowserRecommend = document.getElementById('btnBrowserRecommend');
+
+      if(btnOpenBrowserChoice) btnOpenBrowserChoice.addEventListener('click', ()=>openBrowserGuide());
+      if(btnOpenBrowserChoice2) btnOpenBrowserChoice2.addEventListener('click', ()=>openBrowserGuide());
+      if(btnBrowserRecommend) btnBrowserRecommend.addEventListener('click', ()=>openBrowserGuide());
+
+      const btnCopyUrlMini = document.getElementById('btnCopyUrlMini');
+      if(btnCopyUrlMini) btnCopyUrlMini.addEventListener('click', ()=>copyUrlToClipboard());
+
+      const btnShareUrl = document.getElementById('btnShareUrl');
+      const btnCopyUrl  = document.getElementById('btnCopyUrl');
+      const btnContinueHere = document.getElementById('btnContinueHere');
+      const chkDontShowBrowser = document.getElementById('chkDontShowBrowser');
+
+      if(btnShareUrl){
+        btnShareUrl.addEventListener('click', async ()=>{
+          const ok = await shareUrl();
+          if(!ok){
+            // 共有が使えない端末はコピーへ誘導
+            await copyUrlToClipboard();
+          }
+        });
+      }
+      if(btnCopyUrl){
+        btnCopyUrl.addEventListener('click', async ()=>{
+          await copyUrlToClipboard();
+        });
+      }
+      if(btnContinueHere){
+        btnContinueHere.addEventListener('click', ()=>{
+          toggleModal(modalBrowser,false);
+        });
+      }
+
+      if(chkDontShowBrowser){
+        // 現在の設定を反映
+        try{
+          chkDontShowBrowser.checked = localStorage.getItem('potoro_skip_browser_guide') === '1';
+        }catch(e){}
+
+        chkDontShowBrowser.addEventListener('change', ()=>{
+          try{
+            localStorage.setItem('potoro_skip_browser_guide', chkDontShowBrowser.checked ? '1' : '0');
+          }catch(e){}
+          applyInAppHintVisibility();
+        });
       }
     });
   </script>
