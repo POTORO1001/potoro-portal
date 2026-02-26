@@ -36,6 +36,9 @@
 
     ★ Ver1.11（今回の追加）
       - 麻雀「募集部屋がある時だけ表示」するバナーをヒーロー内に追加（Firestore rooms を参照）
+
+    ★ Ver1.11.1（今回の変更）
+      - 「麻雀募集バナー」を“ポータル上部（main先頭）”に移動（表示位置のみ変更、他は未変更）
   -->
 
   <!-- OGP -->
@@ -1065,6 +1068,23 @@
   </div>
 
   <main>
+    <!-- ★ 変更点：麻雀募集バナーを “ポータル上部（main先頭）” に移動 -->
+    <div class="container" style="padding-top:14px">
+      <div class="mj-banner" id="mjBanner" aria-live="polite">
+        <div class="inner">
+          <div class="left">
+            <div class="ico" aria-hidden="true">🀄</div>
+            <div class="txt">
+              <div class="title">現在、麻雀の募集部屋があります <span id="mjCount" class="tag" style="font-weight:1000"></span></div>
+              <div class="meta" id="mjList"></div>
+              <div class="small tag">※部屋が無いときは自動で非表示になります</div>
+            </div>
+          </div>
+          <a class="btn" id="mjLink" href="https://potoro1001.github.io/potoro-mahjong/" target="_blank" rel="noopener noreferrer">募集を見る</a>
+        </div>
+      </div>
+    </div>
+
     <section class="hero">
       <div class="container wrap">
         <div class="reveal">
@@ -1124,21 +1144,6 @@
                   <button type="button" class="sbtn" id="btnCopyUrlMini">🔗 URLをコピー</button>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <!-- ★ Ver1.11：麻雀募集バナー（部屋がある時だけ表示） -->
-          <div class="mj-banner" id="mjBanner" aria-live="polite">
-            <div class="inner">
-              <div class="left">
-                <div class="ico" aria-hidden="true">🀄</div>
-                <div class="txt">
-                  <div class="title">現在、麻雀の募集部屋があります <span id="mjCount" class="tag" style="font-weight:1000"></span></div>
-                  <div class="meta" id="mjList"></div>
-                  <div class="small tag">※部屋が無いときは自動で非表示になります</div>
-                </div>
-              </div>
-              <a class="btn" id="mjLink" href="https://potoro1001.github.io/potoro-mahjong/" target="_blank" rel="noopener noreferrer">募集を見る</a>
             </div>
           </div>
 
