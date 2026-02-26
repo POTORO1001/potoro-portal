@@ -39,6 +39,10 @@
 
     ★ Ver1.11.1（今回の変更）
       - 「麻雀募集バナー」を“ポータル上部（main先頭）”に移動（表示位置のみ変更、他は未変更）
+
+    ★ Ver1.11.2（今回の変更）
+      - 麻雀バナー： “募集中のみ” を表示
+      - 表示内容：開催日時 / 形式（三人・四人）/ 作成者 に統一（タイトルは表示しない）
   -->
 
   <!-- OGP -->
@@ -1075,9 +1079,11 @@
           <div class="left">
             <div class="ico" aria-hidden="true">🀄</div>
             <div class="txt">
-              <div class="title">現在、麻雀の募集部屋があります <span id="mjCount" class="tag" style="font-weight:1000"></span></div>
+              <!-- ★ タイトル文言を「募集中のみ」に最適化 -->
+              <div class="title">現在、麻雀の募集があります <span id="mjCount" class="tag" style="font-weight:1000"></span></div>
+              <!-- ★ ここに “開催日時/形式/作成者” のみ表示 -->
               <div class="meta" id="mjList"></div>
-              <div class="small tag">※部屋が無いときは自動で非表示になります</div>
+              <div class="small tag">※募集中の部屋が無いときは自動で非表示になります</div>
             </div>
           </div>
           <a class="btn" id="mjLink" href="https://potoro1001.github.io/potoro-mahjong/" target="_blank" rel="noopener noreferrer">募集を見る</a>
@@ -2586,7 +2592,7 @@
     });
   </script>
 
-  <!-- ★ Ver1.11：麻雀募集バナー（Firestore rooms を参照） -->
+  <!-- ★ Ver1.11.2：麻雀募集バナー（募集中のみ / 開催日時・形式・作成者） -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -2604,36 +2610,171 @@
         const app = initializeApp(cfg, "mahjongPortalApp");
         const db = getFirestore(app);
 
+        // まずは新しい順に多めに取り、クライアント側で「募集中のみ」を判定して抽出
         const q = query(
           collection(db, "rooms"),
           orderBy("createdAt", "desc"),
-          limit(3)
+          limit(30)
         );
 
         const snap = await getDocs(q);
 
+        const openRooms = [];
         if(!snap.empty){
-          banner.style.display = "block";
-          countEl.textContent = `（${snap.size}件）`;
-
-          const lines = [];
           snap.forEach(doc=>{
             const d = doc.data() || {};
-            const date = (d.date ?? "").toString().trim();
-            const time = (d.time ?? d.startTime ?? "").toString().trim();
-            const title = (d.title ?? d.roomName ?? "").toString().trim();
-            const s = [date, time, title].filter(Boolean).join(" ");
-            if(s) lines.push(s);
+            if(isRecruiting(d)){
+              openRooms.push(d);
+            }
           });
+        }
+
+        // 表示：募集中が1件でもあれば出す
+        if(openRooms.length){
+          banner.style.display = "block";
+
+          const showList = openRooms.slice(0, 3);
+          countEl.textContent = `（${openRooms.length}件）`;
+
+          const lines = showList.map(d=>{
+            const when = buildWhen(d);           // 開催日時
+            const fmt  = detectFormat(d);        // 三人/四人
+            const who  = detectCreator(d);       // 作成者
+            // 表示仕様：開催日時 / 形式 / 作成者 のみ
+            return [when, fmt, who].filter(Boolean).join(" / ");
+          }).filter(Boolean);
 
           listEl.innerHTML = lines.length
             ? lines.map(x=>`<div>・${escapeHtml(x)}</div>`).join("")
             : `<div>・募集中の部屋があります</div>`;
+        }else{
+          // 募集中が無ければ非表示のまま
         }
       }catch(e){
         // silent（失敗してもポータルを壊さない）
       }
     }
+
+    // === “募集中のみ” 判定（複数実装に耐える）
+    function isRecruiting(d){
+      // 明確に「終了/非募集」を示すフラグがあれば優先で除外
+      const closedFlags = [d.isClosed, d.closed, d.deleted, d.isDeleted];
+      if(closedFlags.some(v => v === true)) return false;
+      if(d.closedAt || d.deletedAt || d.endedAt) return false;
+
+      // status がある場合はそれを最優先
+      const st = String(d.status ?? d.roomStatus ?? "").trim().toLowerCase();
+      if(st){
+        const ok = ["open","opening","recruit","recruiting","active","募集","募集中","募集中です","受付中","受付"].some(k => st.includes(k));
+        const ng = ["close","closed","end","ended","finish","finished","締切","締め切り","募集終了","終了"].some(k => st.includes(k));
+        if(ng) return false;
+        if(ok) return true;
+        // statusはあるがどちらにも当てはまらない → 非表示（安全側）
+        return false;
+      }
+
+      // isRecruiting があるならそれに従う
+      if(typeof d.isRecruiting === "boolean") return d.isRecruiting === true;
+
+      // legacy互換：終了時刻系が入っていない & 明確なNGが無いなら募集中扱い
+      return true;
+    }
+
+    // === 表示：開催日時（date + time/startTime を優先。なければ createdAt をざっくり）
+    function buildWhen(d){
+      const date = String(d.date ?? d.playDate ?? d.eventDate ?? "").trim();
+      const time = String(d.time ?? d.startTime ?? d.playTime ?? "").trim();
+
+      if(date && time) return normalizeDateTime(`${date} ${time}`);
+      if(date) return normalizeDateTime(date);
+
+      // createdAt（Firestore Timestamp / number / string）から推定表示（無いよりマシ）
+      const ca = d.createdAt;
+      const dt = toDateSafe(ca);
+      if(dt){
+        // 例：2026/02/27 22:10
+        return `${pad2(dt.getFullYear())}/${pad2(dt.getMonth()+1)}/${pad2(dt.getDate())} ${pad2(dt.getHours())}:${pad2(dt.getMinutes())}`;
+      }
+      return "";
+    }
+
+    function normalizeDateTime(s){
+      // ざっくり整形（全角→半角、区切り統一）
+      const z2h = (t)=>String(t||'').replace(/[０-９]/g, ch => String.fromCharCode(ch.charCodeAt(0)-0xFEE0));
+      let str = z2h(s)
+        .replace(/\u200B|\u200C|\u200D|\uFEFF/g,'')
+        .replace(/\u00A0|\u3000/g,' ')
+        .replace(/[年月]/g,'/')
+        .replace(/[日]/g,'')
+        .replace(/-/g,'/')
+        .replace(/\s+/g,' ')
+        .trim();
+      return str;
+    }
+
+    // === 形式（三人/四人）
+    function detectFormat(d){
+      const p = d.players ?? d.playerCount ?? d.nPlayers ?? d.modePlayers;
+      if(Number(p) === 3) return "三人";
+      if(Number(p) === 4) return "四人";
+
+      const raw = String(d.format ?? d.rule ?? d.gameType ?? d.mode ?? d.type ?? "").trim();
+      if(!raw) return "";
+
+      // 「三」「3」「三人打ち」などに対応
+      if(/[3３]/.test(raw) || raw.includes("三") || raw.toLowerCase().includes("3p")) return "三人";
+      if(/[4４]/.test(raw) || raw.includes("四") || raw.toLowerCase().includes("4p")) return "四人";
+
+      return "";
+    }
+
+    // === 作成者
+    function detectCreator(d){
+      const who = firstNonEmpty(
+        d.creator,
+        d.creatorName,
+        d.owner,
+        d.ownerName,
+        d.host,
+        d.hostName,
+        d.createdBy,
+        d.createdByName,
+        d.maker,
+        d.makerName,
+        d.name
+      );
+      return who ? `作成：${String(who).trim()}` : "";
+    }
+
+    function firstNonEmpty(...vals){
+      for(const v of vals){
+        const s = String(v ?? "").trim();
+        if(s) return s;
+      }
+      return "";
+    }
+
+    function toDateSafe(v){
+      try{
+        if(!v) return null;
+        // Firestore Timestamp { seconds, nanoseconds } or toDate()
+        if(typeof v.toDate === "function") return v.toDate();
+        if(typeof v.seconds === "number") return new Date(v.seconds * 1000);
+        // number（ms or sec）
+        if(typeof v === "number"){
+          if(v > 1e12) return new Date(v);        // ms
+          if(v > 1e9)  return new Date(v * 1000); // sec
+        }
+        // string
+        if(typeof v === "string"){
+          const d = new Date(v);
+          if(!isNaN(d)) return d;
+        }
+      }catch(e){}
+      return null;
+    }
+
+    function pad2(n){ return String(n).padStart(2,'0'); }
 
     function escapeHtml(str){
       return String(str).replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[s]));
