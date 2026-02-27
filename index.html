@@ -43,6 +43,14 @@
     ★ Ver1.11.2（今回の変更）
       - 麻雀バナー： “募集中のみ” を表示
       - 表示内容：開催日時 / 形式（三人・四人）/ 作成者 に統一（タイトルは表示しない）
+
+    ★ Ver1.11.3（今回の組み込み：あなたのroomsスキーマに最適化）
+      - roomsドキュメント例：
+        closed(boolean), creatorName(string), rule(string),
+        eventAt(timestamp), endAt(timestamp), deadlineAt(timestamp),
+        joinedCount(number), slotsTotal(number), durationMinutes(number)
+      - orderBy("eventAt") に変更（createdAtが無い部屋でも落ちない）
+      - “募集中”判定：closed=false かつ deadlineAt未超過 かつ endAt未超過 かつ 枠が残っている(任意)
   -->
 
   <!-- OGP -->
@@ -1079,9 +1087,7 @@
           <div class="left">
             <div class="ico" aria-hidden="true">🀄</div>
             <div class="txt">
-              <!-- ★ タイトル文言を「募集中のみ」に最適化 -->
               <div class="title">現在、麻雀の募集があります <span id="mjCount" class="tag" style="font-weight:1000"></span></div>
-              <!-- ★ ここに “開催日時/形式/作成者” のみ表示 -->
               <div class="meta" id="mjList"></div>
               <div class="small tag">※募集中の部屋が無いときは自動で非表示になります</div>
             </div>
@@ -1098,7 +1104,6 @@
           <h1 class="headline">ようこそ、ご主人さま・お嬢さま。<br>PO・TOROの入口はここ♡</h1>
           <p class="sub">イベント、メイドさん紹介、ゲームや各種リンクをこのページに集約しました。ブックマーク推奨です！</p>
 
-          <!-- ★ 予約導線：本日の営業時間 → 予約ボタン（固定） -->
           <div class="today-box" role="status" aria-live="polite">
             <div class="today-row">
               <div class="today-left">
@@ -1108,7 +1113,6 @@
               <a href="#schedule" class="tag" style="font-weight:1000">営業日一覧を見る →</a>
             </div>
 
-            <!-- ★ Ver1.5：本日の出勤メイド -->
             <div class="today-maids" aria-label="本日の出勤メイド">
               <div class="today-maids-head">
                 <span class="today-pill">👑 本日の出勤メイド</span>
@@ -2592,7 +2596,7 @@
     });
   </script>
 
-  <!-- ★ Ver1.11.2：麻雀募集バナー（募集中のみ / 開催日時・形式・作成者） -->
+  <!-- ★ Ver1.11.3：麻雀募集バナー（あなたのroomsスキーマ対応） -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -2602,7 +2606,6 @@
     const listEl = document.getElementById("mjList");
     const countEl = document.getElementById("mjCount");
 
-    // 未設定なら何もしない（ポータルを壊さない）
     if(!cfg.projectId || cfg.projectId === "YOUR_PROJECT_ID"){
       // silent
     }else{
@@ -2610,20 +2613,22 @@
         const app = initializeApp(cfg, "mahjongPortalApp");
         const db = getFirestore(app);
 
-        // まずは新しい順に多めに取り、クライアント側で「募集中のみ」を判定して抽出
+        // ★ createdAt が無い部屋でも落ちないよう、eventAt を基準に取得（近い順）
         const q = query(
           collection(db, "rooms"),
-          orderBy("createdAt", "desc"),
-          limit(30)
+          orderBy("eventAt", "asc"),
+          limit(50)
         );
 
         const snap = await getDocs(q);
 
+        const now = new Date();
         const openRooms = [];
+
         if(!snap.empty){
           snap.forEach(doc=>{
             const d = doc.data() || {};
-            if(isRecruiting(d)){
+            if(isRecruiting(d, now)){
               openRooms.push(d);
             }
           });
@@ -2640,76 +2645,65 @@
             const when = buildWhen(d);           // 開催日時
             const fmt  = detectFormat(d);        // 三人/四人
             const who  = detectCreator(d);       // 作成者
-            // 表示仕様：開催日時 / 形式 / 作成者 のみ
             return [when, fmt, who].filter(Boolean).join(" / ");
           }).filter(Boolean);
 
           listEl.innerHTML = lines.length
             ? lines.map(x=>`<div>・${escapeHtml(x)}</div>`).join("")
             : `<div>・募集中の部屋があります</div>`;
-        }else{
-          // 募集中が無ければ非表示のまま
         }
       }catch(e){
         // silent（失敗してもポータルを壊さない）
       }
     }
 
-    // === “募集中のみ” 判定（複数実装に耐える）
-    function isRecruiting(d){
-      // 明確に「終了/非募集」を示すフラグがあれば優先で除外
-      const closedFlags = [d.isClosed, d.closed, d.deleted, d.isDeleted];
+    // === “募集中のみ” 判定：あなたのスキーマ優先
+    function isRecruiting(d, now){
+      // 1) closed が true なら終了
+      if(d.closed === true) return false;
+
+      // 2) deadlineAt が過ぎてたら募集終了（ある場合のみ）
+      const deadline = toDateSafe(d.deadlineAt);
+      if(deadline && deadline.getTime() <= now.getTime()) return false;
+
+      // 3) endAt が過ぎてたら終了（ある場合のみ）
+      const endAt = toDateSafe(d.endAt);
+      if(endAt && endAt.getTime() <= now.getTime()) return false;
+
+      // 4) 枠が埋まっていたら募集終了（両方ある場合のみ）
+      const slots = asNum(d.slotsTotal);
+      const joined = asNum(d.joinedCount);
+      if(Number.isFinite(slots) && Number.isFinite(joined)){
+        if(joined >= slots) return false;
+      }
+
+      // 追加の終了フラグ（互換）
+      const closedFlags = [d.isClosed, d.deleted, d.isDeleted];
       if(closedFlags.some(v => v === true)) return false;
       if(d.closedAt || d.deletedAt || d.endedAt) return false;
 
-      // status がある場合はそれを最優先
-      const st = String(d.status ?? d.roomStatus ?? "").trim().toLowerCase();
-      if(st){
-        const ok = ["open","opening","recruit","recruiting","active","募集","募集中","募集中です","受付中","受付"].some(k => st.includes(k));
-        const ng = ["close","closed","end","ended","finish","finished","締切","締め切り","募集終了","終了"].some(k => st.includes(k));
-        if(ng) return false;
-        if(ok) return true;
-        // statusはあるがどちらにも当てはまらない → 非表示（安全側）
-        return false;
-      }
-
-      // isRecruiting があるならそれに従う
-      if(typeof d.isRecruiting === "boolean") return d.isRecruiting === true;
-
-      // legacy互換：終了時刻系が入っていない & 明確なNGが無いなら募集中扱い
       return true;
     }
 
-    // === 表示：開催日時（date + time/startTime を優先。なければ createdAt をざっくり）
-    function buildWhen(d){
-      const date = String(d.date ?? d.playDate ?? d.eventDate ?? "").trim();
-      const time = String(d.time ?? d.startTime ?? d.playTime ?? "").trim();
-
-      if(date && time) return normalizeDateTime(`${date} ${time}`);
-      if(date) return normalizeDateTime(date);
-
-      // createdAt（Firestore Timestamp / number / string）から推定表示（無いよりマシ）
-      const ca = d.createdAt;
-      const dt = toDateSafe(ca);
-      if(dt){
-        // 例：2026/02/27 22:10
-        return `${pad2(dt.getFullYear())}/${pad2(dt.getMonth()+1)}/${pad2(dt.getDate())} ${pad2(dt.getHours())}:${pad2(dt.getMinutes())}`;
-      }
-      return "";
+    function asNum(v){
+      const n = Number(v);
+      return Number.isFinite(n) ? n : NaN;
     }
 
-    function normalizeDateTime(s){
-      // ざっくり整形（全角→半角、区切り統一）
-      const z2h = (t)=>String(t||'').replace(/[０-９]/g, ch => String.fromCharCode(ch.charCodeAt(0)-0xFEE0));
-      let str = z2h(s)
-        .replace(/\u200B|\u200C|\u200D|\uFEFF/g,'')
-        .replace(/\u00A0|\u3000/g,' ')
-        .replace(/[年月]/g,'/')
-        .replace(/[日]/g,'')
-        .replace(/-/g,'/')
-        .replace(/\s+/g,' ')
-        .trim();
-      return str;
+    // === 表示：開催日時（eventAt を最優先。なければ createdAt などにフォールバック）
+    function buildWhen(d){
+      const dt = toDateSafe(d.eventAt) || toDateSafe(d.startAt) || toDateSafe(d.createdAt);
+      if(!dt) return "";
+
+      const wd = ["日","月","火","水","木","金","土"][dt.getDay()];
+      const y = dt.getFullYear();
+      const m = pad2(dt.getMonth()+1);
+      const da = pad2(dt.getDate());
+      const hh = pad2(dt.getHours());
+      const mm = pad2(dt.getMinutes());
+
+      // 例：2026/02/27(金) 19:00
+      return `${y}/${m}/${da}(${wd}) ${hh}:${mm}`;
     }
 
     // === 形式（三人/四人）
@@ -2721,26 +2715,25 @@
       const raw = String(d.format ?? d.rule ?? d.gameType ?? d.mode ?? d.type ?? "").trim();
       if(!raw) return "";
 
-      // 「三」「3」「三人打ち」などに対応
       if(/[3３]/.test(raw) || raw.includes("三") || raw.toLowerCase().includes("3p")) return "三人";
       if(/[4４]/.test(raw) || raw.includes("四") || raw.toLowerCase().includes("4p")) return "四人";
 
       return "";
     }
 
-    // === 作成者
+    // === 作成者（creatorName が最優先）
     function detectCreator(d){
       const who = firstNonEmpty(
-        d.creator,
         d.creatorName,
-        d.owner,
+        d.creator,
         d.ownerName,
-        d.host,
+        d.owner,
         d.hostName,
-        d.createdBy,
+        d.host,
         d.createdByName,
-        d.maker,
+        d.createdBy,
         d.makerName,
+        d.maker,
         d.name
       );
       return who ? `作成：${String(who).trim()}` : "";
