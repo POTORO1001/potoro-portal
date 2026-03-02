@@ -2191,9 +2191,17 @@ const dateText = `${y}/${m}/${dd}(${wd})`;
     }else{
       // 既存UIに合わせて：名前 + 時間（noteがあればnote優先）
       wrap.innerHTML = list.map(r=>{
-        const baseName = String(r.maid || '').trim();
-const name = escapeHtml(baseName ? baseName + 'ちゃん' : '');
-        const time = escapeHtml((r.note && String(r.note).trim()) ? r.note : `${r.start}–${r.end}`);
+  const baseName = String(r.maid || '').trim();
+  const safeName = baseName.endsWith('ちゃん') ? baseName : (baseName ? baseName + 'ちゃん' : '');
+  const name = escapeHtml(safeName);
+
+  const s = String(r.start || '').trim();
+  const e = String(r.end || '').trim();
+  const time = escapeHtml(
+    (r.note && String(r.note).trim())
+      ? r.note
+      : (s && e ? `${s}–${e}` : '時間未設定')
+  );
         return `
           <div class="maids-pill">
             <span class="maid-name">${name}</span>
