@@ -2017,34 +2017,67 @@ async function fetchJsonWithTimeout(url, ms=10000){
       }).join('');
     }
 
-    function renderSchedule(){
-      const tbody=document.getElementById('scheduleBody'); if(!tbody) return;
-      const status=document.getElementById('scheduleStatus');
-      const all=(window.PORTAL_DATA.schedule||[]);
-      const today=new Date(); today.setHours(0,0,0,0);
-      const limit=new Date(today); limit.setDate(today.getDate()+7);
-      const inRange=[]; const undated=[];
-      for(const r of all){
-        const d=parseSheetDateToJsDate(r.date);
-        if(!d){ undated.push(r); continue; }
-        d.setHours(0,0,0,0);
-        if(d>=today && d<=limit) inRange.push(r);
-      }
-      let rows=inRange.length? inRange : (all.slice(0,7));
-      if(!rows.length){
-        tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
-      } else {
-        tbody.innerHTML = rows.map(r => {
-          const dateText = formatDateJPWithWeekday(r.date);
-          const hours    = String(r.hours || '');
-          const note     = String(r.note  || '');
-          return `<tr><td>${escapeHtml(dateText)}</td><td>${escapeHtml(hours)}</td><td>${escapeHtml(note)}</td></tr>`;
-        }).join('');
-      }
-      if(status){
-        status.textContent = `schedule：CSV ${all.length}件（直近7日 ${inRange.length}件 / 日付未解釈 ${undated.length}件）`;
-      }
+    async function renderSchedule(){
+  const tbody = document.getElementById('scheduleBody'); 
+  if(!tbody) return;
+
+  const status = document.getElementById('scheduleStatus');
+  const apiBase = window.PORTAL_CONFIG?.scheduleApiUrl;
+
+  if(!apiBase){
+    tbody.innerHTML = '<tr><td colspan="3">営業スケジュール：API未設定</td></tr>';
+    return;
+  }
+
+  try{
+    const data = await fetchJsonWithTimeout(`${apiBase}?mode=week`, 10000);
+
+    if(!data || data.ok !== true){
+      tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
+      return;
     }
+
+    const days = Array.isArray(data.days) ? data.days : [];
+    if(!days.length){
+      tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = days.map(d=>{
+      const dateText = d.date ? `${d.date}(${d.dow||''})` : '日付未設定';
+      const hours = String(d.hoursText || '').trim() || '営業時間未設定';
+
+      // “メイド名(時間)” を1行にまとめる（note優先・空防御はあなたの希望通り）
+      const maids = (d.maids || []).map(r=>{
+        const baseName = String(r.maid || '').trim();
+        const safeName = baseName.endsWith('ちゃん') ? baseName : (baseName ? baseName + 'ちゃん' : '');
+        const name = escapeHtml(safeName);
+
+        const s = String(r.start||'').trim();
+        const e = String(r.end||'').trim();
+        const time = escapeHtml((r.note && String(r.note).trim()) ? r.note : (s && e ? `${s}–${e}` : '時間未設定'));
+
+        return `${name}(${time})`;
+      }).filter(Boolean).join(' / ');
+
+      const note = maids || '';
+
+      return `<tr>
+        <td>${escapeHtml(dateText)}</td>
+        <td>${escapeHtml(hours)}</td>
+        <td>${note}</td>
+      </tr>`;
+    }).join('');
+
+    if(status){
+      status.textContent = `ScheduleDB(API)：week ${days.length}日`;
+      status.style.display = 'none';
+      status.setAttribute('aria-hidden','true');
+    }
+  }catch(e){
+    tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
+  }
+}
 
     function renderGoods(){
       const tbody=document.getElementById('goodsBody'); if(!tbody) return;
