@@ -2191,7 +2191,8 @@ const dateText = `${y}/${m}/${dd}(${wd})`;
     }else{
       // 既存UIに合わせて：名前 + 時間（noteがあればnote優先）
       wrap.innerHTML = list.map(r=>{
-        const name = escapeHtml(r.maid || '');
+        const baseName = String(r.maid || '').trim();
+const name = escapeHtml(baseName ? baseName + 'ちゃん' : '');
         const time = escapeHtml((r.note && String(r.note).trim()) ? r.note : `${r.start}–${r.end}`);
         return `
           <div class="maids-pill">
