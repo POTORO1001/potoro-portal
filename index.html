@@ -2508,8 +2508,8 @@ async function fetchJsonWithTimeout(url, ms=10000){
       renderSchedule();
       renderGoods();
 
-      renderTodayHours();
-      renderTodayMaids();
+      await renderTodayHours();
+await renderTodayMaids();
 
       // 画像ライトボックス
       const lightbox=document.getElementById('lightbox');
