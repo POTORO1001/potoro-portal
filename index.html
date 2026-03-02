@@ -2160,53 +2160,57 @@ async function fetchJsonWithTimeout(url, ms=10000){
   }
 }
 
-    function renderTodayMaids(){
-      const wrap = document.getElementById('todayMaidsWrap');
-      const dtEl = document.getElementById('todayMaidsDate');
-      const stEl = document.getElementById('todayMaidsStatus');
+    async function renderTodayMaids(){
+  const wrap = document.getElementById('todayMaidsWrap');
+  const dtEl = document.getElementById('todayMaidsDate');
+  const stEl = document.getElementById('todayMaidsStatus');
+  if(!wrap) return;
 
-      if(!wrap) return;
+  const apiBase = window.PORTAL_CONFIG?.scheduleApiUrl;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const todayLabel = formatDateObjJPNoParen(today);
+  if(dtEl) dtEl.textContent = todayLabel;
 
-      const all = (window.PORTAL_DATA.todayMaids || []);
-      const today = new Date();
-      today.setHours(0,0,0,0);
+  if(!apiBase){
+    wrap.innerHTML = `<span class="maids-fallback">出勤情報：API未設定</span>`;
+    return;
+  }
 
-      const todayLabel = formatDateObjJPNoParen(today);
-      if(dtEl) dtEl.textContent = todayLabel;
-
-      const list = all.filter(r=>{
-        const name = String(r.maid_name||'').trim();
-        if(!name) return false;
-
-        const d = parseSheetDateToJsDate(r.date);
-        if(!d) return false;
-
-        d.setHours(0,0,0,0);
-        return sameYMD(d,today);
-      });
-
-      if(!list.length){
-        wrap.innerHTML = `<span class="maids-fallback">本日の出勤情報は未登録です</span>`;
-      }else{
-        const html = list.map(r=>{
-          const name = escapeHtml(r.maid_name);
-          const time = escapeHtml(r.maid_note || r.maid_time || '');
-          return `
-            <div class="maids-pill">
-              <span class="maid-name">${name}</span>
-              <span class="maid-time">${time}</span>
-            </div>
-          `;
-        }).join('');
-        wrap.innerHTML = html;
-      }
-
-      if(stEl){
-        stEl.textContent = `today_maids：該当 ${list.length}件 / CSV ${all.length}件`;
-        stEl.style.display = 'none';
-        stEl.setAttribute('aria-hidden','true');
-      }
+  try{
+    const data = await fetchJsonWithTimeout(`${apiBase}?mode=today`, 10000);
+    if(!data || data.ok !== true){
+      wrap.innerHTML = `<span class="maids-fallback">本日の出勤情報は未登録です</span>`;
+      return;
     }
+
+    const day = (data.days && data.days[0]) ? data.days[0] : null;
+    const list = day?.maids || [];
+
+    if(!list.length){
+      wrap.innerHTML = `<span class="maids-fallback">本日の出勤情報は未登録です</span>`;
+    }else{
+      // 既存UIに合わせて：名前 + 時間（noteがあればnote優先）
+      wrap.innerHTML = list.map(r=>{
+        const name = escapeHtml(r.maid || '');
+        const time = escapeHtml((r.note && String(r.note).trim()) ? r.note : `${r.start}–${r.end}`);
+        return `
+          <div class="maids-pill">
+            <span class="maid-name">${name}</span>
+            <span class="maid-time">${time}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    if(stEl){
+      stEl.textContent = `ScheduleDB(API)：該当 ${list.length}件`;
+      stEl.style.display = 'none';
+      stEl.setAttribute('aria-hidden','true');
+    }
+  }catch(e){
+    wrap.innerHTML = `<span class="maids-fallback">本日の出勤情報は未登録です</span>`;
+  }
+}
 
     window.PORTAL_DATA={news:[],events:[],schedule:[],goods:[],todayMaids:[]};
 
