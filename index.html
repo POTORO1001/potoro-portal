@@ -2128,13 +2128,13 @@ async function fetchJsonWithTimeout(url, ms=10000){
     const close = times.reduce((mx,t)=> (t.end > mx ? t.end : mx), times[0].end);
 
     // 表示：YYYY/MM/DD(曜) HH:mm–HH:mm（既存に寄せる）
-    const dObj = new Date(day.date + 'T00:00:00');
-    const wd = day.dow || ['日','月','火','水','木','金','土'][dObj.getDay()];
-    const y  = dObj.getFullYear();
-    const m  = String(dObj.getMonth()+1).padStart(2,'0');
-    const dd = String(dObj.getDate()).padStart(2,'0');
-    const dateText = `${y}/${m}/${dd}(${wd})`;
-
+    const dObj = parseSheetDateToJsDate(day.date) || new Date();
+const wd = day.dow || ['日','月','火','水','木','金','土'][dObj.getDay()];
+const y  = dObj.getFullYear();
+const m  = String(dObj.getMonth()+1).padStart(2,'0');
+const dd = String(dObj.getDate()).padStart(2,'0');
+const dateText = `${y}/${m}/${dd}(${wd})`;
+    
     el.textContent = `${dateText}  ${open}–${close}`;
   }catch(e){
     el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
