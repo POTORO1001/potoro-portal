@@ -2531,11 +2531,6 @@ const dateText = `${y}/${m}/${dd}(${wd})`;
       } catch(e){ window.PORTAL_DATA.events = []; }
 
       try {
-        const scheduleCsv = await tryLoadCSV(window.PORTAL_CONFIG.scheduleCsvUrl, window.PORTAL_CONFIG.scheduleCsvUrlAlt);
-        window.PORTAL_DATA.schedule = scheduleCsv ? csvToScheduleObjects(scheduleCsv) : [];
-      } catch(e){ window.PORTAL_DATA.schedule = []; }
-
-      try {
         const goodsCsv = await tryLoadCSV(window.PORTAL_CONFIG.goodsCsvUrl, window.PORTAL_CONFIG.goodsCsvUrlAlt);
         window.PORTAL_DATA.goods = goodsCsv ? csvToGoodsObjects(goodsCsv) : [];
       } catch(e){ window.PORTAL_DATA.goods = []; }
