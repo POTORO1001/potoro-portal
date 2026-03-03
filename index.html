@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="ja">
 <head>
@@ -1071,7 +1070,7 @@
   <!-- 📸 チェキ撮影動画オーバーレイ -->
   <div id="chekiVideoOverlay" class="intro-video-overlay intro-hidden" aria-label="チェキ撮影動画">
     <video id="chekiVideoEl"
-      src="cheki.mp4"
+      src="video/cheki.mp4"
       playsinline webkit-playsinline
       muted
       preload="auto">
@@ -1654,6 +1653,9 @@
       todayMaidsCsvUrl:     "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=0",
       todayMaidsCsvUrlAlt:  "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_today_maids.csv",
 
+// ★追加
+  scheduleApiUrl: "https://script.google.com/macros/s/AKfycbzP4k-zy5b1nIratH5hTaM5vuT5urSIU3m1SAamfxntrsOVRmaLMyoB8Q599-uvBLJnFQ/exec",
+      
       reserve: {
         mode: "x_dm",
         xProfileUrl: "https://x.com/po_toro",
@@ -1686,6 +1688,21 @@
       }
     }
 
+    // ★ここに新規追加
+async function fetchJsonWithTimeout(url, ms=10000){
+  const controller = new AbortController();
+  const id = setTimeout(()=>controller.abort(), ms);
+  try{
+    const res = await fetch(url + (url.includes('?') ? '&' : '?') + 'cb=' + Date.now(), {
+      cache: 'no-store', credentials: 'omit', signal: controller.signal
+    });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    return await res.json();
+  } finally {
+    clearTimeout(id);
+  }
+}
+    
     function parseCSV(text){
       if(!text) return [];
       const trimmed = String(text).replace(/^\s+/, '');
@@ -2000,34 +2017,58 @@
       }).join('');
     }
 
-    function renderSchedule(){
-      const tbody=document.getElementById('scheduleBody'); if(!tbody) return;
-      const status=document.getElementById('scheduleStatus');
-      const all=(window.PORTAL_DATA.schedule||[]);
-      const today=new Date(); today.setHours(0,0,0,0);
-      const limit=new Date(today); limit.setDate(today.getDate()+7);
-      const inRange=[]; const undated=[];
-      for(const r of all){
-        const d=parseSheetDateToJsDate(r.date);
-        if(!d){ undated.push(r); continue; }
-        d.setHours(0,0,0,0);
-        if(d>=today && d<=limit) inRange.push(r);
-      }
-      let rows=inRange.length? inRange : (all.slice(0,7));
-      if(!rows.length){
-        tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
-      } else {
-        tbody.innerHTML = rows.map(r => {
-          const dateText = formatDateJPWithWeekday(r.date);
-          const hours    = String(r.hours || '');
-          const note     = String(r.note  || '');
-          return `<tr><td>${escapeHtml(dateText)}</td><td>${escapeHtml(hours)}</td><td>${escapeHtml(note)}</td></tr>`;
-        }).join('');
-      }
-      if(status){
-        status.textContent = `schedule：CSV ${all.length}件（直近7日 ${inRange.length}件 / 日付未解釈 ${undated.length}件）`;
-      }
+    async function renderSchedule(){
+  const tbody = document.getElementById('scheduleBody'); 
+  if(!tbody) return;
+
+  const apiBase = window.PORTAL_CONFIG?.scheduleApiUrl;
+  if(!apiBase){
+    tbody.innerHTML = '<tr><td colspan="3">営業スケジュール：API未設定</td></tr>';
+    return;
+  }
+
+  try{
+    const data = await fetchJsonWithTimeout(`${apiBase}?mode=week`, 10000);
+
+    if(!data || data.ok !== true){
+      tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
+      return;
     }
+
+    const days = Array.isArray(data.days) ? data.days : [];
+    if(!days.length){
+      tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = days.map(d=>{
+      const dateText = `${d.date}(${d.dow||''})`;
+      const hours = d.hoursText || '営業時間未設定';
+
+      const maids = (d.maids || []).map(r=>{
+        const baseName = String(r.maid || '').trim();
+        const safeName = baseName.endsWith('ちゃん') ? baseName : baseName + 'ちゃん';
+
+        const s = String(r.start||'').trim();
+        const e = String(r.end||'').trim();
+        const time = (r.note && r.note.trim())
+          ? r.note
+          : (s && e ? `${s}–${e}` : '時間未設定');
+
+        return `${safeName}（${time}）`;
+      }).join(' / ');
+
+      return `<tr>
+        <td>${dateText}</td>
+        <td>${hours}</td>
+        <td>${maids}</td>
+      </tr>`;
+    }).join('');
+
+  }catch(e){
+    tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
+  }
+}
 
     function renderGoods(){
       const tbody=document.getElementById('goodsBody'); if(!tbody) return;
@@ -2069,102 +2110,140 @@
       return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
     }
 
-    function renderTodayHours(){
-      const el = document.getElementById('todayHours');
-      if(!el) return;
+    async function renderTodayHours(){
+  const el = document.getElementById('todayHours');
+  if(!el) return;
 
-      const all = (window.PORTAL_DATA.schedule || []);
-      const today = new Date(); today.setHours(0,0,0,0);
+  const apiBase = window.PORTAL_CONFIG?.scheduleApiUrl;
+  if(!apiBase){
+    el.textContent = '営業時間：API未設定';
+    return;
+  }
 
-      let hit = null;
-      for(const r of all){
-        const d = parseSheetDateToJsDate(r.date);
-        if(!d) continue;
-        d.setHours(0,0,0,0);
-        if(sameYMD(d, today)){
-          hit = r;
-          break;
-        }
-      }
+  try{
+    const data = await fetchJsonWithTimeout(`${apiBase}?mode=today`, 10000);
 
-      if(hit){
-        const hours = String(hit.hours || '').trim();
-        const note  = String(hit.note  || '').trim();
-        const dateText = formatDateJPWithWeekday(hit.date);
-        el.textContent = hours ? `${dateText}  ${hours}` : `${dateText}  （営業時間は店頭/DMでご確認ください）`;
-        if(note){
-          el.setAttribute('title', note);
-        }
-      }else{
-        el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
-      }
-
-      const btn = document.getElementById('reserveBtn');
-      if(btn){
-        const cfg = window.PORTAL_CONFIG.reserve || {};
-        if(cfg.mode === "form" && cfg.formUrl){
-          btn.href = cfg.formUrl;
-          btn.target = "_blank";
-          btn.rel = "noopener noreferrer";
-          btn.setAttribute('aria-label','予約フォームを開く');
-          btn.textContent = "📝 予約フォーム";
-        }else{
-          btn.href = cfg.xProfileUrl || "https://x.com/po_toro";
-          btn.target = "_blank";
-          btn.rel = "noopener noreferrer";
-          btn.setAttribute('aria-label','XのDMで予約する（PO・TORO公式Xへ）');
-          btn.textContent = "💌 ご予約はDM";
-        }
-      }
+    if(!data || data.ok !== true){
+      el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
+      return;
     }
 
-    function renderTodayMaids(){
-      const wrap = document.getElementById('todayMaidsWrap');
-      const dtEl = document.getElementById('todayMaidsDate');
-      const stEl = document.getElementById('todayMaidsStatus');
+    const day = (data.days && data.days[0]) ? data.days[0] : null;
 
-      if(!wrap) return;
-
-      const all = (window.PORTAL_DATA.todayMaids || []);
-      const today = new Date();
-      today.setHours(0,0,0,0);
-
-      const todayLabel = formatDateObjJPNoParen(today);
-      if(dtEl) dtEl.textContent = todayLabel;
-
-      const list = all.filter(r=>{
-        const name = String(r.maid_name||'').trim();
-        if(!name) return false;
-
-        const d = parseSheetDateToJsDate(r.date);
-        if(!d) return false;
-
-        d.setHours(0,0,0,0);
-        return sameYMD(d,today);
-      });
-
-      if(!list.length){
-        wrap.innerHTML = `<span class="maids-fallback">本日の出勤情報は未登録です</span>`;
-      }else{
-        const html = list.map(r=>{
-          const name = escapeHtml(r.maid_name);
-          const time = escapeHtml(r.maid_note || r.maid_time || '');
-          return `
-            <div class="maids-pill">
-              <span class="maid-name">${name}</span>
-              <span class="maid-time">${time}</span>
-            </div>
-          `;
-        }).join('');
-        wrap.innerHTML = html;
-      }
-
-      if(stEl){
-        stEl.textContent = `today_maids：該当 ${list.length}件 / CSV ${all.length}件`;
-        stEl.style.display = 'none';
-        stEl.setAttribute('aria-hidden','true');
-      }
+    // dayが無い（=本日0件）でも “未登録” 表示
+    if(!day){
+      el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
+      return;
     }
+
+    // 営業時間：maidsの最小start～最大end（あなたの運用：空欄無し）
+    const times = (day.maids || [])
+      .map(m => ({ start:String(m.start||'').trim(), end:String(m.end||'').trim() }))
+      .filter(t => t.start && t.end);
+
+    if(!times.length){
+      // 本日が空でも日付ラベルだけ出す
+      el.textContent = `${day.date}（${day.dow||''}）  （営業時間は店頭/DMでご確認ください）`;
+      return;
+    }
+
+    times.sort((a,b)=> a.start.localeCompare(b.start));
+    const open = times[0].start;
+    const close = times.reduce((mx,t)=> (t.end > mx ? t.end : mx), times[0].end);
+
+    // 表示：YYYY/MM/DD(曜) HH:mm–HH:mm（既存に寄せる）
+    const dObj = parseSheetDateToJsDate(day.date) || new Date();
+const wd = day.dow || ['日','月','火','水','木','金','土'][dObj.getDay()];
+const y  = dObj.getFullYear();
+const m  = String(dObj.getMonth()+1).padStart(2,'0');
+const dd = String(dObj.getDate()).padStart(2,'0');
+const dateText = `${y}/${m}/${dd}(${wd})`;
+    
+    el.textContent = `${dateText}  ${open}–${close}`;
+  }catch(e){
+    el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
+  }
+
+  // 予約ボタンは既存ロジックをそのまま使う（ここはあなたの元コードのまま維持）
+  const btn = document.getElementById('reserveBtn');
+  if(btn){
+    const cfg = window.PORTAL_CONFIG.reserve || {};
+    if(cfg.mode === "form" && cfg.formUrl){
+      btn.href = cfg.formUrl;
+      btn.target = "_blank";
+      btn.rel = "noopener noreferrer";
+      btn.setAttribute('aria-label','予約フォームを開く');
+      btn.textContent = "📝 予約フォーム";
+    }else{
+      btn.href = cfg.xProfileUrl || "https://x.com/po_toro";
+      btn.target = "_blank";
+      btn.rel = "noopener noreferrer";
+      btn.setAttribute('aria-label','XのDMで予約する（PO・TORO公式Xへ）');
+      btn.textContent = "💌 ご予約はDM";
+    }
+  }
+}
+
+    async function renderTodayMaids(){
+  const wrap = document.getElementById('todayMaidsWrap');
+  const dtEl = document.getElementById('todayMaidsDate');
+  const stEl = document.getElementById('todayMaidsStatus');
+  if(!wrap) return;
+
+  const apiBase = window.PORTAL_CONFIG?.scheduleApiUrl;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const todayLabel = formatDateObjJPNoParen(today);
+  if(dtEl) dtEl.textContent = todayLabel;
+
+  if(!apiBase){
+    wrap.innerHTML = `<span class="maids-fallback">出勤情報：API未設定</span>`;
+    return;
+  }
+
+  try{
+    const data = await fetchJsonWithTimeout(`${apiBase}?mode=today`, 10000);
+    if(!data || data.ok !== true){
+      wrap.innerHTML = `<span class="maids-fallback">本日の出勤情報は未登録です</span>`;
+      return;
+    }
+
+    const day = (data.days && data.days[0]) ? data.days[0] : null;
+    const list = day?.maids || [];
+
+    if(!list.length){
+      wrap.innerHTML = `<span class="maids-fallback">本日の出勤情報は未登録です</span>`;
+    }else{
+      // 既存UIに合わせて：名前 + 時間（noteがあればnote優先）
+      wrap.innerHTML = list.map(r=>{
+  const baseName = String(r.maid || '').trim();
+  const safeName = baseName.endsWith('ちゃん') ? baseName : (baseName ? baseName + 'ちゃん' : '');
+  const name = escapeHtml(safeName);
+
+  const s = String(r.start || '').trim();
+  const e = String(r.end || '').trim();
+  const time = escapeHtml(
+    (r.note && String(r.note).trim())
+      ? r.note
+      : (s && e ? `${s}–${e}` : '時間未設定')
+  );
+        return `
+          <div class="maids-pill">
+            <span class="maid-name">${name}</span>
+            <span class="maid-time">${time}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    if(stEl){
+      stEl.textContent = `ScheduleDB(API)：該当 ${list.length}件`;
+      stEl.style.display = 'none';
+      stEl.setAttribute('aria-hidden','true');
+    }
+  }catch(e){
+    wrap.innerHTML = `<span class="maids-fallback">本日の出勤情報は未登録です</span>`;
+  }
+}
 
     window.PORTAL_DATA={news:[],events:[],schedule:[],goods:[],todayMaids:[]};
 
@@ -2443,11 +2522,6 @@
       } catch(e){ window.PORTAL_DATA.events = []; }
 
       try {
-        const scheduleCsv = await tryLoadCSV(window.PORTAL_CONFIG.scheduleCsvUrl, window.PORTAL_CONFIG.scheduleCsvUrlAlt);
-        window.PORTAL_DATA.schedule = scheduleCsv ? csvToScheduleObjects(scheduleCsv) : [];
-      } catch(e){ window.PORTAL_DATA.schedule = []; }
-
-      try {
         const goodsCsv = await tryLoadCSV(window.PORTAL_CONFIG.goodsCsvUrl, window.PORTAL_CONFIG.goodsCsvUrlAlt);
         window.PORTAL_DATA.goods = goodsCsv ? csvToGoodsObjects(goodsCsv) : [];
       } catch(e){ window.PORTAL_DATA.goods = []; }
@@ -2462,8 +2536,8 @@
       renderSchedule();
       renderGoods();
 
-      renderTodayHours();
-      renderTodayMaids();
+      await renderTodayHours();
+await renderTodayMaids();
 
       // 画像ライトボックス
       const lightbox=document.getElementById('lightbox');
