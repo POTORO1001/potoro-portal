@@ -2028,7 +2028,35 @@ async function fetchJsonWithTimeout(url, ms=10000){
   }
 
   try{
-    const data = await fetchJsonWithTimeout(`${apiBase}?mode=week`, 10000);
+    // 今日の日付取得
+const today = new Date();
+const day = today.getDay(); // 0=日,1=月...
+
+// 月曜を求める
+const monday = new Date(today);
+const diffToMonday = (day === 0 ? -6 : 1 - day);
+monday.setDate(today.getDate() + diffToMonday);
+
+// 日曜を求める
+const sunday = new Date(monday);
+sunday.setDate(monday.getDate() + 6);
+
+// YYYY-MM-DD形式に変換
+function fmt(d){
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const da = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${da}`;
+}
+
+const from = fmt(monday);
+const to   = fmt(sunday);
+
+// ★ rangeで取得
+const data = await fetchJsonWithTimeout(
+  `${apiBase}?mode=range&from=${from}&to=${to}`,
+  10000
+);
 
     if(!data || data.ok !== true){
       tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
