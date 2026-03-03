@@ -2198,7 +2198,7 @@ const dateText = `${y}/${m}/${dd}(${wd})`;
 
   const apiBase = window.PORTAL_CONFIG?.scheduleApiUrl;
   if(!apiBase){
-    wrap.innerHTML = '<div class="empty">本日の出勤情報は未登録です。</div>';
+    wrap.innerHTML = '<div class="maids-fallback">本日の出勤情報は未登録です。</div>';
     return;
   }
 
@@ -2206,7 +2206,7 @@ const dateText = `${y}/${m}/${dd}(${wd})`;
     const data = await fetchJsonWithTimeout(`${apiBase}?mode=today`, 10000);
 
     if(!data || data.ok !== true || !data.days || !data.days.length){
-      wrap.innerHTML = '<div class="empty">本日の出勤情報は未登録です。</div>';
+      wrap.innerHTML = '<div class="maids-fallback">本日の出勤情報は未登録です。</div>';
       return;
     }
 
@@ -2214,7 +2214,7 @@ const dateText = `${y}/${m}/${dd}(${wd})`;
     const list = today.maids || [];
 
     if(!list.length){
-      wrap.innerHTML = '<div class="empty">本日の出勤情報は未登録です。</div>';
+      wrap.innerHTML = '<div class="maids-fallback">本日の出勤情報は未登録です。</div>';
       return;
     }
 
@@ -2224,18 +2224,26 @@ const dateText = `${y}/${m}/${dd}(${wd})`;
 
       const s = String(r.start||'').trim();
       const e = String(r.end||'').trim();
-      const time = (r.note && r.note.trim())
-        ? r.note
-        : (s && e ? `${s}–${e}` : '時間未設定');
 
-      return `<div class="today-maid">
-  <span class="name">${safeName}</span>
-  <span class="time ${isOff ? 'is-off' : ''}">${time}</span>
-</div>`;
+      // ★ここが抜けてた（isOff未定義の原因）
+      const isOff = (r.off === true) || (!s && !e);
+
+      const time = isOff
+        ? 'おやすみ'
+        : ((r.note && String(r.note).trim())
+            ? String(r.note).trim()
+            : (s && e ? `${s}–${e}` : '時間未設定'));
+
+      return `
+        <div class="today-maid">
+          <span class="maid-name">${safeName}</span>
+          <span class="maid-time ${isOff ? 'is-off' : ''}">${time}</span>
+        </div>
+      `;
     }).join('');
 
   }catch(e){
-    wrap.innerHTML = '<div class="empty">本日の出勤情報は未登録です。</div>';
+    wrap.innerHTML = '<div class="maids-fallback">本日の出勤情報は未登録です。</div>';
   }
 }
     window.PORTAL_DATA={news:[],events:[],schedule:[],goods:[],todayMaids:[]};
