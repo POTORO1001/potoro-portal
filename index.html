@@ -2043,7 +2043,9 @@ async function fetchJsonWithTimeout(url, ms=10000){
 
     tbody.innerHTML = days.map(d=>{
       const dateText = `${d.date}(${d.dow||''})`;
-      const hours = d.hoursText || '営業時間未設定';
+      const hours = d.hoursText && d.hoursText.trim()
+  ? d.hoursText
+  : 'お屋敷休館日';
 
       const maids = (d.maids || []).map(r=>{
         const baseName = String(r.maid || '').trim();
