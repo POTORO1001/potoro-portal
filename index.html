@@ -2052,10 +2052,16 @@ async function fetchJsonWithTimeout(url, ms=10000){
         const safeName = baseName.endsWith('ちゃん') ? baseName : baseName + 'ちゃん';
 
         const s = String(r.start||'').trim();
-        const e = String(r.end||'').trim();
-        const time = (r.note && r.note.trim())
-          ? r.note
-          : (s && e ? `${s}–${e}` : '時間未設定');
+const e = String(r.end||'').trim();
+
+// ★追加：off判定（APIの off:true を優先。保険で start/end 空も off 扱い）
+const isOff = (r.off === true) || (!s && !e);
+
+const time = isOff
+  ? 'おやすみ'
+  : ((r.note && String(r.note).trim())
+      ? String(r.note).trim()
+      : (s && e ? `${s}–${e}` : '時間未設定'));
 
         return `${safeName}（${time}）`;
       }).join(' / ');
