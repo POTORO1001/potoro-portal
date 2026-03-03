@@ -2229,9 +2229,9 @@ const dateText = `${y}/${m}/${dd}(${wd})`;
         : (s && e ? `${s}–${e}` : '時間未設定');
 
       return `<div class="today-maid">
-        <span class="name">${safeName}</span>
-        <span class="time">${time}</span>
-      </div>`;
+  <span class="name">${safeName}</span>
+  <span class="time ${isOff ? 'is-off' : ''}">${time}</span>
+</div>`;
     }).join('');
 
   }catch(e){
