@@ -51,6 +51,10 @@
         joinedCount(number), slotsTotal(number), durationMinutes(number)
       - orderBy("eventAt") に変更（createdAtが無い部屋でも落ちない）
       - “募集中”判定：closed=false かつ deadlineAt未超過 かつ endAt未超過 かつ 枠が残っている(任意)
+
+    ★ Ver1.11.4（今回の修正）
+      - 週間お給仕表：API側の days に “データ0件の日” が欠けても、月〜日を必ず7日固定で表示
+      - 欠けた日は「お屋敷休館日」として埋める（3/5など）
   -->
 
   <!-- OGP -->
@@ -1653,9 +1657,9 @@
       todayMaidsCsvUrl:     "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/export?format=csv&gid=0",
       todayMaidsCsvUrlAlt:  "https://docs.google.com/spreadsheets/d/1rqajpwmrRffVgtfBS7fgvgyrCS7YgfkW5RyedstpDnw/gviz/tq?tqx=out:csv&sheet=PORTAL_today_maids.csv",
 
-// ★追加
-  scheduleApiUrl: "https://script.google.com/macros/s/AKfycbzP4k-zy5b1nIratH5hTaM5vuT5urSIU3m1SAamfxntrsOVRmaLMyoB8Q599-uvBLJnFQ/exec",
-      
+      // ★追加
+      scheduleApiUrl: "https://script.google.com/macros/s/AKfycbzP4k-zy5b1nIratH5hTaM5vuT5urSIU3m1SAamfxntrsOVRmaLMyoB8Q599-uvBLJnFQ/exec",
+
       reserve: {
         mode: "x_dm",
         xProfileUrl: "https://x.com/po_toro",
@@ -1689,20 +1693,20 @@
     }
 
     // ★ここに新規追加
-async function fetchJsonWithTimeout(url, ms=10000){
-  const controller = new AbortController();
-  const id = setTimeout(()=>controller.abort(), ms);
-  try{
-    const res = await fetch(url + (url.includes('?') ? '&' : '?') + 'cb=' + Date.now(), {
-      cache: 'no-store', credentials: 'omit', signal: controller.signal
-    });
-    if(!res.ok) throw new Error('HTTP ' + res.status);
-    return await res.json();
-  } finally {
-    clearTimeout(id);
-  }
-}
-    
+    async function fetchJsonWithTimeout(url, ms=10000){
+      const controller = new AbortController();
+      const id = setTimeout(()=>controller.abort(), ms);
+      try{
+        const res = await fetch(url + (url.includes('?') ? '&' : '?') + 'cb=' + Date.now(), {
+          cache: 'no-store', credentials: 'omit', signal: controller.signal
+        });
+        if(!res.ok) throw new Error('HTTP ' + res.status);
+        return await res.json();
+      } finally {
+        clearTimeout(id);
+      }
+    }
+
     function parseCSV(text){
       if(!text) return [];
       const trimmed = String(text).replace(/^\s+/, '');
@@ -1950,15 +1954,6 @@ async function fetchJsonWithTimeout(url, ms=10000){
       return `${y}/${m}/${dd}(${wd})`;
     }
 
-    function formatDateObjJPNoParen(d){
-      if(!(d instanceof Date) || isNaN(d)) return '';
-      const wd = ['日','月','火','水','木','金','土'][d.getDay()];
-      const y  = d.getFullYear();
-      const m  = String(d.getMonth()+1).padStart(2,'0');
-      const dd = String(d.getDate()).padStart(2,'0');
-      return `${y}/${m}/${dd} ${wd}`;
-    }
-
     async function tryLoadCSV(primaryUrl, altUrl){
       try{
         return await fetchTextWithTimeout(primaryUrl, 10000);
@@ -2017,94 +2012,113 @@ async function fetchJsonWithTimeout(url, ms=10000){
       }).join('');
     }
 
+    // ==========================
+    // ★ ここが今回の差分：renderSchedule()
+    //    “APIが返したdays” だけではなく、月〜日を必ず7日埋める
+    // ==========================
     async function renderSchedule(){
-  const tbody = document.getElementById('scheduleBody'); 
-  if(!tbody) return;
+      const tbody = document.getElementById('scheduleBody');
+      if(!tbody) return;
 
-  const apiBase = window.PORTAL_CONFIG?.scheduleApiUrl;
-  if(!apiBase){
-    tbody.innerHTML = '<tr><td colspan="3">営業スケジュール：API未設定</td></tr>';
-    return;
-  }
+      const apiBase = window.PORTAL_CONFIG?.scheduleApiUrl;
+      if(!apiBase){
+        tbody.innerHTML = '<tr><td colspan="3">営業スケジュール：API未設定</td></tr>';
+        return;
+      }
 
-  try{
-    // 今日の日付取得
-const today = new Date();
-const day = today.getDay(); // 0=日,1=月...
+      try{
+        // 今日の日付取得
+        const today = new Date();
+        const day = today.getDay(); // 0=日,1=月...
 
-// 月曜を求める
-const monday = new Date(today);
-const diffToMonday = (day === 0 ? -6 : 1 - day);
-monday.setDate(today.getDate() + diffToMonday);
+        // 月曜を求める
+        const monday = new Date(today);
+        const diffToMonday = (day === 0 ? -6 : 1 - day);
+        monday.setDate(today.getDate() + diffToMonday);
 
-// 日曜を求める
-const sunday = new Date(monday);
-sunday.setDate(monday.getDate() + 6);
+        // 日曜を求める
+        const sunday = new Date(monday);
+        sunday.setDate(monday.getDate() + 6);
 
-// YYYY-MM-DD形式に変換
-function fmt(d){
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,'0');
-  const da = String(d.getDate()).padStart(2,'0');
-  return `${y}-${m}-${da}`;
-}
+        // YYYY-MM-DD形式に変換
+        function fmt(d){
+          const y = d.getFullYear();
+          const m = String(d.getMonth()+1).padStart(2,'0');
+          const da = String(d.getDate()).padStart(2,'0');
+          return `${y}-${m}-${da}`;
+        }
 
-const from = fmt(monday);
-const to   = fmt(sunday);
+        const from = fmt(monday);
+        const to   = fmt(sunday);
 
-// ★ rangeで取得
-const data = await fetchJsonWithTimeout(
-  `${apiBase}?mode=range&from=${from}&to=${to}`,
-  10000
-);
+        // ★ rangeで取得
+        const data = await fetchJsonWithTimeout(
+          `${apiBase}?mode=range&from=${from}&to=${to}`,
+          10000
+        );
 
-    if(!data || data.ok !== true){
-      tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
-      return;
+        if(!data || data.ok !== true){
+          tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
+          return;
+        }
+
+        const daysRaw = Array.isArray(data.days) ? data.days : [];
+
+        // ★ 7日固定で埋める（欠けた日は休館日扱い）
+        const dayMap = new Map(daysRaw.map(d => [String(d.date), d]));
+        const filled = [];
+
+        const fromD = new Date(from + "T00:00:00");
+        for(let i=0;i<7;i++){
+          const cur = new Date(fromD);
+          cur.setDate(fromD.getDate() + i);
+
+          const y = cur.getFullYear();
+          const m = String(cur.getMonth()+1).padStart(2,'0');
+          const da = String(cur.getDate()).padStart(2,'0');
+          const key = `${y}-${m}-${da}`;
+
+          const dow = ['日','月','火','水','木','金','土'][cur.getDay()];
+          const hit = dayMap.get(key);
+          filled.push(hit ? hit : { date:key, dow, hoursText:'', maids:[] });
+        }
+
+        tbody.innerHTML = filled.map(d=>{
+          const dateText = `${d.date}(${d.dow||''})`;
+          const hours = (d.hoursText && String(d.hoursText).trim())
+            ? d.hoursText
+            : 'お屋敷休館日';
+
+          const maids = (d.maids || []).map(r=>{
+            const baseName = String(r.maid || '').trim();
+            const safeName = baseName.endsWith('ちゃん') ? baseName : baseName + 'ちゃん';
+
+            const s = String(r.start||'').trim();
+            const e = String(r.end||'').trim();
+
+            // ★追加：off判定（APIの off:true を優先。保険で start/end 空も off 扱い）
+            const isOff = (r.off === true) || (!s && !e);
+
+            const time = isOff
+              ? 'おやすみ'
+              : ((r.note && String(r.note).trim())
+                  ? String(r.note).trim()
+                  : (s && e ? `${s}–${e}` : '時間未設定'));
+
+            return `${safeName}（${time}）`;
+          }).join(' / ');
+
+          return `<tr>
+            <td>${dateText}</td>
+            <td>${hours}</td>
+            <td>${maids || ''}</td>
+          </tr>`;
+        }).join('');
+
+      }catch(e){
+        tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
+      }
     }
-
-    const days = Array.isArray(data.days) ? data.days : [];
-    if(!days.length){
-      tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
-      return;
-    }
-
-    tbody.innerHTML = days.map(d=>{
-      const dateText = `${d.date}(${d.dow||''})`;
-      const hours = d.hoursText && d.hoursText.trim()
-  ? d.hoursText
-  : 'お屋敷休館日';
-
-      const maids = (d.maids || []).map(r=>{
-        const baseName = String(r.maid || '').trim();
-        const safeName = baseName.endsWith('ちゃん') ? baseName : baseName + 'ちゃん';
-
-        const s = String(r.start||'').trim();
-const e = String(r.end||'').trim();
-
-// ★追加：off判定（APIの off:true を優先。保険で start/end 空も off 扱い）
-const isOff = (r.off === true) || (!s && !e);
-
-const time = isOff
-  ? 'おやすみ'
-  : ((r.note && String(r.note).trim())
-      ? String(r.note).trim()
-      : (s && e ? `${s}–${e}` : '時間未設定'));
-
-        return `${safeName}（${time}）`;
-      }).join(' / ');
-
-      return `<tr>
-        <td>${dateText}</td>
-        <td>${hours}</td>
-        <td>${maids}</td>
-      </tr>`;
-    }).join('');
-
-  }catch(e){
-    tbody.innerHTML = '<tr><td colspan="3">直近7日間の営業データは未登録です。</td></tr>';
-  }
-}
 
     function renderGoods(){
       const tbody=document.getElementById('goodsBody'); if(!tbody) return;
@@ -2142,138 +2156,129 @@ const time = isOff
       }
     }
 
-    function sameYMD(a,b){
-      return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
-    }
-
     async function renderTodayHours(){
-  const el = document.getElementById('todayHours');
-  if(!el) return;
+      const el = document.getElementById('todayHours');
+      if(!el) return;
 
-  const apiBase = window.PORTAL_CONFIG?.scheduleApiUrl;
-  if(!apiBase){
-    el.textContent = '営業時間：API未設定';
-    return;
-  }
+      const apiBase = window.PORTAL_CONFIG?.scheduleApiUrl;
+      if(!apiBase){
+        el.textContent = '営業時間：API未設定';
+        return;
+      }
 
-  try{
-    const data = await fetchJsonWithTimeout(`${apiBase}?mode=today`, 10000);
+      try{
+        const data = await fetchJsonWithTimeout(`${apiBase}?mode=today`, 10000);
 
-    if(!data || data.ok !== true){
-      el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
-      return;
+        if(!data || data.ok !== true){
+          el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
+          return;
+        }
+
+        const day = (data.days && data.days[0]) ? data.days[0] : null;
+
+        if(!day){
+          el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
+          return;
+        }
+
+        const times = (day.maids || [])
+          .map(m => ({ start:String(m.start||'').trim(), end:String(m.end||'').trim() }))
+          .filter(t => t.start && t.end);
+
+        if(!times.length){
+          el.textContent = `${day.date}（${day.dow||''}）  （営業時間は店頭/DMでご確認ください）`;
+          return;
+        }
+
+        times.sort((a,b)=> a.start.localeCompare(b.start));
+        const open = times[0].start;
+        const close = times.reduce((mx,t)=> (t.end > mx ? t.end : mx), times[0].end);
+
+        const dObj = parseSheetDateToJsDate(day.date) || new Date();
+        const wd = day.dow || ['日','月','火','水','木','金','土'][dObj.getDay()];
+        const y  = dObj.getFullYear();
+        const m  = String(dObj.getMonth()+1).padStart(2,'0');
+        const dd = String(dObj.getDate()).padStart(2,'0');
+        const dateText = `${y}/${m}/${dd}(${wd})`;
+
+        el.textContent = `${dateText}  ${open}–${close}`;
+      }catch(e){
+        el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
+      }
+
+      const btn = document.getElementById('reserveBtn');
+      if(btn){
+        const cfg = window.PORTAL_CONFIG.reserve || {};
+        if(cfg.mode === "form" && cfg.formUrl){
+          btn.href = cfg.formUrl;
+          btn.target = "_blank";
+          btn.rel = "noopener noreferrer";
+          btn.setAttribute('aria-label','予約フォームを開く');
+          btn.textContent = "📝 予約フォーム";
+        }else{
+          btn.href = cfg.xProfileUrl || "https://x.com/po_toro";
+          btn.target = "_blank";
+          btn.rel = "noopener noreferrer";
+          btn.setAttribute('aria-label','XのDMで予約する（PO・TORO公式Xへ）');
+          btn.textContent = "💌 ご予約はDM";
+        }
+      }
     }
-
-    const day = (data.days && data.days[0]) ? data.days[0] : null;
-
-    // dayが無い（=本日0件）でも “未登録” 表示
-    if(!day){
-      el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
-      return;
-    }
-
-    // 営業時間：maidsの最小start～最大end（あなたの運用：空欄無し）
-    const times = (day.maids || [])
-      .map(m => ({ start:String(m.start||'').trim(), end:String(m.end||'').trim() }))
-      .filter(t => t.start && t.end);
-
-    if(!times.length){
-      // 本日が空でも日付ラベルだけ出す
-      el.textContent = `${day.date}（${day.dow||''}）  （営業時間は店頭/DMでご確認ください）`;
-      return;
-    }
-
-    times.sort((a,b)=> a.start.localeCompare(b.start));
-    const open = times[0].start;
-    const close = times.reduce((mx,t)=> (t.end > mx ? t.end : mx), times[0].end);
-
-    // 表示：YYYY/MM/DD(曜) HH:mm–HH:mm（既存に寄せる）
-    const dObj = parseSheetDateToJsDate(day.date) || new Date();
-const wd = day.dow || ['日','月','火','水','木','金','土'][dObj.getDay()];
-const y  = dObj.getFullYear();
-const m  = String(dObj.getMonth()+1).padStart(2,'0');
-const dd = String(dObj.getDate()).padStart(2,'0');
-const dateText = `${y}/${m}/${dd}(${wd})`;
-    
-    el.textContent = `${dateText}  ${open}–${close}`;
-  }catch(e){
-    el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
-  }
-
-  // 予約ボタンは既存ロジックをそのまま使う（ここはあなたの元コードのまま維持）
-  const btn = document.getElementById('reserveBtn');
-  if(btn){
-    const cfg = window.PORTAL_CONFIG.reserve || {};
-    if(cfg.mode === "form" && cfg.formUrl){
-      btn.href = cfg.formUrl;
-      btn.target = "_blank";
-      btn.rel = "noopener noreferrer";
-      btn.setAttribute('aria-label','予約フォームを開く');
-      btn.textContent = "📝 予約フォーム";
-    }else{
-      btn.href = cfg.xProfileUrl || "https://x.com/po_toro";
-      btn.target = "_blank";
-      btn.rel = "noopener noreferrer";
-      btn.setAttribute('aria-label','XのDMで予約する（PO・TORO公式Xへ）');
-      btn.textContent = "💌 ご予約はDM";
-    }
-  }
-}
 
     async function renderTodayMaids(){
-  const wrap = document.getElementById('todayMaidsWrap');
-  if(!wrap) return;
+      const wrap = document.getElementById('todayMaidsWrap');
+      if(!wrap) return;
 
-  const apiBase = window.PORTAL_CONFIG?.scheduleApiUrl;
-  if(!apiBase){
-    wrap.innerHTML = '<div class="maids-fallback">本日の出勤情報は未登録です。</div>';
-    return;
-  }
+      const apiBase = window.PORTAL_CONFIG?.scheduleApiUrl;
+      if(!apiBase){
+        wrap.innerHTML = '<div class="maids-fallback">本日の出勤情報は未登録です。</div>';
+        return;
+      }
 
-  try{
-    const data = await fetchJsonWithTimeout(`${apiBase}?mode=today`, 10000);
+      try{
+        const data = await fetchJsonWithTimeout(`${apiBase}?mode=today`, 10000);
 
-    if(!data || data.ok !== true || !data.days || !data.days.length){
-      wrap.innerHTML = '<div class="maids-fallback">本日の出勤情報は未登録です。</div>';
-      return;
+        if(!data || data.ok !== true || !data.days || !data.days.length){
+          wrap.innerHTML = '<div class="maids-fallback">本日の出勤情報は未登録です。</div>';
+          return;
+        }
+
+        const today = data.days[0];
+        const list = today.maids || [];
+
+        if(!list.length){
+          wrap.innerHTML = '<div class="maids-fallback">本日の出勤情報は未登録です。</div>';
+          return;
+        }
+
+        wrap.innerHTML = list.map(r=>{
+          const baseName = String(r.maid || '').trim();
+          const safeName = baseName.endsWith('ちゃん') ? baseName : baseName + 'ちゃん';
+
+          const s = String(r.start||'').trim();
+          const e = String(r.end||'').trim();
+
+          const isOff = (r.off === true) || (!s && !e);
+
+          const time = isOff
+            ? 'おやすみ'
+            : ((r.note && String(r.note).trim())
+                ? String(r.note).trim()
+                : (s && e ? `${s}–${e}` : '時間未設定'));
+
+          return `
+            <div class="today-maid">
+              <span class="maid-name">${safeName}</span>
+              <span class="maid-time ${isOff ? 'is-off' : ''}">${time}</span>
+            </div>
+          `;
+        }).join('');
+
+      }catch(e){
+        wrap.innerHTML = '<div class="maids-fallback">本日の出勤情報は未登録です。</div>';
+      }
     }
 
-    const today = data.days[0];
-    const list = today.maids || [];
-
-    if(!list.length){
-      wrap.innerHTML = '<div class="maids-fallback">本日の出勤情報は未登録です。</div>';
-      return;
-    }
-
-    wrap.innerHTML = list.map(r=>{
-      const baseName = String(r.maid || '').trim();
-      const safeName = baseName.endsWith('ちゃん') ? baseName : baseName + 'ちゃん';
-
-      const s = String(r.start||'').trim();
-      const e = String(r.end||'').trim();
-
-      // ★ここが抜けてた（isOff未定義の原因）
-      const isOff = (r.off === true) || (!s && !e);
-
-      const time = isOff
-        ? 'おやすみ'
-        : ((r.note && String(r.note).trim())
-            ? String(r.note).trim()
-            : (s && e ? `${s}–${e}` : '時間未設定'));
-
-      return `
-        <div class="today-maid">
-          <span class="maid-name">${safeName}</span>
-          <span class="maid-time ${isOff ? 'is-off' : ''}">${time}</span>
-        </div>
-      `;
-    }).join('');
-
-  }catch(e){
-    wrap.innerHTML = '<div class="maids-fallback">本日の出勤情報は未登録です。</div>';
-  }
-}
     window.PORTAL_DATA={news:[],events:[],schedule:[],goods:[],todayMaids:[]};
 
     function trapFocus(container, first){
@@ -2566,7 +2571,7 @@ const dateText = `${y}/${m}/${dd}(${wd})`;
       renderGoods();
 
       await renderTodayHours();
-await renderTodayMaids();
+      await renderTodayMaids();
 
       // 画像ライトボックス
       const lightbox=document.getElementById('lightbox');
@@ -2763,25 +2768,20 @@ await renderTodayMaids();
 
     // === “募集中のみ” 判定：あなたのスキーマ優先
     function isRecruiting(d, now){
-      // 1) closed が true なら終了
       if(d.closed === true) return false;
 
-      // 2) deadlineAt が過ぎてたら募集終了（ある場合のみ）
       const deadline = toDateSafe(d.deadlineAt);
       if(deadline && deadline.getTime() <= now.getTime()) return false;
 
-      // 3) endAt が過ぎてたら終了（ある場合のみ）
       const endAt = toDateSafe(d.endAt);
       if(endAt && endAt.getTime() <= now.getTime()) return false;
 
-      // 4) 枠が埋まっていたら募集終了（両方ある場合のみ）
       const slots = asNum(d.slotsTotal);
       const joined = asNum(d.joinedCount);
       if(Number.isFinite(slots) && Number.isFinite(joined)){
         if(joined >= slots) return false;
       }
 
-      // 追加の終了フラグ（互換）
       const closedFlags = [d.isClosed, d.deleted, d.isDeleted];
       if(closedFlags.some(v => v === true)) return false;
       if(d.closedAt || d.deletedAt || d.endedAt) return false;
@@ -2794,7 +2794,6 @@ await renderTodayMaids();
       return Number.isFinite(n) ? n : NaN;
     }
 
-    // === 表示：開催日時（eventAt を最優先。なければ createdAt などにフォールバック）
     function buildWhen(d){
       const dt = toDateSafe(d.eventAt) || toDateSafe(d.startAt) || toDateSafe(d.createdAt);
       if(!dt) return "";
@@ -2806,11 +2805,9 @@ await renderTodayMaids();
       const hh = pad2(dt.getHours());
       const mm = pad2(dt.getMinutes());
 
-      // 例：2026/02/27(金) 19:00
       return `${y}/${m}/${da}(${wd}) ${hh}:${mm}`;
     }
 
-    // === 形式（三人/四人）
     function detectFormat(d){
       const p = d.players ?? d.playerCount ?? d.nPlayers ?? d.modePlayers;
       if(Number(p) === 3) return "三人";
@@ -2825,7 +2822,6 @@ await renderTodayMaids();
       return "";
     }
 
-    // === 作成者（creatorName が最優先）
     function detectCreator(d){
       const who = firstNonEmpty(
         d.creatorName,
@@ -2854,15 +2850,12 @@ await renderTodayMaids();
     function toDateSafe(v){
       try{
         if(!v) return null;
-        // Firestore Timestamp { seconds, nanoseconds } or toDate()
         if(typeof v.toDate === "function") return v.toDate();
         if(typeof v.seconds === "number") return new Date(v.seconds * 1000);
-        // number（ms or sec）
         if(typeof v === "number"){
-          if(v > 1e12) return new Date(v);        // ms
-          if(v > 1e9)  return new Date(v * 1000); // sec
+          if(v > 1e12) return new Date(v);
+          if(v > 1e9)  return new Date(v * 1000);
         }
-        // string
         if(typeof v === "string"){
           const d = new Date(v);
           if(!isNaN(d)) return d;
