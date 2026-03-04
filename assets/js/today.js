@@ -81,8 +81,12 @@
   }
 
   function renderTodayMaids(day){
-    const wrap = document.getElementById('todayMaidsWrap');
-    if(!wrap) return;
+    const wrap = document.getElementById("todayMaidsWrap");
+
+if (!maids || maids.length === 0) {
+  wrap.innerHTML = '<span class="maids-fallback">本日はお屋敷休館日です</span>';
+  return;
+}
 
     if(!day || !Array.isArray(day.maids) || !day.maids.length){
       wrap.innerHTML = '<div class="maids-fallback">本日の出勤情報は未登録です。</div>';
