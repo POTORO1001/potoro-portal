@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>週間お給仕表｜PO・TORO 公式ポータル</title>
+  <meta name="description" content="concept cafe PO・TORO（ポ・トロ）の週間お給仕表。出勤予定を確認できます。" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="theme-color" content="#f6b7d2" />
+  <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/schedule.html" />
+
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/index.css">
+
+  <style>
+    .sheet-embed{
+      width:100%;
+      border:1px solid rgba(0,0,0,.08);
+      border-radius:16px;
+      overflow:hidden;
+      background:#fff;
+      box-shadow:var(--shadow);
+    }
+    .sheet-embed iframe{
+      width:100%;
+      height:min(86vh, 980px);
+      border:0;
+      display:block;
+    }
+    @media (max-width: 640px){
+      .sheet-embed iframe{ height:78vh; }
+    }
+    .subnote{ font-size:12px; opacity:.78; margin:.6rem 0 0; line-height:1.7; }
+    .top-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+  </style>
+</head>
+
+<body>
+  <a href="#main" class="skip-link">本文へスキップ</a>
+
+  <header>
+    <nav class="nav container" aria-label="Main">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true"><span>PT</span></div>
+        <div class="brand-title">
+          <div class="en">concept cafe <span style="letter-spacing:.12em">PO・TORO</span></div>
+          <div class="jp">ポ・トロ 公式ポータル</div>
+        </div>
+      </div>
+
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">トップ</a>
+        <a href="news.html">お知らせ</a>
+        <a href="events.html">イベント</a>
+        <a href="goods.html">グッズ</a>
+        <a href="games.html">ゲーム/診断</a>
+        <a href="#access">アクセス</a>
+      </div>
+
+      <button class="hamburger" id="btnMenu" aria-label="メニューを開く" aria-controls="drawer" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </nav>
+
+    <div class="drawer" id="drawer" aria-hidden="true" aria-label="サイドメニュー">
+      <div class="head">
+        <div style="font-weight:1000">メニュー</div>
+        <button id="btnClose" aria-label="閉じる" style="background:#f6f6f6;border:none;border-radius:12px;padding:8px 10px;font-weight:1000;cursor:pointer">✕</button>
+      </div>
+      <a href="index.html">トップ</a>
+      <a href="news.html">お知らせ</a>
+      <a href="events.html">イベント</a>
+      <a href="goods.html">グッズ</a>
+      <a href="games.html">ゲーム/診断</a>
+      <a href="#access">アクセス</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" style="padding-top:26px">
+      <div class="container wrap">
+        <div class="reveal" style="width:100%">
+          <h1 class="headline" style="margin-bottom:10px">📅 週間お給仕表</h1>
+          <div class="tag">※反映に少しタイムラグが出ることがあります（ウェブ公開側の仕様）</div>
+
+          <div class="top-actions">
+            <a class="btn btn-ghost" href="index.html">← トップへ戻る</a>
+            <a class="btn btn-primary" href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">💌 ご予約はDM</a>
+            <a class="btn btn-ghost" href="price.html">💴 料金詳細</a>
+          </div>
+
+          <div class="mt-12 sheet-embed" aria-label="週間お給仕表（埋め込み）">
+            <iframe
+              src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRdLqPoS9TfRnJ1IuixzjkcJwjJ2CaW02ZR6CDhFJ1fMfky7pC1HFQhxFUhYEXawPGdos9kl2wnMY-j/pubhtml?gid=306053530&amp;single=true&amp;widget=true&amp;headers=false"
+              title="週間お給仕表"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen></iframe>
+          </div>
+
+          <p class="subnote">
+            スマホで横に見切れる場合は、表を左右にスクロールしてご覧ください。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="access">
+      <div class="container reveal">
+        <h2 class="sec-title">📍 アクセス</h2>
+        <div class="grid cols-3">
+          <div class="card" style="grid-column: span 2;">
+            <div class="body">
+              <h3>店舗情報</h3>
+              <p>〒790-0012 愛媛県松山市湊町3-7-2 2F</p>
+              <p>営業時間（通常）：平日＆祝 18:00–22:00 / 土日 17:00–22:00</p>
+              <p class="tag">※実際の営業は「本日の営業時間」を優先してご確認ください</p>
+              <p class="tag mt-8">※放置ゼロ宣言＆キャストドリンク無しで安心♪</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="body">
+              <h3>地図</h3>
+              <div style="position:relative;width:100%;padding-top:56.25%;border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.12)">
+                <iframe title="PO・TORO の場所" src="https://www.google.com/maps?q=33.8359588,132.7696145&z=18&output=embed"
+                  style="position:absolute;inset:0;border:0;width:100%;height:100%"
+                  loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+              </div>
+              <p class="mt-12"><a href="https://www.google.com/maps/place/PO.TORO/@33.8358626,132.7688299,18.58z" target="_blank" rel="noopener noreferrer">Google マップで開く</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot reveal">
+      <div>
+        <h4>concept cafe PO・TORO</h4>
+        <p>ご帰宅ありがとうございます。最新情報は本ポータルでご確認ください。</p>
+
+        <div class="foot-call">
+          <a href="tel:089-909-5211" class="foot-tel" aria-label="電話をかける：089-909-5211">📞 089-909-5211</a>
+          <div class="foot-tel-note">お電話でのお問い合わせはこちら</div>
+        </div>
+
+        <div class="copyright">© <span id="year"></span> PO・TORO / concept cafe. All rights reserved.</div>
+      </div>
+
+      <div>
+        <h4>リンク</h4>
+        <ul style="margin:0; padding-left:18px">
+          <li><a href="index.html">トップ</a></li>
+          <li><a href="news.html">お知らせ</a></li>
+          <li><a href="events.html">イベント</a></li>
+          <li><a href="goods.html">グッズ</a></li>
+          <li><a href="games.html">ゲーム/診断</a></li>
+          <li><a href="price.html">料金詳細</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>お問い合わせ</h4>
+        <ul style="margin:0; padding-left:18px">
+          <li><a href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">X（@po_toro）</a></li>
+          <li><a href="#access">店舗アクセス</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/core.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      PortalCore.setupReveal();
+      PortalCore.setupDrawer();
+      PortalCore.setupCommonFooterYear();
+    });
+  </script>
+
+  <noscript>JavaScriptが無効になっています。表示が一部制限される可能性があります。</noscript>
+</body>
+</html>
