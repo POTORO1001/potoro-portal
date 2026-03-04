@@ -1,1 +1,130 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>グッズ配布 | PO・TORO</title>
+  <meta name="description" content="PO・TOROのグッズ配布状況" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="theme-color" content="#f6b7d2" />
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/table.css">
+  <style>
+    .goods-wrap{
+      text-align:center;
+      background: linear-gradient(180deg, #fff5fb 0%, #fffefd 50%, #f4f9ff 100%);
+      padding: 30px 14px 34px;
+      border-radius: 24px;
+      box-shadow: 0 14px 40px rgba(255, 164, 191, 0.35);
+      border:1px solid rgba(255,255,255,.8);
+    }
+    .goods-wrap h1{
+      font-size: 1.6rem;
+      color: #ff6fae;
+      margin: 0 0 10px 0;
+      letter-spacing: .03em;
+      font-weight: 1000;
+    }
+    .section-lead{
+      font-size: 0.95rem;
+      color: #666;
+      margin: 0 0 18px 0;
+      line-height: 1.7;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">本文へスキップ</a>
 
+  <header>
+    <nav class="nav container" aria-label="Main">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true"><span>PT</span></div>
+        <div class="brand-title">
+          <div class="en">concept cafe <span style="letter-spacing:.12em">PO・TORO</span></div>
+          <div class="jp">グッズ配布</div>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">トップ</a>
+        <a href="news.html">お知らせ</a>
+        <a href="events.html">イベント</a>
+        <a href="games.html">ゲーム/診断</a>
+      </div>
+      <button class="hamburger" id="btnMenu" aria-label="メニューを開く" aria-controls="drawer" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </nav>
+
+    <div class="drawer" id="drawer" aria-hidden="true" aria-label="サイドメニュー">
+      <div class="head">
+        <div style="font-weight:1000">メニュー</div>
+        <button id="btnClose" aria-label="閉じる" style="background:#f6f6f6;border:none;border-radius:12px;padding:8px 10px;font-weight:1000;cursor:pointer">✕</button>
+      </div>
+      <a href="index.html">トップ</a>
+      <a href="news.html">お知らせ</a>
+      <a href="events.html">イベント</a>
+      <a href="games.html">ゲーム/診断</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section>
+      <div class="container reveal">
+        <div class="goods-wrap">
+          <h1>🎁 現在、下記グッズを配布中でございます</h1>
+          <p class="section-lead">
+            お屋敷にてお渡ししている各種グッズの配布状況です。<br>
+            ※保管期間は配布開始日から1年間です。
+          </p>
+
+          <table class="table table-goods" aria-label="現在配布中のグッズ一覧">
+            <thead>
+              <tr>
+                <th>配布開始日</th>
+                <th>イベント名</th>
+                <th>グッズ名</th>
+                <th>配布終了日</th>
+              </tr>
+            </thead>
+            <tbody id="goodsBody"></tbody>
+          </table>
+
+          <div class="mt-12">
+            <a class="btn btn-ghost" href="index.html">← トップへ戻る</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot reveal">
+      <div>
+        <h4>concept cafe PO・TORO</h4>
+        <div class="copyright">© <span id="year"></span> PO・TORO / concept cafe. All rights reserved.</div>
+      </div>
+      <div></div><div></div>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/goods.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async ()=>{
+      PortalCore.setupReveal();
+      PortalCore.setupDrawer();
+      PortalCore.setupCommonFooterYear();
+
+      const items = await PortalGoods.loadGoods();
+      PortalGoods.renderGoodsTable('goodsBody', items);
+    });
+  </script>
+</body>
+</html>
