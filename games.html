@@ -1,1 +1,120 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>ゲーム / 診断 | PO・TORO</title>
+  <meta name="description" content="PO・TOROのゲーム/診断/コンテンツリンク集" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="theme-color" content="#f6b7d2" />
+  <link rel="stylesheet" href="assets/css/base.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">本文へスキップ</a>
 
+  <header>
+    <nav class="nav container" aria-label="Main">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true"><span>PT</span></div>
+        <div class="brand-title">
+          <div class="en">concept cafe <span style="letter-spacing:.12em">PO・TORO</span></div>
+          <div class="jp">ゲーム / 診断</div>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">トップ</a>
+        <a href="news.html">お知らせ</a>
+        <a href="events.html">イベント</a>
+        <a href="goods.html">グッズ</a>
+      </div>
+      <button class="hamburger" id="btnMenu" aria-label="メニューを開く" aria-controls="drawer" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </nav>
+
+    <div class="drawer" id="drawer" aria-hidden="true" aria-label="サイドメニュー">
+      <div class="head">
+        <div style="font-weight:1000">メニュー</div>
+        <button id="btnClose" aria-label="閉じる" style="background:#f6f6f6;border:none;border-radius:12px;padding:8px 10px;font-weight:1000;cursor:pointer">✕</button>
+      </div>
+      <a href="index.html">トップ</a>
+      <a href="news.html">お知らせ</a>
+      <a href="events.html">イベント</a>
+      <a href="goods.html">グッズ</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section>
+      <div class="container reveal">
+        <h1 class="sec-title">🎮 ゲーム / 診断 / 講義 / 麻雀</h1>
+
+        <div class="grid cols-4">
+          <article class="card">
+            <img src="img/hero-quest-card.png" alt="ポ・トロクエスト" class="thumb" loading="lazy" width="1280" height="720">
+            <div class="body">
+              <h3>ポ・トロクエスト</h3>
+              <p class="tag">外部ブラウザ推奨</p>
+              <a class="btn btn-ghost mt-12" href="https://potoro1001.github.io/potoro-quest/" target="_blank" rel="noopener noreferrer">プレイする</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="img/hero-diagnosis-card.png" alt="ご主人様タイプ診断" class="thumb" loading="lazy" width="1280" height="720">
+            <div class="body">
+              <h3>ご主人様タイプ診断</h3>
+              <p class="tag">MBTIミニ12問</p>
+              <a class="btn btn-ghost mt-12" href="https://potoro1001.github.io/potoro-diagnosis/" target="_blank" rel="noopener noreferrer">診断する</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="img/moeselect_thumbnail.jpg" alt="萌えセレクト講義" class="thumb" loading="lazy" width="1280" height="720">
+            <div class="body">
+              <h3>萌えセレクト講義</h3>
+              <p class="tag">講義形式で学ぶ</p>
+              <a class="btn btn-ghost mt-12" href="https://potoro1001.github.io/potoro-moeselect/" target="_blank" rel="noopener noreferrer">受講する</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="img/mahjong-card.png" alt="ポ・トロ麻雀" class="thumb" loading="lazy" width="1280" height="720">
+            <div class="body">
+              <h3>ポ・トロ麻雀</h3>
+              <p class="tag">ルール・料金・面子募集</p>
+              <a class="btn btn-ghost mt-12" href="https://potoro1001.github.io/potoro-mahjong/" target="_blank" rel="noopener noreferrer">開く</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="mt-12">
+          <a class="btn btn-ghost" href="index.html">← トップへ戻る</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot reveal">
+      <div>
+        <h4>concept cafe PO・TORO</h4>
+        <div class="copyright">© <span id="year"></span> PO・TORO / concept cafe. All rights reserved.</div>
+      </div>
+      <div></div><div></div>
+    </div>
+  </footer>
+
+  <script src="assets/js/core.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      PortalCore.setupReveal();
+      PortalCore.setupDrawer();
+      PortalCore.setupCommonFooterYear();
+    });
+  </script>
+</body>
+</html>
