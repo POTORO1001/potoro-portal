@@ -11,7 +11,7 @@ window.PORTAL_CONFIG = {
   goodsCsvUrlAlt: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTSYdEeN7_fBl7AL-VjQYNh107h7QqsUaJ1oRY7KrvwwjkpQw5xM-Qn54P9QsLuLs8lrTLqzrsIZ59i/pub?gid=681304800&single=true&output=csv",
 
   // ★ 今日（営業時間/出勤）は Apps Script APIで一本化
-  scheduleApiUrl: "https://script.google.com/macros/s/AKfycbzP4k-zy5b1nIratH5hTaM5vuT5urSIU3m1SAamfxntrsOVRmaLMyoB8Q599-uvBLJnFQ/exec",
+  scheduleApiUrl: "https://script.google.com/macros/s/AKfycbyWewdaMnl1zZWOfajom3jFPJjkHXkRJhQyOchhF72WJ4wKg0DRTXrn4TdCtK0NUtNN/exec",
 
   // 予約導線
   reserve: {
