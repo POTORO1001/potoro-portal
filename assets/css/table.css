@@ -1,1 +1,43 @@
+/* /assets/css/table.css */
+.table{
+  width:100%;border-collapse:collapse;
+  background:#fff;border-radius:14px;
+  box-shadow:var(--shadow);overflow:hidden;
+  border:1px solid rgba(255,255,255,.7);
+}
+.table th,.table td{padding:12px;border-bottom:1px solid #eee;text-align:left;vertical-align:top}
+.table th{background:#fafafa;font-weight:1000}
+.table tr:last-child td{border-bottom:none}
 
+/* goods テーブル */
+.table-goods{ margin-top: 8px; border-radius: 18px; }
+.table-goods thead th{
+  background: linear-gradient(90deg, #ffe0f0, #e8f3ff);
+  color: #553344;
+  font-size: .85rem;
+  border-bottom: none;
+}
+.table-goods tbody tr:nth-child(even){ background-color:#fff9fd; }
+.table-goods tbody tr:hover{ background-color:#fff0fb; }
+.table-goods td{ font-size: .9rem; vertical-align: middle; }
+.table-goods .goods-name{ font-weight: 1000; color: #ff4fa3; }
+.table-goods .event-name{
+  display:inline-flex; align-items:center; gap:4px;
+  padding:3px 8px; border-radius:999px;
+  background:#fff; border:1px solid #ffd3eb;
+  font-size:.8rem; font-weight: 1000;
+}
+.table-goods .event-name::before{ content:"★"; font-size:.8rem; }
+.table-goods .date-text{ font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 900; }
+.table-goods .note{ color:#777; font-size:.82rem; font-weight: 800; }
+
+@media (max-width:640px){
+  .table-goods th:nth-child(4),
+  .table-goods td:nth-child(4){ display:none; }
+}
+
+@media (prefers-color-scheme: dark){
+  .table{background:rgba(29,31,34,.92); border-color:rgba(255,255,255,.12)}
+  .table th{background:#232529}
+  .table th,.table td{border-bottom-color:#2b2d31}
+}
