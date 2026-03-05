@@ -11,19 +11,6 @@
     return `${y}/${m}/${dd}(${wd})`;
   }
 
-  function computeOpenClose(day){
-    const times = (day.maids || [])
-      .map(m => ({ start:String(m.start||'').trim(), end:String(m.end||'').trim() }))
-      .filter(t => t.start && t.end);
-
-    if(!times.length) return null;
-
-    times.sort((a,b)=> a.start.localeCompare(b.start));
-    const open = times[0].start;
-    const close = times.reduce((mx,t)=> (t.end > mx ? t.end : mx), times[0].end);
-    return { open, close };
-  }
-
   function ensureChan(name){
     const base = String(name||'').trim();
     if(!base) return '';
@@ -53,7 +40,9 @@
     const apiBase = window.PORTAL_CONFIG?.scheduleApiUrl;
     if(!apiBase) return null;
     try{
-      const data = await fetchJsonWithTimeout(`${apiBase}?mode=today`, 10000);
+      // キャッシュ事故避け（GAS/ブラウザ両方に効く）
+      const url = `${apiBase}?mode=today&ts=${Date.now()}`;
+      const data = await fetchJsonWithTimeout(url, 10000);
       if(!data || data.ok !== true) return null;
       const day = (data.days && data.days[0]) ? data.days[0] : null;
       return day || null;
@@ -63,93 +52,81 @@
   }
 
   function renderTodayHours(day){
-  const el = document.getElementById('todayHours');
-  if(!el) return;
+    const el = document.getElementById('todayHours');
+    if(!el) return;
 
-  if(!day){
-    el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
-    return;
+    if(!day){
+      el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
+      return;
+    }
+
+    const dateText = buildDateText(day);
+
+    // ★「お屋敷休館日」行は営業時間計算から除外
+    const rawMaids = Array.isArray(day.maids) ? day.maids : [];
+    const maids = rawMaids.filter(m => String(m.maid || '').trim() !== 'お屋敷休館日');
+
+    // 休館日（メイド0人 or 休館日だけ）
+    if(maids.length === 0){
+      el.textContent = `${dateText}（休館日）`;
+      return;
+    }
+
+    const times = maids
+      .map(m => ({ start:String(m.start||'').trim(), end:String(m.end||'').trim() }))
+      .filter(t => t.start && t.end);
+
+    // 時間が取れない（全員おやすみ/時間未設定）
+    if(!times.length){
+      el.textContent = `${dateText}（営業時間は店頭/DMでご確認ください）`;
+      return;
+    }
+
+    times.sort((a,b)=> a.start.localeCompare(b.start));
+    const open = times[0].start;
+    const close = times.reduce((mx,t)=> (t.end > mx ? t.end : mx), times[0].end);
+
+    el.textContent = `${dateText}  ${open}–${close}`;
   }
-
-  const dateText = buildDateText(day);
-
-  // ★休館日レコード（お屋敷休館日）を除外して判定
-  const rawMaids = Array.isArray(day.maids) ? day.maids : [];
-  const maids = rawMaids.filter(m => String(m.maid || '').trim() !== 'お屋敷休館日');
-
-  // 休館日（メイド0人 or 休館日だけ）
-  if(maids.length === 0){
-    el.textContent = `${dateText}（休館日）`;
-    return;
-  }
-
-  // 営業時間の計算（休館日レコードを除外した maids を使う）
-  const times = maids
-    .map(m => ({ start:String(m.start||'').trim(), end:String(m.end||'').trim() }))
-    .filter(t => t.start && t.end);
-
-  // 時間が1件も取れない（全員おやすみ/時間未設定）
-  if(!times.length){
-    el.textContent = `${dateText}（営業時間は店頭/DMでご確認ください）`;
-    return;
-  }
-
-  times.sort((a,b)=> a.start.localeCompare(b.start));
-  const open = times[0].start;
-  const close = times.reduce((mx,t)=> (t.end > mx ? t.end : mx), times[0].end);
-
-  el.textContent = `${dateText}  ${open}–${close}`;
-}
 
   function renderTodayMaids(day){
-  const wrap = document.getElementById("todayMaidsWrap");
-  if(!wrap) return;
+    const wrap = document.getElementById('todayMaidsWrap');
+    if(!wrap) return;
 
-  const maids = (day && Array.isArray(day.maids)) ? day.maids : [];
-  const maids = rawMaids.filter(m => String(m.maid || '').trim() !== 'お屋敷休館日');  
+    const rawMaids = (day && Array.isArray(day.maids)) ? day.maids : [];
 
-  // ① 休館日（0人）のとき
-  if(maids.length === 0){
-    wrap.innerHTML = '<div class="maids-fallback">本日はお屋敷休館日です</div>';
-    return;
+    // ★「お屋敷休館日」行は表示から除外（=休館日扱いに寄せる）
+    const maids = rawMaids.filter(m => String(m.maid || '').trim() !== 'お屋敷休館日');
+
+    // 休館日（0人 or 休館日だけ）
+    if(maids.length === 0){
+      wrap.innerHTML = '<div class="maids-fallback">本日はお屋敷休館日です</div>';
+      return;
+    }
+
+    wrap.innerHTML = maids.map(r=>{
+      const safeName = ensureChan(r.maid);
+      const s = String(r.start||'').trim();
+      const e = String(r.end||'').trim();
+      const isOff = (r.off === true) || (!s && !e);
+
+      const time = isOff
+        ? 'おやすみ'
+        : ((r.note && String(r.note).trim())
+            ? String(r.note).trim()
+            : (s && e ? `${s}–${e}` : '時間未設定'));
+
+      return `
+        <div class="today-maid">
+          <span class="maid-name">${safeName}</span>
+          <span class="maid-time ${isOff ? 'is-off' : ''}">${time}</span>
+        </div>
+      `;
+    }).join('');
   }
-
-  // ②（任意）休館日行が明示的に入っている場合も同じ表示にしたいなら
-  // if(maids.length === 1 && maids[0].maid === 'お屋敷休館日'){
-  //   wrap.innerHTML = '<div class="maids-fallback">本日はお屋敷休館日です</div>';
-  //   return;
-  // }
-
-    // 休館日（ScheduleDBが "お屋敷休館日" 行を返してきた場合）
-if (maids.length === 1 && String(maids[0].maid || '').trim() === 'お屋敷休館日') {
-  wrap.innerHTML = '<div class="maids-fallback">本日はお屋敷休館日です</div>';
-  return;
-}
-
-  wrap.innerHTML = maids.map(r=>{
-    const safeName = ensureChan(r.maid);
-    const s = String(r.start||'').trim();
-    const e = String(r.end||'').trim();
-    const isOff = (r.off === true) || (!s && !e);
-
-    const time = isOff
-      ? 'おやすみ'
-      : ((r.note && String(r.note).trim())
-          ? String(r.note).trim()
-          : (s && e ? `${s}–${e}` : '時間未設定'));
-
-    return `
-      <div class="today-maid">
-        <span class="maid-name">${safeName}</span>
-        <span class="maid-time ${isOff ? 'is-off' : ''}">${time}</span>
-      </div>
-    `;
-  }).join('');
-}
 
   async function initToday(){
     setReserveButton();
-
     const day = await fetchTodayOnce();
     renderTodayHours(day);
     renderTodayMaids(day);
