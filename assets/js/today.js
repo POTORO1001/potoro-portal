@@ -81,38 +81,43 @@
   }
 
   function renderTodayMaids(day){
-    const wrap = document.getElementById("todayMaidsWrap");
+  const wrap = document.getElementById("todayMaidsWrap");
+  if(!wrap) return;
 
-if (!maids || maids.length === 0) {
-  wrap.innerHTML = '<span class="maids-fallback">本日はお屋敷休館日です</span>';
-  return;
-}
+  const maids = (day && Array.isArray(day.maids)) ? day.maids : [];
 
-    if(!day || !Array.isArray(day.maids) || !day.maids.length){
-      wrap.innerHTML = '<div class="maids-fallback">本日の出勤情報は未登録です。</div>';
-      return;
-    }
-
-    wrap.innerHTML = day.maids.map(r=>{
-      const safeName = ensureChan(r.maid);
-      const s = String(r.start||'').trim();
-      const e = String(r.end||'').trim();
-      const isOff = (r.off === true) || (!s && !e);
-
-      const time = isOff
-        ? 'おやすみ'
-        : ((r.note && String(r.note).trim())
-            ? String(r.note).trim()
-            : (s && e ? `${s}–${e}` : '時間未設定'));
-
-      return `
-        <div class="today-maid">
-          <span class="maid-name">${safeName}</span>
-          <span class="maid-time ${isOff ? 'is-off' : ''}">${time}</span>
-        </div>
-      `;
-    }).join('');
+  // ① 休館日（0人）のとき
+  if(maids.length === 0){
+    wrap.innerHTML = '<div class="maids-fallback">本日はお屋敷休館日です</div>';
+    return;
   }
+
+  // ②（任意）休館日行が明示的に入っている場合も同じ表示にしたいなら
+  // if(maids.length === 1 && maids[0].maid === 'お屋敷休館日'){
+  //   wrap.innerHTML = '<div class="maids-fallback">本日はお屋敷休館日です</div>';
+  //   return;
+  // }
+
+  wrap.innerHTML = maids.map(r=>{
+    const safeName = ensureChan(r.maid);
+    const s = String(r.start||'').trim();
+    const e = String(r.end||'').trim();
+    const isOff = (r.off === true) || (!s && !e);
+
+    const time = isOff
+      ? 'おやすみ'
+      : ((r.note && String(r.note).trim())
+          ? String(r.note).trim()
+          : (s && e ? `${s}–${e}` : '時間未設定'));
+
+    return `
+      <div class="today-maid">
+        <span class="maid-name">${safeName}</span>
+        <span class="maid-time ${isOff ? 'is-off' : ''}">${time}</span>
+      </div>
+    `;
+  }).join('');
+}
 
   async function initToday(){
     setReserveButton();
