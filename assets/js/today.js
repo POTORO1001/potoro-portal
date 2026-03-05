@@ -63,22 +63,43 @@
   }
 
   function renderTodayHours(day){
-    const el = document.getElementById('todayHours');
-    if(!el) return;
+  const el = document.getElementById('todayHours');
+  if(!el) return;
 
-    if(!day){
-      el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
-      return;
-    }
-
-    const dateText = buildDateText(day);
-    const oc = computeOpenClose(day);
-    if(!oc){
-      el.textContent = `${dateText}（営業時間は店頭/DMでご確認ください）`;
-      return;
-    }
-    el.textContent = `${dateText}  ${oc.open}–${oc.close}`;
+  if(!day){
+    el.textContent = '本日の営業情報は未登録です（DMでご確認ください）';
+    return;
   }
+
+  const dateText = buildDateText(day);
+
+  // ★休館日レコード（お屋敷休館日）を除外して判定
+  const rawMaids = Array.isArray(day.maids) ? day.maids : [];
+  const maids = rawMaids.filter(m => String(m.maid || '').trim() !== 'お屋敷休館日');
+
+  // 休館日（メイド0人 or 休館日だけ）
+  if(maids.length === 0){
+    el.textContent = `${dateText}（休館日）`;
+    return;
+  }
+
+  // 営業時間の計算（休館日レコードを除外した maids を使う）
+  const times = maids
+    .map(m => ({ start:String(m.start||'').trim(), end:String(m.end||'').trim() }))
+    .filter(t => t.start && t.end);
+
+  // 時間が1件も取れない（全員おやすみ/時間未設定）
+  if(!times.length){
+    el.textContent = `${dateText}（営業時間は店頭/DMでご確認ください）`;
+    return;
+  }
+
+  times.sort((a,b)=> a.start.localeCompare(b.start));
+  const open = times[0].start;
+  const close = times.reduce((mx,t)=> (t.end > mx ? t.end : mx), times[0].end);
+
+  el.textContent = `${dateText}  ${open}–${close}`;
+}
 
   function renderTodayMaids(day){
   const wrap = document.getElementById("todayMaidsWrap");
