@@ -358,16 +358,40 @@
     </div>
   </div>
 
-  <script src="assets/js/config.js"></script>
-  <script src="assets/js/core.js"></script>
-  <script src="assets/js/today.js"></script>
-  <script src="assets/js/news.js"></script>
+  <!--
+    ✅ scripts は「依存順」で読み込む
+    config.js -> core.js -> today.js -> news.js
+    キャッシュ事故を減らすために v= を付与（固定でもOK）
+  -->
+  <script src="assets/js/config.js?v=20260306"></script>
+  <script src="assets/js/core.js?v=20260306"></script>
+  <script src="assets/js/today.js?v=20260306"></script>
+  <script src="assets/js/news.js?v=20260306"></script>
 
   <!-- 麻雀募集バナー（任意） -->
-  <script type="module" src="assets/js/mahjong-banner.js"></script>
+  <script type="module" src="assets/js/mahjong-banner.js?v=20260306"></script>
 
   <script>
+    // 今日の表示が失敗した時に「読込中…」を残さない
+    function fallbackTodayUI(message){
+      const hoursEl = document.getElementById('todayHours');
+      if(hoursEl && (hoursEl.textContent || '').includes('読込')) {
+        hoursEl.textContent = message || '本日の営業情報は取得できませんでした（DMでご確認ください）';
+      }
+      const maidsWrap = document.getElementById('todayMaidsWrap');
+      if(maidsWrap && (maidsWrap.textContent || '').includes('読み込み')) {
+        maidsWrap.innerHTML = '<span class="maids-fallback">本日の出勤情報は取得できませんでした（DMでご確認ください）</span>';
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', async ()=>{
+      // コアが無い時点で致命なので、UIを即フォールバック
+      if(!window.PortalCore){
+        console.error('PortalCore is not defined');
+        fallbackTodayUI('本日の営業情報は取得できませんでした（DMでご確認ください）');
+        return;
+      }
+
       PortalCore.setupReveal();
       PortalCore.setupDrawer();
       PortalCore.setupCommonFooterYear();
@@ -386,11 +410,29 @@
       modalFirst?.addEventListener('click',(e)=>{ if(e.target===modalFirst) PortalCore.toggleModal(modalFirst,false); });
 
       // 今日（API 1回）
-      await PortalToday.initToday();
+      try{
+        if(window.PortalToday?.initToday){
+          await window.PortalToday.initToday();
+        }else{
+          console.error('PortalToday.initToday is not available');
+          fallbackTodayUI();
+        }
+      }catch(err){
+        console.error('initToday failed:', err);
+        fallbackTodayUI();
+      }
 
       // 新着お知らせ（最新5件）
-      const news = await PortalNews.loadNews();
-      PortalNews.renderNewsList('newsList', news, 5);
+      try{
+        if(window.PortalNews?.loadNews && window.PortalNews?.renderNewsList){
+          const news = await PortalNews.loadNews();
+          PortalNews.renderNewsList('newsList', news, 5);
+        }else{
+          console.error('PortalNews is not available');
+        }
+      }catch(err){
+        console.error('news load failed:', err);
+      }
 
       // 麻雀リンク（固定）
       document.getElementById('mjLink')?.setAttribute('href', 'https://potoro1001.github.io/potoro-mahjong/');
