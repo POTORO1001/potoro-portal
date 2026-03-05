@@ -98,6 +98,12 @@
   //   return;
   // }
 
+    // 休館日（ScheduleDBが "お屋敷休館日" 行を返してきた場合）
+if (maids.length === 1 && String(maids[0].maid || '').trim() === 'お屋敷休館日') {
+  wrap.innerHTML = '<div class="maids-fallback">本日はお屋敷休館日です</div>';
+  return;
+}
+
   wrap.innerHTML = maids.map(r=>{
     const safeName = ensureChan(r.maid);
     const s = String(r.start||'').trim();
