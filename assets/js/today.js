@@ -106,6 +106,7 @@
   if(!wrap) return;
 
   const maids = (day && Array.isArray(day.maids)) ? day.maids : [];
+  const maids = rawMaids.filter(m => String(m.maid || '').trim() !== 'お屋敷休館日');  
 
   // ① 休館日（0人）のとき
   if(maids.length === 0){
