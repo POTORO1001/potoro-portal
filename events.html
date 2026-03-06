@@ -130,6 +130,33 @@
       line-height:1.7;
     }
 
+    .schedule-table tbody tr.is-today{
+      background:linear-gradient(180deg, rgba(255,121,166,.10), rgba(255,121,166,.05));
+    }
+    .schedule-table tbody tr.is-today:hover{
+      background:linear-gradient(180deg, rgba(255,121,166,.14), rgba(255,121,166,.08));
+    }
+    .schedule-table tbody tr.is-today td:first-child .schedule-date{
+      color:#c44578;
+    }
+
+    .schedule-table tbody tr.is-event{
+      background:rgba(246,183,210,.10);
+    }
+    .schedule-table tbody tr.is-event:hover{
+      background:rgba(246,183,210,.15);
+    }
+
+    .schedule-table tbody tr.is-closed{
+      background:rgba(0,0,0,.035);
+    }
+    .schedule-table tbody tr.is-closed:hover{
+      background:rgba(0,0,0,.06);
+    }
+    .schedule-table tbody tr.is-closed td{
+      color:#666;
+    }
+
     .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;padding:4vw;z-index:100;opacity:0;pointer-events:none;transition:.2s}
     .lightbox.open{opacity:1;pointer-events:auto}
     .lightbox img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 8px 30px rgba(0,0,0,.5);border-radius:10px}
@@ -176,6 +203,33 @@
         background:rgba(255,255,255,.04);
       }
       .schedule-empty{color:#d7d7d7}
+
+      .schedule-table tbody tr.is-today{
+        background:linear-gradient(180deg, rgba(255,121,166,.16), rgba(255,121,166,.08));
+      }
+      .schedule-table tbody tr.is-today:hover{
+        background:linear-gradient(180deg, rgba(255,121,166,.20), rgba(255,121,166,.12));
+      }
+      .schedule-table tbody tr.is-today td:first-child .schedule-date{
+        color:#ffb2cf;
+      }
+
+      .schedule-table tbody tr.is-event{
+        background:rgba(246,183,210,.09);
+      }
+      .schedule-table tbody tr.is-event:hover{
+        background:rgba(246,183,210,.13);
+      }
+
+      .schedule-table tbody tr.is-closed{
+        background:rgba(255,255,255,.05);
+      }
+      .schedule-table tbody tr.is-closed:hover{
+        background:rgba(255,255,255,.08);
+      }
+      .schedule-table tbody tr.is-closed td{
+        color:#d2d2d2;
+      }
     }
   </style>
 </head>
@@ -230,14 +284,14 @@
         <section class="schedule-wrap mt-16" aria-labelledby="scheduleTitle">
           <div class="schedule-head">
             <div>
-              <h2 class="schedule-title" id="scheduleTitle">🗓️ 直近7日間のイベントスケジュール</h2>
-              <p class="schedule-sub">PORTAL_schedule.csv の date / hours / note をもとに、イベント予定のみを一覧表示しています。</p>
+              <h2 class="schedule-title" id="scheduleTitle">🗓️ 直近7日間の営業スケジュール</h2>
+              <p class="schedule-sub">PORTAL_schedule.csv の date / hours / note をもとに、直近7日間の営業予定を一覧表示しています。</p>
             </div>
-            <div class="schedule-note">event schedule</div>
+            <div class="schedule-note">business schedule</div>
           </div>
 
           <div class="schedule-table-wrap">
-            <div id="eventScheduleArea" class="schedule-empty">イベントスケジュールを読み込み中です…</div>
+            <div id="eventScheduleArea" class="schedule-empty">営業スケジュールを読み込み中です…</div>
           </div>
 
           <div class="schedule-status" id="eventScheduleStatus"></div>
@@ -359,6 +413,14 @@
       return `${y}/${m}/${d}（${w}）`;
     }
 
+    function formatJaDateFromDate(dt){
+      const w = ['日','月','火','水','木','金','土'][dt.getDay()];
+      const y = dt.getFullYear();
+      const m = String(dt.getMonth() + 1).padStart(2, '0');
+      const d = String(dt.getDate()).padStart(2, '0');
+      return `${y}/${m}/${d}（${w}）`;
+    }
+
     function startOfDay(dt){
       return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
     }
@@ -369,9 +431,28 @@
       return copy;
     }
 
-    function isEventRow(row){
+    function isScheduleRow(row){
+      const date = String(row.date ?? '').trim();
+      const hours = String(row.hours ?? '').trim();
       const note = String(row.note ?? '').trim();
-      return !!note && note !== 'お屋敷休館日';
+      return !!date && (!!hours || !!note);
+    }
+
+    function isClosedDay(row){
+      const hours = String(row.hours ?? '').trim();
+      const note = String(row.note ?? '').trim();
+      return hours.includes('休館') || note.includes('休館');
+    }
+
+    function hasEventNote(row){
+      const note = String(row.note ?? '').trim();
+      return !!note && !note.includes('休館');
+    }
+
+    function isSameDate(a, b){
+      return a.getFullYear() === b.getFullYear()
+        && a.getMonth() === b.getMonth()
+        && a.getDate() === b.getDate();
     }
 
     function getScheduleCsvUrl(){
@@ -402,18 +483,23 @@
       }
     }
 
-    function buildScheduleTable(rows){
+    function buildScheduleTable(rows, today){
       if(!rows.length){
-        return `<div class="schedule-empty">直近7日間のイベント予定はありません。</div>`;
+        return `<div class="schedule-empty">直近7日間の営業予定はありません。</div>`;
       }
 
       const body = rows.map(row => {
         const dateText = formatJaDate(row.date);
         const hoursText = escapeHtml(row.hours || '—');
-        const noteText = escapeHtml(row.note || '—');
+        const noteText = escapeHtml(row.note || '');
+
+        const classes = [];
+        if(row._date && isSameDate(row._date, today)) classes.push('is-today');
+        if(hasEventNote(row)) classes.push('is-event');
+        if(isClosedDay(row)) classes.push('is-closed');
 
         return `
-          <tr>
+          <tr class="${classes.join(' ')}">
             <td class="schedule-date">${escapeHtml(dateText)}</td>
             <td class="schedule-hours">${hoursText}</td>
             <td>${noteText}</td>
@@ -422,7 +508,7 @@
       }).join('');
 
       return `
-        <table class="schedule-table" aria-label="直近7日間のイベントスケジュール一覧">
+        <table class="schedule-table" aria-label="直近7日間の営業スケジュール一覧">
           <thead>
             <tr>
               <th>日付</th>
@@ -461,23 +547,20 @@
             hours: String(row.hours ?? '').trim(),
             note: String(row.note ?? '').trim()
           }))
-          .filter(row => row.date)
-          .filter(isEventRow)
+          .filter(isScheduleRow)
           .map(row => ({ ...row, _date: parseDateOnly(row.date) }))
           .filter(row => row._date)
           .filter(row => row._date >= today && row._date <= limit)
           .sort((a, b) => a._date - b._date);
 
-        area.innerHTML = buildScheduleTable(filtered);
+        area.innerHTML = buildScheduleTable(filtered, today);
 
         if(status){
-          status.textContent = filtered.length
-            ? `表示期間：${formatJaDate(today)} 〜 ${formatJaDate(limit)}`
-            : `表示期間：${formatJaDate(today)} 〜 ${formatJaDate(limit)} / 該当イベントなし`;
+          status.textContent = `表示期間：${formatJaDateFromDate(today)} 〜 ${formatJaDateFromDate(limit)}`;
         }
       }catch(err){
         console.error('schedule load failed:', err);
-        area.innerHTML = `<div class="schedule-empty">イベントスケジュールの取得に失敗しました。</div>`;
+        area.innerHTML = `<div class="schedule-empty">営業スケジュールの取得に失敗しました。</div>`;
         if(status) status.textContent = '';
       }
     }
@@ -488,7 +571,7 @@
         fallbackEvents('イベント情報の取得に失敗しました。');
         const area = document.getElementById('eventScheduleArea');
         if(area){
-          area.innerHTML = `<div class="schedule-empty">イベントスケジュールの取得に失敗しました。</div>`;
+          area.innerHTML = `<div class="schedule-empty">営業スケジュールの取得に失敗しました。</div>`;
         }
         return;
       }
