@@ -4,20 +4,34 @@
 
   async function loadEvents(){
     const cfg = window.PORTAL_CONFIG || {};
-    const csv = await tryLoadCSV(cfg.eventsCsvUrl, cfg.eventsCsvUrlAlt);
-    return csv ? csvToEventObjects(csv) : [];
+    try{
+      const csv = await tryLoadCSV(cfg.eventsCsvUrl, cfg.eventsCsvUrlAlt);
+      if(!csv){
+        console.error('events CSV could not be loaded', {
+          eventsCsvUrl: cfg.eventsCsvUrl,
+          eventsCsvUrlAlt: cfg.eventsCsvUrlAlt
+        });
+        return [];
+      }
+      return csvToEventObjects(csv) || [];
+    }catch(err){
+      console.error('loadEvents failed:', err);
+      return [];
+    }
   }
 
   function renderEventsGrid(containerId, items){
     const g = document.getElementById(containerId);
     if(!g) return;
 
-    if(!items.length){
+    const safeItems = Array.isArray(items) ? items : [];
+
+    if(!safeItems.length){
       g.innerHTML = `<div class="tag">イベントは準備中です。</div>`;
       return;
     }
 
-    g.innerHTML = items.map((e, idx)=>{
+    g.innerHTML = safeItems.map((e, idx)=>{
       const imgSrc = e.image || 'img/ogp.jpg';
       const title  = escapeHtml(e.title||'');
       const date   = escapeHtml(e.datetext||'');
@@ -56,6 +70,7 @@
       lightbox.setAttribute('aria-hidden','false');
       document.body.style.overflow = 'hidden';
     };
+
     const close = ()=>{
       lightbox.classList.remove('open');
       lightbox.setAttribute('aria-hidden','true');
@@ -66,12 +81,14 @@
     document.getElementById('eventsGrid')?.addEventListener('click', (e)=>{
       const target = e.target.closest('img');
       if(!target) return;
-      open(target.getAttribute('data-full')||target.src, target.alt);
+      open(target.getAttribute('data-full') || target.src, target.alt);
     });
 
     lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) close(); });
     closeBtn.addEventListener('click', close);
-    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && lightbox.classList.contains('open')) close(); });
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && lightbox.classList.contains('open')) close();
+    });
   }
 
   window.PortalEvents = { loadEvents, renderEventsGrid, setupLightbox };
