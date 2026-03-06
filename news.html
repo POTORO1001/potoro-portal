@@ -64,7 +64,9 @@
       <div class="container reveal">
         <h1 class="sec-title">🗞️ お知らせ一覧</h1>
         <div class="ticker">
-          <ul id="newsList"></ul>
+          <ul id="newsList">
+            <li><span class="tag">—</span> 読み込み中です…</li>
+          </ul>
         </div>
         <div class="mt-12">
           <a class="btn btn-ghost" href="index.html">← トップへ戻る</a>
@@ -83,17 +85,39 @@
     </div>
   </footer>
 
-  <script src="assets/js/config.js"></script>
-  <script src="assets/js/core.js"></script>
-  <script src="assets/js/news.js"></script>
+  <script src="assets/js/config.js?v=20260306"></script>
+  <script src="assets/js/core.js?v=20260306"></script>
+  <script src="assets/js/news.js?v=20260306"></script>
   <script>
+    function fallbackNews(message){
+      const ul = document.getElementById('newsList');
+      if(!ul) return;
+      ul.innerHTML = `<li><span class="tag">—</span> ${message}</li>`;
+    }
+
     document.addEventListener('DOMContentLoaded', async ()=>{
+      if(!window.PortalCore){
+        console.error('PortalCore is not defined');
+        fallbackNews('お知らせの取得に失敗しました。');
+        return;
+      }
+
       PortalCore.setupReveal();
       PortalCore.setupDrawer();
       PortalCore.setupCommonFooterYear();
 
-      const items = await PortalNews.loadNews();
-      PortalNews.renderNewsList('newsList', items);
+      try{
+        if(window.PortalNews?.loadNews && window.PortalNews?.renderNewsList){
+          const items = await window.PortalNews.loadNews();
+          window.PortalNews.renderNewsList('newsList', items);
+        }else{
+          console.error('PortalNews is not available');
+          fallbackNews('お知らせの取得に失敗しました。');
+        }
+      }catch(err){
+        console.error('news load failed:', err);
+        fallbackNews('お知らせの取得に失敗しました。');
+      }
     });
   </script>
 </body>
