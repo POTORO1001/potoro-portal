@@ -1,3 +1,5 @@
+いただいた下記のコードはevents.htmlですか？
+
 <!doctype html>
 <html lang="ja">
 <head>
@@ -35,13 +37,147 @@
     .featured{ grid-column: span 2; }
     @media (max-width:880px){ .featured{grid-column:auto} }
 
+    .schedule-wrap{
+      margin-top:28px;
+      padding:18px;
+      border:1px solid rgba(0,0,0,.06);
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,248,252,.96));
+      box-shadow:0 12px 28px rgba(0,0,0,.05);
+    }
+    .schedule-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+      flex-wrap:wrap;
+    }
+    .schedule-title{
+      margin:0;
+      font-size:1.25rem;
+      font-weight:1000;
+      letter-spacing:.02em;
+    }
+    .schedule-sub{
+      margin:0;
+      color:#666;
+      font-size:.93rem;
+      line-height:1.7;
+    }
+    .schedule-note{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:.8rem;
+      font-weight:900;
+      color:#6f4b59;
+      background:rgba(246,183,210,.18);
+      border:1px solid rgba(246,183,210,.36);
+      white-space:nowrap;
+    }
+    .schedule-table-wrap{
+      overflow:auto;
+      -webkit-overflow-scrolling:touch;
+      border-radius:18px;
+      border:1px solid rgba(0,0,0,.07);
+      background:#fff;
+    }
+    .schedule-table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:640px;
+    }
+    .schedule-table th,
+    .schedule-table td{
+      padding:14px 14px;
+      text-align:left;
+      border-bottom:1px solid rgba(0,0,0,.07);
+      vertical-align:middle;
+      line-height:1.7;
+    }
+    .schedule-table thead th{
+      background:linear-gradient(180deg, #fff7fb, #fff);
+      font-size:.92rem;
+      font-weight:1000;
+      color:#5a4650;
+      white-space:nowrap;
+    }
+    .schedule-table tbody tr:hover{
+      background:rgba(246,183,210,.08);
+    }
+    .schedule-table tbody tr:last-child td{
+      border-bottom:none;
+    }
+    .schedule-date{
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .schedule-hours{
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .schedule-empty{
+      padding:20px 16px;
+      color:#666;
+      font-size:.95rem;
+      line-height:1.8;
+    }
+    .schedule-status{
+      margin-top:10px;
+      color:#777;
+      font-size:.88rem;
+      line-height:1.7;
+    }
+
     .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;padding:4vw;z-index:100;opacity:0;pointer-events:none;transition:.2s}
     .lightbox.open{opacity:1;pointer-events:auto}
     .lightbox img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 8px 30px rgba(0,0,0,.5);border-radius:10px}
     .lightbox .close{position:absolute;top:16px;right:16px;background:#fff;border:none;border-radius:999px;font-size:16px;padding:8px 12px;cursor:pointer}
+
+    @media (max-width: 720px){
+      .schedule-wrap{padding:14px;border-radius:20px}
+      .schedule-title{font-size:1.12rem}
+      .schedule-sub{font-size:.88rem}
+      .schedule-table th,
+      .schedule-table td{padding:12px 12px}
+    }
+
     @media (prefers-color-scheme: dark){
       .event-overlay{background:rgba(29,31,34,.92);border-color:rgba(255,255,255,.12)}
       .pill.date{background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#e8e8e8}
+
+      .schedule-wrap{
+        background:linear-gradient(180deg, rgba(29,31,34,.94), rgba(35,37,40,.96));
+        border-color:rgba(255,255,255,.08);
+      }
+      .schedule-title{color:#f3f3f3}
+      .schedule-sub,
+      .schedule-status{color:#cfcfcf}
+      .schedule-note{
+        color:#ffe2ee;
+        background:rgba(246,183,210,.16);
+        border-color:rgba(246,183,210,.24);
+      }
+      .schedule-table-wrap{
+        background:rgba(255,255,255,.03);
+        border-color:rgba(255,255,255,.08);
+      }
+      .schedule-table thead th{
+        background:rgba(255,255,255,.05);
+        color:#f1f1f1;
+      }
+      .schedule-table th,
+      .schedule-table td{
+        border-bottom-color:rgba(255,255,255,.08);
+        color:#efefef;
+      }
+      .schedule-table tbody tr:hover{
+        background:rgba(255,255,255,.04);
+      }
+      .schedule-empty{color:#d7d7d7}
     }
   </style>
 </head>
@@ -88,9 +224,27 @@
     <section>
       <div class="container reveal">
         <h1 class="sec-title">🎉 イベント一覧</h1>
+
         <div class="grid cols-3" id="eventsGrid">
           <div class="tag">読み込み中です…</div>
         </div>
+
+        <section class="schedule-wrap mt-16" aria-labelledby="scheduleTitle">
+          <div class="schedule-head">
+            <div>
+              <h2 class="schedule-title" id="scheduleTitle">🗓️ 直近7日間のイベントスケジュール</h2>
+              <p class="schedule-sub">PORTAL_schedule.csv の date / hours / note をもとに、イベント予定のみを一覧表示しています。</p>
+            </div>
+            <div class="schedule-note">event schedule</div>
+          </div>
+
+          <div class="schedule-table-wrap">
+            <div id="eventScheduleArea" class="schedule-empty">イベントスケジュールを読み込み中です…</div>
+          </div>
+
+          <div class="schedule-status" id="eventScheduleStatus"></div>
+        </section>
+
         <div class="mt-12">
           <a class="btn btn-ghost" href="index.html">← トップへ戻る</a>
         </div>
@@ -117,16 +271,224 @@
   <script src="assets/js/core.js?v=20260306"></script>
   <script src="assets/js/events.js?v=20260306"></script>
   <script>
+    function escapeHtml(str){
+      return String(str ?? '').replace(/[&<>"]/g, s => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'
+      }[s]));
+    }
+
     function fallbackEvents(message){
       const grid = document.getElementById('eventsGrid');
       if(!grid) return;
-      grid.innerHTML = `<div class="tag">${message}</div>`;
+      grid.innerHTML = `<div class="tag">${escapeHtml(message)}</div>`;
+    }
+
+    function normalizeHeader(s){
+      let t = String(s ?? '');
+      if(t && t.charCodeAt(0) === 0xFEFF) t = t.slice(1);
+      return t.trim().toLowerCase();
+    }
+
+    function parseCsvLine(line){
+      const out = [];
+      let cur = '';
+      let inQuotes = false;
+
+      for(let i=0;i<line.length;i++){
+        const ch = line[i];
+        const next = line[i+1];
+
+        if(ch === '"'){
+          if(inQuotes && next === '"'){
+            cur += '"';
+            i++;
+          }else{
+            inQuotes = !inQuotes;
+          }
+        }else if(ch === ',' && !inQuotes){
+          out.push(cur);
+          cur = '';
+        }else{
+          cur += ch;
+        }
+      }
+      out.push(cur);
+      return out;
+    }
+
+    function parseCsv(text){
+      const lines = String(text ?? '')
+        .replace(/\r\n/g, '\n')
+        .replace(/\r/g, '\n')
+        .split('\n')
+        .filter(line => line.trim() !== '');
+
+      if(!lines.length) return [];
+
+      const headers = parseCsvLine(lines[0]).map(normalizeHeader);
+      return lines.slice(1).map(line => {
+        const cols = parseCsvLine(line);
+        const row = {};
+        headers.forEach((h, i) => row[h] = (cols[i] ?? '').trim());
+        return row;
+      });
+    }
+
+    function parseDateOnly(value){
+      const s = String(value ?? '').trim();
+      const m = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
+      if(!m) return null;
+      const y = Number(m[1]);
+      const mon = Number(m[2]) - 1;
+      const d = Number(m[3]);
+      const dt = new Date(y, mon, d);
+      if(
+        Number.isNaN(dt.getTime()) ||
+        dt.getFullYear() !== y ||
+        dt.getMonth() !== mon ||
+        dt.getDate() !== d
+      ) return null;
+      return dt;
+    }
+
+    function formatJaDate(value){
+      const dt = parseDateOnly(value);
+      if(!dt) return String(value ?? '');
+      const w = ['日','月','火','水','木','金','土'][dt.getDay()];
+      const y = dt.getFullYear();
+      const m = String(dt.getMonth() + 1).padStart(2, '0');
+      const d = String(dt.getDate()).padStart(2, '0');
+      return `${y}/${m}/${d}（${w}）`;
+    }
+
+    function startOfDay(dt){
+      return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+    }
+
+    function addDays(dt, days){
+      const copy = new Date(dt);
+      copy.setDate(copy.getDate() + days);
+      return copy;
+    }
+
+    function isEventRow(row){
+      const note = String(row.note ?? '').trim();
+      return !!note && note !== 'お屋敷休館日';
+    }
+
+    function getScheduleCsvUrl(){
+      return (
+        window.PortalConfig?.SCHEDULE_CSV_URL ||
+        window.PortalConfig?.scheduleCsvUrl ||
+        window.PortalConfig?.schedule?.csvUrl ||
+        ''
+      );
+    }
+
+    async function fetchTextWithTimeout(url, ms=10000){
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), ms);
+      try{
+        const res = await fetch(url + (url.includes('?') ? '&' : '?') + 'cb=' + Date.now(), {
+          cache: 'no-store',
+          credentials: 'omit',
+          signal: controller.signal
+        });
+        if(!res.ok) throw new Error('HTTP ' + res.status);
+        return await res.text();
+      } finally {
+        clearTimeout(id);
+      }
+    }
+
+    function buildScheduleTable(rows){
+      if(!rows.length){
+        return `<div class="schedule-empty">直近7日間のイベント予定はありません。</div>`;
+      }
+
+      const body = rows.map(row => {
+        const dateText = formatJaDate(row.date);
+        const hoursText = escapeHtml(row.hours || '—');
+        const noteText = escapeHtml(row.note || '—');
+
+        return `
+          <tr>
+            <td class="schedule-date">${escapeHtml(dateText)}</td>
+            <td class="schedule-hours">${hoursText}</td>
+            <td>${noteText}</td>
+          </tr>
+        `;
+      }).join('');
+
+      return `
+        <table class="schedule-table" aria-label="直近7日間のイベントスケジュール一覧">
+          <thead>
+            <tr>
+              <th>日付</th>
+              <th>営業時間</th>
+              <th>備考</th>
+            </tr>
+          </thead>
+          <tbody>${body}</tbody>
+        </table>
+      `;
+    }
+
+    async function loadEventSchedule(){
+      const area = document.getElementById('eventScheduleArea');
+      const status = document.getElementById('eventScheduleStatus');
+      if(!area) return;
+
+      const csvUrl = getScheduleCsvUrl();
+
+      if(!csvUrl){
+        area.innerHTML = `<div class="schedule-empty">スケジュールCSVのURLが未設定です。assets/js/config.js に <strong>SCHEDULE_CSV_URL</strong> を追加してください。</div>`;
+        if(status) status.textContent = '';
+        return;
+      }
+
+      try{
+        const text = await fetchTextWithTimeout(csvUrl, 10000);
+        const rows = parseCsv(text);
+
+        const today = startOfDay(new Date());
+        const limit = addDays(today, 6);
+
+        const filtered = rows
+          .map(row => ({
+            date: String(row.date ?? '').trim(),
+            hours: String(row.hours ?? '').trim(),
+            note: String(row.note ?? '').trim()
+          }))
+          .filter(row => row.date)
+          .filter(isEventRow)
+          .map(row => ({ ...row, _date: parseDateOnly(row.date) }))
+          .filter(row => row._date)
+          .filter(row => row._date >= today && row._date <= limit)
+          .sort((a, b) => a._date - b._date);
+
+        area.innerHTML = buildScheduleTable(filtered);
+
+        if(status){
+          status.textContent = filtered.length
+            ? `表示期間：${formatJaDate(today)} 〜 ${formatJaDate(limit)}`
+            : `表示期間：${formatJaDate(today)} 〜 ${formatJaDate(limit)} / 該当イベントなし`;
+        }
+      }catch(err){
+        console.error('schedule load failed:', err);
+        area.innerHTML = `<div class="schedule-empty">イベントスケジュールの取得に失敗しました。</div>`;
+        if(status) status.textContent = '';
+      }
     }
 
     document.addEventListener('DOMContentLoaded', async ()=>{
       if(!window.PortalCore){
         console.error('PortalCore is not defined');
         fallbackEvents('イベント情報の取得に失敗しました。');
+        const area = document.getElementById('eventScheduleArea');
+        if(area){
+          area.innerHTML = `<div class="schedule-empty">イベントスケジュールの取得に失敗しました。</div>`;
+        }
         return;
       }
 
@@ -147,6 +509,8 @@
         console.error('events load failed:', err);
         fallbackEvents('イベント情報の取得に失敗しました。');
       }
+
+      await loadEventSchedule();
     });
   </script>
 </body>
