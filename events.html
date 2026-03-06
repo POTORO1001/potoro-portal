@@ -88,7 +88,9 @@
     <section>
       <div class="container reveal">
         <h1 class="sec-title">🎉 イベント一覧</h1>
-        <div class="grid cols-3" id="eventsGrid"></div>
+        <div class="grid cols-3" id="eventsGrid">
+          <div class="tag">読み込み中です…</div>
+        </div>
         <div class="mt-12">
           <a class="btn btn-ghost" href="index.html">← トップへ戻る</a>
         </div>
@@ -111,18 +113,40 @@
     <img id="lightboxImg" alt="拡大画像" />
   </div>
 
-  <script src="assets/js/config.js"></script>
-  <script src="assets/js/core.js"></script>
-  <script src="assets/js/events.js"></script>
+  <script src="assets/js/config.js?v=20260306"></script>
+  <script src="assets/js/core.js?v=20260306"></script>
+  <script src="assets/js/events.js?v=20260306"></script>
   <script>
+    function fallbackEvents(message){
+      const grid = document.getElementById('eventsGrid');
+      if(!grid) return;
+      grid.innerHTML = `<div class="tag">${message}</div>`;
+    }
+
     document.addEventListener('DOMContentLoaded', async ()=>{
+      if(!window.PortalCore){
+        console.error('PortalCore is not defined');
+        fallbackEvents('イベント情報の取得に失敗しました。');
+        return;
+      }
+
       PortalCore.setupReveal();
       PortalCore.setupDrawer();
       PortalCore.setupCommonFooterYear();
 
-      const items = await PortalEvents.loadEvents();
-      PortalEvents.renderEventsGrid('eventsGrid', items);
-      PortalEvents.setupLightbox();
+      try{
+        if(window.PortalEvents?.loadEvents && window.PortalEvents?.renderEventsGrid){
+          const items = await window.PortalEvents.loadEvents();
+          window.PortalEvents.renderEventsGrid('eventsGrid', items);
+          window.PortalEvents?.setupLightbox?.();
+        }else{
+          console.error('PortalEvents is not available');
+          fallbackEvents('イベント情報の取得に失敗しました。');
+        }
+      }catch(err){
+        console.error('events load failed:', err);
+        fallbackEvents('イベント情報の取得に失敗しました。');
+      }
     });
   </script>
 </body>
