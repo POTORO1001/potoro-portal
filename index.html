@@ -385,7 +385,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', async ()=>{
-      // コアが無い時点で致命なので、UIを即フォールバック
       if(!window.PortalCore){
         console.error('PortalCore is not defined');
         fallbackTodayUI('本日の営業情報は取得できませんでした（DMでご確認ください）');
@@ -396,7 +395,6 @@
       PortalCore.setupDrawer();
       PortalCore.setupCommonFooterYear();
 
-      // 初めての方へモーダル
       const modalFirst = document.getElementById('modalFirst');
       document.getElementById('openFirst')?.addEventListener('click', ()=> PortalCore.toggleModal(modalFirst, true));
       document.querySelectorAll('.modal .close').forEach(btn=>{
@@ -409,7 +407,6 @@
       window.addEventListener('keydown',(e)=>{ if(e.key==='Escape') PortalCore.toggleModal(modalFirst,false); });
       modalFirst?.addEventListener('click',(e)=>{ if(e.target===modalFirst) PortalCore.toggleModal(modalFirst,false); });
 
-      // 今日（API 1回）
       try{
         if(window.PortalToday?.initToday){
           await window.PortalToday.initToday();
@@ -422,7 +419,6 @@
         fallbackTodayUI();
       }
 
-      // 新着お知らせ（最新5件）
       try{
         if(window.PortalNews?.loadNews && window.PortalNews?.renderNewsList){
           const news = await PortalNews.loadNews();
@@ -434,7 +430,6 @@
         console.error('news load failed:', err);
       }
 
-      // 麻雀リンク（固定）
       document.getElementById('mjLink')?.setAttribute('href', 'https://potoro1001.github.io/potoro-mahjong/');
     });
   </script>
