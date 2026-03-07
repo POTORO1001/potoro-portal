@@ -17,6 +17,21 @@
     return base.endsWith('ちゃん') ? base : base + 'ちゃん';
   }
 
+  function normalizeText(v){
+    return String(v ?? '').trim();
+  }
+
+  function isClosedLabel(name){
+    return normalizeText(name) === 'お屋敷休館日';
+  }
+
+  function isOffRow(row){
+    const s = normalizeText(row?.start);
+    const e = normalizeText(row?.end);
+    const note = normalizeText(row?.note);
+    return (row?.off === true) || note === 'おやすみ' || (!s && !e);
+  }
+
   function setReserveButton(){
     const btn = document.getElementById('reserveBtn');
     if(!btn) return;
@@ -62,21 +77,27 @@
 
     const dateText = buildDateText(day);
 
-    // ★「お屋敷休館日」行は営業時間計算から除外
     const rawMaids = Array.isArray(day.maids) ? day.maids : [];
-    const maids = rawMaids.filter(m => String(m.maid || '').trim() !== 'お屋敷休館日');
 
-    // 休館日（メイド0人 or 休館日だけ）
+    // 休館日ラベル行は除外
+    const maids = rawMaids.filter(m => !isClosedLabel(m?.maid));
+
+    // 休館日（= お屋敷休館日しか無い、または0件）
     if(maids.length === 0){
       el.textContent = `${dateText}（休館日）`;
       return;
     }
 
+    // 営業時間は「実際に start/end がある子」だけで計算
     const times = maids
-      .map(m => ({ start:String(m.start||'').trim(), end:String(m.end||'').trim() }))
-      .filter(t => t.start && t.end);
+      .map(m => ({
+        start: normalizeText(m?.start),
+        end: normalizeText(m?.end),
+        off: isOffRow(m)
+      }))
+      .filter(t => !t.off && t.start && t.end);
 
-    // 時間が取れない（全員おやすみ/時間未設定）
+    // 全員おやすみ / 全員時間未設定
     if(!times.length){
       el.textContent = `${dateText}（営業時間は店頭/DMでご確認ください）`;
       return;
@@ -95,10 +116,10 @@
 
     const rawMaids = (day && Array.isArray(day.maids)) ? day.maids : [];
 
-    // ★「お屋敷休館日」行は表示から除外（=休館日扱いに寄せる）
-    const maids = rawMaids.filter(m => String(m.maid || '').trim() !== 'お屋敷休館日');
+    // 「お屋敷休館日」行は個人表示から除外
+    const maids = rawMaids.filter(m => !isClosedLabel(m?.maid));
 
-    // 休館日（0人 or 休館日だけ）
+    // 休館日
     if(maids.length === 0){
       wrap.innerHTML = '<div class="maids-fallback">本日はお屋敷休館日です</div>';
       return;
@@ -106,15 +127,14 @@
 
     wrap.innerHTML = maids.map(r=>{
       const safeName = ensureChan(r.maid);
-      const s = String(r.start||'').trim();
-      const e = String(r.end||'').trim();
-      const isOff = (r.off === true) || (!s && !e);
+      const s = normalizeText(r.start);
+      const e = normalizeText(r.end);
+      const note = normalizeText(r.note);
+      const isOff = isOffRow(r);
 
       const time = isOff
         ? 'おやすみ'
-        : ((r.note && String(r.note).trim())
-            ? String(r.note).trim()
-            : (s && e ? `${s}–${e}` : '時間未設定'));
+        : (note || (s && e ? `${s}–${e}` : '時間未設定'));
 
       return `
         <div class="today-maid">
