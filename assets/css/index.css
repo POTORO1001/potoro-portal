@@ -153,3 +153,105 @@
   .mj-banner .btn{width:100%; justify-content:center; text-align:center;}
   .mj-banner .left{align-items:center;}
 }
+
+/* =========================
+   Promise Card / ポ・トロのお約束
+   ========================= */
+
+.promise-card{
+  box-shadow:none;
+  border:1px solid #eee;
+}
+
+.promise-body{
+  padding:22px 20px;
+}
+
+.promise-list{
+  margin-top:14px;
+}
+
+.promise-item{
+  margin-top:16px;
+  padding:18px 16px;
+  border-radius:18px;
+  border:1px solid #f3e3eb;
+  background:linear-gradient(180deg, #fffdfd 0%, #fffafc 100%);
+  box-shadow:0 8px 20px rgba(66, 20, 44, .04);
+}
+
+.promise-item:first-child{
+  margin-top:0;
+}
+
+.promise-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.promise-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:34px;
+  height:34px;
+  flex:0 0 34px;
+  border-radius:999px;
+  background:#fdeff5;
+  border:1px solid #f3d6e3;
+  font-size:16px;
+  line-height:1;
+  box-shadow:0 4px 10px rgba(255,121,166,.08);
+}
+
+.promise-badge{
+  display:inline-flex;
+  align-items:center;
+  min-height:34px;
+  padding:0 12px;
+  border-radius:999px;
+  background:#fff7fb;
+  border:1px solid #efd6e4;
+  color:#7a4b62;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.03em;
+}
+
+.promise-item p{
+  margin:10px 0 0;
+  color:#444;
+  line-height:1.95;
+}
+
+.promise-item p:first-of-type{
+  margin-top:0;
+}
+
+.promise-last{
+  color:#6d4457;
+  font-weight:500;
+}
+
+@media (max-width:640px){
+  .promise-body{
+    padding:18px 16px;
+  }
+
+  .promise-item{
+    padding:16px 14px;
+    border-radius:16px;
+  }
+
+  .promise-head{
+    align-items:flex-start;
+  }
+
+  .promise-badge{
+    min-height:auto;
+    padding:7px 12px;
+    line-height:1.4;
+  }
+}
