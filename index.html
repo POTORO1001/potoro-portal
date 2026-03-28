@@ -1,4 +1,5 @@
 
+
 <!doctype html>
 <html lang="ja">
 <head>
@@ -790,6 +791,23 @@
 
       document.getElementById('mjLink')?.setAttribute('href', 'https://potoro1001.github.io/potoro-mahjong/mahjong-room-list.html');
     });
+  </script>
+
+
+  <script>
+    (function(){
+      const recruitMessages = [
+        'メイドさん大募集中☆<br>今すぐ応募はこちら！',
+        '未経験でも大丈夫♡<br>一緒にお給仕しませんか？',
+        'ノルマなしで安心♪<br>今すぐ応募できます！'
+      ];
+
+      const recruitLink = document.querySelector('.recruit-float a');
+      if(recruitLink){
+        const randomIndex = Math.floor(Math.random() * recruitMessages.length);
+        recruitLink.innerHTML = recruitMessages[randomIndex];
+      }
+    })();
   </script>
 
   <noscript>JavaScriptが無効になっています。最新情報の読み込みがご利用いただけません。</noscript>
