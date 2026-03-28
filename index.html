@@ -1,141 +1,758 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PO・TORO 公式ポータル</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
 
-<link rel="stylesheet" href="assets/css/base.css">
-<link rel="stylesheet" href="assets/css/index.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>PO・TORO 公式ポータル</title>
+  <meta name="description" content="concept cafe PO・TORO（ポ・トロ）の総合ポータル。今日の営業時間/本日の出勤/予約導線を最短で。" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="theme-color" content="#f6b7d2" />
+  <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/" />
 
-<style>
-/* ===== 求人バナー ===== */
-.recruit-top{
-  background:linear-gradient(90deg,#fff0f6,#ffe4ef,#fff5d9);
-  border-top:1px solid rgba(255,140,180,.2);
-  border-bottom:1px solid rgba(255,140,180,.2);
-}
-.recruit-top a{
-  display:block;
-  padding:10px;
-  text-align:center;
-  font-weight:1000;
-  color:#b03060;
-  text-decoration:none;
-  animation:fadeGlow 2s infinite;
-}
-@keyframes fadeGlow{
-  0%,100%{opacity:1}
-  50%{opacity:.7}
-}
+  <link rel="preconnect" href="https://www.google.com" crossorigin>
+  <link rel="preconnect" href="https://www.google.com/maps" crossorigin>
+  <link rel="preconnect" href="https://x.com" crossorigin>
 
-/* ===== 固定ボタン ===== */
-.recruit-float{
-  position:fixed;
-  right:16px;
-  bottom:20px;
-  z-index:999;
-}
-.recruit-float a{
-  background:#ff6cab;
-  color:#fff;
-  padding:14px 16px;
-  border-radius:999px;
-  font-weight:1000;
-  box-shadow:0 8px 20px rgba(255,108,171,.4);
-  text-decoration:none;
-}
-</style>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="concept cafe PO・TORO" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="PO・TORO 公式ポータル" />
+  <meta property="og:description" content="concept cafe PO・TORO（ポ・トロ）の最新情報とリンク集。" />
+  <meta property="og:image" content="https://potoro1001.github.io/potoro-portal/img/ogp.jpg" />
+  <meta property="og:url" content="https://potoro1001.github.io/potoro-portal/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PO・TORO 公式ポータル">
+  <meta name="twitter:description" content="concept cafe PO・TORO（ポ・トロ）の総合ポータル。今日の営業時間/本日の出勤/予約導線を最短で。">
+  <meta name="twitter:image" content="https://potoro1001.github.io/potoro-portal/img/ogp.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    "name": "concept cafe PO・TORO",
+    "url": "https://potoro1001.github.io/potoro-portal/",
+    "image": "https://potoro1001.github.io/potoro-portal/img/ogp.jpg",
+    "telephone": "+81-89-909-5211",
+    "address": {
+      "@type": "PostalAddress",
+      "postalCode": "790-0012",
+      "addressRegion": "愛媛県",
+      "addressLocality": "松山市",
+      "streetAddress": "湊町3-7-2 2F",
+      "addressCountry": "JP"
+    }
+  }
+  </script>
+
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/index.css">
+
+  <style>
+    .ticker{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(255,255,255,.7)}
+    .ticker ul{list-style:none;margin:0;padding:0}
+    .ticker li{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border-bottom:1px solid #eee;line-height:1.55}
+    .ticker li:last-child{border-bottom:none}
+    .label{display:inline-block;padding:.18em .62em;border-radius:999px;font-size:.75rem;font-weight:1000;color:#fff;background:#ff72b4;white-space:nowrap}
+    @media (prefers-color-scheme: dark){
+      .ticker{background:rgba(29,31,34,.92);border-color:rgba(255,255,255,.12)}
+      .ticker li{border-bottom-color:#2b2d31}
+    }
+
+    .mahjong-top-alert{
+      position:relative;
+      z-index:30;
+      background:linear-gradient(90deg,#fff4f8 0%,#ffe8f0 38%,#fff2cf 100%);
+      border-top:1px solid rgba(255,121,166,.18);
+      border-bottom:1px solid rgba(255,121,166,.22);
+      box-shadow:
+        0 10px 26px rgba(255,121,166,.10),
+        0 0 22px rgba(255,210,120,.18);
+      overflow:hidden;
+    }
+
+    .mahjong-top-alert__inner{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-height:58px;
+      text-decoration:none;
+      padding-top:10px;
+      padding-bottom:10px;
+    }
+
+    .mahjong-top-alert__badge{
+      flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:9px 13px;
+      border-radius:999px;
+      background:linear-gradient(135deg,#ff72b4,#ff9ac7);
+      color:#fff;
+      font-size:.86rem;
+      font-weight:1000;
+      letter-spacing:.04em;
+      box-shadow:
+        0 8px 18px rgba(255,114,180,.22),
+        0 0 16px rgba(255,114,180,.20);
+      animation:mahjongAlertPulse 1.8s ease-in-out infinite;
+      white-space:nowrap;
+    }
+
+    .mahjong-top-alert__marquee{
+      position:relative;
+      flex:1 1 auto;
+      overflow:hidden;
+      white-space:nowrap;
+      mask-image:linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+      -webkit-mask-image:linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    }
+
+    .mahjong-top-alert__track{
+      display:inline-flex;
+      align-items:center;
+      gap:18px;
+      min-width:max-content;
+      padding-left:100%;
+      font-weight:1000;
+      color:#8b3c60;
+      letter-spacing:.02em;
+      animation:mahjongAlertMarquee 16s linear infinite;
+    }
+
+    .mahjong-top-alert__track span{
+      display:inline-flex;
+      align-items:center;
+    }
+
+    @keyframes mahjongAlertMarquee{
+      0%{ transform:translateX(0); }
+      100%{ transform:translateX(-100%); }
+    }
+
+    @keyframes mahjongAlertPulse{
+      0%,100%{
+        box-shadow:
+          0 8px 18px rgba(255,114,180,.22),
+          0 0 0 rgba(255,114,180,0);
+        transform:translateY(0);
+      }
+      50%{
+        box-shadow:
+          0 10px 22px rgba(255,114,180,.26),
+          0 0 18px rgba(255,114,180,.18);
+        transform:translateY(-1px);
+      }
+    }
+
+    @media (max-width: 768px){
+      .mahjong-top-alert__inner{
+        min-height:54px;
+        gap:10px;
+        padding-top:9px;
+        padding-bottom:9px;
+      }
+      .mahjong-top-alert__badge{
+        padding:8px 11px;
+        font-size:.78rem;
+      }
+      .mahjong-top-alert__track{
+        gap:14px;
+        font-size:.92rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .mahjong-top-alert__badge,
+      .mahjong-top-alert__track{
+        animation:none !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <a href="#main" class="skip-link">本文へスキップ</a>
 
-<!-- 求人バナー -->
-<div class="recruit-top">
-  <a href="https://xn--pckua2a7gp15o89zb.com/jbn/161ab3df92e8edd79020e422936454ff" target="_blank">
-    🎀 メイドさん募集中｜未経験OK・安心して働けるポトロで一緒にお給仕しませんか？
-  </a>
-</div>
+  <header>
+    <nav class="nav container" aria-label="Main">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true"><span>PT</span></div>
+        <div class="brand-title">
+          <div class="en">concept cafe <span style="letter-spacing:.12em">PO・TORO</span></div>
+          <div class="jp">ポ・トロ 公式ポータル</div>
+        </div>
+      </div>
 
-<header>
-<nav class="nav container">
-  <div class="brand">PO・TORO</div>
+      <div class="nav-links" id="navLinks">
+        <a href="news.html">お知らせ</a>
+        <a href="events.html">イベント</a>
+        <a href="goods.html">グッズ</a>
+        <a href="games.html">ゲーム/診断</a>
+        <a href="schedule.html">週間お給仕表</a>
+        <a href="#access">アクセス</a>
+      </div>
 
-  <div class="nav-links">
-    <a href="news.html">お知らせ</a>
-    <a href="events.html">イベント</a>
-    <a href="goods.html">グッズ</a>
-    <a href="games.html">ゲーム</a>
-    <a href="schedule.html">週間お給仕表</a>
-    <a href="#access">アクセス</a>
-    <a href="#recruit">キャスト募集</a>
+      <button class="hamburger" id="btnMenu" aria-label="メニューを開く" aria-controls="drawer" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </nav>
+
+    <div class="drawer" id="drawer" aria-hidden="true" aria-label="サイドメニュー">
+      <div class="head">
+        <div style="font-weight:1000">メニュー</div>
+        <button id="btnClose" aria-label="閉じる" style="background:#f6f6f6;border:none;border-radius:12px;padding:8px 10px;font-weight:1000;cursor:pointer">✕</button>
+      </div>
+      <a href="news.html">お知らせ</a>
+      <a href="events.html">イベント</a>
+      <a href="goods.html">グッズ</a>
+      <a href="games.html">ゲーム/診断</a>
+      <a href="schedule.html">週間お給仕表</a>
+      <a href="#access">アクセス</a>
+    </div>
+  </header>
+
+  <div class="mahjong-top-alert" id="mahjongTopAlert" hidden aria-live="polite">
+    <a
+      class="mahjong-top-alert__inner container"
+      id="mahjongTopAlertLink"
+      href="https://potoro1001.github.io/potoro-mahjong/mahjong-room-list.html"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span class="mahjong-top-alert__badge">🀄 【NEW】</span>
+
+      <div class="mahjong-top-alert__marquee" aria-label="ポトロ麻雀の募集速報">
+        <div class="mahjong-top-alert__track" id="mahjongTopAlertTrack">
+          <span>🀄 【NEW】ポトロ麻雀で面子募集中！</span>
+          <span aria-hidden="true">／</span>
+          <span id="mahjongTopAlertMeta">現在の募集状況をチェックできます</span>
+          <span aria-hidden="true">／</span>
+          <span>タップして募集を見る</span>
+        </div>
+      </div>
+    </a>
   </div>
-</nav>
-</header>
 
-<main>
+  <main id="main">
+    <div class="container">
+      <div class="mj-banner" id="mjBanner" aria-live="polite">
+        <div class="inner">
+          <div class="left">
+            <div class="ico" aria-hidden="true">🀄</div>
+            <div class="txt">
+              <div class="title">現在、麻雀の募集があります <span id="mjCount" class="tag" style="font-weight:1000"></span></div>
+              <div class="meta" id="mjList"></div>
+              <div class="tag mt-8">※募集中の部屋が無いときは自動で非表示になります</div>
+            </div>
+          </div>
+          <a class="btn" id="mjLink" href="https://potoro1001.github.io/potoro-mahjong/mahjong-room-list.html" target="_blank" rel="noopener noreferrer">募集を見る</a>
+        </div>
+      </div>
+    </div>
 
-<section class="hero">
-<div class="container">
-<h1>ようこそ PO・TOROへ♡</h1>
-</div>
-</section>
+    <section class="hero">
+      <div class="container wrap">
+        <div class="reveal">
+          <h1 class="headline">ようこそ、ご主人さま・お嬢さま。<br>PO・TOROの入口はここ♡</h1>
 
-<!-- ===== アクセス ===== -->
-<section id="access">
-<div class="container">
-<h2>アクセス</h2>
+          <div class="today-box" role="status" aria-live="polite">
+            <div class="today-row">
+              <div class="today-left">
+                <span class="today-pill">🕒 本日の営業時間</span>
+                <span class="today-hours" id="todayHours">読込中…</span>
+              </div>
+              <a href="#access" class="tag" style="font-weight:1000">アクセスを見る →</a>
+            </div>
 
-<iframe
-src="https://www.google.com/maps?q=愛媛県松山市湊町3丁目7-2&output=embed"
-width="100%" height="300"></iframe>
+            <div class="today-maids" aria-label="本日の出勤メイド">
+              <div class="today-maids-head">
+                <span class="today-pill">👑 本日のお給仕メイドちゃん</span>
+              </div>
+              <div class="maids-wrap" id="todayMaidsWrap">
+                <span class="maids-fallback">読み込み中…</span>
+              </div>
+            </div>
 
-</div>
-</section>
+            <div class="reserve-stack">
+              <a class="btn btn-primary btn-reserve" id="reserveBtn"
+                href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">
+                💌 ご予約はDM
+              </a>
 
-<!-- ===== 求人（ここが移動済み） ===== -->
-<section id="recruit">
-<div class="container">
+              <div class="reserve-subactions">
+                <button type="button" id="openFirst">🫖 初めての方へ</button>
+                <a href="price.html">💴 料金詳細</a>
+                <a href="schedule.html">📅 週間お給仕表</a>
+                <a href="#access">📍 アクセス</a>
+              </div>
 
-<h2>🎀 キャスト募集</h2>
+              <div class="reserve-note">
+                ※DM予約の際は「ご予約名(ハンドルネーム)／ご利用日時と利用時間／セレクト希望メイドさん名」を送ってください♡
+              </div>
 
-<div style="background:linear-gradient(135deg,#fff6fb,#fff0f6,#fff8ec);padding:20px;border-radius:16px">
+              <div class="tag mt-12">
+                料金：<b>30分 1,000円（税込）</b>／各種ドリンク飲み放題（生ビール含む）／延長は30分単位
+              </div>
+            </div>
+          </div>
+        </div>
 
-<h3 style="font-weight:1000">
-ポ・トロでいっしょにお給仕してくれる<br>
-メイドさんを募集しています♡
-</h3>
+        <div class="reveal">
+          <div class="grid cols-3">
+            <a class="qcard" href="news.html">
+              <div class="top"><div class="ico">🗞️</div><div class="tag">最新</div></div>
+              <h3>お知らせ</h3><p>新着をまとめて確認♡</p>
+            </a>
+            <a class="qcard" href="events.html">
+              <div class="top"><div class="ico">🎉</div><div class="tag">一覧</div></div>
+              <h3>イベント</h3><p>開催情報をチェック♡</p>
+            </a>
+            <a class="qcard" href="goods.html">
+              <div class="top"><div class="ico">🎁</div><div class="tag">配布</div></div>
+              <h3>グッズ</h3><p>配布状況はこちら♡</p>
+            </a>
+          </div>
 
-<p>放置ゼロ宣言／キャストドリンク無しで安心して働ける環境です</p>
+          <div class="grid cols-3 mt-12">
+            <a class="qcard" href="games.html">
+              <div class="top"><div class="ico">🎮</div><div class="tag">遊ぶ</div></div>
+              <h3>ゲーム/診断</h3><p>リンク集はこちら♡</p>
+            </a>
+            <a class="qcard" href="https://potoro1001.github.io/potoro-profile-public/" target="_blank" rel="noopener noreferrer">
+              <div class="top"><div class="ico">👑</div><div class="tag">紹介</div></div>
+              <h3>メイドさん紹介</h3><p>プロフィール一覧♡</p>
+            </a>
+            <a class="qcard" href="schedule.html">
+              <div class="top"><div class="ico">📅</div><div class="tag">週間</div></div>
+              <h3>週間お給仕表</h3><p>出勤予定を確認♡</p>
+            </a>
+          </div>
 
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px">
+          <div class="grid cols-3 mt-12">
+            <a class="qcard" href="https://potoro1001.github.io/potoro-mahjong/" target="_blank" rel="noopener noreferrer">
+              <div class="top"><div class="ico">🀄</div><div class="tag">麻雀</div></div>
+              <h3>ポ・トロ麻雀</h3><p>ルール/募集はこちら♡</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<div>🌸 安心して働きやすい</div>
-<div>💬 会話を大切に</div>
-<div>🌷 未経験OK</div>
+    <section id="news">
+      <div class="container reveal">
+        <h2 class="sec-title">🗞️ 新着お知らせ（最新5件）</h2>
+        <div class="ticker" aria-live="polite">
+          <ul id="newsList"></ul>
+        </div>
+        <div class="mt-12">
+          <a class="btn btn-ghost" href="news.html">お知らせ一覧を見る</a>
+        </div>
+      </div>
+    </section>
 
-</div>
+    <section id="access">
+      <div class="container reveal">
+        <h2 class="sec-title">📍 アクセス</h2>
+        <div class="grid cols-3">
+          <div class="card" style="grid-column: span 2;">
+            <div class="body">
+              <h3>concept cafe PO・TORO</h3>
+              <p class="tag">放置ゼロ宣言＆キャストドリンク無しで安心♪</p>
+              <p class="mt-8" style="line-height:1.8">
+                〒790-0012<br>
+                愛媛県松山市湊町3丁目7-2 2F
+              </p>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+                <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=%E6%84%9B%E5%AA%9B%E7%9C%8C%E6%9D%BE%E5%B1%B1%E5%B8%82%E6%B9%8A%E7%94%BA3%E4%B8%81%E7%9B%AE7-2+2F" target="_blank" rel="noopener noreferrer">Google Mapsで開く</a>
+                <a class="btn btn-ghost" href="tel:089-909-5211">電話する</a>
+              </div>
+            </div>
+          </div>
 
-<div style="margin-top:16px">
-<a class="btn btn-primary"
-href="https://xn--pckua2a7gp15o89zb.com/jbn/161ab3df92e8edd79020e422936454ff"
-target="_blank">
-💌 求人詳細・応募はこちら
-</a>
-</div>
+          <div class="card">
+            <div class="body">
+              <h3>営業時間（通常）</h3>
+              <p class="mt-8" style="line-height:1.8">
+                平日＆祝　18:00–22:00<br>
+                土日　　　17:00–22:00
+              </p>
+              <p class="tag mt-12">※実際の営業時間は「本日の営業時間」をご確認ください</p>
+            </div>
+          </div>
+        </div>
 
-</div>
-</div>
-</section>
+        <div class="card mt-12" style="overflow:hidden">
+          <div class="body" style="padding:0">
+            <iframe
+              title="PO・TORO location map"
+              src="https://www.google.com/maps?q=%E6%84%9B%E5%AA%9B%E7%9C%8C%E6%9D%BE%E5%B1%B1%E5%B8%82%E6%B9%8A%E7%94%BA3%E4%B8%81%E7%9B%AE7-2+2F&output=embed"
+              width="100%" height="360" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-</main>
+  <footer>
+    <div class="container foot reveal">
+      <div>
+        <h4>concept cafe PO・TORO</h4>
+        <p>ご帰宅ありがとうございます。最新情報は本ポータルでご確認ください。</p>
 
-<!-- 固定ボタン -->
-<div class="recruit-float">
-<a href="https://xn--pckua2a7gp15o89zb.com/jbn/161ab3df92e8edd79020e422936454ff" target="_blank">
-🎀 応募はこちら
-</a>
-</div>
+        <div class="foot-call">
+          <a href="tel:089-909-5211" class="foot-tel" aria-label="電話をかける：089-909-5211">📞 089-909-5211</a>
+          <div class="foot-tel-note">お電話でのお問い合わせはこちら</div>
+        </div>
 
+        <div class="copyright">© <span id="year"></span> PO・TORO / concept cafe. All rights reserved.</div>
+      </div>
+
+      <div>
+        <h4>リンク</h4>
+        <ul style="margin:0; padding-left:18px">
+          <li><a href="news.html">お知らせ</a></li>
+          <li><a href="events.html">イベント</a></li>
+          <li><a href="goods.html">グッズ</a></li>
+          <li><a href="games.html">ゲーム/診断</a></li>
+          <li><a href="schedule.html">週間お給仕表</a></li>
+          <li><a href="price.html">料金詳細</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>お問い合わせ</h4>
+        <ul style="margin:0; padding-left:18px">
+          <li><a href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">X（@po_toro）</a></li>
+          <li><a href="#access">店舗アクセス</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <div id="modalFirst" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="初めての方へ" aria-hidden="true">
+    <div class="panel">
+      <button class="close" data-close="modalFirst" aria-label="閉じる">✕ 閉じる</button>
+      <div class="body">
+        <h2>初めての方へ</h2>
+
+        <div class="card promise-card">
+          <div class="body promise-body">
+            <h3>🫖 ポ・トロのお約束</h3>
+            <p class="tag">放置ゼロ宣言／キャストドリンク制度なしで安心♪</p>
+
+            <div class="promise-list mt-12">
+              <section class="promise-item">
+                <div class="promise-head">
+                  <span class="promise-icon" aria-hidden="true">💬</span>
+                  <span class="promise-badge">放置ゼロ宣言</span>
+                </div>
+
+                <p>
+                  ポ・トロでは、ご主人様・お嬢様にとって
+                  メイドさんとの会話の時間こそが、何より大切なひとときだと考えております。
+                </p>
+                <p>
+                  そのため、お屋敷内でお過ごしいただく間、
+                  「手持ち無沙汰になってしまう」「一人の時間が長くなってしまう」
+                  といったことがないよう、常に心を配りお給仕いたします。
+                </p>
+                <p class="promise-last">
+                  はじめてお越しの方も、いつもご帰宅くださる方も、
+                  安心してゆったりとした時間をお楽しみいただけるよう、
+                  “放置ゼロ”をお約束いたします。
+                </p>
+              </section>
+
+              <section class="promise-item">
+                <div class="promise-head">
+                  <span class="promise-icon" aria-hidden="true">🥤</span>
+                  <span class="promise-badge">キャストドリンク無し</span>
+                </div>
+
+                <p>
+                  ポ・トロでは、
+                  ご主人様・お嬢様にキャストドリンクのご注文をお願いすることはございません。
+                </p>
+                <p>
+                  私たちは、ドリンクの有無ではなく、
+                  その場で交わす会話や空気感こそが価値だと考えております。
+                </p>
+                <p>
+                  どうぞお気遣いなく、
+                  純粋にメイドさんとのひとときをお楽しみください。
+                </p>
+                <p class="promise-last">
+                  心を込めたお給仕で、
+                  温かく穏やかな時間をお届けいたします。
+                </p>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid cols-3 mt-12">
+          <div class="card" style="box-shadow:none;border:1px solid #eee">
+            <div class="body">
+              <h3>💴 料金</h3>
+              <p class="tag">30分 1,000円（税込）／飲み放題</p>
+              <p class="mt-8" style="line-height:1.7">
+                ・現金のみ（前金制）<br>
+                ・延長は30分単位（自動延長なし）
+              </p>
+            </div>
+          </div>
+
+          <div class="card" style="box-shadow:none;border:1px solid #eee">
+            <div class="body">
+              <h3>🧭 来店の流れ</h3>
+              <p class="mt-8" style="line-height:1.7">
+                ① 予約不要・お気軽にご来店♡<br>
+                ② 入口のピンポン → お迎え♡<br>
+                ③ ご案内 → システム説明 → お給仕
+              </p>
+            </div>
+          </div>
+
+          <div class="card" style="box-shadow:none;border:1px solid #eee">
+            <div class="body">
+              <h3>⚠️ 注意</h3>
+              <p class="mt-8" style="line-height:1.7">
+                ・撮影はドリンク/フードのみOK◎<br>
+                ・メイドさん/他のお客様の撮影はNG×<br>
+                ・困ったら近くのメイドさんへ♡
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+          <a class="btn btn-primary" href="price.html" data-close="modalFirst" style="text-decoration:none">料金詳細へ</a>
+          <a class="btn btn-ghost" href="#access" data-close="modalFirst" style="text-decoration:none">アクセスを見る</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/config.js?v=20260306"></script>
+  <script src="assets/js/core.js?v=20260306"></script>
+  <script src="assets/js/today.js?v=20260306"></script>
+  <script src="assets/js/news.js?v=20260306"></script>
+
+  <script type="module">
+    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAm1EIxmK_UWmRM7VMP7LREbMQhSYmylko",
+      authDomain: "potoro-mahjong.firebaseapp.com",
+      projectId: "potoro-mahjong",
+      storageBucket: "potoro-mahjong.firebasestorage.app",
+      messagingSenderId: "467297785940",
+      appId: "1:467297785940:web:b1a0ed4cfa5ecd29a575c1",
+      measurementId: "G-KTFZDLG5TL"
+    };
+
+    const MAHJONG_URL = "https://potoro1001.github.io/potoro-mahjong/mahjong-room-list.html";
+
+    const topAlert = document.getElementById("mahjongTopAlert");
+    const topAlertLink = document.getElementById("mahjongTopAlertLink");
+    const topAlertMeta = document.getElementById("mahjongTopAlertMeta");
+
+    const banner = document.getElementById("mjBanner");
+    const countEl = document.getElementById("mjCount");
+    const listEl = document.getElementById("mjList");
+    const linkEl = document.getElementById("mjLink");
+
+    if (topAlertLink) topAlertLink.href = MAHJONG_URL;
+    if (linkEl) linkEl.href = MAHJONG_URL;
+
+    const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    function toMs(ts) {
+      try {
+        return ts?.toDate?.().getTime?.() ?? 0;
+      } catch {
+        return 0;
+      }
+    }
+
+    function remainingSlots(room) {
+      return Math.max(0, (room.slotsTotal | 0) - (room.joinedCount | 0));
+    }
+
+    function isOpenRoom(room) {
+      const now = Date.now();
+      const deadline = toMs(room.deadlineAt);
+      if (room.closed) return false;
+      if (deadline && now > deadline) return false;
+      if (remainingSlots(room) <= 0) return false;
+      return true;
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function hideMahjongUi() {
+      if (topAlert) topAlert.hidden = true;
+      if (banner) banner.style.display = "none";
+    }
+
+    function renderOpenRooms(rooms) {
+      const openRooms = rooms.filter(isOpenRoom);
+
+      if (openRooms.length === 0) {
+        hideMahjongUi();
+        return;
+      }
+
+      const count = openRooms.length;
+      const roomNames = openRooms
+        .slice(0, 3)
+        .map((room) => room.comment?.trim() || room.id || "募集中の部屋")
+        .filter(Boolean);
+
+      const joinedText = roomNames.join(" ／ ");
+      const remainSummary = openRooms
+        .slice(0, 3)
+        .map((room) => `残り${remainingSlots(room)}名`)
+        .join(" ／ ");
+
+      if (topAlertMeta) {
+        topAlertMeta.textContent =
+          count === 1
+            ? `現在1部屋募集中！ ${joinedText} ${remainSummary}`
+            : `現在${count}部屋募集中！ ${joinedText} ${remainSummary}`;
+      }
+
+      if (countEl) {
+        countEl.textContent = count === 1 ? "1部屋募集中" : `${count}部屋募集中`;
+      }
+
+      if (listEl) {
+        listEl.innerHTML = openRooms
+          .slice(0, 3)
+          .map((room) => {
+            const label = room.comment?.trim() || room.id || "募集中の部屋";
+            const remain = remainingSlots(room);
+            return `<span class="tag" style="margin-right:8px">${escapeHtml(label)} / 残り${remain}名</span>`;
+          })
+          .join("");
+      }
+
+      if (topAlert) topAlert.hidden = false;
+      if (banner) banner.style.display = "block";
+    }
+
+    async function startMahjongFeed() {
+      try {
+        await signInAnonymously(auth);
+      } catch (err) {
+        console.error("Mahjong auth failed:", err);
+        hideMahjongUi();
+        return;
+      }
+
+      const qRooms = query(collection(db, "rooms"), orderBy("eventAt", "asc"));
+      onSnapshot(
+        qRooms,
+        (snap) => {
+          const rooms = snap.docs.map((docSnap) => ({
+            ...docSnap.data(),
+            id: docSnap.id
+          }));
+          renderOpenRooms(rooms);
+        },
+        (err) => {
+          console.error("Mahjong snapshot failed:", err);
+          hideMahjongUi();
+        }
+      );
+    }
+
+    startMahjongFeed();
+  </script>
+
+  <script>
+    function fallbackTodayUI(message){
+      const hoursEl = document.getElementById('todayHours');
+      if(hoursEl && (hoursEl.textContent || '').includes('読込')) {
+        hoursEl.textContent = message || '本日の営業情報は取得できませんでした（DMでご確認ください）';
+      }
+      const maidsWrap = document.getElementById('todayMaidsWrap');
+      if(maidsWrap && (maidsWrap.textContent || '').includes('読み込み')) {
+        maidsWrap.innerHTML = '<span class="maids-fallback">本日の出勤情報は取得できませんでした（DMでご確認ください）</span>';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', async ()=>{
+      if(!window.PortalCore){
+        console.error('PortalCore is not defined');
+        fallbackTodayUI('本日の営業情報は取得できませんでした（DMでご確認ください）');
+        return;
+      }
+
+      PortalCore.setupReveal();
+      PortalCore.setupDrawer();
+      PortalCore.setupCommonFooterYear();
+
+      const modalFirst = document.getElementById('modalFirst');
+      document.getElementById('openFirst')?.addEventListener('click', ()=> PortalCore.toggleModal(modalFirst, true));
+      document.querySelectorAll('.modal .close').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const id = btn.getAttribute('data-close');
+          const el = id ? document.getElementById(id) : btn.closest('.modal');
+          PortalCore.toggleModal(el, false);
+        });
+      });
+      window.addEventListener('keydown',(e)=>{ if(e.key==='Escape') PortalCore.toggleModal(modalFirst,false); });
+      modalFirst?.addEventListener('click',(e)=>{ if(e.target===modalFirst) PortalCore.toggleModal(modalFirst,false); });
+
+      try{
+        if(window.PortalToday?.initToday){
+          await window.PortalToday.initToday();
+        }else{
+          console.error('PortalToday.initToday is not available');
+          fallbackTodayUI();
+        }
+      }catch(err){
+        console.error('initToday failed:', err);
+        fallbackTodayUI();
+      }
+
+      try{
+        if(window.PortalNews?.loadNews && window.PortalNews?.renderNewsList){
+          const news = await PortalNews.loadNews();
+          PortalNews.renderNewsList('newsList', news, 5);
+        }else{
+          console.error('PortalNews is not available');
+        }
+      }catch(err){
+        console.error('news load failed:', err);
+      }
+
+      document.getElementById('mjLink')?.setAttribute('href', 'https://potoro1001.github.io/potoro-mahjong/mahjong-room-list.html');
+    });
+  </script>
+
+  <noscript>JavaScriptが無効になっています。最新情報の読み込みがご利用いただけません。</noscript>
 </body>
 </html>
