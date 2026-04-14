@@ -792,6 +792,143 @@ footer::before{
     border-radius: 14px;
   }
 }
+
+    :root{
+  --pt-accent-soft: #ff8fbe;
+  --pt-accent-main: #ff6cab;
+  --pt-text-main: #56424d;
+  --pt-text-sub: #6f5d68;
+  --pt-shadow-soft: rgba(214, 162, 191, .14);
+}
+
+body{
+  color: var(--pt-text-main);
+}
+
+a{
+  transition: color .2s ease, opacity .2s ease;
+}
+
+a:hover{
+  opacity: .95;
+}
+
+.container{
+  position: relative;
+  z-index: 1;
+}
+
+.headline,
+.sec-title,
+.qcard h3,
+.card h3,
+footer h4{
+  letter-spacing: .02em;
+}
+
+.qcard p,
+.card p,
+.reserve-note,
+.copyright,
+.foot-tel-note{
+  color: var(--pt-text-sub);
+}
+
+.qcard,
+.today-box,
+.card,
+.nav,
+.foot-call{
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.card{
+  border-radius: 24px;
+  border: 1px solid rgba(255, 210, 228, .42);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.92) 0%, rgba(255,248,252,.88) 100%);
+  box-shadow:
+    0 12px 26px var(--pt-shadow-soft),
+    inset 0 1px 0 rgba(255,255,255,.72);
+}
+
+.card.mt-12{
+  margin-top: 14px;
+}
+
+.btn,
+.btn-ghost,
+.btn-primary{
+  border-radius: 16px;
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    border-color .2s ease,
+    background .2s ease;
+}
+
+.btn:hover,
+.btn-ghost:hover,
+.btn-primary:hover{
+  transform: translateY(-2px);
+}
+
+.btn-primary{
+  box-shadow:
+    0 10px 22px rgba(255,108,171,.16),
+    inset 0 1px 0 rgba(255,255,255,.34);
+}
+
+.btn-ghost{
+  border-color: rgba(255, 196, 220, .55);
+  background: rgba(255,255,255,.52);
+}
+
+.tag{
+  border: 1px solid rgba(255, 210, 228, .35);
+}
+
+#news .ticker,
+#access .card,
+.today-box,
+.qcard{
+  will-change: transform;
+}
+
+.hero-visual img,
+.qcard .ico,
+.brand-logo{
+  image-rendering: auto;
+}
+
+footer a,
+.nav-links a,
+.drawer a{
+  text-underline-offset: 3px;
+}
+
+.nav-links a[href="./recruit/"],
+.drawer a[href="./recruit/"],
+.qcard[href="./recruit/"] h3{
+  color: var(--pt-accent-main);
+}
+
+@media (max-width: 768px){
+  .headline{
+    line-height: 1.42;
+  }
+
+  .card{
+    border-radius: 20px;
+  }
+
+  .btn,
+  .btn-ghost,
+  .btn-primary{
+    border-radius: 14px;
+  }
+}
     
 </style>
 </head>
