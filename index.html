@@ -231,6 +231,126 @@ body{
       linear-gradient(180deg,#fff8fc 0%, #f7eefe 48%, #eaf4ff 100%);
     background-size: 220px, cover;
   }
+
+    .qcard{
+  position: relative;
+  overflow: hidden;
+  border-radius: 26px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.96) 0%, rgba(255,248,252,.93) 100%);
+  border: 1px solid rgba(255, 182, 213, 0.45);
+  box-shadow:
+    0 12px 30px rgba(214, 162, 191, 0.18),
+    0 4px 10px rgba(255,255,255,0.75) inset;
+  transition:
+    transform .22s ease,
+    box-shadow .22s ease,
+    border-color .22s ease;
+}
+
+.qcard::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at top right, rgba(255,192,220,.18), transparent 34%),
+    radial-gradient(circle at bottom left, rgba(255,240,210,.16), transparent 28%);
+  pointer-events:none;
+}
+
+.qcard:hover{
+  transform: translateY(-4px);
+  box-shadow:
+    0 18px 36px rgba(214, 162, 191, 0.24),
+    0 4px 10px rgba(255,255,255,0.82) inset;
+  border-color: rgba(255, 121, 166, 0.42);
+}
+
+.qcard .top{
+  position: relative;
+  z-index: 1;
+  align-items: center;
+}
+
+.qcard .ico{
+  width: 64px;
+  height: 64px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius: 20px;
+  background: linear-gradient(180deg,#ffeaf3 0%, #f6efff 100%);
+  box-shadow:
+    0 8px 18px rgba(255, 182, 213, .22),
+    inset 0 1px 0 rgba(255,255,255,.9);
+  font-size: 1.8rem;
+}
+
+.qcard .tag{
+  background: transparent;
+  color: #7f7482;
+  font-weight: 900;
+  letter-spacing: .04em;
+}
+
+.qcard h3{
+  position: relative;
+  z-index: 1;
+  margin-top: 14px;
+  margin-bottom: 8px;
+  color: #2f2430;
+  line-height: 1.25;
+}
+
+.qcard p{
+  position: relative;
+  z-index: 1;
+  color: #5e5360;
+  line-height: 1.55;
+}
+
+.qcard[href="./recruit/"]{
+  background:
+    linear-gradient(180deg, rgba(255,247,251,.98) 0%, rgba(255,239,246,.96) 100%);
+  border: 1px solid rgba(255, 121, 166, 0.42);
+  box-shadow:
+    0 14px 34px rgba(255, 121, 166, 0.18),
+    0 4px 10px rgba(255,255,255,0.82) inset;
+}
+
+.qcard[href="./recruit/"] .ico{
+  background: linear-gradient(180deg,#ffe1ef 0%, #fff2f8 100%);
+  box-shadow:
+    0 10px 22px rgba(255, 121, 166, .18),
+    inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+.qcard[href="./recruit/"] .tag{
+  color:#ff5c9f;
+}
+
+.qcard[href="./recruit/"]::after{
+  content:"♥";
+  position:absolute;
+  right:14px;
+  bottom:10px;
+  font-size: 18px;
+  color: rgba(255,108,171,.28);
+  pointer-events:none;
+}
+
+@media (max-width: 768px){
+  .qcard{
+    border-radius: 22px;
+  }
+
+  .qcard .ico{
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+    font-size: 1.6rem;
+  }
+}
     
 </style>
 </head>
