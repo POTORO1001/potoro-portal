@@ -1,201 +1,738 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>メイドさん募集｜conceptcafe PO・TORO</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
-<style>
-body{
-  margin:0;
-  font-family:"Hiragino Kaku Gothic ProN", sans-serif;
-  background:#fff8fc;
-  color:#5a3d4a;
-}
+  <title>メイドさん募集｜PO・TORO 公式ポータル</title>
+  <meta name="description" content="concept cafe PO・TORO（ポ・トロ）のキャスト募集ページ。未経験歓迎・ノルマなし・可愛い制服で一緒に楽しくお給仕しませんか？" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="theme-color" content="#f6b7d2" />
+  <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/recruit/" />
 
-/* ===== ヘッダー ===== */
-header{
-  background:linear-gradient(135deg,#ff6cab,#ff9bc6);
-  color:#fff;
-  text-align:center;
-  padding:50px 20px;
-}
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="concept cafe PO・TORO" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="メイドさん募集｜PO・TORO 公式ポータル" />
+  <meta property="og:description" content="未経験でも大歓迎♪ 可愛い制服で一緒に楽しくお給仕しませんか？" />
+  <meta property="og:image" content="https://potoro1001.github.io/potoro-portal/img/ogp.jpg" />
+  <meta property="og:url" content="https://potoro1001.github.io/potoro-portal/recruit/" />
 
-header h1{
-  font-size:28px;
-  margin-bottom:10px;
-}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="メイドさん募集｜PO・TORO 公式ポータル">
+  <meta name="twitter:description" content="未経験でも大歓迎♪ 可愛い制服で一緒に楽しくお給仕しませんか？">
+  <meta name="twitter:image" content="https://potoro1001.github.io/potoro-portal/img/ogp.jpg">
 
-header p{
-  font-size:16px;
-}
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/index.css">
 
-/* ===== セクション ===== */
-.section{
-  padding:40px 20px;
-  max-width:900px;
-  margin:auto;
-}
+  <style>
+    :root{
+      --pt-accent:#ff6cab;
+      --pt-accent-soft:#ff9bc6;
+      --pt-accent-deep:#d94b8d;
+      --pt-text:#56424d;
+      --pt-sub:#6f5d68;
+      --pt-line:rgba(255,210,228,.42);
+      --pt-shadow-soft:rgba(214,162,191,.14);
+    }
 
-.section h2{
-  text-align:center;
-  color:#ff6cab;
-  margin-bottom:20px;
-}
+    *{ box-sizing:border-box; }
 
-/* ===== カード ===== */
-.card{
-  background:#fff;
-  border-radius:12px;
-  padding:20px;
-  margin-bottom:20px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.08);
-}
+    body{
+      color:var(--pt-text);
+      background:
+        url("../img/bg-pattern.png") repeat,
+        linear-gradient(180deg,#fff8fc 0%, #f7eefe 48%, #eaf4ff 100%);
+      background-size:220px, cover;
+    }
 
-/* ===== 強調 ===== */
-.highlight{
-  color:#ff6cab;
-  font-weight:bold;
-}
+    a{
+      color:inherit;
+      text-decoration:none;
+      transition:color .2s ease, opacity .2s ease, transform .2s ease;
+    }
 
-/* ===== リスト ===== */
-ul{
-  padding-left:20px;
-}
+    a:hover{ opacity:.96; }
 
-/* ===== 応募ボタン ===== */
-.cta{
-  text-align:center;
-  margin-top:30px;
-}
+    .container{
+      position:relative;
+      z-index:1;
+    }
 
-.cta a{
-  display:inline-block;
-  background:#ff6cab;
-  color:#fff;
-  padding:15px 30px;
-  border-radius:50px;
-  font-size:18px;
-  text-decoration:none;
-  box-shadow:0 5px 15px rgba(0,0,0,0.2);
-  transition:0.3s;
-}
+    .nav{
+      position:relative;
+      padding-top:10px;
+      padding-bottom:10px;
+      border-radius:24px;
+      background:rgba(255,255,255,.38);
+      box-shadow:
+        0 10px 24px rgba(214,162,191,.10),
+        inset 0 1px 0 rgba(255,255,255,.34);
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+      margin-top:8px;
+    }
 
-.cta a:hover{
-  background:#ff3e8f;
-  transform:scale(1.05);
-}
+    .brand-logo{
+      box-shadow:
+        0 10px 22px rgba(255,155,198,.18),
+        inset 0 1px 0 rgba(255,255,255,.45);
+    }
 
-/* ===== フッター ===== */
-footer{
-  text-align:center;
-  padding:20px;
-  font-size:12px;
-  color:#999;
-}
-</style>
+    .nav-links a,
+    .drawer a{
+      text-underline-offset:3px;
+      transition:color .2s ease, opacity .2s ease, transform .2s ease;
+    }
 
+    .nav-links a:hover,
+    .drawer a:hover{
+      color:var(--pt-accent);
+      transform:translateY(-1px);
+    }
+
+    .nav-links a[aria-current="page"],
+    .drawer a[aria-current="page"]{
+      font-weight:800;
+      color:var(--pt-accent-deep);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      padding-top:30px;
+      padding-bottom:28px;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 10% 18%, rgba(255,232,242,.58), transparent 24%),
+        radial-gradient(circle at 88% 12%, rgba(234,244,255,.50), transparent 22%),
+        radial-gradient(circle at 18% 86%, rgba(255,244,214,.26), transparent 18%);
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:18px;
+      transform:translateX(-50%);
+      width:min(92%, 1100px);
+      height:100%;
+      border-radius:34px;
+      background:rgba(255,255,255,.18);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.22);
+      pointer-events:none;
+    }
+
+    .hero-wrap{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:1.06fr .94fr;
+      gap:28px;
+      align-items:center;
+    }
+
+    .hero-copy{
+      position:relative;
+      padding:8px 0;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:36px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(255,240,247,.88);
+      border:1px solid rgba(255,192,220,.55);
+      color:var(--pt-accent-deep);
+      font-size:.9rem;
+      font-weight:900;
+      box-shadow:0 8px 18px rgba(255,108,171,.08);
+    }
+
+    .headline{
+      position:relative;
+      display:inline-block;
+      margin:14px 0 12px;
+      line-height:1.32;
+      color:#5a3d4a;
+      text-shadow:0 1px 0 rgba(255,255,255,.45);
+      letter-spacing:.02em;
+      font-size:clamp(1.9rem, 3.8vw, 3rem);
+    }
+
+    .headline::after{
+      content:"";
+      display:block;
+      width:104px;
+      height:8px;
+      margin-top:10px;
+      border-radius:999px;
+      background:linear-gradient(90deg,#ffd6e8 0%, #ffeef6 100%);
+    }
+
+    .hero-desc{
+      margin:0;
+      color:var(--pt-sub);
+      line-height:1.9;
+      max-width:760px;
+    }
+
+    .hero-note{
+      margin-top:18px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .mini-pill{
+      display:inline-flex;
+      align-items:center;
+      min-height:38px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.82);
+      border:1px solid var(--pt-line);
+      color:var(--pt-text);
+      font-weight:800;
+      box-shadow:0 8px 16px rgba(214,162,191,.08);
+    }
+
+    .hero-panel{
+      position:relative;
+      padding:24px;
+      border-radius:28px;
+      border:1px solid rgba(255,210,228,.55);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.93) 0%, rgba(255,248,252,.90) 100%);
+      box-shadow:
+        0 16px 34px rgba(203,171,195,.14),
+        inset 0 1px 0 rgba(255,255,255,.78);
+      overflow:hidden;
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
+    }
+
+    .hero-panel::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at top right, rgba(255,228,239,.45), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(234,244,255,.42), transparent 26%);
+    }
+
+    .hero-panel > *{ position:relative; z-index:1; }
+
+    .hero-panel h2{
+      margin:0 0 10px;
+      color:#4f3944;
+      font-size:1.2rem;
+      line-height:1.4;
+    }
+
+    .hero-panel p{
+      margin:0;
+      color:var(--pt-sub);
+      line-height:1.8;
+    }
+
+    .hero-panel ul{
+      list-style:none;
+      padding:0;
+      margin:14px 0 0;
+      display:grid;
+      gap:10px;
+    }
+
+    .hero-panel li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color:var(--pt-sub);
+      line-height:1.75;
+    }
+
+    .hero-panel li::before{
+      content:"♡";
+      flex:0 0 auto;
+      color:var(--pt-accent);
+      font-weight:900;
+    }
+
+    .section{
+      position:relative;
+      padding:14px 0 10px;
+    }
+
+    .section + .section{
+      margin-top:8px;
+    }
+
+    .section + .section::before{
+      content:"";
+      display:block;
+      width:min(92%, 980px);
+      height:1px;
+      margin:0 auto 26px;
+      background:linear-gradient(
+        90deg,
+        rgba(255,255,255,0),
+        rgba(255,192,220,.7) 20%,
+        rgba(255,230,242,.95) 50%,
+        rgba(255,192,220,.7) 80%,
+        rgba(255,255,255,0)
+      );
+    }
+
+    .section-title{
+      position:relative;
+      text-align:center;
+      margin:0 0 22px;
+      color:#5c4250;
+      letter-spacing:.03em;
+      font-size:1.6rem;
+      line-height:1.35;
+    }
+
+    .section-title::before{
+      content:"✦";
+      display:block;
+      font-size:14px;
+      line-height:1;
+      color:#ff9bc6;
+      margin-bottom:6px;
+      opacity:.9;
+    }
+
+    .section-title::after{
+      content:"";
+      display:block;
+      width:140px;
+      height:10px;
+      margin:10px auto 0;
+      border-radius:999px;
+      background:
+        radial-gradient(circle, rgba(255,166,201,.85) 0 18%, transparent 19%) center/22px 10px repeat-x;
+      opacity:.9;
+    }
+
+    .card{
+      position:relative;
+      overflow:hidden;
+      border-radius:24px;
+      border:1px solid rgba(255,210,228,.42);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.92) 0%, rgba(255,248,252,.88) 100%);
+      box-shadow:
+        0 12px 26px var(--pt-shadow-soft),
+        inset 0 1px 0 rgba(255,255,255,.72);
+      padding:22px 20px;
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at top right, rgba(255,192,220,.18), transparent 34%),
+        radial-gradient(circle at bottom left, rgba(255,240,210,.16), transparent 28%);
+    }
+
+    .card > *{ position:relative; z-index:1; }
+
+    .card p{
+      margin:0 0 12px;
+      color:var(--pt-sub);
+      line-height:1.85;
+    }
+
+    .card p:last-child{ margin-bottom:0; }
+
+    .list{
+      display:grid;
+      gap:10px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+
+    .list li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color:var(--pt-sub);
+      line-height:1.78;
+    }
+
+    .list li::before{
+      content:"♡";
+      flex:0 0 auto;
+      color:var(--pt-accent);
+      font-weight:900;
+    }
+
+    .highlight{
+      color:var(--pt-accent);
+      font-weight:900;
+    }
+
+    .faq{
+      display:grid;
+      gap:12px;
+    }
+
+    .faq-item{
+      padding:16px 18px;
+      border-radius:20px;
+      background:rgba(255,255,255,.62);
+      border:1px solid rgba(255,210,228,.38);
+      box-shadow:0 8px 18px rgba(214,162,191,.07);
+    }
+
+    .faq-item strong{
+      display:block;
+      margin-bottom:6px;
+      color:#4f3944;
+    }
+
+    .cta{
+      padding:22px 0 40px;
+    }
+
+    .cta-card{
+      text-align:center;
+      padding:28px 22px;
+      border-radius:30px;
+      background:linear-gradient(180deg, rgba(255,247,251,.96) 0%, rgba(255,239,246,.96) 100%);
+      border:1px solid rgba(255,192,220,.5);
+      box-shadow:0 16px 32px rgba(255,108,171,.12);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .cta-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255,255,255,.26) 0 2px, transparent 3px),
+        radial-gradient(circle at 82% 26%, rgba(255,215,232,.22) 0 2px, transparent 3px);
+    }
+
+    .cta-card > *{ position:relative; z-index:1; }
+
+    .cta-card h2{
+      margin:0 0 10px;
+      font-size:1.7rem;
+      color:#5a3d4a;
+      line-height:1.35;
+    }
+
+    .cta-card p{
+      margin:0;
+      color:var(--pt-sub);
+      line-height:1.8;
+    }
+
+    .cta-actions{
+      margin-top:18px;
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:12px 18px;
+      border-radius:16px;
+      font-weight:900;
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .btn:hover{ transform:translateY(-2px); }
+
+    .btn-primary{
+      color:#fff;
+      background:linear-gradient(135deg,var(--pt-accent),#ff9ac7);
+      box-shadow:
+        0 10px 22px rgba(255,108,171,.16),
+        inset 0 1px 0 rgba(255,255,255,.34);
+    }
+
+    .btn-ghost{
+      color:var(--pt-text);
+      border:1px solid rgba(255,196,220,.55);
+      background:rgba(255,255,255,.52);
+      box-shadow:0 10px 20px rgba(214,162,191,.08);
+    }
+
+    .footer{
+      position:relative;
+      margin-top:22px;
+      padding:26px 0 34px;
+      background:
+        linear-gradient(180deg, rgba(255,247,251,.72) 0%, rgba(255,241,247,.88) 100%);
+      border-top:1px solid rgba(255,203,224,.42);
+      text-align:center;
+      color:var(--pt-sub);
+      font-size:.95rem;
+    }
+
+    .footer::before{
+      content:"";
+      display:block;
+      width:min(92%, 1080px);
+      height:1px;
+      margin:0 auto 18px;
+      background:linear-gradient(
+        90deg,
+        rgba(255,255,255,0),
+        rgba(255,192,220,.65) 22%,
+        rgba(255,240,247,.95) 50%,
+        rgba(255,192,220,.65) 78%,
+        rgba(255,255,255,0)
+      );
+    }
+
+    .footer a{
+      color:var(--pt-accent-deep);
+      font-weight:800;
+      text-underline-offset:3px;
+    }
+
+    .footer a:hover{
+      color:var(--pt-accent);
+    }
+
+    @media (max-width: 960px){
+      .hero-wrap{
+        grid-template-columns:1fr;
+        gap:20px;
+      }
+    }
+
+    @media (max-width: 768px){
+      .nav{
+        border-radius:18px;
+        padding-top:8px;
+        padding-bottom:8px;
+      }
+
+      .hero{
+        padding-top:22px;
+        padding-bottom:20px;
+      }
+
+      .hero::after{
+        width:calc(100% - 20px);
+        border-radius:24px;
+      }
+
+      .headline::after{
+        width:78px;
+      }
+
+      .section-title::after{
+        width:110px;
+      }
+
+      .hero-panel,
+      .cta-card{
+        border-radius:24px;
+      }
+
+      .card,
+      .faq-item{
+        border-radius:22px;
+      }
+
+      .btn{
+        border-radius:14px;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <a href="#main" class="skip-link">本文へスキップ</a>
 
-<header>
-  <h1>メイドさん大募集中♡</h1>
-  <p>未経験でも大歓迎♪ 可愛い制服で一緒に楽しくお給仕しませんか？</p>
-</header>
+  <header>
+    <nav class="nav container" aria-label="Main">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true"><span>PT</span></div>
+        <div class="brand-title">
+          <div class="en">concept cafe <span style="letter-spacing:.12em">PO・TORO</span></div>
+          <div class="jp">メイドさん募集</div>
+        </div>
+      </div>
 
-<!-- ===== 魅力 ===== -->
-<div class="section">
-  <h2>ポトロで働く魅力</h2>
+      <div class="nav-links" id="navLinks">
+        <a href="../index.html">ポータルTOP</a>
+        <a href="../news.html">お知らせ</a>
+        <a href="../events.html">イベント</a>
+        <a href="../goods.html">グッズ</a>
+        <a href="../games.html">ゲーム/診断</a>
+        <a href="../schedule.html">週間お給仕表</a>
+        <a href="../price.html">料金詳細</a>
+        <a href="./index.html" aria-current="page">メイドさん募集</a>
+      </div>
+    </nav>
+  </header>
 
-  <div class="card">
-    <ul>
-      <li><span class="highlight">未経験OK！</span> ほぼ全員が業界未経験者！</li>
-      <li><span class="highlight">ノルマなし！</span> 自分のペースで働ける</li>
-      <li>可愛い制服でお給仕♡</li>
-      <li>楽しい職場で友達もできる♪</li>
-    </ul>
-  </div>
-</div>
+  <main id="main">
+    <section class="hero">
+      <div class="container hero-wrap">
+        <div class="hero-copy">
+          <div class="eyebrow">👗 Cast Recruit</div>
+          <h1 class="headline">メイドさん大募集中♡</h1>
+          <p class="hero-desc">
+            未経験でも大歓迎♪ 可愛い制服で一緒に楽しくお給仕しませんか？<br>
+            ポ・トロは、安心して始められる環境と、楽しく働ける雰囲気を大切にしています。
+          </p>
 
-<!-- ===== お仕事内容 ===== -->
-<div class="section">
-  <h2>お仕事内容</h2>
+          <div class="hero-note">
+            <span class="mini-pill">未経験歓迎</span>
+            <span class="mini-pill">ノルマなし</span>
+            <span class="mini-pill">月1日〜OK</span>
+          </div>
+        </div>
 
-  <div class="card">
-    <p>
-      可愛い制服を着用して、ご主人様・お嬢様にお飲み物やお料理を提供するお仕事です。
-    </p>
-    <p>
-      ※キャバクラ、ガールズバーの様なお客様との連絡先交換やお客様への営業努力(ノルマ)などは一切ありません！
-    </p>
-  </div>
-</div>
+        <div class="hero-panel">
+          <h2>ポトロで働く魅力</h2>
+          <ul>
+            <li><span class="highlight">未経験OK！</span> ほぼ全員が業界未経験者！</li>
+            <li><span class="highlight">ノルマなし！</span> 自分のペースで働ける</li>
+            <li>可愛い制服でお給仕♡</li>
+            <li>楽しい職場で友達もできる♪</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-<!-- ===== 応募条件 ===== -->
-<div class="section">
-  <h2>応募条件</h2>
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">お仕事内容</h2>
+        <div class="card">
+          <p>
+            可愛い制服を着用して、ご主人様・お嬢様にお飲み物やお料理を提供するお仕事です。
+          </p>
+          <p>
+            ※キャバクラ、ガールズバーの様なお客様との連絡先交換やお客様への営業努力（ノルマ）などは一切ありません！
+          </p>
+        </div>
+      </div>
+    </section>
 
-  <div class="card">
-    <ul>
-      <li>18歳以上（高校生可）</li>
-      <li>月1日〜OK</li>
-      <li>未経験大歓迎</li>
-      <li>明るく元気な方</li>
-    </ul>
-  </div>
-</div>
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">応募条件</h2>
+        <div class="card">
+          <ul class="list">
+            <li>18歳以上（高校生可）</li>
+            <li>月1日〜OK</li>
+            <li>未経験大歓迎</li>
+            <li>明るく元気な方</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-<!-- ===== 給与 ===== -->
-<div class="section">
-  <h2>給与・待遇</h2>
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">給与・待遇</h2>
+        <div class="card">
+          <ul class="list">
+            <li>時給：1,100円〜（昇給あり）</li>
+            <li>給与は全額日払い（お給仕日が給料日）</li>
+            <li>各種バックあり</li>
+            <li>交通費支給（規定あり）</li>
+            <li>可愛い制服貸与</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-  <div class="card">
-    <ul>
-      <li>時給：1,100円〜（昇給あり）</li>
-      <li>給与は全額日払い(お給仕日が給料日)</li>
-      <li>各種バックあり</li>
-      <li>交通費支給（規定あり）</li>
-      <li>可愛い制服貸与</li>
-    </ul>
-  </div>
-</div>
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">よくある質問</h2>
+        <div class="card faq">
+          <div class="faq-item">
+            <strong>Q1. 未経験でも大丈夫？</strong>
+            <div>→ 全く問題ありません！ポトロは未経験からのスタートばかりです。</div>
+          </div>
 
-<!-- ===== よくある質問 ===== -->
-<div class="section">
-  <h2>よくある質問</h2>
+          <div class="faq-item">
+            <strong>Q2. 履歴書は必要？</strong>
+            <div>→ 必要ありません！お気軽にお越しください。</div>
+          </div>
 
-  <div class="card">
-    <p><strong>Q1. 未経験でも大丈夫？</strong><br>
-    → 全く問題ありません！ポトロは未経験からのスタートばかりです。</p>
+          <div class="faq-item">
+            <strong>Q3. 自分で用意するものは？</strong>
+            <div>→ ございません！ポトロは靴から制服をすべて用意しています。</div>
+          </div>
 
-    <p><strong>Q2. 履歴書は必要？</strong><br>
-    → 必要ありません！お気軽にお越しください。</p>
+          <div class="faq-item">
+            <strong>Q4. 週何日から？</strong>
+            <div>→ 週ではなく月1日から可能です！</div>
+          </div>
 
-    <p><strong>Q3. 自分で用意するものは？</strong><br>
-    → ございません！ポトロは靴から制服をすべて用意しています。</p>
+          <div class="faq-item">
+            <strong>Q5. キャッチやビラ配りなどありますか？</strong>
+            <div>→ 絶対にございませんので安心してください。</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <p><strong>Q4. 週何日から？</strong><br>
-    → 週ではなく月1日から可能です！</p>
+    <section class="cta">
+      <div class="container">
+        <div class="cta-card">
+          <h2>今すぐ応募する</h2>
+          <p>
+            可愛い制服で、楽しく安心してお給仕できる環境をご用意しています。<br>
+            少しでも気になったら、ぜひお気軽にご応募ください♡
+          </p>
 
-    <p><strong>Q5. キャッチやビラ配りなどありますか？</strong><br>
-    → 絶対にございませんので安心してください。</p>
-  </div>
-</div>
+          <div class="cta-actions">
+            <a class="btn btn-primary" href="https://xn--pckua2a7gp15o89zb.com/jbn/161ab3df92e8edd79020e422936454ff" target="_blank" rel="noopener noreferrer">応募はこちら♡</a>
+            <a class="btn btn-ghost" href="../index.html">← ポータルへ戻る</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<!-- ===== CTA ===== -->
-<div class="section">
-  <h2>今すぐ応募する</h2>
+  <footer class="footer">
+    <div class="container">
+      © <span id="year"></span> concept cafe PO・TORO ／
+      <a href="../index.html">ポータルTOP</a>
+    </div>
+  </footer>
 
-  <div class="cta">
-    <a href="https://xn--pckua2a7gp15o89zb.com/jbn/161ab3df92e8edd79020e422936454ff" target="_blank">
-      応募はこちら♡
-    </a>
-  </div>
-</div>
-
-<footer>
-  © conceptcafe PO・TORO
-</footer>
-
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
