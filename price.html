@@ -1,1 +1,721 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>料金詳細｜PO・TORO 公式ポータル</title>
+  <meta name="description" content="concept cafe PO・TORO（ポ・トロ）の料金詳細ページです。システム、ご利用の流れ、注意事項をご案内します。" />
+  <meta name="theme-color" content="#f6b7d2" />
 
+  <link rel="stylesheet" href="assets/css/base.css">
+  <style>
+    :root{
+      --bg1:#fff8fc;
+      --bg2:#f7eefe;
+      --bg3:#eaf4ff;
+      --card:#ffffffd9;
+      --line:rgba(255,210,228,.45);
+      --text:#56424d;
+      --sub:#6f5d68;
+      --accent:#ff6cab;
+      --accent-soft:#ff8fbe;
+      --shadow:0 14px 32px rgba(214,162,191,.14);
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      color:var(--text);
+      background:
+        linear-gradient(180deg,var(--bg1) 0%, var(--bg2) 48%, var(--bg3) 100%);
+      font-family: "Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .container{
+      width:min(1100px, calc(100% - 24px));
+      margin:0 auto;
+    }
+
+    .header{
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      background:rgba(255,255,255,.55);
+      border-bottom:1px solid rgba(255,255,255,.65);
+    }
+
+    .header-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-logo{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      color:#fff;
+      background:linear-gradient(135deg,var(--accent),#ff9ac7);
+      box-shadow:0 10px 22px rgba(255,108,171,.22);
+      flex:0 0 auto;
+    }
+
+    .brand-copy{
+      min-width:0;
+    }
+
+    .brand-copy .en{
+      font-size:.8rem;
+      color:var(--sub);
+      white-space:nowrap;
+    }
+
+    .brand-copy .jp{
+      font-size:1rem;
+      font-weight:900;
+      color:var(--text);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .header-links{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .back-link,
+    .reserve-link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:42px;
+      padding:10px 16px;
+      border-radius:999px;
+      font-weight:800;
+      transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+
+    .back-link{
+      background:rgba(255,255,255,.72);
+      border:1px solid var(--line);
+      color:var(--text);
+      box-shadow:0 8px 18px rgba(214,162,191,.08);
+    }
+
+    .reserve-link{
+      color:#fff;
+      background:linear-gradient(135deg,var(--accent),#ff9ac7);
+      box-shadow:0 12px 24px rgba(255,108,171,.24);
+    }
+
+    .back-link:hover,
+    .reserve-link:hover{
+      transform:translateY(-2px);
+      opacity:.96;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      padding:34px 0 22px;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 8% 18%, rgba(255,230,242,.7), transparent 22%),
+        radial-gradient(circle at 88% 10%, rgba(234,244,255,.72), transparent 20%),
+        radial-gradient(circle at 82% 82%, rgba(255,244,214,.4), transparent 16%);
+    }
+
+    .hero-card{
+      position:relative;
+      z-index:1;
+      padding:26px;
+      border-radius:30px;
+      background:rgba(255,255,255,.58);
+      border:1px solid rgba(255,255,255,.6);
+      box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:.9rem;
+      font-weight:900;
+      color:#d94b8d;
+      background:rgba(255,240,247,.9);
+      border:1px solid rgba(255,192,220,.55);
+      box-shadow:0 8px 18px rgba(255,108,171,.08);
+    }
+
+    h1{
+      margin:14px 0 10px;
+      font-size:clamp(1.8rem, 3.6vw, 2.8rem);
+      line-height:1.3;
+      letter-spacing:.02em;
+    }
+
+    .hero-desc{
+      margin:0;
+      color:var(--sub);
+      line-height:1.9;
+      max-width:760px;
+    }
+
+    .hero-note{
+      margin-top:16px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .mini-pill{
+      display:inline-flex;
+      align-items:center;
+      min-height:38px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.82);
+      border:1px solid var(--line);
+      color:var(--text);
+      font-weight:800;
+      box-shadow:0 8px 16px rgba(214,162,191,.08);
+    }
+
+    .section{
+      padding:18px 0 8px;
+    }
+
+    .section-title{
+      text-align:center;
+      margin:0 0 18px;
+      color:#5c4250;
+      font-size:1.55rem;
+      line-height:1.35;
+    }
+
+    .section-title::before{
+      content:"✦";
+      display:block;
+      font-size:.9rem;
+      color:#ff9bc6;
+      margin-bottom:6px;
+    }
+
+    .cards{
+      display:grid;
+      gap:16px;
+    }
+
+    .cards.cols-2{
+      grid-template-columns:repeat(2, minmax(0,1fr));
+    }
+
+    .cards.cols-3{
+      grid-template-columns:repeat(3, minmax(0,1fr));
+    }
+
+    .card{
+      position:relative;
+      overflow:hidden;
+      border-radius:26px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,248,252,.9) 100%);
+      box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.7);
+      padding:22px 20px;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at top right, rgba(255,192,220,.14), transparent 32%),
+        radial-gradient(circle at bottom left, rgba(255,240,210,.12), transparent 28%);
+    }
+
+    .card > *{
+      position:relative;
+      z-index:1;
+    }
+
+    .card h3{
+      margin:0 0 10px;
+      font-size:1.15rem;
+      line-height:1.4;
+      color:#4f3944;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--sub);
+      line-height:1.8;
+    }
+
+    .price-main{
+      display:grid;
+      gap:16px;
+      grid-template-columns:1.2fr .8fr;
+      align-items:stretch;
+    }
+
+    .price-highlight{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      min-height:240px;
+      padding:28px;
+      border-radius:30px;
+      background:linear-gradient(135deg, rgba(255,109,172,.96), rgba(255,154,199,.95));
+      color:#fff;
+      box-shadow:0 18px 36px rgba(255,108,171,.22);
+    }
+
+    .price-highlight .label{
+      display:inline-flex;
+      align-items:center;
+      align-self:flex-start;
+      min-height:34px;
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.2);
+      border:1px solid rgba(255,255,255,.22);
+      font-size:.9rem;
+      font-weight:900;
+      margin-bottom:14px;
+    }
+
+    .price-highlight .price{
+      margin:0;
+      font-size:clamp(2rem, 5vw, 3.4rem);
+      line-height:1.1;
+      font-weight:900;
+      letter-spacing:.01em;
+    }
+
+    .price-highlight .sub{
+      margin-top:12px;
+      font-size:1rem;
+      line-height:1.8;
+      color:rgba(255,255,255,.95);
+    }
+
+    .price-side{
+      display:grid;
+      gap:16px;
+    }
+
+    .list{
+      display:grid;
+      gap:10px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+
+    .list li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color:var(--sub);
+      line-height:1.75;
+    }
+
+    .list li::before{
+      content:"♡";
+      flex:0 0 auto;
+      color:var(--accent);
+      font-weight:900;
+    }
+
+    .flow{
+      counter-reset:flow;
+      display:grid;
+      gap:14px;
+    }
+
+    .flow-item{
+      position:relative;
+      padding:18px 18px 18px 62px;
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,.96) 0%, rgba(255,248,252,.9) 100%);
+      border:1px solid var(--line);
+      box-shadow:0 12px 24px rgba(214,162,191,.1);
+    }
+
+    .flow-item::before{
+      counter-increment:flow;
+      content:counter(flow);
+      position:absolute;
+      left:16px;
+      top:16px;
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--accent),#ff9ac7);
+      color:#fff;
+      font-weight:900;
+      box-shadow:0 8px 18px rgba(255,108,171,.22);
+    }
+
+    .flow-item h3{
+      margin:0 0 6px;
+      font-size:1rem;
+      color:#4f3944;
+    }
+
+    .flow-item p{
+      margin:0;
+      color:var(--sub);
+      line-height:1.75;
+    }
+
+    .notice{
+      display:grid;
+      gap:12px;
+      padding:18px;
+      border-radius:24px;
+      background:rgba(255,255,255,.72);
+      border:1px solid var(--line);
+      box-shadow:0 12px 24px rgba(214,162,191,.08);
+    }
+
+    .notice strong{
+      color:#d94b8d;
+    }
+
+    .cta{
+      padding:26px 0 40px;
+    }
+
+    .cta-card{
+      text-align:center;
+      padding:28px 22px;
+      border-radius:30px;
+      background:linear-gradient(180deg, rgba(255,247,251,.96) 0%, rgba(255,239,246,.96) 100%);
+      border:1px solid rgba(255,192,220,.5);
+      box-shadow:0 16px 32px rgba(255,108,171,.12);
+    }
+
+    .cta-card h2{
+      margin:0 0 10px;
+      font-size:1.6rem;
+      color:#5a3d4a;
+    }
+
+    .cta-card p{
+      margin:0;
+      color:var(--sub);
+      line-height:1.8;
+    }
+
+    .cta-actions{
+      margin-top:18px;
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:12px 18px;
+      border-radius:16px;
+      font-weight:900;
+      transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+      opacity:.97;
+    }
+
+    .btn-primary{
+      color:#fff;
+      background:linear-gradient(135deg,var(--accent),#ff9ac7);
+      box-shadow:0 12px 24px rgba(255,108,171,.22);
+    }
+
+    .btn-ghost{
+      color:var(--text);
+      background:rgba(255,255,255,.78);
+      border:1px solid var(--line);
+      box-shadow:0 10px 20px rgba(214,162,191,.08);
+    }
+
+    .footer{
+      padding:0 0 34px;
+      text-align:center;
+      color:var(--sub);
+      font-size:.95rem;
+    }
+
+    .footer a{
+      color:#d94b8d;
+      font-weight:800;
+    }
+
+    @media (max-width: 900px){
+      .price-main,
+      .cards.cols-2,
+      .cards.cols-3{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 768px){
+      .header-inner{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .header-links{
+        width:100%;
+        justify-content:flex-start;
+      }
+
+      .hero{
+        padding-top:24px;
+      }
+
+      .hero-card,
+      .price-highlight,
+      .cta-card{
+        border-radius:24px;
+      }
+
+      .card,
+      .flow-item{
+        border-radius:22px;
+      }
+
+      .price-highlight{
+        min-height:auto;
+      }
+
+      .price-highlight .price{
+        font-size:2.4rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="PO・TORO 公式ポータルへ戻る">
+        <div class="brand-logo">PT</div>
+        <div class="brand-copy">
+          <div class="en">concept cafe PO・TORO</div>
+          <div class="jp">料金詳細</div>
+        </div>
+      </a>
+
+      <div class="header-links">
+        <a class="back-link" href="index.html">← ポータルへ戻る</a>
+        <a class="reserve-link" href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">💌 ご予約はDM</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-card">
+          <div class="eyebrow">💴 Price System</div>
+          <h1>ポ・トロの料金システム</h1>
+          <p class="hero-desc">
+            初めてのご主人さま・お嬢さまにも分かりやすいように、ポ・トロのご利用料金と流れをまとめました。<br>
+            安心してご帰宅いただけるよう、シンプルで明朗なシステムになっています♡
+          </p>
+
+          <div class="hero-note">
+            <span class="mini-pill">前金制で安心</span>
+            <span class="mini-pill">30分単位でご案内</span>
+            <span class="mini-pill">各種ドリンク飲み放題</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">基本料金</h2>
+
+        <div class="price-main">
+          <div class="price-highlight">
+            <span class="label">基本システム</span>
+            <p class="price">30分 1,000円（税込）</p>
+            <div class="sub">
+              各種ドリンク飲み放題（生ビール含む）<br>
+              延長は30分単位でご利用いただけます♡
+            </div>
+          </div>
+
+          <div class="price-side">
+            <div class="card">
+              <h3>ご利用時のポイント</h3>
+              <ul class="list">
+                <li>料金は前金制です</li>
+                <li>自動延長ではありません</li>
+                <li>延長希望の際はメイドさんがお伺いします</li>
+                <li>ご不明点はお気軽にお尋ねください</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h3>ドリンクについて</h3>
+              <p>
+                ソフトドリンクを中心に、各種ドリンクをご用意しています。<br>
+                生ビールも飲み放題に含まれます。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">ご利用の流れ</h2>
+
+        <div class="flow">
+          <div class="flow-item">
+            <h3>ご来店・お迎え</h3>
+            <p>入口でピンポンを押していただくと、メイドさんがお迎えにまいります♡</p>
+          </div>
+
+          <div class="flow-item">
+            <h3>お席へご案内・システム説明</h3>
+            <p>お席にご案内後、料金システムやご利用方法を分かりやすくご説明します。</p>
+          </div>
+
+          <div class="flow-item">
+            <h3>お給仕スタート</h3>
+            <p>ドリンクや会話を楽しみながら、ポ・トロでの時間をゆっくりお過ごしください♡</p>
+          </div>
+
+          <div class="flow-item">
+            <h3>延長確認・ご出発</h3>
+            <p>お時間が近づいたら延長のご希望をお伺いします。ご出発の際は、メイドさんがお見送りします♡</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">あわせて知っておきたいこと</h2>
+
+        <div class="cards cols-2">
+          <div class="card">
+            <h3>初めての方も安心です</h3>
+            <p>
+              ポ・トロは、初めての方にも安心してご利用いただけるよう、分かりやすいシステムと丁寧なご案内を大切にしています。
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>ご予約について</h3>
+            <p>
+              ご予約はX（旧Twitter）のDMから承っています。<br>
+              ご予約名、日時、ご利用時間、セレクト希望メイドさん名をお送りください♡
+            </p>
+          </div>
+        </div>
+
+        <div class="cards cols-3" style="margin-top:16px;">
+          <div class="card">
+            <h3>お支払い</h3>
+            <p>現金のみ・前金制です。ご不明点はご来店時にもご案内します。</p>
+          </div>
+
+          <div class="card">
+            <h3>延長について</h3>
+            <p>延長は30分単位です。自動延長ではないので、安心してご利用いただけます。</p>
+          </div>
+
+          <div class="card">
+            <h3>お願い</h3>
+            <p>店内ルールや撮影ルールなど、メイドさんからのご案内にご協力をお願いいたします。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="notice">
+          <div><strong>※ ご案内</strong> 実際の営業状況やイベント時の内容によって、提供内容やご案内が一部変わる場合があります。</div>
+          <div><strong>※ ご不明点</strong> は、ご来店時またはDMにてお気軽にお問い合わせください。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <div class="cta-card">
+          <h2>ご帰宅をお待ちしております♡</h2>
+          <p>
+            ポ・トロで、ゆったり楽しいひとときをお過ごしください。<br>
+            ご予約・最新情報は公式Xからご確認いただけます。
+          </p>
+
+          <div class="cta-actions">
+            <a class="btn btn-primary" href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">💌 ご予約はDM</a>
+            <a class="btn btn-ghost" href="index.html">← ポータルへ戻る</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer container">
+    © <span id="year"></span> concept cafe PO・TORO ／
+    <a href="index.html">ポータルTOP</a>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
