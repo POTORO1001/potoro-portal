@@ -2,146 +2,106 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
   <title>料金詳細｜PO・TORO 公式ポータル</title>
   <meta name="description" content="concept cafe PO・TORO（ポ・トロ）の料金詳細ページです。システム、ご利用の流れ、注意事項をご案内します。" />
+  <meta name="format-detection" content="telephone=no" />
   <meta name="theme-color" content="#f6b7d2" />
+  <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/price.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="concept cafe PO・TORO" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="料金詳細｜PO・TORO 公式ポータル" />
+  <meta property="og:description" content="concept cafe PO・TORO（ポ・トロ）の料金詳細ページです。システム、ご利用の流れ、注意事項をご案内します。" />
+  <meta property="og:image" content="https://potoro1001.github.io/potoro-portal/img/ogp.jpg" />
+  <meta property="og:url" content="https://potoro1001.github.io/potoro-portal/price.html" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="料金詳細｜PO・TORO 公式ポータル">
+  <meta name="twitter:description" content="concept cafe PO・TORO（ポ・トロ）の料金詳細ページです。システム、ご利用の流れ、注意事項をご案内します。">
+  <meta name="twitter:image" content="https://potoro1001.github.io/potoro-portal/img/ogp.jpg">
 
   <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/index.css">
+
   <style>
     :root{
-      --bg1:#fff8fc;
-      --bg2:#f7eefe;
-      --bg3:#eaf4ff;
-      --card:#ffffffd9;
-      --line:rgba(255,210,228,.45);
-      --text:#56424d;
-      --sub:#6f5d68;
-      --accent:#ff6cab;
-      --accent-soft:#ff8fbe;
-      --shadow:0 14px 32px rgba(214,162,191,.14);
+      --pt-accent-soft:#ff8fbe;
+      --pt-accent-main:#ff6cab;
+      --pt-accent-deep:#d94b8d;
+      --pt-text-main:#56424d;
+      --pt-text-sub:#6f5d68;
+      --pt-line:rgba(255,210,228,.42);
+      --pt-shadow-soft:rgba(214,162,191,.14);
     }
 
     *{ box-sizing:border-box; }
 
     body{
-      margin:0;
-      color:var(--text);
+      color:var(--pt-text-main);
       background:
-        linear-gradient(180deg,var(--bg1) 0%, var(--bg2) 48%, var(--bg3) 100%);
-      font-family: "Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
+        url("img/bg-pattern.png") repeat,
+        linear-gradient(180deg,#fff8fc 0%, #f7eefe 48%, #eaf4ff 100%);
+      background-size:220px, cover;
     }
 
     a{
       color:inherit;
       text-decoration:none;
+      transition:color .2s ease, opacity .2s ease, transform .2s ease;
     }
+
+    a:hover{ opacity:.96; }
 
     .container{
-      width:min(1100px, calc(100% - 24px));
-      margin:0 auto;
+      position:relative;
+      z-index:1;
     }
 
-    .header{
-      position:sticky;
-      top:0;
-      z-index:20;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      background:rgba(255,255,255,.55);
-      border-bottom:1px solid rgba(255,255,255,.65);
-    }
-
-    .header-inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding:14px 0;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
+    .nav{
+      position:relative;
+      padding-top:10px;
+      padding-bottom:10px;
+      border-radius:24px;
+      background:rgba(255,255,255,.38);
+      box-shadow:
+        0 10px 24px rgba(214,162,191,.10),
+        inset 0 1px 0 rgba(255,255,255,.34);
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+      margin-top:8px;
     }
 
     .brand-logo{
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      display:grid;
-      place-items:center;
-      font-weight:900;
-      color:#fff;
-      background:linear-gradient(135deg,var(--accent),#ff9ac7);
-      box-shadow:0 10px 22px rgba(255,108,171,.22);
-      flex:0 0 auto;
+      box-shadow:
+        0 10px 22px rgba(255,155,198,.18),
+        inset 0 1px 0 rgba(255,255,255,.45);
     }
 
-    .brand-copy{
-      min-width:0;
+    .nav-links a{
+      text-underline-offset:3px;
     }
 
-    .brand-copy .en{
-      font-size:.8rem;
-      color:var(--sub);
-      white-space:nowrap;
+    .nav-links a:hover{
+      color:var(--pt-accent-main);
+      transform:translateY(-1px);
     }
 
-    .brand-copy .jp{
-      font-size:1rem;
-      font-weight:900;
-      color:var(--text);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .header-links{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-
-    .back-link,
-    .reserve-link{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:42px;
-      padding:10px 16px;
-      border-radius:999px;
+    .nav-links a[aria-current="page"]{
       font-weight:800;
-      transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease;
-    }
-
-    .back-link{
-      background:rgba(255,255,255,.72);
-      border:1px solid var(--line);
-      color:var(--text);
-      box-shadow:0 8px 18px rgba(214,162,191,.08);
-    }
-
-    .reserve-link{
-      color:#fff;
-      background:linear-gradient(135deg,var(--accent),#ff9ac7);
-      box-shadow:0 12px 24px rgba(255,108,171,.24);
-    }
-
-    .back-link:hover,
-    .reserve-link:hover{
-      transform:translateY(-2px);
-      opacity:.96;
+      color:var(--pt-accent-deep);
     }
 
     .hero{
       position:relative;
       overflow:hidden;
-      padding:34px 0 22px;
+      padding-top:28px;
+      padding-bottom:26px;
     }
 
     .hero::before{
@@ -150,47 +110,78 @@
       inset:0;
       pointer-events:none;
       background:
-        radial-gradient(circle at 8% 18%, rgba(255,230,242,.7), transparent 22%),
-        radial-gradient(circle at 88% 10%, rgba(234,244,255,.72), transparent 20%),
-        radial-gradient(circle at 82% 82%, rgba(255,244,214,.4), transparent 16%);
+        radial-gradient(circle at 12% 20%, rgba(255,232,242,.55), transparent 24%),
+        radial-gradient(circle at 86% 14%, rgba(234,244,255,.48), transparent 22%),
+        radial-gradient(circle at 20% 82%, rgba(255,244,214,.28), transparent 18%);
     }
 
-    .hero-card{
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:18px;
+      transform:translateX(-50%);
+      width:min(92%, 1100px);
+      height:100%;
+      border-radius:34px;
+      background:rgba(255,255,255,.18);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.22);
+      pointer-events:none;
+    }
+
+    .hero-wrap{
       position:relative;
       z-index:1;
-      padding:26px;
-      border-radius:30px;
-      background:rgba(255,255,255,.58);
-      border:1px solid rgba(255,255,255,.6);
-      box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.55);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:center;
+    }
+
+    .hero-copy{
+      position:relative;
+      padding:8px 0;
     }
 
     .eyebrow{
       display:inline-flex;
       align-items:center;
       gap:8px;
+      min-height:36px;
       padding:8px 14px;
       border-radius:999px;
+      background:rgba(255,240,247,.88);
+      border:1px solid rgba(255,192,220,.55);
+      color:var(--pt-accent-deep);
       font-size:.9rem;
       font-weight:900;
-      color:#d94b8d;
-      background:rgba(255,240,247,.9);
-      border:1px solid rgba(255,192,220,.55);
       box-shadow:0 8px 18px rgba(255,108,171,.08);
     }
 
-    h1{
-      margin:14px 0 10px;
-      font-size:clamp(1.8rem, 3.6vw, 2.8rem);
-      line-height:1.3;
+    .headline{
+      position:relative;
+      display:inline-block;
+      margin:14px 0 12px;
+      line-height:1.35;
+      color:#5a3d4a;
+      text-shadow:0 1px 0 rgba(255,255,255,.45);
       letter-spacing:.02em;
+      font-size:clamp(1.8rem, 3.6vw, 2.9rem);
+    }
+
+    .headline::after{
+      content:"";
+      display:block;
+      width:104px;
+      height:8px;
+      margin-top:10px;
+      border-radius:999px;
+      background:linear-gradient(90deg,#ffd6e8 0%, #ffeef6 100%);
     }
 
     .hero-desc{
       margin:0;
-      color:var(--sub);
+      color:var(--pt-text-sub);
       line-height:1.9;
       max-width:760px;
     }
@@ -209,81 +200,156 @@
       padding:8px 14px;
       border-radius:999px;
       background:rgba(255,255,255,.82);
-      border:1px solid var(--line);
-      color:var(--text);
+      border:1px solid var(--pt-line);
+      color:var(--pt-text-main);
       font-weight:800;
       box-shadow:0 8px 16px rgba(214,162,191,.08);
     }
 
+    .hero-panel{
+      position:relative;
+      padding:22px;
+      border-radius:28px;
+      border:1px solid rgba(255,210,228,.55);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.93) 0%, rgba(255,248,252,.90) 100%);
+      box-shadow:
+        0 16px 34px rgba(203,171,195,.14),
+        inset 0 1px 0 rgba(255,255,255,.78);
+      overflow:hidden;
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
+    }
+
+    .hero-panel::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at top right, rgba(255,228,239,.45), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(234,244,255,.42), transparent 26%);
+    }
+
+    .hero-panel > *{ position:relative; z-index:1; }
+
+    .price-badge{
+      display:inline-flex;
+      align-items:center;
+      min-height:34px;
+      padding:6px 12px;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--pt-accent-main),#ff9ac7);
+      color:#fff;
+      font-size:.88rem;
+      font-weight:900;
+      box-shadow:0 10px 22px rgba(255,108,171,.18);
+    }
+
+    .big-price{
+      margin:14px 0 8px;
+      font-size:clamp(2.2rem, 5vw, 3.4rem);
+      line-height:1.1;
+      font-weight:900;
+      color:#4e3642;
+    }
+
+    .hero-panel p{
+      margin:0;
+      color:var(--pt-text-sub);
+      line-height:1.8;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:12px 18px;
+      border-radius:16px;
+      font-weight:900;
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .btn:hover{ transform:translateY(-2px); }
+
+    .btn-primary{
+      color:#fff;
+      background:linear-gradient(135deg,var(--pt-accent-main),#ff9ac7);
+      box-shadow:
+        0 10px 22px rgba(255,108,171,.16),
+        inset 0 1px 0 rgba(255,255,255,.34);
+    }
+
+    .btn-ghost{
+      color:var(--pt-text-main);
+      border:1px solid rgba(255,196,220,.55);
+      background:rgba(255,255,255,.52);
+      box-shadow:0 10px 20px rgba(214,162,191,.08);
+    }
+
     .section{
-      padding:18px 0 8px;
+      position:relative;
+      padding:14px 0 10px;
+    }
+
+    .section + .section{
+      margin-top:8px;
+    }
+
+    .section + .section::before{
+      content:"";
+      display:block;
+      width:min(92%, 980px);
+      height:1px;
+      margin:0 auto 26px;
+      background:linear-gradient(
+        90deg,
+        rgba(255,255,255,0),
+        rgba(255,192,220,.7) 20%,
+        rgba(255,230,242,.95) 50%,
+        rgba(255,192,220,.7) 80%,
+        rgba(255,255,255,0)
+      );
     }
 
     .section-title{
+      position:relative;
       text-align:center;
-      margin:0 0 18px;
+      margin:0 0 22px;
       color:#5c4250;
-      font-size:1.55rem;
+      letter-spacing:.03em;
+      font-size:1.6rem;
       line-height:1.35;
     }
 
     .section-title::before{
       content:"✦";
       display:block;
-      font-size:.9rem;
+      font-size:14px;
+      line-height:1;
       color:#ff9bc6;
       margin-bottom:6px;
+      opacity:.9;
     }
 
-    .cards{
-      display:grid;
-      gap:16px;
-    }
-
-    .cards.cols-2{
-      grid-template-columns:repeat(2, minmax(0,1fr));
-    }
-
-    .cards.cols-3{
-      grid-template-columns:repeat(3, minmax(0,1fr));
-    }
-
-    .card{
-      position:relative;
-      overflow:hidden;
-      border-radius:26px;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,248,252,.9) 100%);
-      box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.7);
-      padding:22px 20px;
-    }
-
-    .card::before{
+    .section-title::after{
       content:"";
-      position:absolute;
-      inset:0;
-      pointer-events:none;
+      display:block;
+      width:140px;
+      height:10px;
+      margin:10px auto 0;
+      border-radius:999px;
       background:
-        radial-gradient(circle at top right, rgba(255,192,220,.14), transparent 32%),
-        radial-gradient(circle at bottom left, rgba(255,240,210,.12), transparent 28%);
-    }
-
-    .card > *{
-      position:relative;
-      z-index:1;
-    }
-
-    .card h3{
-      margin:0 0 10px;
-      font-size:1.15rem;
-      line-height:1.4;
-      color:#4f3944;
-    }
-
-    .card p{
-      margin:0;
-      color:var(--sub);
-      line-height:1.8;
+        radial-gradient(circle, rgba(255,166,201,.85) 0 18%, transparent 19%) center/22px 10px repeat-x;
+      opacity:.9;
     }
 
     .price-main{
@@ -303,7 +369,22 @@
       background:linear-gradient(135deg, rgba(255,109,172,.96), rgba(255,154,199,.95));
       color:#fff;
       box-shadow:0 18px 36px rgba(255,108,171,.22);
+      position:relative;
+      overflow:hidden;
     }
+
+    .price-highlight::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 14% 20%, rgba(255,255,255,.22) 0 2px, transparent 3px),
+        radial-gradient(circle at 82% 30%, rgba(255,255,255,.18) 0 2px, transparent 3px),
+        linear-gradient(120deg, transparent 0%, rgba(255,255,255,.10) 45%, transparent 70%);
+    }
+
+    .price-highlight > *{ position:relative; z-index:1; }
 
     .price-highlight .label{
       display:inline-flex;
@@ -339,6 +420,60 @@
       gap:16px;
     }
 
+    .cards{
+      display:grid;
+      gap:16px;
+    }
+
+    .cards.cols-2{
+      grid-template-columns:repeat(2, minmax(0,1fr));
+    }
+
+    .cards.cols-3{
+      grid-template-columns:repeat(3, minmax(0,1fr));
+    }
+
+    .card{
+      position:relative;
+      overflow:hidden;
+      border-radius:24px;
+      border:1px solid rgba(255,210,228,.42);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.92) 0%, rgba(255,248,252,.88) 100%);
+      box-shadow:
+        0 12px 26px var(--pt-shadow-soft),
+        inset 0 1px 0 rgba(255,255,255,.72);
+      padding:22px 20px;
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at top right, rgba(255,192,220,.18), transparent 34%),
+        radial-gradient(circle at bottom left, rgba(255,240,210,.16), transparent 28%);
+    }
+
+    .card > *{ position:relative; z-index:1; }
+
+    .card h3{
+      margin:0 0 10px;
+      font-size:1.15rem;
+      line-height:1.4;
+      color:#4f3944;
+      letter-spacing:.02em;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--pt-text-sub);
+      line-height:1.8;
+    }
+
     .list{
       display:grid;
       gap:10px;
@@ -351,14 +486,14 @@
       display:flex;
       gap:10px;
       align-items:flex-start;
-      color:var(--sub);
+      color:var(--pt-text-sub);
       line-height:1.75;
     }
 
     .list li::before{
       content:"♡";
       flex:0 0 auto;
-      color:var(--accent);
+      color:var(--pt-accent-main);
       font-weight:900;
     }
 
@@ -373,8 +508,8 @@
       padding:18px 18px 18px 62px;
       border-radius:24px;
       background:linear-gradient(180deg, rgba(255,255,255,.96) 0%, rgba(255,248,252,.9) 100%);
-      border:1px solid var(--line);
-      box-shadow:0 12px 24px rgba(214,162,191,.1);
+      border:1px solid var(--pt-line);
+      box-shadow:0 12px 24px rgba(214,162,191,.10);
     }
 
     .flow-item::before{
@@ -388,7 +523,7 @@
       border-radius:50%;
       display:grid;
       place-items:center;
-      background:linear-gradient(135deg,var(--accent),#ff9ac7);
+      background:linear-gradient(135deg,var(--pt-accent-main),#ff9ac7);
       color:#fff;
       font-weight:900;
       box-shadow:0 8px 18px rgba(255,108,171,.22);
@@ -402,7 +537,7 @@
 
     .flow-item p{
       margin:0;
-      color:var(--sub);
+      color:var(--pt-text-sub);
       line-height:1.75;
     }
 
@@ -410,14 +545,16 @@
       display:grid;
       gap:12px;
       padding:18px;
-      border-radius:24px;
+      border-radius:22px;
       background:rgba(255,255,255,.72);
-      border:1px solid var(--line);
+      border:1px solid var(--pt-line);
       box-shadow:0 12px 24px rgba(214,162,191,.08);
+      color:var(--pt-text-sub);
+      line-height:1.8;
     }
 
     .notice strong{
-      color:#d94b8d;
+      color:var(--pt-accent-deep);
     }
 
     .cta{
@@ -431,7 +568,21 @@
       background:linear-gradient(180deg, rgba(255,247,251,.96) 0%, rgba(255,239,246,.96) 100%);
       border:1px solid rgba(255,192,220,.5);
       box-shadow:0 16px 32px rgba(255,108,171,.12);
+      position:relative;
+      overflow:hidden;
     }
+
+    .cta-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255,255,255,.26) 0 2px, transparent 3px),
+        radial-gradient(circle at 82% 26%, rgba(255,215,232,.22) 0 2px, transparent 3px);
+    }
+
+    .cta-card > *{ position:relative; z-index:1; }
 
     .cta-card h2{
       margin:0 0 10px;
@@ -441,7 +592,7 @@
 
     .cta-card p{
       margin:0;
-      color:var(--sub);
+      color:var(--pt-text-sub);
       line-height:1.8;
     }
 
@@ -453,45 +604,42 @@
       flex-wrap:wrap;
     }
 
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:48px;
-      padding:12px 18px;
-      border-radius:16px;
-      font-weight:900;
-      transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease;
-    }
-
-    .btn:hover{
-      transform:translateY(-2px);
-      opacity:.97;
-    }
-
-    .btn-primary{
-      color:#fff;
-      background:linear-gradient(135deg,var(--accent),#ff9ac7);
-      box-shadow:0 12px 24px rgba(255,108,171,.22);
-    }
-
-    .btn-ghost{
-      color:var(--text);
-      background:rgba(255,255,255,.78);
-      border:1px solid var(--line);
-      box-shadow:0 10px 20px rgba(214,162,191,.08);
-    }
-
     .footer{
-      padding:0 0 34px;
+      position:relative;
+      margin-top:22px;
+      padding:26px 0 34px;
+      background:
+        linear-gradient(180deg, rgba(255,247,251,.72) 0%, rgba(255,241,247,.88) 100%);
+      border-top:1px solid rgba(255,203,224,.42);
       text-align:center;
-      color:var(--sub);
+      color:var(--pt-text-sub);
       font-size:.95rem;
     }
 
+    .footer::before{
+      content:"";
+      display:block;
+      width:min(92%, 1080px);
+      height:1px;
+      margin:0 auto 18px;
+      background:linear-gradient(
+        90deg,
+        rgba(255,255,255,0),
+        rgba(255,192,220,.65) 22%,
+        rgba(255,240,247,.95) 50%,
+        rgba(255,192,220,.65) 78%,
+        rgba(255,255,255,0)
+      );
+    }
+
     .footer a{
-      color:#d94b8d;
+      color:var(--pt-accent-deep);
       font-weight:800;
+      text-underline-offset:3px;
+    }
+
+    .footer a:hover{
+      color:var(--pt-accent-main);
     }
 
     @media (max-width: 900px){
@@ -503,18 +651,32 @@
     }
 
     @media (max-width: 768px){
-      .header-inner{
-        align-items:flex-start;
-        flex-direction:column;
-      }
-
-      .header-links{
-        width:100%;
-        justify-content:flex-start;
+      .nav{
+        border-radius:18px;
+        padding-top:8px;
+        padding-bottom:8px;
       }
 
       .hero{
         padding-top:24px;
+      }
+
+      .hero::after{
+        width:calc(100% - 20px);
+        border-radius:24px;
+      }
+
+      .headline::after{
+        width:78px;
+      }
+
+      .section-title::after{
+        width:110px;
+      }
+
+      .hero-wrap{
+        grid-template-columns:1fr;
+        gap:20px;
       }
 
       .hero-card,
@@ -535,34 +697,45 @@
       .price-highlight .price{
         font-size:2.4rem;
       }
+
+      .btn{
+        border-radius:14px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <header class="header">
-    <div class="container header-inner">
-      <a href="index.html" class="brand" aria-label="PO・TORO 公式ポータルへ戻る">
-        <div class="brand-logo">PT</div>
-        <div class="brand-copy">
-          <div class="en">concept cafe PO・TORO</div>
+  <a href="#main" class="skip-link">本文へスキップ</a>
+
+  <header>
+    <nav class="nav container" aria-label="Main">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true"><span>PT</span></div>
+        <div class="brand-title">
+          <div class="en">concept cafe <span style="letter-spacing:.12em">PO・TORO</span></div>
           <div class="jp">料金詳細</div>
         </div>
-      </a>
-
-      <div class="header-links">
-        <a class="back-link" href="index.html">← ポータルへ戻る</a>
-        <a class="reserve-link" href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">💌 ご予約はDM</a>
       </div>
-    </div>
+
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">ポータルTOP</a>
+        <a href="news.html">お知らせ</a>
+        <a href="events.html">イベント</a>
+        <a href="goods.html">グッズ</a>
+        <a href="games.html">ゲーム/診断</a>
+        <a href="schedule.html">週間お給仕表</a>
+        <a href="price.html" aria-current="page">料金詳細</a>
+      </div>
+    </nav>
   </header>
 
-  <main>
+  <main id="main">
     <section class="hero">
-      <div class="container">
-        <div class="hero-card">
+      <div class="container hero-wrap">
+        <div class="hero-copy">
           <div class="eyebrow">💴 Price System</div>
-          <h1>ポ・トロの料金システム</h1>
+          <h1 class="headline">ポ・トロの料金システム</h1>
           <p class="hero-desc">
             初めてのご主人さま・お嬢さまにも分かりやすいように、ポ・トロのご利用料金と流れをまとめました。<br>
             安心してご帰宅いただけるよう、シンプルで明朗なシステムになっています♡
@@ -572,6 +745,20 @@
             <span class="mini-pill">前金制で安心</span>
             <span class="mini-pill">30分単位でご案内</span>
             <span class="mini-pill">各種ドリンク飲み放題</span>
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <span class="price-badge">基本システム</span>
+          <p class="big-price">30分 1,000円（税込）</p>
+          <p>
+            各種ドリンク飲み放題（生ビール含む）<br>
+            延長は30分単位でご利用いただけます♡
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">💌 ご予約はDM</a>
+            <a class="btn btn-ghost" href="index.html">← ポータルへ戻る</a>
           </div>
         </div>
       </div>
@@ -709,9 +896,11 @@
     </section>
   </main>
 
-  <footer class="footer container">
-    © <span id="year"></span> concept cafe PO・TORO ／
-    <a href="index.html">ポータルTOP</a>
+  <footer class="footer">
+    <div class="container">
+      © <span id="year"></span> concept cafe PO・TORO ／
+      <a href="index.html">ポータルTOP</a>
+    </div>
   </footer>
 
   <script>
