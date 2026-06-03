@@ -31,18 +31,37 @@
       return;
     }
 
+    const encodeLocalImageUrl = (src)=>{
+      const value = String(src || '').trim();
+      return /^img\//i.test(value) ? encodeURI(value) : value;
+    };
+
+    const getEventWebpSrc = (src)=>{
+      const value = String(src || '').trim();
+      if(!/^img\/event.+\.(png|jpe?g)$/i.test(value)) return '';
+      return value + '.webp';
+    };
+
     g.innerHTML = safeItems.map((e, idx)=>{
-      const imgSrc = e.image || 'img/ogp.jpg';
+      const rawImgSrc = e.image || 'img/ogp.jpg';
+      const imgSrc = escapeHtml(encodeLocalImageUrl(rawImgSrc));
+      const webpSrc = escapeHtml(encodeLocalImageUrl(getEventWebpSrc(rawImgSrc)));
       const title  = escapeHtml(e.title||'');
       const date   = escapeHtml(e.datetext||'');
       const chip   = e.chip ? `<span class="pill">${escapeHtml(e.chip)}</span>` : '';
       const alt    = escapeHtml(e.alt||e.title||'イベント画像');
       const link   = e.link ? `<a href="${e.link}" target="_blank" rel="noopener noreferrer">詳細を見る</a>` : '';
       const featuredClass = (idx===0) ? ' featured' : '';
+      const imageMarkup = webpSrc
+        ? `<picture>
+            <source srcset="${webpSrc}" type="image/webp">
+            <img src="${imgSrc}" alt="${alt}" class="thumb" data-full="${webpSrc}" loading="lazy">
+          </picture>`
+        : `<img src="${imgSrc}" alt="${alt}" class="thumb" data-full="${imgSrc}" loading="lazy">`;
 
       return `
         <article class="card event-card${featuredClass}">
-          <img src="${imgSrc}" alt="${alt}" class="thumb" data-full="${imgSrc}" loading="lazy">
+          ${imageMarkup}
           <div class="event-overlay">
             <div class="meta">
               ${date ? `<span class="pill date">📅 ${date}</span>` : ''}
@@ -81,7 +100,7 @@
     document.getElementById('eventsGrid')?.addEventListener('click', (e)=>{
       const target = e.target.closest('img');
       if(!target) return;
-      open(target.getAttribute('data-full') || target.src, target.alt);
+      open(target.currentSrc || target.getAttribute('data-full') || target.src, target.alt);
     });
 
     lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) close(); });
