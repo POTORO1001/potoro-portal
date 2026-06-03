@@ -1,0 +1,10 @@
+.ticker{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(255,255,255,.7)}
+.ticker ul{list-style:none;margin:0;padding:0}
+.ticker li{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border-bottom:1px solid #eee;line-height:1.55}
+.ticker li:last-child{border-bottom:none}
+.label{display:inline-block;padding:.18em .62em;border-radius:999px;font-size:.75rem;font-weight:1000;color:#fff;background:#ff72b4;white-space:nowrap}
+
+@media (prefers-color-scheme: dark){
+  .ticker{background:rgba(29,31,34,.92);border-color:rgba(255,255,255,.12)}
+  .ticker li{border-bottom-color:#2b2d31}
+}
