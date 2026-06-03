@@ -110,6 +110,16 @@ a:hover{ opacity:.96; }
   align-items:center;
 }
 
+.hero-wrap > *,
+.hero-note,
+.hero-panel,
+.card,
+.faq,
+.faq-item,
+.cta-actions{
+  min-width:0;
+}
+
 .hero-copy{
   position:relative;
   padding:8px 0;
@@ -176,6 +186,8 @@ a:hover{ opacity:.96; }
   color:var(--pt-text);
   font-weight:800;
   box-shadow:0 8px 16px rgba(214,162,191,.08);
+  line-height:1.35;
+  text-align:center;
 }
 
 .hero-panel{
@@ -436,6 +448,8 @@ a:hover{ opacity:.96; }
   padding:12px 18px;
   border-radius:16px;
   font-weight:900;
+  text-align:center;
+  line-height:1.35;
   transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
 }
 
@@ -494,6 +508,17 @@ a:hover{ opacity:.96; }
   color:var(--pt-accent);
 }
 
+.headline,
+.hero-desc,
+.mini-pill,
+.hero-panel,
+.card,
+.list li,
+.faq-item,
+.cta-card{
+  overflow-wrap:anywhere;
+}
+
 @media (max-width: 960px){
   .hero-wrap{
     grid-template-columns:1fr;
@@ -538,5 +563,26 @@ a:hover{ opacity:.96; }
 
   .btn{
     border-radius:14px;
+  }
+}
+
+@media (max-width: 520px){
+  .hero-note,
+  .cta-actions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .mini-pill,
+  .btn{
+    width:100%;
+  }
+
+  .hero-panel,
+  .card,
+  .faq-item,
+  .cta-card{
+    padding-left:16px;
+    padding-right:16px;
   }
 }

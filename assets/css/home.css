@@ -30,6 +30,20 @@
   padding-bottom:10px;
 }
 
+.mahjong-top-alert__inner > *,
+.hero .wrap > *,
+.qcard,
+.qcard .top,
+.today-row > *,
+.reserve-stack,
+.reserve-subactions,
+.reserve-subactions a,
+.reserve-subactions button,
+.foot,
+.foot-call{
+  min-width:0;
+}
+
 .mahjong-top-alert__badge{
   flex:0 0 auto;
   display:inline-flex;
@@ -124,6 +138,7 @@ position:fixed;
 right:14px;
 bottom:18px;
 z-index:9999;
+max-width:calc(100vw - 28px);
   }
 
   .recruit-float a{
@@ -138,6 +153,7 @@ line-height:1.4;
 text-align:center;
 box-shadow:0 10px 24px rgba(255,108,171,.35);
 text-decoration:none;
+overflow-wrap:anywhere;
   }
   
   /* ===== 追加：ホバー＆軽いアニメーション ===== */
@@ -243,6 +259,7 @@ inset 0 1px 0 rgba(255,255,255,.9);
   margin-bottom: 8px;
   color: #2f2430;
   line-height: 1.25;
+  overflow-wrap:anywhere;
 }
 
 .qcard p{
@@ -250,6 +267,7 @@ inset 0 1px 0 rgba(255,255,255,.9);
   z-index: 1;
   color: #5e5360;
   line-height: 1.55;
+  overflow-wrap:anywhere;
 }
 
 .qcard[href="./recruit/"]{
@@ -381,6 +399,7 @@ margin-bottom: 20px;
 .recruit-float{
   right: 16px;
   bottom: 20px;
+  max-width:calc(100vw - 32px);
 }
 
 .recruit-float a{
@@ -396,6 +415,7 @@ linear-gradient(180deg, rgba(255,125,182,.96) 0%, rgba(255,108,171,.96) 100%);
 0 14px 30px rgba(255,108,171,.28),
 0 3px 10px rgba(255,255,255,.16) inset;
   letter-spacing: .02em;
+  overflow-wrap:anywhere;
 }
 
 .recruit-float a::before{
@@ -421,6 +441,7 @@ linear-gradient(120deg, transparent 0%, rgba(255,255,255,.12) 45%, transparent 7
   .recruit-float{
 right: 12px;
 bottom: 14px;
+max-width: calc(100vw - 24px);
   }
 
   .recruit-float a{
@@ -428,6 +449,19 @@ min-width: 170px;
 padding: 12px 14px;
 border-radius: 16px;
 font-size: .8rem;
+  }
+}
+
+@media (max-width: 520px){
+  .recruit-float{
+    left:12px;
+    right:12px;
+    bottom:12px;
+  }
+
+  .recruit-float a{
+    min-width:0;
+    width:100%;
   }
 }
 
@@ -475,6 +509,9 @@ box-shadow .2s ease,
 border-color .2s ease;
   border: 1px solid rgba(255, 203, 224, .45);
   box-shadow: 0 8px 18px rgba(214, 162, 191, .08);
+  justify-content:center;
+  text-align:center;
+  line-height:1.35;
 }
 
 .reserve-subactions a:hover,
@@ -486,6 +523,19 @@ border-color .2s ease;
 
 .reserve-note{
   color:#6c5b66;
+}
+
+@media (max-width: 520px){
+  .reserve-subactions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .reserve-subactions a,
+  .reserve-subactions button{
+    width:100%;
+    border-radius:14px;
+  }
 }
 
 .hero{

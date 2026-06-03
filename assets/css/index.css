@@ -5,6 +5,16 @@
   gap:22px;align-items:start;
   padding:34px 0 10px;
 }
+.hero .wrap > *,
+.today-row > *,
+.today-left > *,
+.reserve-stack,
+.reserve-subactions,
+.quick-grid > *,
+.mj-banner .left,
+.mj-banner .txt{
+  min-width:0;
+}
 @media (max-width:880px){
   .hero .wrap{grid-template-columns:1fr; padding:26px 0 8px;}
 }
@@ -83,12 +93,15 @@
 .reserve-subactions a,
 .reserve-subactions button{
   display:inline-flex;gap:8px;align-items:center;
+  justify-content:center;
   padding:9px 12px;border-radius:999px;
   background:rgba(255,255,255,.95);
   border:1px solid rgba(0,0,0,.06);
   box-shadow:0 6px 14px rgba(0,0,0,.08);
   text-decoration:none;color:#222;cursor:pointer;
   font-weight:1000;
+  text-align:center;
+  line-height:1.35;
 }
 .reserve-note{color:#555;font-size:.86rem;font-weight:900;line-height:1.6}
 
@@ -119,6 +132,15 @@
 }
 .qcard h3{margin:0;font-size:1.02rem;font-weight:1000}
 .qcard p{margin:0;color:#555;font-size:.9rem;line-height:1.5}
+.qcard h3,
+.qcard p,
+.badge,
+.sub,
+.today-maid,
+.reserve-note,
+.promise-item p{
+  overflow-wrap:anywhere;
+}
 
 /* 麻雀募集バナー（任意） */
 .mj-banner{ margin-top:14px; display:none; }
@@ -152,6 +174,12 @@
   .mj-banner .inner{flex-direction:column; align-items:stretch;}
   .mj-banner .btn{width:100%; justify-content:center; text-align:center;}
   .mj-banner .left{align-items:center;}
+  .today-row{align-items:stretch}
+  .today-left{width:100%}
+  .today-pill{white-space:normal}
+  .reserve-subactions{display:grid;grid-template-columns:1fr}
+  .reserve-subactions a,
+  .reserve-subactions button{width:100%;border-radius:14px}
 }
 
 /* =========================
