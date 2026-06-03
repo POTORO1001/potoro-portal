@@ -69,7 +69,7 @@ header{
 .brand-title .en{font-size:1.03rem}
 .brand-title .jp{font-size:.8rem;color:#666;font-weight:800}
 
-.nav-links{display:flex;gap:12px;align-items:center}
+.nav-links{display:flex;gap:12px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
 .nav-links a{
   padding:10px 14px;border-radius:999px;
   background:rgba(255,255,255,.98);
@@ -84,6 +84,9 @@ header{
   background:#111;color:#fff;text-decoration:none;
   transform:translateY(-1px);
   box-shadow:0 10px 18px rgba(0,0,0,.18)
+}
+.nav-links a[aria-current="page"]{
+  background:#111;color:#fff;text-decoration:none;
 }
 
 .hamburger{
@@ -105,6 +108,7 @@ header{
   .drawer .head{display:flex;align-items:center;justify-content:space-between;padding:16px}
   .drawer a{padding:16px 20px;border-bottom:1px solid #eee;font-size:1.05rem;font-weight:900;color:#222;letter-spacing:.02em;text-decoration:none}
   .drawer a:hover{background:#fafafa}
+  .drawer a[aria-current="page"]{background:#111;color:#fff}
 }
 
 section{padding:28px 0}
@@ -203,6 +207,7 @@ footer{padding:28px 0;color:#333}
   header{background:rgba(20,20,20,.78)}
   .nav-links a{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
   .nav-links a:hover{background:#fff;color:#111}
+  .nav-links a[aria-current="page"]{background:#fff;color:#111}
   .card{background:rgba(29,31,34,.92);color:#e8e8e8}
   .tag, .card p{color:#cfcfcf}
   .modal .panel{background:#1d1f22;color:#e8e8e8}

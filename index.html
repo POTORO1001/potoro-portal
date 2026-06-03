@@ -227,7 +227,7 @@
 
 body{
     background:
-      url("img/bg-pattern.png") repeat,
+      url("img/bg-pattern.webp") repeat,
       linear-gradient(180deg,#fff8fc 0%, #f7eefe 48%, #eaf4ff 100%);
     background-size: 220px, cover;
   }
@@ -947,6 +947,7 @@ footer a,
       </div>
 
       <div class="nav-links" id="navLinks">
+        <a href="index.html" aria-current="page">ポータルTOP</a>
         <a href="news.html">お知らせ</a>
         <a href="events.html">イベント</a>
         <a href="goods.html">グッズ</a>
@@ -970,6 +971,7 @@ footer a,
         <div style="font-weight:1000">メニュー</div>
         <button id="btnClose" aria-label="閉じる" style="background:#f6f6f6;border:none;border-radius:12px;padding:8px 10px;font-weight:1000;cursor:pointer">✕</button>
       </div>
+      <a href="index.html" aria-current="page">ポータルTOP</a>
       <a href="news.html">お知らせ</a>
       <a href="events.html">イベント</a>
       <a href="goods.html">グッズ</a>
@@ -1025,7 +1027,10 @@ footer a,
           <h1 class="headline">ようこそ、ご主人さま・お嬢さま。<br>PO・TOROの入口はここ♡</h1>
 
 <div class="hero-visual">
-  <img src="img/hero-maid.png" alt="メイドさん">
+  <picture>
+    <source srcset="img/hero-maid.webp" type="image/webp">
+    <img src="img/hero-maid.png" alt="メイドさん" width="1024" height="1536" fetchpriority="high">
+  </picture>
 </div>
           
           <div class="today-box" role="status" aria-live="polite">
