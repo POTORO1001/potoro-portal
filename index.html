@@ -193,6 +193,32 @@
               </div>
             </div>
           </div>
+
+          <div class="visitor-guide" aria-label="初めての方におすすめの導線">
+            <div class="visitor-guide__head">
+              <p class="visitor-guide__eyebrow">まずはこちら</p>
+              <h2>初めての方も、今日行きたい方も</h2>
+            </div>
+
+            <div class="visitor-guide__grid">
+              <button type="button" class="visitor-guide__item" id="openFirstGuide">
+                <span class="visitor-guide__label">初めての方へ</span>
+                <span class="visitor-guide__text">料金と来店の流れを見る</span>
+              </button>
+              <a class="visitor-guide__item" href="price.html">
+                <span class="visitor-guide__label">料金</span>
+                <span class="visitor-guide__text">30分ごとの料金を確認</span>
+              </a>
+              <a class="visitor-guide__item" href="schedule.html">
+                <span class="visitor-guide__label">出勤</span>
+                <span class="visitor-guide__text">週間お給仕表を見る</span>
+              </a>
+              <a class="visitor-guide__item" href="#access">
+                <span class="visitor-guide__label">場所</span>
+                <span class="visitor-guide__text">地図と電話番号を見る</span>
+              </a>
+            </div>
+          </div>
         </div>
 
         <div class="reveal">
@@ -608,6 +634,7 @@
 
       const modalFirst = document.getElementById('modalFirst');
       document.getElementById('openFirst')?.addEventListener('click', ()=> PortalCore.toggleModal(modalFirst, true));
+      document.getElementById('openFirstGuide')?.addEventListener('click', ()=> PortalCore.toggleModal(modalFirst, true));
       document.querySelectorAll('.modal .close').forEach(btn=>{
         btn.addEventListener('click', ()=>{
           const id = btn.getAttribute('data-close');

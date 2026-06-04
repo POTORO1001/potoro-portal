@@ -105,6 +105,86 @@
 }
 .reserve-note{color:#555;font-size:.86rem;font-weight:900;line-height:1.6}
 
+.visitor-guide{
+  margin-top:14px;
+  padding:14px;
+  border-radius:20px;
+  background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,248,252,.88));
+  border:1px solid rgba(255,210,228,.48);
+  box-shadow:0 12px 26px rgba(214,162,191,.12);
+}
+
+.visitor-guide__head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.visitor-guide__eyebrow{
+  margin:0;
+  color:#d94b8d;
+  font-size:.78rem;
+  font-weight:1000;
+  letter-spacing:.08em;
+}
+
+.visitor-guide h2{
+  margin:0;
+  color:#4f3944;
+  font-size:1.06rem;
+  line-height:1.45;
+  font-weight:1000;
+}
+
+.visitor-guide__grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:10px;
+}
+
+.visitor-guide__item{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  min-width:0;
+  min-height:82px;
+  padding:12px;
+  border-radius:16px;
+  border:1px solid rgba(255,203,224,.56);
+  background:rgba(255,255,255,.82);
+  color:#4f3944;
+  box-shadow:0 8px 18px rgba(214,162,191,.08);
+  text-align:left;
+  text-decoration:none;
+  cursor:pointer;
+  font:inherit;
+  transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.visitor-guide__item:hover{
+  transform:translateY(-2px);
+  border-color:rgba(255,121,166,.42);
+  box-shadow:0 12px 24px rgba(214,162,191,.14);
+  text-decoration:none;
+}
+
+.visitor-guide__label{
+  color:#d94b8d;
+  font-size:.8rem;
+  font-weight:1000;
+  letter-spacing:.04em;
+}
+
+.visitor-guide__text{
+  color:#5e5360;
+  font-size:.92rem;
+  font-weight:900;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+
 .quick-grid{display:grid;gap:14px;grid-template-columns:repeat(4,1fr)}
 @media (max-width:1024px){ .quick-grid{grid-template-columns:repeat(2,1fr)} }
 @media (max-width:520px){ .quick-grid{grid-template-columns:1fr} }
@@ -180,6 +260,10 @@
   .reserve-subactions{display:grid;grid-template-columns:1fr}
   .reserve-subactions a,
   .reserve-subactions button{width:100%;border-radius:14px}
+  .visitor-guide__head{display:block}
+  .visitor-guide__eyebrow{margin-bottom:4px}
+  .visitor-guide__grid{grid-template-columns:1fr}
+  .visitor-guide__item{min-height:auto}
 }
 
 /* =========================
