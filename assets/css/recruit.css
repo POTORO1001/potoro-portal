@@ -508,6 +508,28 @@ a:hover{ opacity:.96; }
   color:var(--pt-accent);
 }
 
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:18px;
+  text-align:left;
+}
+
+.footer h4{
+  margin:.2rem 0 .6rem;
+  color:#5c4250;
+  font-weight:900;
+}
+
+.foot-list{
+  margin:0;
+  padding-left:18px;
+}
+
+.foot-list li{
+  margin:.28rem 0;
+}
+
 .headline,
 .hero-desc,
 .mini-pill,
@@ -563,6 +585,16 @@ a:hover{ opacity:.96; }
 
   .btn{
     border-radius:14px;
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+
+  .foot-list{
+    display:inline-block;
+    text-align:left;
   }
 }
 
