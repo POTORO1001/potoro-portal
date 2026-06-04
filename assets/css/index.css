@@ -26,6 +26,96 @@
   font-size:.86rem;font-weight:900;
   border:1px solid rgba(255,121,166,.25);
 }
+
+.brand-name{
+  letter-spacing:.12em;
+}
+
+.drawer-title,
+.tag-strong{
+  font-weight:1000;
+}
+
+.drawer-close{
+  background:#f6f6f6;
+  border:none;
+  border-radius:12px;
+  padding:8px 10px;
+  font-weight:1000;
+  cursor:pointer;
+}
+
+.drawer-close:hover{
+  background:#eee;
+}
+
+.text-comfy{
+  line-height:1.8;
+}
+
+.text-flow{
+  line-height:1.7;
+}
+
+.action-row,
+.modal-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.action-row{
+  margin-top:12px;
+}
+
+.modal-actions{
+  margin-top:14px;
+}
+
+.access-main-card{
+  grid-column:span 2;
+}
+
+.map-card{
+  overflow:hidden;
+}
+
+.flush-body{
+  padding:0;
+}
+
+.map-frame{
+  border:0;
+}
+
+.foot-list{
+  margin:0;
+  padding-left:18px;
+}
+
+.promise-mini-card{
+  box-shadow:none;
+  border:1px solid #eee;
+}
+
+.room-tag{
+  margin-right:8px;
+}
+
+@media (max-width:880px){
+  .access-main-card{
+    grid-column:auto;
+  }
+}
+
+@media (max-width:520px){
+  .action-row,
+  .modal-actions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+}
+
 .headline{
   font-size:clamp(1.65rem,4vw,2.55rem);
   line-height:1.12;margin:.55rem 0 .35rem;
