@@ -17,12 +17,12 @@
       return;
     }
 
-    tbody.innerHTML = items.map(g=>{
-      const start = g.start ? formatDateJPWithWeekday(g.start) : '';
-      const end   = g.end   ? formatDateJPWithWeekday(g.end)   : '';
-      const event = g.event || '';
-      const name  = g.name  || '';
-      const note  = g.note  || '';
+    tbody.innerHTML = items.map(goods=>{
+      const start = goods.start ? formatDateJPWithWeekday(goods.start) : '';
+      const end = goods.end ? formatDateJPWithWeekday(goods.end) : '';
+      const event = goods.event || '';
+      const name = goods.name || '';
+      const note = goods.note || '';
 
       return `
         <tr>

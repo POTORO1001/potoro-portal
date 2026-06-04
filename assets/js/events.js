@@ -21,13 +21,13 @@
   }
 
   function renderEventsGrid(containerId, items){
-    const g = document.getElementById(containerId);
-    if(!g) return;
+    const grid = document.getElementById(containerId);
+    if(!grid) return;
 
     const safeItems = Array.isArray(items) ? items : [];
 
     if(!safeItems.length){
-      g.innerHTML = `<div class="tag">イベントは準備中です。</div>`;
+      grid.innerHTML = `<div class="tag">イベントは準備中です。</div>`;
       return;
     }
 
@@ -42,16 +42,16 @@
       return value + '.webp';
     };
 
-    g.innerHTML = safeItems.map((e, idx)=>{
-      const rawImgSrc = e.image || 'img/ogp.jpg';
+    grid.innerHTML = safeItems.map((event, index)=>{
+      const rawImgSrc = event.image || 'img/ogp.jpg';
       const imgSrc = escapeHtml(encodeLocalImageUrl(rawImgSrc));
       const webpSrc = escapeHtml(encodeLocalImageUrl(getEventWebpSrc(rawImgSrc)));
-      const title  = escapeHtml(e.title||'');
-      const date   = escapeHtml(e.datetext||'');
-      const chip   = e.chip ? `<span class="pill">${escapeHtml(e.chip)}</span>` : '';
-      const alt    = escapeHtml(e.alt||e.title||'イベント画像');
-      const link   = e.link ? `<a href="${e.link}" target="_blank" rel="noopener noreferrer">詳細を見る</a>` : '';
-      const featuredClass = (idx===0) ? ' featured' : '';
+      const title = escapeHtml(event.title || '');
+      const date = escapeHtml(event.datetext || '');
+      const chip = event.chip ? `<span class="pill">${escapeHtml(event.chip)}</span>` : '';
+      const alt = escapeHtml(event.alt || event.title || 'イベント画像');
+      const link = event.link ? `<a href="${escapeHtml(event.link)}" target="_blank" rel="noopener noreferrer">詳細を見る</a>` : '';
+      const featuredClass = index === 0 ? ' featured' : '';
       const imageMarkup = webpSrc
         ? `<picture>
             <source srcset="${webpSrc}" type="image/webp">
@@ -97,16 +97,16 @@
       document.body.style.overflow = '';
     };
 
-    document.getElementById('eventsGrid')?.addEventListener('click', (e)=>{
-      const target = e.target.closest('img');
+    document.getElementById('eventsGrid')?.addEventListener('click', (event)=>{
+      const target = event.target.closest('img');
       if(!target) return;
       open(target.currentSrc || target.getAttribute('data-full') || target.src, target.alt);
     });
 
-    lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) close(); });
+    lightbox.addEventListener('click', (event)=>{ if(event.target === lightbox) close(); });
     closeBtn.addEventListener('click', close);
-    window.addEventListener('keydown', (e)=>{
-      if(e.key === 'Escape' && lightbox.classList.contains('open')) close();
+    window.addEventListener('keydown', (event)=>{
+      if(event.key === 'Escape' && lightbox.classList.contains('open')) close();
     });
   }
 

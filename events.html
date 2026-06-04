@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>イベント | PO・TORO</title>
-  <meta name="description" content="concept cafe PO・TORO（ポ・トロ）のイベント一覧。開催予定やイベント画像、最新企画をまとめて確認できます。" />
+  <meta name="description" content="concept cafe PO・TORO（ポ・トロ）のイベント一覧です。開催予定やイベント画像、直近の営業スケジュールをまとめて確認できます。" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="theme-color" content="#f6b7d2" />
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/events.html" />
@@ -12,14 +12,14 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="concept cafe PO・TORO" />
   <meta property="og:locale" content="ja_JP" />
-  <meta property="og:title" content="イベント｜PO・TORO 公式ポータル" />
-  <meta property="og:description" content="concept cafe PO・TORO（ポ・トロ）の開催予定やイベント画像、最新企画をまとめて確認できます。" />
+  <meta property="og:title" content="イベント | PO・TORO 公式ポータル" />
+  <meta property="og:description" content="開催予定やイベント画像、直近の営業スケジュールをまとめて確認できます。" />
   <meta property="og:image" content="https://potoro1001.github.io/potoro-portal/img/ogp.jpg" />
   <meta property="og:url" content="https://potoro1001.github.io/potoro-portal/events.html" />
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="イベント｜PO・TORO 公式ポータル">
-  <meta name="twitter:description" content="concept cafe PO・TORO（ポ・トロ）の開催予定やイベント画像、最新企画をまとめて確認できます。">
+  <meta name="twitter:title" content="イベント | PO・TORO 公式ポータル">
+  <meta name="twitter:description" content="開催予定やイベント画像、直近の営業スケジュールをまとめて確認できます。">
   <meta name="twitter:image" content="https://potoro1001.github.io/potoro-portal/img/ogp.jpg">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/events.css">
@@ -32,12 +32,12 @@
       <div class="brand">
         <div class="brand-logo" aria-hidden="true"><span>PT</span></div>
         <div class="brand-title">
-          <div class="en">concept cafe <span style="letter-spacing:.12em">PO・TORO</span></div>
+          <div class="en">concept cafe <span class="brand-name">PO・TORO</span></div>
           <div class="jp">イベント</div>
         </div>
       </div>
       <div class="nav-links">
-        <a href="index.html">トップ</a>
+        <a href="index.html">ポータルTOP</a>
         <a href="news.html">お知らせ</a>
         <a href="events.html" aria-current="page">イベント</a>
         <a href="goods.html">グッズ</a>
@@ -54,10 +54,10 @@
 
     <div class="drawer" id="drawer" aria-hidden="true" aria-label="サイドメニュー">
       <div class="head">
-        <div style="font-weight:1000">メニュー</div>
-        <button id="btnClose" aria-label="閉じる" style="background:#f6f6f6;border:none;border-radius:12px;padding:8px 10px;font-weight:1000;cursor:pointer">✕</button>
+        <div class="drawer-title">メニュー</div>
+        <button class="drawer-close" id="btnClose" aria-label="閉じる">✕</button>
       </div>
-      <a href="index.html">トップ</a>
+      <a href="index.html">ポータルTOP</a>
       <a href="news.html">お知らせ</a>
       <a href="events.html" aria-current="page">イベント</a>
       <a href="goods.html">グッズ</a>
@@ -71,27 +71,27 @@
         <h1 class="sec-title">🎉 イベント一覧</h1>
 
         <div class="grid cols-3" id="eventsGrid">
-          <div class="tag">読み込み中です…</div>
+          <div class="tag">読み込み中です...</div>
         </div>
 
         <section class="schedule-wrap mt-16" aria-labelledby="scheduleTitle">
           <div class="schedule-head">
             <div>
-              <h2 class="schedule-title" id="scheduleTitle">🗓️ 直近7日間の営業スケジュール</h2>
-              <p class="schedule-sub">PORTAL_schedule.csv の date / hours / note をもとに、直近7日間の営業予定を一覧表示しています。</p>
+              <h2 class="schedule-title" id="scheduleTitle">📅 直近7日間の営業スケジュール</h2>
+              <p class="schedule-sub">営業時間やイベント予定を一覧で確認できます。</p>
             </div>
             <div class="schedule-note">business schedule</div>
           </div>
 
           <div class="schedule-table-wrap">
-            <div id="eventScheduleArea" class="schedule-empty">営業スケジュールを読み込み中です…</div>
+            <div id="eventScheduleArea" class="schedule-empty">営業スケジュールを読み込み中です...</div>
           </div>
 
           <div class="schedule-status" id="eventScheduleStatus"></div>
         </section>
 
         <div class="mt-12">
-          <a class="btn btn-ghost" href="index.html">← トップへ戻る</a>
+          <a class="btn btn-ghost" href="index.html">ポータルへ戻る</a>
         </div>
       </div>
     </section>
@@ -108,7 +108,7 @@
   </footer>
 
   <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="画像ビューア">
-    <button type="button" class="close" aria-label="閉じる (Esc)">閉じる ✕</button>
+    <button type="button" class="close" aria-label="閉じる（Esc）">閉じる ✕</button>
     <img id="lightboxImg" alt="拡大画像" />
   </div>
 
@@ -199,11 +199,7 @@
     function formatJaDate(value){
       const dt = parseDateOnly(value);
       if(!dt) return String(value ?? '');
-      const w = ['日','月','火','水','木','金','土'][dt.getDay()];
-      const y = dt.getFullYear();
-      const m = String(dt.getMonth() + 1).padStart(2, '0');
-      const d = String(dt.getDate()).padStart(2, '0');
-      return `${y}/${m}/${d}（${w}）`;
+      return formatJaDateFromDate(dt);
     }
 
     function formatJaDateFromDate(dt){
@@ -234,12 +230,12 @@
     function isClosedDay(row){
       const hours = String(row.hours ?? '').trim();
       const note = String(row.note ?? '').trim();
-      return hours.includes('休館') || note.includes('休館');
+      return hours.includes('休館') || hours.includes('休み') || note.includes('休館') || note.includes('休み');
     }
 
     function hasEventNote(row){
       const note = String(row.note ?? '').trim();
-      return !!note && !note.includes('休館');
+      return !!note && !isClosedDay(row);
     }
 
     function isSameDate(a, b){
@@ -253,9 +249,6 @@
         window.PORTAL_CONFIG?.scheduleCsvUrl ||
         window.PORTAL_CONFIG?.schedule?.csvUrl ||
         window.PORTAL_CONFIG?.SCHEDULE_CSV_URL ||
-        window.PortalConfig?.scheduleCsvUrl ||
-        window.PortalConfig?.schedule?.csvUrl ||
-        window.PortalConfig?.SCHEDULE_CSV_URL ||
         ''
       );
     }
@@ -283,7 +276,7 @@
 
       const body = rows.map(row => {
         const dateText = formatJaDate(row.date);
-        const hoursText = escapeHtml(row.hours || '—');
+        const hoursText = escapeHtml(row.hours || '-');
         const noteText = escapeHtml(row.note || '');
 
         const classes = [];
@@ -322,7 +315,7 @@
       const csvUrl = getScheduleCsvUrl();
 
       if(!csvUrl){
-        area.innerHTML = `<div class="schedule-empty">スケジュールCSVのURLが未設定です。assets/js/config.js に <strong>scheduleCsvUrl</strong> を追加してください。</div>`;
+        area.innerHTML = `<div class="schedule-empty">スケジュールCSVのURLが未設定です。</div>`;
         if(status) status.textContent = '';
         return;
       }
