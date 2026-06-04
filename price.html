@@ -49,8 +49,31 @@
         <a href="games.html">ゲーム/診断</a>
         <a href="schedule.html">週間お給仕表</a>
         <a href="price.html" aria-current="page">料金詳細</a>
+        <a href="./recruit/">メイドさん募集</a>
       </div>
+      <button class="hamburger" id="btnMenu" aria-label="メニューを開く" aria-controls="drawer" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
     </nav>
+
+    <div class="drawer" id="drawer" aria-hidden="true" aria-label="サイドメニュー">
+      <div class="head">
+        <div class="drawer-title">メニュー</div>
+        <button class="drawer-close" id="btnClose" aria-label="閉じる">✕</button>
+      </div>
+      <a href="index.html">ポータルTOP</a>
+      <a href="news.html">お知らせ</a>
+      <a href="events.html">イベント</a>
+      <a href="goods.html">グッズ</a>
+      <a href="games.html">ゲーム/診断</a>
+      <a href="schedule.html">週間お給仕表</a>
+      <a href="price.html" aria-current="page">料金詳細</a>
+      <a href="./recruit/">メイドさん募集</a>
+    </div>
   </header>
 
   <main id="main">
@@ -217,13 +240,34 @@
   </main>
 
   <footer class="footer">
-    <div class="container">
-      © <span id="year"></span> concept cafe PO・TORO ・
-      <a href="index.html">ポータルTOP</a>
+    <div class="container footer-grid">
+      <div>
+        <h4>concept cafe PO・TORO</h4>
+        <div class="copyright">© <span id="year"></span> concept cafe PO・TORO</div>
+      </div>
+      <div>
+        <h4>リンク</h4>
+        <ul class="foot-list">
+          <li><a href="index.html">ポータルTOP</a></li>
+          <li><a href="news.html">お知らせ</a></li>
+          <li><a href="events.html">イベント</a></li>
+          <li><a href="schedule.html">週間お給仕表</a></li>
+          <li><a href="./recruit/">メイドさん募集</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>お問い合わせ</h4>
+        <ul class="foot-list">
+          <li><a href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">X（@po_toro）</a></li>
+          <li><a href="schedule.html">お給仕表を見る</a></li>
+        </ul>
+      </div>
     </div>
   </footer>
 
+  <script src="assets/js/core.js"></script>
   <script>
+    window.PortalCore?.setupDrawer?.();
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
