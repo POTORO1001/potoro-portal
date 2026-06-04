@@ -83,6 +83,9 @@ header{
 .brand-title{font-weight:900;letter-spacing:.06em}
 .brand-title .en{font-size:1.03rem}
 .brand-title .jp{font-size:.8rem;color:#666;font-weight:800}
+.brand-name{
+  letter-spacing:.12em;
+}
 .brand-title,
 .sec-title,
 .card h3,
@@ -133,6 +136,21 @@ header{
   .drawer a:hover{background:#fafafa}
   .drawer a[aria-current="page"]{background:#111;color:#fff}
 }
+.drawer-title,
+.tag-strong{
+  font-weight:1000;
+}
+.drawer-close{
+  background:#f6f6f6;
+  border:none;
+  border-radius:12px;
+  padding:8px 10px;
+  font-weight:1000;
+  cursor:pointer;
+}
+.drawer-close:hover{
+  background:#eee;
+}
 
 section{padding:28px 0}
 .sec-title{
@@ -181,6 +199,10 @@ section{padding:28px 0}
 footer{padding:28px 0;color:#333}
 .foot{display:grid;gap:16px;grid-template-columns:2fr 1fr 1fr}
 .foot h4{margin:.2rem 0 .6rem;font-weight:1000}
+.foot-list{
+  margin:0;
+  padding-left:18px;
+}
 @media (max-width:880px){.foot{grid-template-columns:1fr}}
 .copyright{margin-top:12px;font-size:.85rem;color:#555}
 

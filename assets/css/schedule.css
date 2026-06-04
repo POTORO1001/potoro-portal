@@ -14,7 +14,25 @@
 }
 .subnote{font-size:12px;opacity:.78;margin:.6rem 0 0;line-height:1.7}
 .top-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.schedule-hero{padding-top:26px}
+.schedule-main{width:100%}
+.map-embed{
+  position:relative;
+  width:100%;
+  padding-top:56.25%;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+}
+.map-embed iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
 
 @media (max-width:640px){
   .sheet-embed iframe{height:85vh}
+  .top-actions{display:grid;grid-template-columns:1fr}
 }

@@ -2,12 +2,14 @@
 (function(){
   const { tryLoadCSV, csvToNewsObjects, escapeHtml } = window.PortalCore;
 
-  function parseDateSortable(s){
-    const t = String(s||'').trim().replace(/-/g,'/');
-    const m = t.match(/(\d{4})[\/\.](\d{1,2})[\/\.](\d{1,2})/);
-    if(m){
-      const y = Number(m[1]), mo = Number(m[2]), d = Number(m[3]);
-      return new Date(y, mo-1, d).getTime();
+  function parseDateSortable(value){
+    const text = String(value || '').trim().replace(/-/g,'/');
+    const match = text.match(/(\d{4})[\/\.](\d{1,2})[\/\.](\d{1,2})/);
+    if(match){
+      const year = Number(match[1]);
+      const month = Number(match[2]);
+      const day = Number(match[3]);
+      return new Date(year, month - 1, day).getTime();
     }
     return 0;
   }
@@ -40,15 +42,15 @@
     const list = Number.isFinite(limit) ? safeItems.slice(0, limit) : safeItems;
 
     if(!list.length){
-      ul.innerHTML = '<li><span class="tag">—</span> 現在お知らせはありません。</li>';
+      ul.innerHTML = '<li><span class="tag">-</span> 現在お知らせはありません。</li>';
       return;
     }
 
-    ul.innerHTML = list.map(n=>{
-      const date = escapeHtml(n.date || '—');
-      const label = n.label ? `<span class="label">${escapeHtml(n.label)}</span>` : '';
-      const text = escapeHtml(n.text || '');
-      return `<li><span class="tag" style="min-width:8.2em;display:inline-block">${date}</span> ${label} ${text}</li>`;
+    ul.innerHTML = list.map(news=>{
+      const date = escapeHtml(news.date || '-');
+      const label = news.label ? `<span class="label">${escapeHtml(news.label)}</span>` : '';
+      const text = escapeHtml(news.text || '');
+      return `<li><span class="tag news-date">${date}</span> ${label} ${text}</li>`;
     }).join('');
   }
 
