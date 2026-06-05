@@ -55,9 +55,9 @@
       const imageMarkup = webpSrc
         ? `<picture>
             <source srcset="${webpSrc}" type="image/webp">
-            <img src="${imgSrc}" alt="${alt}" class="thumb" data-full="${webpSrc}" loading="lazy">
+            <img src="${imgSrc}" alt="${alt}" class="thumb" data-full="${webpSrc}" loading="lazy" decoding="async">
           </picture>`
-        : `<img src="${imgSrc}" alt="${alt}" class="thumb" data-full="${imgSrc}" loading="lazy">`;
+        : `<img src="${imgSrc}" alt="${alt}" class="thumb" data-full="${imgSrc}" loading="lazy" decoding="async">`;
 
       return `
         <article class="card event-card${featuredClass}">
