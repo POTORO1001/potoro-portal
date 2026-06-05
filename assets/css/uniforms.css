@@ -19,6 +19,15 @@ h1{font-weight:900;font-size:clamp(1.6rem,4vw,2.4rem);margin:24px 0 6px}
 .card .body{padding:12px 14px}
 .card h3{margin:.2rem 0 .4rem;font-size:1.05rem}
 .card p{margin:0;color:#555;font-size:.92rem}
+.uniform-image-button{display:block;width:100%;padding:0;border:0;background:transparent;color:inherit;cursor:pointer}
+.uniform-image-button picture{display:block}
+.uniform-image-button .thumb{width:100%;transition:transform .18s ease, filter .18s ease}
+.uniform-image-button:hover .thumb{filter:brightness(1.04);transform:scale(1.01)}
+.uniform-image-button:focus-visible{outline:3px solid #0b69d5;outline-offset:-3px}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;padding:4vw;z-index:100;opacity:0;pointer-events:none;transition:.2s}
+.lightbox.open{opacity:1;pointer-events:auto}
+.lightbox img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 8px 30px rgba(0,0,0,.5);border-radius:10px}
+.lightbox .close{position:absolute;top:16px;right:16px;background:#fff;border:none;border-radius:999px;font-size:16px;padding:8px 12px;cursor:pointer;color:#111}
 .chip{display:inline-flex;align-items:center;gap:6px;background:#fafafa;border:1px solid #eee;border-radius:999px;padding:4px 8px;font-size:.78rem}
 
 .toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:8px auto 16px}
