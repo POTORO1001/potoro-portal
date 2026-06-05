@@ -53,11 +53,15 @@
       const link = event.link ? `<a href="${escapeHtml(event.link)}" target="_blank" rel="noopener noreferrer">詳細を見る</a>` : '';
       const featuredClass = index === 0 ? ' featured' : '';
       const imageMarkup = webpSrc
-        ? `<picture>
-            <source srcset="${webpSrc}" type="image/webp">
-            <img src="${imgSrc}" alt="${alt}" class="thumb" data-full="${webpSrc}" loading="lazy" decoding="async">
-          </picture>`
-        : `<img src="${imgSrc}" alt="${alt}" class="thumb" data-full="${imgSrc}" loading="lazy" decoding="async">`;
+        ? `<button type="button" class="event-image-button" aria-label="${alt}を拡大">
+            <picture>
+              <source srcset="${webpSrc}" type="image/webp">
+              <img src="${imgSrc}" alt="${alt}" class="thumb" data-full="${webpSrc}" loading="lazy" decoding="async">
+            </picture>
+          </button>`
+        : `<button type="button" class="event-image-button" aria-label="${alt}を拡大">
+            <img src="${imgSrc}" alt="${alt}" class="thumb" data-full="${imgSrc}" loading="lazy" decoding="async">
+          </button>`;
 
       return `
         <article class="card event-card${featuredClass}">
@@ -80,14 +84,17 @@
     const img = document.getElementById('lightboxImg');
     const closeBtn = lightbox?.querySelector('.close');
     if(!lightbox || !img || !closeBtn) return;
+    let activeTrigger = null;
 
-    const open = (src, alt)=>{
+    const open = (src, alt, trigger)=>{
       if(!src) return;
+      activeTrigger = trigger || document.activeElement;
       img.src = src;
       img.alt = alt || '拡大画像';
       lightbox.classList.add('open');
       lightbox.setAttribute('aria-hidden','false');
       document.body.style.overflow = 'hidden';
+      closeBtn.focus();
     };
 
     const close = ()=>{
@@ -95,12 +102,18 @@
       lightbox.setAttribute('aria-hidden','true');
       img.removeAttribute('src');
       document.body.style.overflow = '';
+      if(activeTrigger && typeof activeTrigger.focus === 'function'){
+        activeTrigger.focus();
+      }
+      activeTrigger = null;
     };
 
     document.getElementById('eventsGrid')?.addEventListener('click', (event)=>{
-      const target = event.target.closest('img');
+      const button = event.target.closest('.event-image-button');
+      if(!button) return;
+      const target = button.querySelector('img');
       if(!target) return;
-      open(target.currentSrc || target.getAttribute('data-full') || target.src, target.alt);
+      open(target.currentSrc || target.getAttribute('data-full') || target.src, target.alt, button);
     });
 
     lightbox.addEventListener('click', (event)=>{ if(event.target === lightbox) close(); });

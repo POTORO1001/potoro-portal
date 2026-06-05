@@ -1,5 +1,10 @@
 #eventsGrid .card{position:relative}
 #eventsGrid .thumb{aspect-ratio:16/10;object-fit:cover}
+.event-image-button{display:block;width:100%;padding:0;border:0;background:transparent;color:inherit;cursor:pointer;text-align:inherit}
+.event-image-button picture{display:block}
+.event-image-button .thumb{width:100%;transition:transform .18s ease, filter .18s ease}
+.event-image-button:hover .thumb{filter:brightness(1.04);transform:scale(1.01)}
+.event-image-button:focus-visible{outline:3px solid #0b69d5;outline-offset:4px;border-radius:10px}
 .event-overlay{
   position:absolute; left:12px; right:12px; bottom:12px;
   background:rgba(255,255,255,.90);
