@@ -11,18 +11,23 @@
           eventsCsvUrl: cfg.eventsCsvUrl,
           eventsCsvUrlAlt: cfg.eventsCsvUrlAlt
         });
-        return [];
+        return null;
       }
       return csvToEventObjects(csv) || [];
     }catch(err){
       console.error('loadEvents failed:', err);
-      return [];
+      return null;
     }
   }
 
   function renderEventsGrid(containerId, items){
     const grid = document.getElementById(containerId);
     if(!grid) return;
+
+    if(items === null){
+      grid.innerHTML = `<div class="tag">イベント情報の取得に失敗しました。時間をおいて再度ご確認ください。</div>`;
+      return;
+    }
 
     const safeItems = Array.isArray(items) ? items : [];
 

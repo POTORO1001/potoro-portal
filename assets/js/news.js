@@ -23,20 +23,25 @@
           newsCsvUrl: cfg.newsCsvUrl,
           newsCsvUrlAlt: cfg.newsCsvUrlAlt
         });
-        return [];
+        return null;
       }
       const items = csvToNewsObjects(csv) || [];
       items.sort((a,b)=> parseDateSortable(b.date) - parseDateSortable(a.date));
       return items;
     }catch(err){
       console.error('loadNews failed:', err);
-      return [];
+      return null;
     }
   }
 
   function renderNewsList(ulId, items, limit){
     const ul = document.getElementById(ulId);
     if(!ul) return;
+
+    if(items === null){
+      ul.innerHTML = '<li><span class="tag">-</span> お知らせの取得に失敗しました。時間をおいて再度ご確認ください。</li>';
+      return;
+    }
 
     const safeItems = Array.isArray(items) ? items : [];
     const list = Number.isFinite(limit) ? safeItems.slice(0, limit) : safeItems;
