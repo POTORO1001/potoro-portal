@@ -93,11 +93,11 @@
         ? `<button type="button" class="event-image-button" aria-label="${alt}を拡大">
             <picture>
               <source srcset="${webpSrc}" type="image/webp">
-              <img src="${imgSrc}" alt="${alt}" class="thumb" data-full="${webpSrc}" loading="lazy" decoding="async">
+              <img src="${imgSrc}" alt="${alt}" class="thumb" data-full="${webpSrc}" loading="lazy" width="1200" height="750" decoding="async">
             </picture>
           </button>`
         : `<button type="button" class="event-image-button" aria-label="${alt}を拡大">
-            <img src="${imgSrc}" alt="${alt}" class="thumb" data-full="${imgSrc}" loading="lazy" decoding="async">
+            <img src="${imgSrc}" alt="${alt}" class="thumb" data-full="${imgSrc}" loading="lazy" width="1200" height="750" decoding="async">
           </button>`;
 
       return `

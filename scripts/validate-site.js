@@ -57,6 +57,31 @@ function normalizeLocalTarget(fromFile, href) {
   return target.replace(/\\/g, '/');
 }
 
+function isLargeRaster(target) {
+  if (!/\.(png|jpe?g)$/i.test(target)) return false;
+  const absolute = path.join(root, target);
+  return fs.existsSync(absolute) && fs.statSync(absolute).size > 250000;
+}
+
+function hasWebpSibling(target) {
+  const absolute = path.join(root, target);
+  const dir = path.dirname(absolute);
+  const base = path.basename(absolute);
+  const candidates = [
+    `${absolute}.webp`,
+    path.join(dir, base.replace(/\.(png|jpe?g)$/i, '.webp'))
+  ];
+  return candidates.some(candidate => fs.existsSync(candidate));
+}
+
+function hasWebpSourceBeforeImage(html, imgIndex) {
+  const before = html.slice(0, imgIndex);
+  const lastPicture = before.lastIndexOf('<picture');
+  const lastPictureClose = before.lastIndexOf('</picture>');
+  if (lastPicture === -1 || lastPictureClose > lastPicture) return false;
+  return /<source\b[^>]*type="image\/webp"[^>]*>/i.test(before.slice(lastPicture));
+}
+
 function validateHtml(file) {
   const html = readFile(file);
   const is404 = file === '404.html';
@@ -84,11 +109,29 @@ function validateHtml(file) {
   for (const match of html.matchAll(/<img\b[^>]*>/gi)) {
     const tag = match[0];
     const id = attr(tag, 'id');
+    const src = attr(tag, 'src');
+    const alt = attr(tag, 'alt');
     const isLightboxImage = id === 'lightboxImg' || id === 'uniformLightboxImg';
     if (!/\salt=/.test(tag)) addIssue(file, `image missing alt: ${tag}`);
+    if (/\s(?:class|loading|width|height|src)=/i.test(alt)) {
+      addIssue(file, `image alt appears to contain markup attributes: ${tag}`);
+    }
     if (!/\sdecoding=/.test(tag)) addIssue(file, `image missing decoding: ${tag}`);
+    if (!isLightboxImage && !/\s(?:loading|fetchpriority)=/.test(tag)) {
+      addIssue(file, `image missing loading/fetchpriority: ${tag}`);
+    }
     if (!isLightboxImage && (!/\swidth=/.test(tag) || !/\sheight=/.test(tag))) {
       addIssue(file, `image missing width/height: ${tag}`);
+    }
+
+    const target = src ? normalizeLocalTarget(file, src) : null;
+    if (
+      target &&
+      isLargeRaster(target) &&
+      hasWebpSibling(target) &&
+      !hasWebpSourceBeforeImage(html, match.index)
+    ) {
+      addIssue(file, `large raster image should be paired with a WebP source: ${src}`);
     }
   }
 
@@ -102,6 +145,19 @@ function validateHtml(file) {
 
   if (is404 && !/<meta\s+name="robots"\s+content="noindex"/i.test(html)) {
     addIssue(file, '404 page should be noindex');
+  }
+}
+
+function validateDynamicImageMarkup() {
+  const file = 'assets/js/events.js';
+  const js = readFile(file);
+  for (const match of js.matchAll(/<img\b[^>]*class="thumb"[^>]*>/gi)) {
+    const tag = match[0];
+    if (!/\sloading=/.test(tag)) addIssue(file, `generated event image missing loading: ${tag}`);
+    if (!/\sdecoding=/.test(tag)) addIssue(file, `generated event image missing decoding: ${tag}`);
+    if (!/\swidth=/.test(tag) || !/\sheight=/.test(tag)) {
+      addIssue(file, `generated event image missing width/height: ${tag}`);
+    }
   }
 }
 
@@ -128,6 +184,7 @@ function validateIgnore() {
 }
 
 for (const page of publicPages) validateHtml(page);
+validateDynamicImageMarkup();
 validateSitemap();
 validateIgnore();
 
