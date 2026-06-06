@@ -175,6 +175,13 @@ a:hover{ opacity:.96; }
   gap:10px;
 }
 
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:18px;
+}
+
 .mini-pill{
   display:inline-flex;
   align-items:center;
@@ -276,6 +283,43 @@ a:hover{ opacity:.96; }
     rgba(255,192,220,.7) 80%,
     rgba(255,255,255,0)
   );
+}
+
+.apply-flow{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+
+.apply-step{
+  position:relative;
+  padding:18px;
+  border-radius:22px;
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(255,210,228,.58);
+  box-shadow:0 12px 26px rgba(203,171,195,.12);
+}
+
+.apply-step span{
+  display:inline-flex;
+  padding:5px 10px;
+  border-radius:999px;
+  background:rgba(255,240,247,.9);
+  color:var(--pt-accent-deep);
+  font-size:.78rem;
+  font-weight:900;
+}
+
+.apply-step h3{
+  margin:10px 0 6px;
+  color:#4f3944;
+  font-size:1.05rem;
+}
+
+.apply-step p{
+  margin:0;
+  color:var(--pt-sub);
+  line-height:1.75;
 }
 
 .section-title{
@@ -546,6 +590,10 @@ a:hover{ opacity:.96; }
     grid-template-columns:1fr;
     gap:20px;
   }
+
+  .apply-flow{
+    grid-template-columns:1fr;
+  }
 }
 
 @media (max-width: 768px){
@@ -600,6 +648,7 @@ a:hover{ opacity:.96; }
 
 @media (max-width: 520px){
   .hero-note,
+  .hero-actions,
   .cta-actions{
     display:grid;
     grid-template-columns:1fr;

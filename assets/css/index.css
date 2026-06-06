@@ -123,6 +123,42 @@
 }
 .sub{color:#444;margin:.2rem 0 1rem;line-height:1.7}
 
+.hero-priority{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin:12px 0 10px;
+}
+
+.hero-priority a{
+  display:grid;
+  gap:4px;
+  min-height:72px;
+  padding:12px;
+  border-radius:16px;
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(255,210,228,.58);
+  box-shadow:0 10px 22px rgba(214,162,191,.12);
+  color:#3e2f37;
+  text-decoration:none;
+}
+
+.hero-priority a:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 28px rgba(214,162,191,.18);
+}
+
+.hero-priority span{
+  color:#d94b8d;
+  font-size:.78rem;
+  font-weight:1000;
+}
+
+.hero-priority strong{
+  font-size:.98rem;
+  line-height:1.35;
+}
+
 .today-box{
   margin-top:12px;
   background:rgba(255,255,255,.92);
@@ -363,6 +399,7 @@
   .mj-banner .inner{flex-direction:column; align-items:stretch;}
   .mj-banner .btn{width:100%; justify-content:center; text-align:center;}
   .mj-banner .left{align-items:center;}
+  .hero-priority{grid-template-columns:1fr}
   .today-row{align-items:stretch}
   .today-left{width:100%}
   .today-pill{white-space:normal}
