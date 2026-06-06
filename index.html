@@ -5,8 +5,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>PO・TORO 公式ポータル</title>
-  <meta name="description" content="concept cafe PO・TORO（ポ・トロ）の総合ポータル。今日の営業時間/本日の出勤/予約導線を最短で。" />
+  <title>PO・TORO 公式ポータル | 松山のコンセプトカフェ</title>
+  <meta name="description" content="松山市湊町のconcept cafe PO・TORO（ポ・トロ）公式ポータル。営業時間、出勤予定、料金、イベント、メイドさん募集をまとめて確認できます。" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="theme-color" content="#f6b7d2" />
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/" />
@@ -21,36 +21,87 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="concept cafe PO・TORO" />
   <meta property="og:locale" content="ja_JP" />
-  <meta property="og:title" content="PO・TORO 公式ポータル" />
-  <meta property="og:description" content="concept cafe PO・TORO（ポ・トロ）の最新情報とリンク集。" />
+  <meta property="og:title" content="PO・TORO 公式ポータル | 松山のコンセプトカフェ" />
+  <meta property="og:description" content="松山市湊町のconcept cafe PO・TORO（ポ・トロ）公式ポータル。営業時間、出勤予定、料金、イベント、メイドさん募集をまとめて確認できます。" />
   <meta property="og:image" content="https://potoro1001.github.io/potoro-portal/img/ogp.jpg" />
   <meta property="og:url" content="https://potoro1001.github.io/potoro-portal/" />
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="PO・TORO 公式ポータル">
-  <meta name="twitter:description" content="concept cafe PO・TORO（ポ・トロ）の総合ポータル。今日の営業時間/本日の出勤/予約導線を最短で。">
+  <meta name="twitter:title" content="PO・TORO 公式ポータル | 松山のコンセプトカフェ">
+  <meta name="twitter:description" content="松山市湊町のconcept cafe PO・TORO（ポ・トロ）公式ポータル。営業時間、出勤予定、料金、イベント、メイドさん募集をまとめて確認できます。">
   <meta name="twitter:image" content="https://potoro1001.github.io/potoro-portal/img/ogp.jpg">
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "CafeOrCoffeeShop",
-    "name": "concept cafe PO・TORO",
-    "url": "https://potoro1001.github.io/potoro-portal/",
-    "image": "https://potoro1001.github.io/potoro-portal/img/ogp.jpg",
-    "telephone": "+81-89-909-5211",
-    "address": {
-      "@type": "PostalAddress",
-      "postalCode": "790-0012",
-      "addressRegion": "愛媛県",
-      "addressLocality": "松山市",
-      "streetAddress": "湊町3-7-2 2F",
-      "addressCountry": "JP"
-    }
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://potoro1001.github.io/potoro-portal/#website",
+        "url": "https://potoro1001.github.io/potoro-portal/",
+        "name": "PO・TORO 公式ポータル",
+        "inLanguage": "ja",
+        "publisher": {
+          "@id": "https://potoro1001.github.io/potoro-portal/#localbusiness"
+        }
+      },
+      {
+        "@type": [
+          "CafeOrCoffeeShop",
+          "LocalBusiness"
+        ],
+        "@id": "https://potoro1001.github.io/potoro-portal/#localbusiness",
+        "name": "concept cafe PO・TORO",
+        "alternateName": "ポ・トロ",
+        "url": "https://potoro1001.github.io/potoro-portal/",
+        "image": "https://potoro1001.github.io/potoro-portal/img/ogp.jpg",
+        "telephone": "+81-89-909-5211",
+        "priceRange": "30分 1,000円から",
+        "address": {
+          "@type": "PostalAddress",
+          "postalCode": "790-0012",
+          "addressRegion": "愛媛県",
+          "addressLocality": "松山市",
+          "streetAddress": "湊町3丁目7-2 2F",
+          "addressCountry": "JP"
+        },
+        "sameAs": [
+          "https://x.com/po_toro"
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://potoro1001.github.io/potoro-portal/#webpage",
+        "url": "https://potoro1001.github.io/potoro-portal/",
+        "name": "PO・TORO 公式ポータル | 松山のコンセプトカフェ",
+        "description": "松山市湊町のconcept cafe PO・TORO（ポ・トロ）公式ポータル。営業時間、出勤予定、料金、イベント、メイドさん募集をまとめて確認できます。",
+        "inLanguage": "ja",
+        "isPartOf": {
+          "@id": "https://potoro1001.github.io/potoro-portal/#website"
+        },
+        "image": "https://potoro1001.github.io/potoro-portal/img/ogp.jpg",
+        "breadcrumb": {
+          "@id": "https://potoro1001.github.io/potoro-portal/#breadcrumb"
+        },
+        "about": {
+          "@id": "https://potoro1001.github.io/potoro-portal/#localbusiness"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://potoro1001.github.io/potoro-portal/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "PO・TORO 公式ポータル",
+            "item": "https://potoro1001.github.io/potoro-portal/"
+          }
+        ]
+      }
+    ]
   }
   </script>
-
-  <link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/index.css">
 
   <link rel="stylesheet" href="assets/css/home.css">

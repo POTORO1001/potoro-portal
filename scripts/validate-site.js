@@ -43,6 +43,10 @@ function attr(tag, name) {
   return match ? match[1] : '';
 }
 
+function hasLikelyEncodingDamage(value) {
+  return /\?{3,}|\uFFFD/.test(value);
+}
+
 function normalizeLocalTarget(fromFile, href) {
   const clean = href.split('#')[0].split('?')[0];
   if (!clean || clean.startsWith('#')) return null;
@@ -92,6 +96,23 @@ function validateHtml(file) {
   if (!/<link\s+rel="canonical"/i.test(html)) addIssue(file, 'missing canonical');
   if (!/property="og:image"/i.test(html)) addIssue(file, 'missing og:image');
   if (!/name="twitter:card"/i.test(html)) addIssue(file, 'missing twitter card');
+  if (!is404 && !/type="application\/ld\+json"/i.test(html)) addIssue(file, 'missing JSON-LD');
+
+  const title = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1] || '';
+  const description = attr(html.match(/<meta\s+name="description"[^>]*>/i)?.[0] || '', 'content');
+  if (hasLikelyEncodingDamage(title)) addIssue(file, `title appears to be encoding-damaged: ${title}`);
+  if (hasLikelyEncodingDamage(description)) addIssue(file, `description appears to be encoding-damaged: ${description}`);
+
+  for (const match of html.matchAll(/<script\s+type="application\/ld\+json">([\s\S]*?)<\/script>/gi)) {
+    try {
+      const data = JSON.parse(match[1]);
+      if (hasLikelyEncodingDamage(JSON.stringify(data))) {
+        addIssue(file, 'JSON-LD appears to be encoding-damaged');
+      }
+    } catch (err) {
+      addIssue(file, `invalid JSON-LD: ${err.message}`);
+    }
+  }
 
   const h1Count = (html.match(/<h1\b/gi) || []).length;
   if (h1Count !== 1) addIssue(file, `expected 1 h1, found ${h1Count}`);
@@ -174,6 +195,12 @@ function validateSitemap() {
     }
   }
   if (sitemap.includes('/404.html')) addIssue('sitemap.xml', '404 page should not be listed');
+
+  for (const match of sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(match[1])) {
+      addIssue('sitemap.xml', `invalid lastmod ${match[1]}`);
+    }
+  }
 }
 
 function validateIgnore() {
