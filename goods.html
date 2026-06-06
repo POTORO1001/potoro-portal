@@ -140,15 +140,6 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/core.js"></script>
   <script src="assets/js/goods.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', async ()=>{
-      PortalCore.setupReveal();
-      PortalCore.setupDrawer();
-      PortalCore.setupCommonFooterYear();
-
-      const items = await PortalGoods.loadGoods();
-      PortalGoods.renderGoodsTable('goodsBody', items);
-    });
-  </script>
+  <script src="assets/js/goods-page.js?v=20260606"></script>
 </body>
 </html>
