@@ -239,6 +239,54 @@ section{padding:28px 0}
   line-height:1.55;
   overflow-wrap:anywhere;
 }
+.data-fallback{
+  display:block;
+  padding:16px;
+  border-radius:18px;
+  background:rgba(255,255,255,.94);
+  box-shadow:var(--shadow);
+  border:1px solid rgba(255,255,255,.72);
+  color:#333;
+}
+.grid > .data-fallback{
+  grid-column:1 / -1;
+}
+.data-fallback-title{
+  margin:0 0 6px;
+  font-weight:1000;
+  color:#222;
+}
+.data-fallback-text{
+  margin:0;
+  color:#555;
+  font-size:.92rem;
+  line-height:1.6;
+}
+.fallback-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+.fallback-actions a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:40px;
+  padding:9px 13px;
+  border-radius:999px;
+  background:#fff;
+  color:#222;
+  border:1px solid #eee;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+  font-weight:900;
+  text-decoration:none;
+}
+.fallback-actions a:hover{
+  background:#111;
+  color:#fff;
+  text-decoration:none;
+}
 
 footer{padding:28px 0;color:#333}
 .foot{display:grid;gap:16px;grid-template-columns:2fr 1fr 1fr}
@@ -305,6 +353,11 @@ footer{padding:28px 0;color:#333}
   .tag, .card p{color:#cfcfcf}
   .next-link-card{background:rgba(29,31,34,.92);color:#e8e8e8;border-color:rgba(255,255,255,.12)}
   .next-link-label,.next-link-text{color:#cfcfcf}
+  .data-fallback{background:rgba(29,31,34,.92);color:#e8e8e8;border-color:rgba(255,255,255,.12)}
+  .data-fallback-title{color:#fff}
+  .data-fallback-text{color:#cfcfcf}
+  .fallback-actions a{background:#2a2c31;color:#e8e8e8;border-color:rgba(255,255,255,.14)}
+  .fallback-actions a:hover{background:#fff;color:#111}
   .modal .panel{background:#1d1f22;color:#e8e8e8}
   .modal .close{background:#2a2c31;color:#e8e8e8}
   a{color:#7fc9ff}
@@ -321,5 +374,6 @@ footer{padding:28px 0;color:#333}
   .brand-title .jp{font-size:.72rem}
   .btn{width:100%}
   .next-links{grid-template-columns:1fr}
+  .fallback-actions{display:grid;grid-template-columns:1fr}
   .foot-call a.foot-tel{width:100%;padding-left:12px;padding-right:12px}
 }

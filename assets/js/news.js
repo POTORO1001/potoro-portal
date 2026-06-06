@@ -2,6 +2,22 @@
 (function(){
   const { tryLoadCSV, csvToNewsObjects, escapeHtml } = window.PortalCore;
 
+  function actionLinks(links){
+    return `<div class="fallback-actions">${links.map(link =>
+      `<a href="${escapeHtml(link.href)}"${link.external ? ' target="_blank" rel="noopener noreferrer"' : ''}>${escapeHtml(link.label)}</a>`
+    ).join('')}</div>`;
+  }
+
+  function newsFallback(title, text, links){
+    return `
+      <li class="data-fallback">
+        <div class="data-fallback-title">${escapeHtml(title)}</div>
+        <p class="data-fallback-text">${escapeHtml(text)}</p>
+        ${actionLinks(links)}
+      </li>
+    `;
+  }
+
   function parseDateSortable(value){
     const text = String(value || '').trim().replace(/-/g,'/');
     const match = text.match(/(\d{4})[\/\.](\d{1,2})[\/\.](\d{1,2})/);
@@ -39,7 +55,15 @@
     if(!ul) return;
 
     if(items === null){
-      ul.innerHTML = '<li><span class="tag">-</span> お知らせの取得に失敗しました。時間をおいて再度ご確認ください。</li>';
+      ul.innerHTML = newsFallback(
+        'お知らせを取得できませんでした',
+        '最新情報はXでも案内しています。時間をおいて再読み込みするか、下のリンクから確認してください。',
+        [
+          { href: 'https://x.com/po_toro', label: 'Xで最新情報を見る', external: true },
+          { href: 'schedule.html', label: '週間お給仕表を見る' },
+          { href: 'events.html', label: 'イベントを見る' }
+        ]
+      );
       return;
     }
 
@@ -47,7 +71,15 @@
     const list = Number.isFinite(limit) ? safeItems.slice(0, limit) : safeItems;
 
     if(!list.length){
-      ul.innerHTML = '<li><span class="tag">-</span> 現在お知らせはありません。</li>';
+      ul.innerHTML = newsFallback(
+        '現在表示できるお知らせはありません',
+        '営業日やイベント情報は、ほかのページから確認できます。',
+        [
+          { href: 'schedule.html', label: '週間お給仕表を見る' },
+          { href: 'events.html', label: 'イベントを見る' },
+          { href: 'price.html', label: '料金詳細を見る' }
+        ]
+      );
       return;
     }
 

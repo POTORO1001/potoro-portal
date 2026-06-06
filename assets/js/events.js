@@ -2,6 +2,22 @@
 (function(){
   const { tryLoadCSV, csvToEventObjects, escapeHtml } = window.PortalCore;
 
+  function actionLinks(links){
+    return `<div class="fallback-actions">${links.map(link =>
+      `<a href="${escapeHtml(link.href)}"${link.external ? ' target="_blank" rel="noopener noreferrer"' : ''}>${escapeHtml(link.label)}</a>`
+    ).join('')}</div>`;
+  }
+
+  function eventsFallback(title, text, links){
+    return `
+      <div class="data-fallback">
+        <div class="data-fallback-title">${escapeHtml(title)}</div>
+        <p class="data-fallback-text">${escapeHtml(text)}</p>
+        ${actionLinks(links)}
+      </div>
+    `;
+  }
+
   async function loadEvents(){
     const cfg = window.PORTAL_CONFIG || {};
     try{
@@ -25,14 +41,30 @@
     if(!grid) return;
 
     if(items === null){
-      grid.innerHTML = `<div class="tag">イベント情報の取得に失敗しました。時間をおいて再度ご確認ください。</div>`;
+      grid.innerHTML = eventsFallback(
+        'イベント情報を取得できませんでした',
+        '最新の開催情報はXやお知らせでも案内しています。時間をおいて再読み込みするか、下のリンクから確認してください。',
+        [
+          { href: 'https://x.com/po_toro', label: 'Xで最新情報を見る', external: true },
+          { href: 'news.html', label: 'お知らせを見る' },
+          { href: 'schedule.html', label: '週間お給仕表を見る' }
+        ]
+      );
       return;
     }
 
     const safeItems = Array.isArray(items) ? items : [];
 
     if(!safeItems.length){
-      grid.innerHTML = `<div class="tag">イベントは準備中です。</div>`;
+      grid.innerHTML = eventsFallback(
+        '現在表示できるイベントはありません',
+        '営業日や最新のお知らせを確認して、次の来店予定を探せます。',
+        [
+          { href: 'schedule.html', label: '週間お給仕表を見る' },
+          { href: 'news.html', label: 'お知らせを見る' },
+          { href: 'price.html', label: '料金詳細を見る' }
+        ]
+      );
       return;
     }
 

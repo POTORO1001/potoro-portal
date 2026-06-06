@@ -8,7 +8,39 @@ function escapeHtml(str){
 function fallbackEvents(message){
   const grid = document.getElementById('eventsGrid');
   if(!grid) return;
-  grid.innerHTML = `<div class="tag">${escapeHtml(message)}</div>`;
+  grid.innerHTML = buildDataFallback(
+    'イベント情報を取得できませんでした',
+    `${message} 最新情報はXやお知らせから確認できます。`,
+    [
+      { href: 'https://x.com/po_toro', label: 'Xで最新情報を見る', external: true },
+      { href: 'news.html', label: 'お知らせを見る' },
+      { href: 'schedule.html', label: '週間お給仕表を見る' }
+    ]
+  );
+}
+
+function buildActionLinks(links){
+  return `<div class="fallback-actions">${links.map(link =>
+    `<a href="${escapeHtml(link.href)}"${link.external ? ' target="_blank" rel="noopener noreferrer"' : ''}>${escapeHtml(link.label)}</a>`
+  ).join('')}</div>`;
+}
+
+function buildDataFallback(title, text, links){
+  return `
+    <div class="data-fallback">
+      <div class="data-fallback-title">${escapeHtml(title)}</div>
+      <p class="data-fallback-text">${escapeHtml(text)}</p>
+      ${buildActionLinks(links)}
+    </div>
+  `;
+}
+
+function buildScheduleFallback(title, text){
+  return buildDataFallback(title, text, [
+    { href: 'https://x.com/po_toro', label: 'Xで最新情報を見る', external: true },
+    { href: 'schedule.html', label: '週間お給仕表を見る' },
+    { href: 'price.html', label: '料金詳細を見る' }
+  ]);
 }
 
 function normalizeHeader(s){
@@ -154,7 +186,10 @@ async function fetchTextWithTimeout(url, ms=10000){
 
 function buildScheduleTable(rows, today){
   if(!rows.length){
-    return `<div class="schedule-empty">直近7日間の営業予定はありません。</div>`;
+    return buildScheduleFallback(
+      '直近7日間の営業予定はありません',
+      '最新の営業情報はXや週間お給仕表でも確認できます。'
+    );
   }
 
   const body = rows.map(row => {
@@ -198,7 +233,10 @@ async function loadEventSchedule(){
   const csvUrl = getScheduleCsvUrl();
 
   if(!csvUrl){
-    area.innerHTML = `<div class="schedule-empty">スケジュールCSVのURLが未設定です。</div>`;
+    area.innerHTML = buildScheduleFallback(
+      '営業スケジュールを表示できません',
+      'スケジュールの設定を確認中です。最新情報はXや週間お給仕表をご確認ください。'
+    );
     if(status) status.textContent = '';
     return;
   }
@@ -229,7 +267,10 @@ async function loadEventSchedule(){
     }
   }catch(err){
     console.error('schedule load failed:', err);
-    area.innerHTML = `<div class="schedule-empty">営業スケジュールの取得に失敗しました。</div>`;
+    area.innerHTML = buildScheduleFallback(
+      '営業スケジュールを取得できませんでした',
+      '時間をおいて再読み込みするか、Xや週間お給仕表から最新情報をご確認ください。'
+    );
     if(status) status.textContent = '';
   }
 }
@@ -240,7 +281,10 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     fallbackEvents('イベント情報の取得に失敗しました。');
     const area = document.getElementById('eventScheduleArea');
     if(area){
-      area.innerHTML = `<div class="schedule-empty">営業スケジュールの取得に失敗しました。</div>`;
+      area.innerHTML = buildScheduleFallback(
+        '営業スケジュールを取得できませんでした',
+        'ページの読み込み中に問題が発生しました。最新情報はXや週間お給仕表をご確認ください。'
+      );
     }
     return;
   }

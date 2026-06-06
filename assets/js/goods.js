@@ -2,6 +2,26 @@
 (function(){
   const { tryLoadCSV, csvToGoodsObjects, escapeHtml, formatDateJPWithWeekday } = window.PortalCore;
 
+  function actionLinks(links){
+    return `<div class="fallback-actions">${links.map(link =>
+      `<a href="${escapeHtml(link.href)}"${link.external ? ' target="_blank" rel="noopener noreferrer"' : ''}>${escapeHtml(link.label)}</a>`
+    ).join('')}</div>`;
+  }
+
+  function goodsFallback(title, text, links){
+    return `
+      <tr>
+        <td colspan="4">
+          <div class="data-fallback">
+            <div class="data-fallback-title">${escapeHtml(title)}</div>
+            <p class="data-fallback-text">${escapeHtml(text)}</p>
+            ${actionLinks(links)}
+          </div>
+        </td>
+      </tr>
+    `;
+  }
+
   async function loadGoods(){
     const cfg = window.PORTAL_CONFIG || {};
     try{
@@ -25,14 +45,30 @@
     if(!tbody) return;
 
     if(items === null){
-      tbody.innerHTML = '<tr><td colspan="4">グッズ情報の取得に失敗しました。時間をおいて再度ご確認ください。</td></tr>';
+      tbody.innerHTML = goodsFallback(
+        'グッズ情報を取得できませんでした',
+        '最新の配布状況はXやお知らせでも案内しています。時間をおいて再読み込みするか、下のリンクから確認してください。',
+        [
+          { href: 'https://x.com/po_toro', label: 'Xで最新情報を見る', external: true },
+          { href: 'news.html', label: 'お知らせを見る' },
+          { href: 'events.html', label: 'イベントを見る' }
+        ]
+      );
       return;
     }
 
     const safeItems = Array.isArray(items) ? items : [];
 
     if(!safeItems.length){
-      tbody.innerHTML = '<tr><td colspan="4">現在表示できるグッズ情報はありません。</td></tr>';
+      tbody.innerHTML = goodsFallback(
+        '現在表示できるグッズ情報はありません',
+        'イベントやお知らせから、今後の配布・販売情報を確認できます。',
+        [
+          { href: 'events.html', label: 'イベントを見る' },
+          { href: 'news.html', label: 'お知らせを見る' },
+          { href: 'schedule.html', label: '週間お給仕表を見る' }
+        ]
+      );
       return;
     }
 
