@@ -264,29 +264,31 @@
     els.forEach(el=>io.observe(el));
   }
 
-  function trapFocus(container, first){
-    const focusables = container.querySelectorAll('a, button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
-    if(!focusables.length) return;
-    const firstEl = first || focusables[0];
-    const lastEl = focusables[focusables.length-1];
+  function getFocusable(container){
+    return Array.from(container.querySelectorAll(
+      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter(el => el.offsetParent !== null || el === document.activeElement);
+  }
 
-    function onKey(e){
-      if(e.key === 'Tab'){
-        if(e.shiftKey && document.activeElement === firstEl){
-          e.preventDefault(); lastEl.focus();
-        }else if(!e.shiftKey && document.activeElement === lastEl){
-          e.preventDefault(); firstEl.focus();
-        }
-      }
-      if(e.key === 'Escape'){
-        if(container.classList.contains('open')){
-          container.classList.remove('open');
-          container.setAttribute('aria-hidden','true');
-          document.body.style.overflow='';
-        }
-      }
+  function keepFocusInside(container, event){
+    if(event.key !== 'Tab') return;
+    const focusables = getFocusable(container);
+    if(!focusables.length){
+      event.preventDefault();
+      container.focus();
+      return;
     }
-    container.addEventListener('keydown', onKey);
+
+    const firstEl = focusables[0];
+    const lastEl = focusables[focusables.length - 1];
+
+    if(event.shiftKey && document.activeElement === firstEl){
+      event.preventDefault();
+      lastEl.focus();
+    }else if(!event.shiftKey && document.activeElement === lastEl){
+      event.preventDefault();
+      firstEl.focus();
+    }
   }
 
   function setupDrawer(){
@@ -294,32 +296,40 @@
     const drawer  = document.getElementById('drawer');
     const btnClose= document.getElementById('btnClose');
     if(!btnMenu || !drawer || !btnClose) return;
+    let lastFocus = null;
 
     const toggleDrawer=(open)=>{
+      if(open) lastFocus = document.activeElement;
       drawer.classList.toggle('open', open);
       drawer.setAttribute('aria-hidden', String(!open));
       btnMenu.setAttribute('aria-expanded', String(open));
       document.body.style.overflow = open ? 'hidden' : '';
       if(open){
-        drawer.querySelector('a')?.focus();
-        trapFocus(drawer, drawer.querySelector('a'));
+        (drawer.querySelector('a') || btnClose || drawer).focus();
       }else{
-        btnMenu.focus();
+        (lastFocus && typeof lastFocus.focus === 'function' ? lastFocus : btnMenu).focus();
       }
     };
 
     btnMenu.addEventListener('click', ()=>toggleDrawer(true));
     btnClose.addEventListener('click', ()=>toggleDrawer(false));
     drawer.addEventListener('click', (e)=>{ if(e.target.tagName === 'A') toggleDrawer(false); });
+    drawer.addEventListener('keydown', (e)=>keepFocusInside(drawer, e));
     window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && drawer.classList.contains('open')) toggleDrawer(false); });
   }
 
   function toggleModal(el, open){
     if(!el) return;
+    if(open) el.__previousFocus = document.activeElement;
     el.classList.toggle('open', open);
     el.setAttribute('aria-hidden', String(!open));
     document.body.style.overflow = open ? 'hidden' : '';
-    if(open) trapFocus(el, el.querySelector('.close'));
+    if(open){
+      (el.querySelector('.close') || el).focus();
+    }else if(el.__previousFocus && typeof el.__previousFocus.focus === 'function'){
+      el.__previousFocus.focus();
+      el.__previousFocus = null;
+    }
   }
 
   function setupCommonFooterYear(){
@@ -342,6 +352,7 @@
     setupReveal,
     setupDrawer,
     toggleModal,
+    keepFocusInside,
     setupCommonFooterYear
   };
 })();

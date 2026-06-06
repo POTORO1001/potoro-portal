@@ -30,10 +30,28 @@ document.addEventListener('DOMContentLoaded', ()=>{
     activeTrigger = null;
   };
 
+  const keepFocusInside = (event)=>{
+    if(event.key !== 'Tab' || !lightbox) return;
+    const focusables = Array.from(lightbox.querySelectorAll(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    ));
+    if(!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if(event.shiftKey && document.activeElement === first){
+      event.preventDefault();
+      last.focus();
+    }else if(!event.shiftKey && document.activeElement === last){
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
   document.querySelectorAll('.uniform-image-button').forEach((button)=>{
     button.addEventListener('click', ()=>open(button));
   });
   lightbox?.addEventListener('click', (event)=>{ if(event.target === lightbox) close(); });
+  lightbox?.addEventListener('keydown', keepFocusInside);
   closeBtn?.addEventListener('click', close);
   window.addEventListener('keydown', (event)=>{
     if(event.key === 'Escape' && lightbox?.classList.contains('open')) close();

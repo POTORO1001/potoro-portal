@@ -228,6 +228,7 @@
   font-weight:1000;
   text-align:center;
   line-height:1.35;
+  min-height:44px;
 }
 .reserve-note{color:#555;font-size:.86rem;font-weight:900;line-height:1.6}
 

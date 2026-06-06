@@ -155,6 +155,9 @@
 
     lightbox.addEventListener('click', (event)=>{ if(event.target === lightbox) close(); });
     closeBtn.addEventListener('click', close);
+    lightbox.addEventListener('keydown', (event)=>{
+      window.PortalCore?.keepFocusInside?.(lightbox, event);
+    });
     window.addEventListener('keydown', (event)=>{
       if(event.key === 'Escape' && lightbox.classList.contains('open')) close();
     });

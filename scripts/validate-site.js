@@ -43,6 +43,10 @@ function attr(tag, name) {
   return match ? match[1] : '';
 }
 
+function stripTags(value) {
+  return String(value || '').replace(/<[^>]*>/g, '').trim();
+}
+
 function hasLikelyEncodingDamage(value) {
   return /\?{3,}|\uFFFD/.test(value);
 }
@@ -125,6 +129,43 @@ function validateHtml(file) {
   const drawerLinks = (html.match(/class="drawer"/i) && html.match(/<div class="drawer"[\s\S]*?<\/div>\s*<\/header>/i)?.[0].match(/<a\b/gi)) || [];
   if (!isUniforms && drawerLinks.length !== expectedNavLinks) {
     addIssue(file, `expected ${expectedNavLinks} drawer links, found ${drawerLinks.length}`);
+  }
+
+  const drawerTag = html.match(/<div class="drawer"[^>]*>/i)?.[0] || '';
+  if (!isUniforms) {
+    if (!/role="dialog"/i.test(drawerTag)) addIssue(file, 'drawer missing role="dialog"');
+    if (!/aria-modal="true"/i.test(drawerTag)) addIssue(file, 'drawer missing aria-modal="true"');
+    if (!/tabindex="-1"/i.test(drawerTag)) addIssue(file, 'drawer missing tabindex="-1"');
+  }
+
+  for (const match of html.matchAll(/<button\b[^>]*>([\s\S]*?)<\/button>/gi)) {
+    const tag = match[0];
+    const label = attr(tag, 'aria-label') || stripTags(match[1]);
+    if (!label) addIssue(file, `button missing accessible name: ${tag}`);
+    if (/class="[^"]*\bdrawer-close\b/i.test(tag) && stripTags(match[1]) === '?') {
+      addIssue(file, `drawer close button appears to be mojibake: ${tag}`);
+    }
+  }
+
+  for (const match of html.matchAll(/<a\b[^>]*target="_blank"[^>]*>/gi)) {
+    const tag = match[0];
+    const rel = attr(tag, 'rel');
+    if (!/\bnoopener\b/i.test(rel) || !/\bnoreferrer\b/i.test(rel)) {
+      addIssue(file, `external link missing rel noopener noreferrer: ${tag}`);
+    }
+  }
+
+  for (const match of html.matchAll(/<iframe\b[^>]*>/gi)) {
+    const tag = match[0];
+    if (!attr(tag, 'title')) addIssue(file, `iframe missing title: ${tag}`);
+  }
+
+  for (const match of html.matchAll(/<div\b[^>]*role="dialog"[^>]*>/gi)) {
+    const tag = match[0];
+    if (!/aria-modal="true"/i.test(tag)) addIssue(file, `dialog missing aria-modal: ${tag}`);
+    if (!attr(tag, 'aria-label') && !attr(tag, 'aria-labelledby')) {
+      addIssue(file, `dialog missing accessible label: ${tag}`);
+    }
   }
 
   for (const match of html.matchAll(/<img\b[^>]*>/gi)) {
