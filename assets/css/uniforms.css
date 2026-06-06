@@ -33,6 +33,14 @@ h1{font-weight:900;font-size:clamp(1.6rem,4vw,2.4rem);margin:24px 0 6px}
 .toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:8px auto 16px}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid #eaeaea;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.08);font-weight:800;color:#222}
 .btn:hover{background:#111;color:#fff}
+.next-links-section{margin:0 auto 36px}
+.next-links{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.next-link-card{display:flex;flex-direction:column;gap:6px;min-height:132px;padding:16px;border-radius:18px;background:rgba(255,255,255,.96);box-shadow:var(--shadow);color:#222;text-decoration:none;border:1px solid rgba(255,255,255,.72)}
+.next-link-card:hover{background:#111;color:#fff;text-decoration:none}
+.next-link-label{font-size:.78rem;color:#666;font-weight:900}
+.next-link-card:hover .next-link-label,.next-link-card:hover .next-link-text{color:#fff}
+.next-link-title{font-size:1.05rem;font-weight:900}
+.next-link-text{margin:0;color:#555;font-size:.9rem;line-height:1.55;overflow-wrap:anywhere}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;text-align:left}
 .footer-grid h4{margin:.2rem 0 .6rem;font-weight:900}
 .foot-list{margin:0;padding-left:18px}
@@ -43,6 +51,7 @@ h1{font-weight:900;font-size:clamp(1.6rem,4vw,2.4rem);margin:24px 0 6px}
 @media (max-width:760px){
   .page-nav{display:grid;grid-template-columns:1fr 1fr}
   .page-nav a{display:flex;align-items:center;justify-content:center;min-height:44px;text-align:center}
+  .next-links{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr;text-align:center}
   .foot-list{display:inline-block;text-align:left}
 }
@@ -51,6 +60,8 @@ h1{font-weight:900;font-size:clamp(1.6rem,4vw,2.4rem);margin:24px 0 6px}
   html,body{color:#eee}
   .card{background:#1d1f22;color:#e8e8e8}
   .lead,.card p{color:#d7d7d7}
+  .next-link-card{background:#1d1f22;color:#eee;border-color:rgba(255,255,255,.16)}
+  .next-link-label,.next-link-text{color:#d7d7d7}
   .page-nav a,.btn,.chip{background:#1d1f22;color:#eee;border-color:rgba(255,255,255,.16)}
   .page-nav a:hover,.btn:hover{background:#fff;color:#111}
 }
