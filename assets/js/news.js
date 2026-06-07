@@ -87,7 +87,7 @@
       const date = escapeHtml(news.date || '-');
       const label = news.label ? `<span class="label">${escapeHtml(news.label)}</span>` : '';
       const text = escapeHtml(news.text || '');
-      return `<li><span class="tag news-date">${date}</span> ${label} ${text}</li>`;
+      return `<li><span class="tag news-date">${date}</span>${label}<span class="news-text">${text}</span></li>`;
     }).join('');
   }
 
