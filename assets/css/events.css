@@ -144,6 +144,120 @@
   .schedule-table td{padding:12px 12px}
 }
 
+@media (max-width:520px){
+  #eventsGrid{
+    gap:14px;
+  }
+
+  #eventsGrid .card{
+    border-radius:16px;
+  }
+
+  #eventsGrid .thumb{
+    aspect-ratio:4/3;
+  }
+
+  .event-overlay{
+    position:static;
+    border-radius:0;
+    border-width:1px 0 0;
+    box-shadow:none;
+    background:#fff;
+    padding:11px 12px 12px;
+  }
+
+  .event-overlay .meta{
+    gap:6px;
+  }
+
+  .pill{
+    max-width:100%;
+    white-space:normal;
+    line-height:1.35;
+  }
+
+  .event-title{
+    font-size:1rem;
+    line-height:1.45;
+  }
+
+  .schedule-table-wrap{
+    overflow:visible;
+    border:0;
+    background:transparent;
+  }
+
+  .schedule-table{
+    display:block;
+    min-width:0;
+    border-collapse:separate;
+  }
+
+  .schedule-table thead{
+    display:none;
+  }
+
+  .schedule-table tbody,
+  .schedule-table tr,
+  .schedule-table td{
+    display:block;
+    width:100%;
+  }
+
+  .schedule-table tbody{
+    display:grid;
+    gap:10px;
+  }
+
+  .schedule-table tbody tr{
+    padding:12px 14px;
+    border:1px solid rgba(246,183,210,.36);
+    border-radius:14px;
+    background:#fff;
+    box-shadow:0 8px 22px rgba(255, 141, 186, .16);
+  }
+
+  .schedule-table th,
+  .schedule-table td{
+    border-bottom:0;
+  }
+
+  .schedule-table td{
+    display:grid;
+    grid-template-columns:68px minmax(0, 1fr);
+    gap:10px;
+    align-items:start;
+    padding:6px 0;
+    font-size:.88rem;
+    line-height:1.55;
+  }
+
+  .schedule-table td::before{
+    color:#9b667c;
+    font-size:.72rem;
+    font-weight:1000;
+    line-height:1.55;
+    white-space:nowrap;
+  }
+
+  .schedule-table td:nth-child(1)::before{
+    content:"日付";
+  }
+
+  .schedule-table td:nth-child(2)::before{
+    content:"時間";
+  }
+
+  .schedule-table td:nth-child(3)::before{
+    content:"備考";
+  }
+
+  .schedule-date,
+  .schedule-hours{
+    white-space:normal;
+  }
+}
+
 @media (prefers-color-scheme: dark){
   .event-overlay{background:rgba(29,31,34,.92);border-color:rgba(255,255,255,.12)}
   .pill.date{background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#e8e8e8}
@@ -187,4 +301,40 @@
   .schedule-table tbody tr.is-closed{background:rgba(255,255,255,.05)}
   .schedule-table tbody tr.is-closed:hover{background:rgba(255,255,255,.08)}
   .schedule-table tbody tr.is-closed td{color:#d2d2d2}
+
+  @media (max-width:520px){
+    .event-overlay{
+      background:rgba(29,31,34,.96);
+    }
+
+    .schedule-table-wrap{
+      background:transparent;
+    }
+
+    .schedule-table tbody tr,
+    .schedule-table tbody tr:hover{
+      background:rgba(29,31,34,.95);
+      border-color:rgba(255,255,255,.14);
+      box-shadow:0 8px 22px rgba(0,0,0,.22);
+    }
+
+    .schedule-table td::before{
+      color:#f0a7c7;
+    }
+
+    .schedule-table tbody tr.is-today,
+    .schedule-table tbody tr.is-today:hover{
+      background:linear-gradient(180deg, rgba(255,121,166,.18), rgba(29,31,34,.95));
+    }
+
+    .schedule-table tbody tr.is-event,
+    .schedule-table tbody tr.is-event:hover{
+      background:rgba(246,183,210,.10);
+    }
+
+    .schedule-table tbody tr.is-closed,
+    .schedule-table tbody tr.is-closed:hover{
+      background:rgba(255,255,255,.05);
+    }
+  }
 }
