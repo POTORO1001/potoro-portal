@@ -251,10 +251,109 @@ function validateIgnore() {
   }
 }
 
+function extractConfigStrings(js) {
+  const values = {};
+  for (const match of js.matchAll(/\b([A-Za-z][A-Za-z0-9_]*)\s*:\s*"([^"]*)"/g)) {
+    values[match[1]] = match[2];
+  }
+  return values;
+}
+
+function validateCsvUrl(file, key, value) {
+  if (!value) {
+    addIssue(file, `missing ${key}`);
+    return;
+  }
+
+  let url;
+  try {
+    url = new URL(value);
+  } catch (err) {
+    addIssue(file, `${key} is not a valid URL: ${value}`);
+    return;
+  }
+
+  if (url.protocol !== 'https:') addIssue(file, `${key} should use https`);
+  if (!/docs\.google\.com$/.test(url.hostname)) addIssue(file, `${key} should point to docs.google.com`);
+  if (!url.pathname.includes('/pub')) addIssue(file, `${key} should be a published Google Sheets URL`);
+  if (url.searchParams.get('output') !== 'csv') addIssue(file, `${key} should include output=csv`);
+  if (!url.searchParams.get('gid')) addIssue(file, `${key} should include gid`);
+}
+
+function validateConfig() {
+  const file = 'assets/js/config.js';
+  const js = readFile(file);
+  const values = extractConfigStrings(js);
+  const csvKeys = [
+    'newsCsvUrl',
+    'newsCsvUrlAlt',
+    'eventsCsvUrl',
+    'eventsCsvUrlAlt',
+    'goodsCsvUrl',
+    'goodsCsvUrlAlt',
+    'scheduleCsvUrl'
+  ];
+
+  for (const key of csvKeys) validateCsvUrl(file, key, values[key]);
+
+  if (!values.scheduleApiUrl) addIssue(file, 'missing scheduleApiUrl');
+  if (values.scheduleApiUrl) {
+    try {
+      const url = new URL(values.scheduleApiUrl);
+      if (url.protocol !== 'https:') addIssue(file, 'scheduleApiUrl should use https');
+      if (!/script\.google\.com$/.test(url.hostname)) {
+        addIssue(file, 'scheduleApiUrl should point to script.google.com');
+      }
+    } catch (err) {
+      addIssue(file, `scheduleApiUrl is not a valid URL: ${values.scheduleApiUrl}`);
+    }
+  }
+
+  if (values.mode === 'x_dm' && !values.xProfileUrl) {
+    addIssue(file, 'reserve mode x_dm requires xProfileUrl');
+  }
+}
+
+function validateManagedImagePairs() {
+  const imgDir = path.join(root, 'img');
+  const files = fs.readdirSync(imgDir);
+  const names = new Set(files);
+
+  for (const file of files) {
+    if (!/^(event_|uniform_).+\.(png|jpe?g)$/i.test(file)) continue;
+    const absolute = path.join(imgDir, file);
+    if (fs.statSync(absolute).isDirectory()) continue;
+
+    const webpCandidates = [
+      `${file}.webp`,
+      file.replace(/\.(png|jpe?g)$/i, '.webp')
+    ];
+    if (!webpCandidates.some(candidate => names.has(candidate))) {
+      addIssue('img/', `${file} is missing a WebP pair`);
+    }
+  }
+}
+
+function validateOperationDocs() {
+  const file = 'docs/operation-checklist.md';
+  if (!fs.existsSync(path.join(root, file))) {
+    addIssue(file, 'missing operation checklist');
+    return;
+  }
+
+  const doc = readFile(file);
+  for (const phrase of ['Googleスプレッドシート', '画像', '公開前チェック', 'node scripts/validate-site.js']) {
+    if (!doc.includes(phrase)) addIssue(file, `missing checklist topic: ${phrase}`);
+  }
+}
+
 for (const page of publicPages) validateHtml(page);
 validateDynamicImageMarkup();
 validateSitemap();
 validateIgnore();
+validateConfig();
+validateManagedImagePairs();
+validateOperationDocs();
 
 if (issues.length) {
   console.error(`Site validation failed with ${issues.length} issue(s):`);

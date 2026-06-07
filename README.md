@@ -17,6 +17,7 @@ concept cafe PO・TORO official portal site.
 ## Operations
 
 - Dynamic news, event, goods, and schedule data are loaded from the URLs in `assets/js/config.js`.
+- Publishing and data-update checks are documented in `docs/operation-checklist.md`.
 - Page-specific styles live in `assets/css/`.
 - `robots.txt` points crawlers to `sitemap.xml`.
 - `potoro-profile-public/` is a separate workspace folder and is intentionally ignored by this repository.
