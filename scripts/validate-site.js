@@ -136,6 +136,11 @@ function validateHtml(file) {
     if (!/role="dialog"/i.test(drawerTag)) addIssue(file, 'drawer missing role="dialog"');
     if (!/aria-modal="true"/i.test(drawerTag)) addIssue(file, 'drawer missing aria-modal="true"');
     if (!/tabindex="-1"/i.test(drawerTag)) addIssue(file, 'drawer missing tabindex="-1"');
+
+    const brandLogoTag = html.match(/<a\b[^>]*class="brand-logo"[^>]*>/i)?.[0] || '';
+    if (!brandLogoTag) addIssue(file, 'brand logo should link to portal top');
+    if (brandLogoTag && !attr(brandLogoTag, 'href')) addIssue(file, 'brand logo missing href');
+    if (brandLogoTag && !attr(brandLogoTag, 'aria-label')) addIssue(file, 'brand logo missing accessible label');
   }
 
   for (const match of html.matchAll(/<button\b[^>]*>([\s\S]*?)<\/button>/gi)) {
