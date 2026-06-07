@@ -135,6 +135,20 @@
             <a class="btn btn-ghost" href="price.html">料金詳細</a>
           </div>
 
+          <div class="schedule-cards-panel mt-12" aria-labelledby="scheduleCardsTitle">
+            <div class="schedule-cards-head">
+              <div>
+                <h2 id="scheduleCardsTitle">直近の営業予定</h2>
+                <p>スマホでも見やすいよう、日付ごとにまとめています。</p>
+              </div>
+              <span class="schedule-cards-badge">7日分</span>
+            </div>
+            <div class="schedule-card-list" id="scheduleCardList" aria-live="polite">
+              <div class="schedule-card-loading">営業予定を読み込み中です…</div>
+            </div>
+          </div>
+
+          <h2 class="sheet-title mt-16">週間お給仕表 詳細</h2>
           <div class="mt-12 sheet-embed" aria-label="週間お給仕表">
             <iframe
               src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRdLqPoS9TfRnJ1IuixzjkcJwjJ2CaW02ZR6CDhFJ1fMfky7pC1HFQhxFUhYEXawPGdos9kl2wnMY-j/pubhtml?gid=306053530&amp;single=true&amp;widget=true&amp;headers=false"
@@ -145,7 +159,7 @@
           </div>
 
           <p class="subnote">
-            スマホで横に見切れる場合は、表を左右にスクロールしてご覧ください。
+            詳細表は横に長いため、スマホでは上のカード表示を先にご確認ください。表を詳しく見る場合は左右にスクロールできます。
           </p>
         </div>
       </div>
@@ -241,7 +255,9 @@
     </div>
   </footer>
 
+  <script src="assets/js/config.js?v=20260306"></script>
   <script src="assets/js/core.js"></script>
+  <script src="assets/js/schedule-cards.js?v=20260607"></script>
   <script src="assets/js/page-init.js?v=20260606"></script>
 
   <noscript>JavaScriptが無効になっています。一部の表示が制限される可能性があります。</noscript>
