@@ -25,3 +25,4 @@
 - スマートフォン幅で、文字の重なりや横スクロールが出ていないか確認します。
 - Google Sheetsが一時的に読めない場合でも、各ページに案内カードが出ることを確認します。
 - GitHub Pagesの公開後、`https://potoro1001.github.io/potoro-portal/` を開いて反映を確認します。
+- GitHub Pagesの公開後、`node scripts/check-public-site.js` を実行して公開ページの応答を確認します。

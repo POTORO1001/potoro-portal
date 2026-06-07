@@ -30,6 +30,7 @@ concept cafe PO・TORO official portal site.
 ## Quick Checks
 
 - Run `node scripts/validate-site.js` before publishing broad navigation or page changes.
+- Run `node scripts/check-public-site.js` after GitHub Pages deployment to confirm the public pages and critical assets respond.
 - Confirm there are no broken local links after editing page links.
 - Check mobile and desktop layouts for horizontal overflow.
 - Check pages that load Google Sheets CSV data still show a useful fallback message when loading fails.
