@@ -104,9 +104,94 @@
 }
 
 @media (max-width:640px){
-  .table-goods th:nth-child(4),
-  .table-goods td:nth-child(4){
+  .table-goods{
+    display:block;
+    overflow:visible;
+    background:transparent;
+    border:0;
+    box-shadow:none;
+  }
+
+  .table-goods thead{
     display:none;
+  }
+
+  .table-goods tbody,
+  .table-goods tr,
+  .table-goods td{
+    display:block;
+    width:100%;
+  }
+
+  .table-goods tbody tr{
+    padding:13px 14px;
+    border:1px solid #ffd8ea;
+    border-radius:14px;
+    background:#fff;
+    box-shadow:0 8px 24px rgba(255, 141, 186, .18);
+  }
+
+  .table-goods tbody tr:nth-child(even),
+  .table-goods tbody tr:hover{
+    background:#fff;
+  }
+
+  .table-goods td{
+    display:grid;
+    grid-template-columns:72px minmax(0, 1fr);
+    gap:10px;
+    align-items:start;
+    padding:7px 0;
+    border-bottom:0;
+    font-size:.88rem;
+  }
+
+  .table-goods td::before{
+    color:#9b667c;
+    font-size:.72rem;
+    font-weight:1000;
+    line-height:1.5;
+    white-space:nowrap;
+  }
+
+  .table-goods td:nth-child(1)::before{
+    content:"配布開始";
+  }
+
+  .table-goods td:nth-child(2)::before{
+    content:"イベント";
+  }
+
+  .table-goods td:nth-child(3)::before{
+    content:"グッズ";
+  }
+
+  .table-goods td:nth-child(4)::before{
+    content:"配布終了";
+  }
+
+  .table-goods .date-text{
+    white-space:normal;
+  }
+
+  .table-goods .goods-name{
+    font-size:.95rem;
+    line-height:1.45;
+  }
+
+  .table-goods .event-name{
+    justify-self:start;
+    max-width:100%;
+    white-space:normal;
+  }
+
+  .table-goods td[colspan]{
+    display:block;
+    padding:0;
+  }
+
+  .table-goods td[colspan]::before{
+    content:none;
   }
 }
 
@@ -123,5 +208,23 @@
   .table th,
   .table td{
     border-bottom-color:#2b2d31;
+  }
+
+  @media (max-width:640px){
+    .table-goods{
+      background:transparent;
+    }
+
+    .table-goods tbody tr,
+    .table-goods tbody tr:nth-child(even),
+    .table-goods tbody tr:hover{
+      background:rgba(29,31,34,.95);
+      border-color:rgba(255,255,255,.14);
+      box-shadow:0 8px 24px rgba(0,0,0,.22);
+    }
+
+    .table-goods td::before{
+      color:#f0a7c7;
+    }
   }
 }
