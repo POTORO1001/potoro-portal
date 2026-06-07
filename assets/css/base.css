@@ -125,6 +125,8 @@ header{
 
 .hamburger{
   display:none;background:#fff;border:none;border-radius:12px;padding:9px;
+  width:44px;height:44px;
+  place-items:center;
   box-shadow:0 4px 12px rgba(0,0,0,.08); cursor:pointer;
 }
 .hamburger svg{width:22px;height:22px}
@@ -152,7 +154,9 @@ header{
   background:#f6f6f6;
   border:none;
   border-radius:12px;
-  padding:8px 10px;
+  width:44px;
+  height:44px;
+  padding:0;
   font-weight:1000;
   cursor:pointer;
 }
@@ -340,7 +344,7 @@ footer{padding:28px 0;color:#333}
 .modal.open{opacity:1;pointer-events:auto}
 .modal .panel{width:min(880px,92vw);max-height:min(80vh,900px);overflow:auto;background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px}
 .modal .panel h2{margin:.4rem 0 0.6rem;font-size:1.3rem;font-weight:1000}
-.modal .close{position:sticky;top:0;margin-left:auto;background:#f6f6f6;border:none;border-radius:999px;padding:8px 12px;cursor:pointer;font-weight:900}
+.modal .close{position:sticky;top:0;margin-left:auto;background:#f6f6f6;border:none;border-radius:999px;min-height:44px;padding:10px 14px;cursor:pointer;font-weight:900}
 .modal .body{padding:8px 4px}
 
 .reveal{opacity:0;transform: translateY(10px);transition: opacity .45s var(--ease), transform .45s var(--ease)}

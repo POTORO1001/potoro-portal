@@ -27,11 +27,11 @@ h1{font-weight:900;font-size:clamp(1.6rem,4vw,2.4rem);margin:24px 0 6px}
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;padding:4vw;z-index:100;opacity:0;pointer-events:none;transition:.2s}
 .lightbox.open{opacity:1;pointer-events:auto}
 .lightbox img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 8px 30px rgba(0,0,0,.5);border-radius:10px}
-.lightbox .close{position:absolute;top:16px;right:16px;background:#fff;border:none;border-radius:999px;font-size:16px;padding:8px 12px;cursor:pointer;color:#111}
+.lightbox .close{position:absolute;top:16px;right:16px;background:#fff;border:none;border-radius:999px;font-size:16px;min-width:44px;min-height:44px;padding:10px 14px;cursor:pointer;color:#111}
 .chip{display:inline-flex;align-items:center;gap:6px;background:#fafafa;border:1px solid #eee;border-radius:999px;padding:4px 8px;font-size:.78rem}
 
 .toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:8px auto 16px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid #eaeaea;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.08);font-weight:800;color:#222}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 14px;border-radius:999px;border:1px solid #eaeaea;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.08);font-weight:800;color:#222}
 .btn:hover{background:#111;color:#fff}
 .next-links-section{margin:0 auto 36px}
 .next-links{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}

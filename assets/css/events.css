@@ -130,7 +130,7 @@
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;padding:4vw;z-index:100;opacity:0;pointer-events:none;transition:.2s}
 .lightbox.open{opacity:1;pointer-events:auto}
 .lightbox img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 8px 30px rgba(0,0,0,.5);border-radius:10px}
-.lightbox .close{position:absolute;top:16px;right:16px;background:#fff;border:none;border-radius:999px;font-size:16px;padding:8px 12px;cursor:pointer}
+.lightbox .close{position:absolute;top:16px;right:16px;background:#fff;border:none;border-radius:999px;font-size:16px;min-width:44px;min-height:44px;padding:10px 14px;cursor:pointer}
 
 @media (max-width:880px){
   .featured{grid-column:auto}
