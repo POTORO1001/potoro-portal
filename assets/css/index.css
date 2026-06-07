@@ -400,7 +400,23 @@
   .mj-banner .inner{flex-direction:column; align-items:stretch;}
   .mj-banner .btn{width:100%; justify-content:center; text-align:center;}
   .mj-banner .left{align-items:center;}
-  .hero-priority{grid-template-columns:1fr}
+  .hero-priority{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:8px;
+  }
+  .hero-priority a{
+    min-height:64px;
+    padding:10px 8px;
+    border-radius:14px;
+  }
+  .hero-priority span{
+    font-size:.68rem;
+    line-height:1.25;
+  }
+  .hero-priority strong{
+    font-size:.84rem;
+    line-height:1.3;
+  }
   .today-row{align-items:stretch}
   .today-left{width:100%}
   .today-pill{white-space:normal}

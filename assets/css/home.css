@@ -454,14 +454,24 @@ font-size: .8rem;
 
 @media (max-width: 520px){
   .recruit-float{
-    left:12px;
-    right:12px;
-    bottom:12px;
+    left:auto;
+    right:10px;
+    bottom:10px;
+    max-width:min(48vw, 178px);
   }
 
   .recruit-float a{
     min-width:0;
-    width:100%;
+    width:auto;
+    min-height:46px;
+    padding:9px 12px;
+    border-radius:999px;
+    font-size:.72rem;
+    line-height:1.25;
+  }
+
+  .recruit-float a br{
+    display:none;
   }
 }
 
@@ -664,6 +674,16 @@ width: 74px;
   .hero-visual::before{
 width: 220px;
 height: 220px;
+  }
+
+  .hero-visual{
+margin-top: 10px;
+margin-bottom: 8px;
+  }
+
+  .hero-visual img{
+width: 220px;
+max-width: 68%;
   }
 
   .hero .reveal:first-child::after{
