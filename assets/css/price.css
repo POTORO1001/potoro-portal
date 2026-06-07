@@ -237,6 +237,27 @@ a:hover{ opacity:.96; }
   color:#4e3642;
 }
 
+.big-price,
+.price-highlight .price{
+  display:flex;
+  align-items:baseline;
+  flex-wrap:wrap;
+  gap:.18em .34em;
+}
+
+.price-duration,
+.price-amount,
+.price-tax{
+  display:inline-block;
+  white-space:nowrap;
+}
+
+.price-tax{
+  font-size:.5em;
+  font-weight:900;
+  letter-spacing:.02em;
+}
+
 .hero-panel p{
   margin:0;
   color:var(--pt-text-sub);
@@ -765,6 +786,30 @@ a:hover{ opacity:.96; }
 }
 
 @media (max-width: 520px){
+  .big-price,
+  .price-highlight .price{
+    display:flex;
+    flex-wrap:nowrap;
+    gap:.22em;
+    align-items:baseline;
+    font-size:2.25rem;
+    line-height:1.12;
+  }
+
+  .big-price .price-duration,
+  .price-highlight .price .price-duration{
+    font-size:.52em;
+  }
+
+  .big-price .price-tax,
+  .price-highlight .price .price-tax{
+    font-size:.42em;
+  }
+
+  .price-quick{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
   .hero-actions,
   .cta-actions{
     display:grid;
