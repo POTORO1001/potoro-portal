@@ -23,10 +23,3 @@ window.PORTAL_CONFIG = {
     formUrl: ""
   }
 };
-
-// 麻雀募集バナー用 Firebase 設定（未設定ならバナー自動で無効）
-window.MAHJONG_FIREBASE_CONFIG = {
-  apiKey: "AIzaSyAm1EIxmK_UWmRM7VMP7LREbMQhSYmylko",
-  authDomain: "potoro-mahjong.firebaseapp.com",
-  projectId: "potoro-mahjong"
-};

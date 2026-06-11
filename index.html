@@ -160,45 +160,7 @@
     </div>
   </header>
 
-  <div class="mahjong-top-alert" id="mahjongTopAlert" hidden aria-live="polite">
-    <a
-      class="mahjong-top-alert__inner container"
-      id="mahjongTopAlertLink"
-      href="https://potoro1001.github.io/potoro-mahjong/mahjong-room-list.html"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <span class="mahjong-top-alert__badge">🀄 【NEW】</span>
-
-      <div class="mahjong-top-alert__marquee" aria-label="ポトロ麻雀の募集速報">
-        <div class="mahjong-top-alert__track" id="mahjongTopAlertTrack">
-          <span>🀄 【NEW】ポトロ麻雀で面子募集中！</span>
-          <span aria-hidden="true">／</span>
-          <span id="mahjongTopAlertMeta">現在の募集状況をチェックできます</span>
-          <span aria-hidden="true">／</span>
-          <span>タップして募集を見る</span>
-        </div>
-      </div>
-    </a>
-  </div>
-
   <main id="main">
-    <div class="container">
-      <div class="mj-banner" id="mjBanner" aria-live="polite">
-        <div class="inner">
-          <div class="left">
-            <div class="ico" aria-hidden="true">🀄</div>
-            <div class="txt">
-              <div class="title">現在、麻雀の募集があります <span id="mjCount" class="tag tag-strong"></span></div>
-              <div class="meta" id="mjList"></div>
-              <div class="tag mt-8">※募集中の部屋が無いときは自動で非表示になります</div>
-            </div>
-          </div>
-          <a class="btn" id="mjLink" href="https://potoro1001.github.io/potoro-mahjong/mahjong-room-list.html" target="_blank" rel="noopener noreferrer">募集を見る</a>
-        </div>
-      </div>
-    </div>
-
     <section class="hero">
       <div class="container wrap">
         <div class="reveal">
@@ -339,10 +301,6 @@
             <div class="quick-section">
               <h2 class="quick-section-title">もっと知る・参加する</h2>
               <div class="grid cols-3">
-                <a class="qcard" href="https://potoro1001.github.io/potoro-mahjong/" target="_blank" rel="noopener noreferrer">
-                  <div class="top"><div class="ico">🀄</div><div class="tag">麻雀</div></div>
-                  <h3>ポ・トロ麻雀</h3><p>ルール/募集はこちら♡</p>
-                </a>
                 <a class="qcard" href="uniforms.html">
                   <div class="top"><div class="ico">🎀</div><div class="tag">世界観</div></div>
                   <h3>歴代メイド服</h3><p>初代から現行までの制服紹介♡</p>
@@ -561,8 +519,6 @@
   <script src="assets/js/today.js?v=20260306"></script>
   <script src="assets/js/news.js?v=20260306"></script>
 
-  <script type="module" src="assets/js/mahjong-feed.js?v=20260606"></script>
-
   <script>
     function fallbackTodayUI(message){
       const hoursEl = document.getElementById('todayHours');
@@ -622,7 +578,7 @@
         console.error('news load failed:', err);
       }
 
-      document.getElementById('mjLink')?.setAttribute('href', 'https://potoro1001.github.io/potoro-mahjong/mahjong-room-list.html');
+
     });
   </script>
 
