@@ -11,6 +11,9 @@
 .reserve-stack,
 .reserve-subactions,
 .quick-grid > *,
+.quick-links,
+.quick-section,
+.quick-section .grid{
   min-width:0;
 }
 @media (max-width:880px){
@@ -367,6 +370,16 @@
 }
 
 @media (max-width:520px){
+  .quick-links,
+  .quick-section,
+  .quick-section .grid{
+    width:100%;
+  }
+
+  .quick-section .grid.cols-3{
+    grid-template-columns:1fr;
+  }
+
   .hero-priority{
     grid-template-columns:repeat(3,minmax(0,1fr));
     gap:8px;
