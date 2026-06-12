@@ -68,7 +68,7 @@ function collectCriticalAssets(html, pageUrl) {
   for (const match of html.matchAll(/<img\b[^>]*>/gi)) {
     const tag = match[0];
     const src = attr(tag, 'src');
-    if (src && /(?:ogp|hero|uniform|recruit|moeselect|diagnosis|quest)/i.test(src)) {
+    if (src && /(?:ogp|hero|uniform|recruit|moeselect|diagnosis|quest|omikuji)/i.test(src)) {
       assets.push(new URL(src, pageUrl).toString());
     }
   }

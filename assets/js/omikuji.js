@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const button = document.getElementById('drawFortune');
+  const card = document.getElementById('fortuneCard');
   const paper = document.querySelector('.fortune-paper');
   const mark = document.getElementById('fortuneMark');
   const rank = document.getElementById('fortuneRank');
@@ -64,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const linkText = document.getElementById('fortuneLinkText');
   const link = document.getElementById('fortuneLink');
 
-  if (!button || !paper || !mark || !rank || !message || !action || !linkText || !link) return;
+  if (!button || !card || !paper || !mark || !rank || !message || !action || !linkText || !link) return;
 
   const pickFortune = () => {
     const todayKey = new Date().toLocaleDateString('ja-JP');
@@ -95,6 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const fortune = pickFortune();
 
     button.disabled = true;
+    card.classList.remove('is-revealed');
+    card.classList.add('is-drawing');
     paper.setAttribute('aria-busy', 'true');
     paper.classList.remove('is-drawing');
     paper.classList.remove('is-revealed');
@@ -115,6 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     drawTimer = setTimeout(() => {
       render(fortune);
+      card.classList.remove('is-drawing');
+      card.classList.add('is-revealed');
       paper.classList.remove('is-drawing');
       paper.classList.add('is-revealed');
       paper.removeAttribute('aria-busy');
