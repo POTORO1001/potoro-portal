@@ -87,9 +87,11 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   let drawTimer = null;
+  let drawMessageTimer = null;
 
   button.addEventListener('click', () => {
     if (drawTimer) clearTimeout(drawTimer);
+    if (drawMessageTimer) clearTimeout(drawMessageTimer);
     const fortune = pickFortune();
 
     button.disabled = true;
@@ -105,6 +107,12 @@ document.addEventListener('DOMContentLoaded', () => {
     action.textContent = '-';
     linkText.textContent = '-';
 
+    drawMessageTimer = setTimeout(() => {
+      mark.textContent = '!';
+      rank.textContent = '運勢を開いています';
+      message.textContent = 'もう少しで結果が出ます。';
+    }, 620);
+
     drawTimer = setTimeout(() => {
       render(fortune);
       paper.classList.remove('is-drawing');
@@ -112,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
       paper.removeAttribute('aria-busy');
       button.disabled = false;
       drawTimer = null;
-    }, 820);
+      drawMessageTimer = null;
+    }, 1180);
   });
 });

@@ -68,6 +68,40 @@
   z-index:1;
 }
 
+.fortune-aura,
+.fortune-sparkles{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+
+.fortune-aura{
+  opacity:0;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255,255,255,.72), transparent 18%),
+    radial-gradient(circle at 18% 72%, rgba(255,121,166,.22), transparent 26%),
+    radial-gradient(circle at 86% 72%, rgba(127,201,255,.24), transparent 24%),
+    linear-gradient(115deg, transparent 0 36%, rgba(255,255,255,.72) 46%, transparent 56% 100%);
+  transform:translateX(-40%);
+}
+
+.fortune-sparkles span{
+  position:absolute;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#ffd15c;
+  box-shadow:0 0 12px rgba(255,209,92,.78);
+  opacity:0;
+}
+
+.fortune-sparkles span:nth-child(1){left:18%;top:22%}
+.fortune-sparkles span:nth-child(2){left:78%;top:24%;background:#ff85bf}
+.fortune-sparkles span:nth-child(3){left:24%;top:74%;background:#8ed2ff}
+.fortune-sparkles span:nth-child(4){left:70%;top:70%}
+.fortune-sparkles span:nth-child(5){left:50%;top:14%;background:#fff}
+
 .fortune-mark{
   width:62px;
   height:62px;
@@ -145,27 +179,61 @@
 }
 
 .fortune-paper.is-drawing{
-  animation:fortuneDrawShake .78s ease-in-out;
+  animation:fortuneDrawShake 1.12s cubic-bezier(.22,.9,.24,1);
+  box-shadow:0 24px 54px rgba(255, 128, 178, .32);
+}
+
+.fortune-paper.is-drawing .fortune-aura{
+  animation:fortuneSweep 1.12s ease-in-out;
+}
+
+.fortune-paper.is-drawing .fortune-sparkles span{
+  animation:fortuneSpark .9s ease-out;
+}
+
+.fortune-paper.is-drawing .fortune-sparkles span:nth-child(2){
+  animation-delay:.08s;
+}
+
+.fortune-paper.is-drawing .fortune-sparkles span:nth-child(3){
+  animation-delay:.15s;
+}
+
+.fortune-paper.is-drawing .fortune-sparkles span:nth-child(4){
+  animation-delay:.22s;
+}
+
+.fortune-paper.is-drawing .fortune-sparkles span:nth-child(5){
+  animation-delay:.3s;
 }
 
 .fortune-paper.is-drawing .fortune-mark{
-  animation:fortuneMarkSpin .78s ease-in-out;
+  animation:fortuneMarkSpin 1.12s cubic-bezier(.22,.9,.24,1);
 }
 
 .fortune-paper.is-drawing .fortune-rank,
 .fortune-paper.is-drawing .fortune-message,
 .fortune-paper.is-drawing .fortune-details{
-  opacity:.58;
+  opacity:.42;
+  filter:blur(.5px);
 }
 
 .fortune-paper.is-revealed .fortune-mark{
-  animation:fortunePop .42s ease-out;
+  animation:fortunePop .56s cubic-bezier(.2,1.35,.32,1);
 }
 
 .fortune-paper.is-revealed .fortune-rank,
 .fortune-paper.is-revealed .fortune-message,
 .fortune-paper.is-revealed .fortune-details{
-  animation:fortuneReveal .42s ease-out both;
+  animation:fortuneReveal .56s cubic-bezier(.2,.9,.24,1) both;
+}
+
+.fortune-paper.is-revealed .fortune-aura{
+  animation:fortuneRevealGlow .62s ease-out;
+}
+
+.fortune-paper.is-revealed .fortune-sparkles span{
+  animation:fortuneSpark .68s ease-out;
 }
 
 .fortune-paper.is-revealed .fortune-message{
@@ -182,20 +250,23 @@
 }
 
 @keyframes fortuneDrawShake{
-  0%,100%{transform:translateX(0) rotate(0deg)}
-  12%{transform:translateX(-7px) rotate(-1.8deg)}
-  24%{transform:translateX(7px) rotate(1.8deg)}
-  36%{transform:translateX(-6px) rotate(-1.4deg)}
-  48%{transform:translateX(6px) rotate(1.4deg)}
-  60%{transform:translateX(-4px) rotate(-.9deg)}
-  72%{transform:translateX(4px) rotate(.9deg)}
-  86%{transform:translateX(-2px) rotate(-.4deg)}
+  0%,100%{transform:translateX(0) translateY(0) rotate(0deg) scale(1)}
+  8%{transform:translateX(-10px) translateY(-2px) rotate(-3deg) scale(1.015)}
+  16%{transform:translateX(10px) translateY(1px) rotate(3deg) scale(1.02)}
+  24%{transform:translateX(-12px) translateY(-2px) rotate(-3.4deg) scale(1.018)}
+  34%{transform:translateX(12px) translateY(1px) rotate(3.2deg) scale(1.02)}
+  46%{transform:translateX(-9px) translateY(-1px) rotate(-2.4deg) scale(1.012)}
+  58%{transform:translateX(8px) translateY(0) rotate(2deg) scale(1.01)}
+  72%{transform:translateX(-5px) rotate(-1.2deg)}
+  86%{transform:translateX(3px) rotate(.7deg)}
 }
 
 @keyframes fortuneMarkSpin{
   0%{transform:scale(1) rotate(0deg)}
-  45%{transform:scale(1.08) rotate(12deg)}
-  78%{transform:scale(.96) rotate(-8deg)}
+  18%{transform:scale(1.18) rotate(-16deg)}
+  42%{transform:scale(1.08) rotate(18deg)}
+  68%{transform:scale(1.16) rotate(-12deg)}
+  84%{transform:scale(.92) rotate(8deg)}
   100%{transform:scale(1) rotate(0deg)}
 }
 
@@ -213,6 +284,54 @@
   100%{
     opacity:1;
     transform:translateY(0);
+  }
+}
+
+@keyframes fortuneSweep{
+  0%{
+    opacity:0;
+    transform:translateX(-58%);
+  }
+  18%{
+    opacity:.9;
+  }
+  74%{
+    opacity:.78;
+    transform:translateX(38%);
+  }
+  100%{
+    opacity:0;
+    transform:translateX(58%);
+  }
+}
+
+@keyframes fortuneRevealGlow{
+  0%{
+    opacity:0;
+    transform:scale(.92);
+  }
+  45%{
+    opacity:.9;
+    transform:scale(1.02);
+  }
+  100%{
+    opacity:0;
+    transform:scale(1.08);
+  }
+}
+
+@keyframes fortuneSpark{
+  0%{
+    opacity:0;
+    transform:translateY(10px) scale(.5);
+  }
+  38%{
+    opacity:1;
+    transform:translateY(-8px) scale(1.1);
+  }
+  100%{
+    opacity:0;
+    transform:translateY(-24px) scale(.35);
   }
 }
 
