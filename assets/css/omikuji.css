@@ -145,14 +145,75 @@
 }
 
 .fortune-paper.is-drawing{
-  animation:fortuneShake .32s ease-in-out;
+  animation:fortuneDrawShake .78s ease-in-out;
 }
 
-@keyframes fortuneShake{
+.fortune-paper.is-drawing .fortune-mark{
+  animation:fortuneMarkSpin .78s ease-in-out;
+}
+
+.fortune-paper.is-drawing .fortune-rank,
+.fortune-paper.is-drawing .fortune-message,
+.fortune-paper.is-drawing .fortune-details{
+  opacity:.58;
+}
+
+.fortune-paper.is-revealed .fortune-mark{
+  animation:fortunePop .42s ease-out;
+}
+
+.fortune-paper.is-revealed .fortune-rank,
+.fortune-paper.is-revealed .fortune-message,
+.fortune-paper.is-revealed .fortune-details{
+  animation:fortuneReveal .42s ease-out both;
+}
+
+.fortune-paper.is-revealed .fortune-message{
+  animation-delay:.06s;
+}
+
+.fortune-paper.is-revealed .fortune-details{
+  animation-delay:.12s;
+}
+
+.fortune-actions .btn[disabled]{
+  cursor:wait;
+  opacity:.78;
+}
+
+@keyframes fortuneDrawShake{
   0%,100%{transform:translateX(0) rotate(0deg)}
-  25%{transform:translateX(-4px) rotate(-1deg)}
-  50%{transform:translateX(4px) rotate(1deg)}
-  75%{transform:translateX(-2px) rotate(-.5deg)}
+  12%{transform:translateX(-7px) rotate(-1.8deg)}
+  24%{transform:translateX(7px) rotate(1.8deg)}
+  36%{transform:translateX(-6px) rotate(-1.4deg)}
+  48%{transform:translateX(6px) rotate(1.4deg)}
+  60%{transform:translateX(-4px) rotate(-.9deg)}
+  72%{transform:translateX(4px) rotate(.9deg)}
+  86%{transform:translateX(-2px) rotate(-.4deg)}
+}
+
+@keyframes fortuneMarkSpin{
+  0%{transform:scale(1) rotate(0deg)}
+  45%{transform:scale(1.08) rotate(12deg)}
+  78%{transform:scale(.96) rotate(-8deg)}
+  100%{transform:scale(1) rotate(0deg)}
+}
+
+@keyframes fortunePop{
+  0%{transform:scale(.72);filter:brightness(1.15)}
+  64%{transform:scale(1.12);filter:brightness(1.05)}
+  100%{transform:scale(1);filter:brightness(1)}
+}
+
+@keyframes fortuneReveal{
+  0%{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  100%{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
 @media (max-width:720px){

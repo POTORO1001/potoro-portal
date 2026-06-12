@@ -86,10 +86,32 @@ document.addEventListener('DOMContentLoaded', () => {
     link.href = fortune.href;
   };
 
+  let drawTimer = null;
+
   button.addEventListener('click', () => {
+    if (drawTimer) clearTimeout(drawTimer);
+    const fortune = pickFortune();
+
+    button.disabled = true;
+    paper.setAttribute('aria-busy', 'true');
     paper.classList.remove('is-drawing');
+    paper.classList.remove('is-revealed');
     void paper.offsetWidth;
     paper.classList.add('is-drawing');
-    render(pickFortune());
+
+    mark.textContent = '...';
+    rank.textContent = 'おみくじを振っています';
+    message.textContent = '紙の向こうから、今日の運勢が近づいています。';
+    action.textContent = '-';
+    linkText.textContent = '-';
+
+    drawTimer = setTimeout(() => {
+      render(fortune);
+      paper.classList.remove('is-drawing');
+      paper.classList.add('is-revealed');
+      paper.removeAttribute('aria-busy');
+      button.disabled = false;
+      drawTimer = null;
+    }, 820);
   });
 });
