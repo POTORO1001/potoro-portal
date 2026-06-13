@@ -962,6 +962,13 @@ footer a,
   color: var(--pt-accent-main);
 }
 
+@media (max-width:880px){
+  .drawer a[href="./recruit/"]{
+    color:#fff;
+    text-shadow:0 1px 6px rgba(120,20,74,.24);
+  }
+}
+
 @media (max-width: 768px){
   .headline{
 line-height: 1.42;
