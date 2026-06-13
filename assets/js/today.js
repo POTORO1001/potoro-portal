@@ -139,6 +139,9 @@
     const day = await fetchTodayOnce();
     renderTodayHours(day);
     renderTodayMaids(day);
+    window.PortalTodayDay = day;
+    window.dispatchEvent(new CustomEvent('portal:today-ready', { detail: { day } }));
+    return day;
   }
 
   window.PortalToday = { initToday };

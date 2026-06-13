@@ -30,6 +30,9 @@
 
   const statusKeys = ['status', 'color', '状態', '状況', '色'];
   const updatedKeys = ['updated', 'time', 'updated_at', '最終更新', '更新', '時刻'];
+  let latestSeat = null;
+  let latestDay = null;
+  let hasTodayData = false;
 
   function normalize(value) {
     return core.normalizeHeader ? core.normalizeHeader(value) : String(value || '').trim().toLowerCase();
@@ -103,6 +106,59 @@
     return `${raw}時点の状況です`;
   }
 
+  function parseTimeToMinutes(value) {
+    const text = String(value || '').trim();
+    const match = text.match(/(\d{1,2})[:：](\d{1,2})/);
+    if (!match) return null;
+    const hours = Number(match[1]);
+    const minutes = Number(match[2]);
+    if (!Number.isFinite(hours) || !Number.isFinite(minutes)) return null;
+    return hours * 60 + minutes;
+  }
+
+  function getTokyoMinutes(date = new Date()) {
+    const parts = new Intl.DateTimeFormat('ja-JP', {
+      timeZone: 'Asia/Tokyo',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).formatToParts(date);
+    const hour = Number(parts.find((part) => part.type === 'hour')?.value || 0);
+    const minute = Number(parts.find((part) => part.type === 'minute')?.value || 0);
+    return hour * 60 + minute;
+  }
+
+  function getBusinessWindow(day) {
+    const maids = Array.isArray(day?.maids) ? day.maids : [];
+    const times = maids.map((maid) => ({
+      start: parseTimeToMinutes(maid && maid.start),
+      end: parseTimeToMinutes(maid && maid.end),
+      off: maid && maid.off === true
+    })).filter((time) => !time.off && time.start != null && time.end != null);
+
+    if (!times.length) return null;
+    return {
+      open: Math.min(...times.map((time) => time.start)),
+      close: Math.max(...times.map((time) => time.end))
+    };
+  }
+
+  function isWithinBusinessHours(day, date = new Date()) {
+    const window = getBusinessWindow(day);
+    if (!window) return false;
+    const now = getTokyoMinutes(date);
+    if (window.close < window.open) return now >= window.open || now <= window.close;
+    return now >= window.open && now <= window.close;
+  }
+
+  function renderIfAllowed() {
+    if (!hasTodayData || !isWithinBusinessHours(latestDay)) {
+      render(null);
+      return;
+    }
+    render(latestSeat);
+  }
+
   function render(seat) {
     const root = document.getElementById('seatsStatus');
     const dot = document.getElementById('seatsStatusDot');
@@ -164,18 +220,35 @@
     if (!primaryUrl) return;
 
     try {
-      render(await loadGvizJsonp(primaryUrl));
+      latestSeat = await loadGvizJsonp(primaryUrl);
+      renderIfAllowed();
     } catch (err) {
       try {
         const csv = await core.tryLoadCSV(primaryUrl, altUrl);
-        render(parseCsv(csv));
+        latestSeat = parseCsv(csv);
+        renderIfAllowed();
       } catch (fetchErr) {
+        latestSeat = null;
         render(null);
       }
     }
   }
 
-  window.PortalSeats = { init, parseCsv, parseGvizTable, render, formatUpdatedText };
+  window.addEventListener('portal:today-ready', (event) => {
+    latestDay = event.detail && event.detail.day ? event.detail.day : null;
+    hasTodayData = true;
+    renderIfAllowed();
+  });
+
+  window.PortalSeats = {
+    init,
+    parseCsv,
+    parseGvizTable,
+    render,
+    formatUpdatedText,
+    getBusinessWindow,
+    isWithinBusinessHours
+  };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init, { once: true });
