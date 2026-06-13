@@ -24,16 +24,20 @@
     return [...messageKeys, ...enabledKeys, ...linkKeys].some((key) => headers.includes(normalize(key)));
   }
 
-  function parseRows(csv) {
-    const rows = core.parseCSV ? core.parseCSV(csv) : [];
+  function rowsToItems(rows) {
     if (!rows.length) return [];
 
     if (!hasHeader(rows[0])) {
       return rows
-        .map((row) => ({
-          message: String((row || []).find((cell) => String(cell || '').trim()) || '').trim(),
-          link: ''
-        }))
+        .map((row) => {
+          const enabled = String(row[1] || '').trim().toLowerCase();
+          if (enabled && falseValues.has(enabled)) return null;
+          return {
+            message: String((row || []).find((cell) => String(cell || '').trim()) || '').trim(),
+            link: String(row[2] || '').trim()
+          };
+        })
+        .filter(Boolean)
         .filter((item) => item.message);
     }
 
@@ -46,6 +50,21 @@
         link: firstByKeys(row, headers, linkKeys)
       };
     }).filter((item) => item && item.message);
+  }
+
+  function parseRows(csv) {
+    const rows = core.parseCSV ? core.parseCSV(csv) : [];
+    return rowsToItems(rows);
+  }
+
+  function parseGvizTable(table) {
+    const rows = ((table || {}).rows || []).map((row) => (
+      ((row || {}).c || []).map((cell) => {
+        const value = cell && (cell.f != null ? cell.f : cell.v);
+        return value == null ? '' : String(value);
+      })
+    ));
+    return rowsToItems(rows);
   }
 
   function escapeHtml(value) {
@@ -92,17 +111,54 @@
   async function init() {
     const primaryUrl = config.sokuhouCsvUrl;
     const altUrl = config.sokuhouCsvUrlAlt || primaryUrl;
-    if (!primaryUrl || !core.tryLoadCSV) return;
+    if (!primaryUrl) return;
 
     try {
       const csv = await core.tryLoadCSV(primaryUrl, altUrl);
       render(parseRows(csv));
     } catch (err) {
-      render([]);
+      try {
+        render(await loadGvizJsonp(primaryUrl));
+      } catch (jsonpErr) {
+        render([]);
+      }
     }
   }
 
-  window.PortalSokuhou = { init, parseRows, render };
+  function loadGvizJsonp(url) {
+    return new Promise((resolve, reject) => {
+      const callbackName = `__portalSokuhou${Date.now()}${Math.floor(Math.random() * 1000)}`;
+      const script = document.createElement('script');
+      const cleanup = () => {
+        delete window[callbackName];
+        script.remove();
+      };
+
+      window[callbackName] = (response) => {
+        cleanup();
+        resolve(parseGvizTable(response && response.table));
+      };
+
+      try {
+        const gvizUrl = new URL(url);
+        gvizUrl.searchParams.set('tqx', `responseHandler:${callbackName}`);
+        script.src = gvizUrl.toString();
+      } catch (err) {
+        cleanup();
+        reject(err);
+        return;
+      }
+
+      script.async = true;
+      script.onerror = () => {
+        cleanup();
+        reject(new Error('sokuhou jsonp failed'));
+      };
+      document.head.appendChild(script);
+    });
+  }
+
+  window.PortalSokuhou = { init, parseRows, parseGvizTable, render };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init, { once: true });
