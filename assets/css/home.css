@@ -744,6 +744,30 @@ opacity .2s ease;
   color:#d94b8d;
 }
 
+@media (max-width:880px){
+  .drawer{
+    background:
+linear-gradient(180deg, rgba(255,255,255,.98) 0%, rgba(255,247,251,.98) 100%);
+  }
+
+  .drawer a{
+    color:#2f2530;
+  }
+
+  .drawer a[aria-current="page"]{
+    color:#fff;
+    background:linear-gradient(135deg,#171217,#2a1a24);
+    border-color:rgba(255,255,255,.12);
+    box-shadow:0 10px 22px rgba(24,18,22,.22);
+  }
+
+  .drawer a[href="./recruit/"]{
+    color:#fff;
+    background:linear-gradient(135deg,#ff5c9f,#e86fb1);
+    border-color:rgba(255,255,255,.3);
+  }
+}
+
 footer{
   position: relative;
   margin-top: 22px;

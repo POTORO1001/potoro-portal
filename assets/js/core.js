@@ -294,6 +294,7 @@
   function setupDrawer(){
     const btnMenu = document.getElementById('btnMenu');
     const drawer  = document.getElementById('drawer');
+    const scrim = document.getElementById('drawerScrim');
     const btnClose= document.getElementById('btnClose');
     if(!btnMenu || !drawer || !btnClose) return;
     let lastFocus = null;
@@ -301,6 +302,8 @@
     const toggleDrawer=(open)=>{
       if(open) lastFocus = document.activeElement;
       drawer.classList.toggle('open', open);
+      scrim?.classList.toggle('open', open);
+      document.body.classList.toggle('drawer-open', open);
       drawer.setAttribute('aria-hidden', String(!open));
       btnMenu.setAttribute('aria-expanded', String(open));
       document.body.style.overflow = open ? 'hidden' : '';
@@ -313,6 +316,7 @@
 
     btnMenu.addEventListener('click', ()=>toggleDrawer(true));
     btnClose.addEventListener('click', ()=>toggleDrawer(false));
+    scrim?.addEventListener('click', ()=>toggleDrawer(false));
     drawer.addEventListener('click', (e)=>{ if(e.target.tagName === 'A') toggleDrawer(false); });
     drawer.addEventListener('keydown', (e)=>keepFocusInside(drawer, e));
     window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && drawer.classList.contains('open')) toggleDrawer(false); });
