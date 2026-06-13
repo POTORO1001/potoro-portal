@@ -282,9 +282,11 @@ function validateCsvUrl(file, key, value) {
 
   if (url.protocol !== 'https:') addIssue(file, `${key} should use https`);
   if (!/docs\.google\.com$/.test(url.hostname)) addIssue(file, `${key} should point to docs.google.com`);
-  if (!url.pathname.includes('/pub')) addIssue(file, `${key} should be a published Google Sheets URL`);
-  if (url.searchParams.get('output') !== 'csv') addIssue(file, `${key} should include output=csv`);
-  if (!url.searchParams.get('gid')) addIssue(file, `${key} should include gid`);
+  const isPublishedCsv = url.pathname.includes('/pub') && url.searchParams.get('output') === 'csv' && url.searchParams.get('gid');
+  const isSheetNameCsv = url.pathname.includes('/gviz/tq') && url.searchParams.get('tqx') === 'out:csv' && url.searchParams.get('sheet');
+  if (!isPublishedCsv && !isSheetNameCsv) {
+    addIssue(file, `${key} should be a published CSV URL with gid or a gviz CSV URL with sheet`);
+  }
 }
 
 function validateConfig() {
@@ -298,6 +300,8 @@ function validateConfig() {
     'eventsCsvUrlAlt',
     'goodsCsvUrl',
     'goodsCsvUrlAlt',
+    'sokuhouCsvUrl',
+    'sokuhouCsvUrlAlt',
     'scheduleCsvUrl'
   ];
 

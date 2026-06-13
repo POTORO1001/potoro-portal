@@ -3,9 +3,97 @@
 .ticker li{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border-bottom:1px solid #eee;line-height:1.55}
 .ticker li:last-child{border-bottom:none}
 .label{display:inline-block;padding:.18em .62em;border-radius:999px;font-size:.75rem;font-weight:1000;color:#fff;background:#ff72b4;white-space:nowrap}
+.sokuhou-alert{
+  position:relative;
+  z-index:45;
+  background:linear-gradient(90deg,#1b1b1f,#33202b 52%,#1b1b1f);
+  border-top:1px solid rgba(255,255,255,.55);
+  border-bottom:1px solid rgba(255,124,178,.35);
+  box-shadow:0 8px 22px rgba(70,34,54,.14);
+}
+.sokuhou-alert[hidden]{display:none}
+.sokuhou-alert__inner{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-height:42px;
+  color:#fff;
+  text-decoration:none;
+  overflow:hidden;
+}
+.sokuhou-alert__badge{
+  flex:0 0 auto;
+  display:inline-grid;
+  place-items:center;
+  min-width:48px;
+  min-height:24px;
+  padding:0 10px;
+  border-radius:999px;
+  background:#ff2f72;
+  color:#fff;
+  font-size:.78rem;
+  font-weight:1000;
+  line-height:1;
+  box-shadow:0 0 0 0 rgba(255,47,114,.45);
+  animation:sokuhouBlink .9s steps(2,end) infinite, sokuhouPulse 1.8s ease-in-out infinite;
+}
+.sokuhou-alert__marquee{
+  flex:1 1 auto;
+  min-width:0;
+  overflow:hidden;
+  white-space:nowrap;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+}
+.sokuhou-alert__track{
+  display:inline-flex;
+  align-items:center;
+  gap:48px;
+  min-width:max-content;
+  color:#fff7fb;
+  font-weight:900;
+  letter-spacing:0;
+  animation:sokuhouMarquee 18s linear infinite;
+  text-shadow:0 1px 12px rgba(255,183,215,.32);
+}
+@keyframes sokuhouMarquee{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+@keyframes sokuhouBlink{
+  50%{filter:brightness(1.5)}
+}
+@keyframes sokuhouPulse{
+  50%{box-shadow:0 0 0 8px rgba(255,47,114,0)}
+}
 @media (prefers-color-scheme: dark){
   .ticker{background:rgba(29,31,34,.92);border-color:rgba(255,255,255,.12)}
   .ticker li{border-bottom-color:#2b2d31}
+}
+@media (max-width:560px){
+  .sokuhou-alert__inner{
+    min-height:40px;
+    gap:8px;
+  }
+  .sokuhou-alert__badge{
+    min-width:44px;
+    padding:0 8px;
+    font-size:.74rem;
+  }
+  .sokuhou-alert__track{
+    gap:36px;
+    font-size:.88rem;
+    animation-duration:14s;
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  .sokuhou-alert__badge,
+  .sokuhou-alert__track{
+    animation:none;
+  }
+  .sokuhou-alert__track{
+    transform:none;
+  }
 }
 
 .hero .wrap > *,
