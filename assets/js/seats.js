@@ -90,6 +90,19 @@
     return rowsToSeat(rows);
   }
 
+  function formatUpdatedText(value) {
+    const raw = String(value || '').trim();
+    if (!raw) return '';
+
+    const jp = raw.match(/(\d{1,2})\s*時\s*(\d{1,2})\s*分?/);
+    if (jp) return `${Number(jp[1])}時${String(Number(jp[2])).padStart(2, '0')}分時点の状況です`;
+
+    const colon = raw.match(/(\d{1,2})[:：](\d{1,2})/);
+    if (colon) return `${Number(colon[1])}時${String(Number(colon[2])).padStart(2, '0')}分時点の状況です`;
+
+    return `${raw}時点の状況です`;
+  }
+
   function render(seat) {
     const root = document.getElementById('seatsStatus');
     const dot = document.getElementById('seatsStatusDot');
@@ -108,7 +121,7 @@
     dot.className = `seats-status__dot ${view.className}`;
     label.textContent = view.label;
     message.textContent = view.message;
-    updated.textContent = seat.updated ? `最終更新 ${seat.updated} / 更新時点の状況です` : '更新時点の状況です';
+    updated.textContent = formatUpdatedText(seat.updated) || '更新時点の状況です';
     root.hidden = false;
   }
 
@@ -162,7 +175,7 @@
     }
   }
 
-  window.PortalSeats = { init, parseCsv, parseGvizTable, render };
+  window.PortalSeats = { init, parseCsv, parseGvizTable, render, formatUpdatedText };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init, { once: true });

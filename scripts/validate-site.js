@@ -283,9 +283,9 @@ function validateCsvUrl(file, key, value) {
   if (url.protocol !== 'https:') addIssue(file, `${key} should use https`);
   if (!/docs\.google\.com$/.test(url.hostname)) addIssue(file, `${key} should point to docs.google.com`);
   const isPublishedCsv = url.pathname.includes('/pub') && url.searchParams.get('output') === 'csv' && url.searchParams.get('gid');
-  const isSheetNameCsv = url.pathname.includes('/gviz/tq') && url.searchParams.get('tqx') === 'out:csv' && url.searchParams.get('sheet');
+  const isSheetNameCsv = url.pathname.includes('/gviz/tq') && url.searchParams.get('tqx') === 'out:csv' && (url.searchParams.get('sheet') || url.searchParams.get('gid'));
   if (!isPublishedCsv && !isSheetNameCsv) {
-    addIssue(file, `${key} should be a published CSV URL with gid or a gviz CSV URL with sheet`);
+    addIssue(file, `${key} should be a published CSV URL with gid or a gviz CSV URL with sheet/gid`);
   }
 }
 
