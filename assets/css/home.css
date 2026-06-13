@@ -6,17 +6,17 @@
 .sokuhou-alert{
   position:relative;
   z-index:45;
-  background:linear-gradient(90deg,#1b1b1f,#33202b 52%,#1b1b1f);
-  border-top:1px solid rgba(255,255,255,.55);
-  border-bottom:1px solid rgba(255,124,178,.35);
-  box-shadow:0 8px 22px rgba(70,34,54,.14);
+  background:linear-gradient(90deg,#13050c 0%,#ff2f72 18%,#27111c 52%,#ff2f72 82%,#13050c 100%);
+  border-top:2px solid rgba(255,255,255,.7);
+  border-bottom:2px solid rgba(255,47,114,.55);
+  box-shadow:0 12px 30px rgba(255,47,114,.26), inset 0 -1px 0 rgba(255,255,255,.22);
 }
 .sokuhou-alert[hidden]{display:none}
 .sokuhou-alert__inner{
   display:flex;
   align-items:center;
-  gap:10px;
-  min-height:42px;
+  gap:12px;
+  min-height:54px;
   color:#fff;
   text-decoration:none;
   overflow:hidden;
@@ -25,16 +25,17 @@
   flex:0 0 auto;
   display:inline-grid;
   place-items:center;
-  min-width:48px;
-  min-height:24px;
-  padding:0 10px;
-  border-radius:999px;
-  background:#ff2f72;
-  color:#fff;
-  font-size:.78rem;
+  min-width:62px;
+  min-height:32px;
+  padding:0 12px;
+  border-radius:10px;
+  background:#fff;
+  color:#ff145f;
+  border:2px solid rgba(255,255,255,.65);
+  font-size:.92rem;
   font-weight:1000;
   line-height:1;
-  box-shadow:0 0 0 0 rgba(255,47,114,.45);
+  box-shadow:0 0 0 0 rgba(255,255,255,.55), 0 8px 18px rgba(0,0,0,.2);
   animation:sokuhouBlink .9s steps(2,end) infinite, sokuhouPulse 1.8s ease-in-out infinite;
 }
 .sokuhou-alert__marquee{
@@ -52,9 +53,10 @@
   min-width:max-content;
   color:#fff7fb;
   font-weight:900;
+  font-size:1.04rem;
   letter-spacing:0;
-  animation:sokuhouMarquee 18s linear infinite;
-  text-shadow:0 1px 12px rgba(255,183,215,.32);
+  animation:sokuhouMarquee 15s linear infinite;
+  text-shadow:0 1px 16px rgba(255,255,255,.42), 0 2px 8px rgba(0,0,0,.32);
 }
 @keyframes sokuhouMarquee{
   from{transform:translateX(0)}
@@ -64,7 +66,7 @@
   50%{filter:brightness(1.5)}
 }
 @keyframes sokuhouPulse{
-  50%{box-shadow:0 0 0 8px rgba(255,47,114,0)}
+  50%{box-shadow:0 0 0 9px rgba(255,255,255,0), 0 8px 18px rgba(0,0,0,.2)}
 }
 @media (prefers-color-scheme: dark){
   .ticker{background:rgba(29,31,34,.92);border-color:rgba(255,255,255,.12)}
@@ -72,18 +74,19 @@
 }
 @media (max-width:560px){
   .sokuhou-alert__inner{
-    min-height:40px;
-    gap:8px;
+    min-height:50px;
+    gap:9px;
   }
   .sokuhou-alert__badge{
-    min-width:44px;
-    padding:0 8px;
-    font-size:.74rem;
+    min-width:54px;
+    min-height:28px;
+    padding:0 9px;
+    font-size:.84rem;
   }
   .sokuhou-alert__track{
-    gap:36px;
-    font-size:.88rem;
-    animation-duration:14s;
+    gap:38px;
+    font-size:.96rem;
+    animation-duration:13s;
   }
 }
 @media (prefers-reduced-motion: reduce){
@@ -480,24 +483,24 @@ radial-gradient(circle at bottom left, rgba(234,244,255,.42), transparent 26%);
   position: relative;
   z-index: 1;
   box-shadow:
-0 10px 22px rgba(203, 171, 195, .12),
+0 16px 34px rgba(203, 171, 195, .2),
 inset 0 1px 0 rgba(255,255,255,.74);
 }
 
 .seats-status__dot{
-  animation: seatsStatusGlow 2.4s ease-in-out infinite;
+  animation: seatsStatusGlow 1.8s ease-in-out infinite;
 }
 
 .seats-status--green{
-  box-shadow:0 0 0 5px rgba(24,181,107,.12), 0 0 16px rgba(24,181,107,.34);
+  box-shadow:0 0 0 7px rgba(24,181,107,.14), 0 0 24px rgba(24,181,107,.45);
 }
 
 .seats-status--blue{
-  box-shadow:0 0 0 5px rgba(40,121,242,.12), 0 0 16px rgba(40,121,242,.32);
+  box-shadow:0 0 0 7px rgba(40,121,242,.14), 0 0 24px rgba(40,121,242,.42);
 }
 
 .seats-status--red{
-  box-shadow:0 0 0 5px rgba(239,51,80,.12), 0 0 16px rgba(239,51,80,.34);
+  box-shadow:0 0 0 7px rgba(239,51,80,.14), 0 0 24px rgba(239,51,80,.46);
 }
 
 @keyframes seatsStatusGlow{

@@ -104,6 +104,7 @@
       return;
     }
 
+    root.className = `seats-status ${view.className}`;
     dot.className = `seats-status__dot ${view.className}`;
     label.textContent = view.label;
     message.textContent = view.message;
