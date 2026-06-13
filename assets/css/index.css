@@ -188,6 +188,52 @@
   font-size:1.02rem;
 }
 
+.seats-status{
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-radius:14px;
+  border:1px solid rgba(0,0,0,.06);
+  background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(250,253,255,.94));
+  padding:10px;
+}
+.seats-status[hidden]{display:none}
+.seats-status__main{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+.seats-status__dot{
+  flex:0 0 auto;
+  width:18px;
+  height:18px;
+  border-radius:999px;
+  box-shadow:0 0 0 5px rgba(0,0,0,.04);
+}
+.seats-status--green{background:#18b56b}
+.seats-status--blue{background:#2879f2}
+.seats-status--red{background:#ef3350}
+.seats-status__label{
+  color:#333;
+  font-size:.8rem;
+  font-weight:1000;
+}
+.seats-status__message{
+  color:#1f1f24;
+  font-weight:1000;
+  line-height:1.35;
+}
+.seats-status__updated{
+  flex:0 0 auto;
+  color:#666;
+  font-size:.78rem;
+  font-weight:800;
+  text-align:right;
+}
+
 .today-maids{
   margin-top:10px;
   border-radius:14px;
@@ -400,6 +446,8 @@
   .today-row{align-items:stretch}
   .today-left{width:100%}
   .today-pill{white-space:normal}
+  .seats-status{align-items:flex-start;flex-direction:column}
+  .seats-status__updated{text-align:left}
   .reserve-subactions{display:grid;grid-template-columns:1fr}
   .reserve-subactions a,
   .reserve-subactions button{width:100%;border-radius:14px}

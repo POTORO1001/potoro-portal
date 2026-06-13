@@ -302,6 +302,8 @@ function validateConfig() {
     'goodsCsvUrlAlt',
     'sokuhouCsvUrl',
     'sokuhouCsvUrlAlt',
+    'seatsCsvUrl',
+    'seatsCsvUrlAlt',
     'scheduleCsvUrl'
   ];
 

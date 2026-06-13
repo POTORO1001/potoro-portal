@@ -104,7 +104,7 @@
 <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/index.css">
 
-  <link rel="stylesheet" href="assets/css/home.css?v=20260613-2">
+  <link rel="stylesheet" href="assets/css/home.css?v=20260613-3">
 </head>
 
 <body>
@@ -197,6 +197,17 @@
                 <span class="today-hours" id="todayHours">読込中…</span>
               </div>
               <a href="#access" class="tag tag-strong">アクセスを見る →</a>
+            </div>
+
+            <div class="seats-status" id="seatsStatus" hidden>
+              <div class="seats-status__main">
+                <span class="seats-status__dot seats-status--green" id="seatsStatusDot" aria-hidden="true"></span>
+                <div>
+                  <div class="seats-status__label" id="seatsStatusLabel">空席あり</div>
+                  <div class="seats-status__message" id="seatsStatusMessage">ただいまご案内可能です</div>
+                </div>
+              </div>
+              <div class="seats-status__updated" id="seatsStatusUpdated">更新時点の状況です</div>
             </div>
 
             <div class="today-maids" aria-label="本日の出勤メイド">
@@ -527,9 +538,10 @@
     </div>
   </div>
 
-  <script src="assets/js/config.js?v=20260613-2"></script>
+  <script src="assets/js/config.js?v=20260613-3"></script>
   <script src="assets/js/core.js?v=20260306"></script>
   <script src="assets/js/sokuhou.js?v=20260613-2"></script>
+  <script src="assets/js/seats.js?v=20260613"></script>
   <script src="assets/js/today.js?v=20260306"></script>
   <script src="assets/js/news.js?v=20260306"></script>
 
