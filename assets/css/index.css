@@ -216,6 +216,7 @@
 .seats-status--green{background:#18b56b}
 .seats-status--blue{background:#2879f2}
 .seats-status--red{background:#ef3350}
+.seats-status--black{background:#1f1f24}
 .seats-status.seats-status--green{
   border-color:rgba(24,181,107,.34);
   background:linear-gradient(135deg, rgba(24,181,107,.16), rgba(255,255,255,.98) 48%, rgba(24,181,107,.08));
@@ -227,6 +228,10 @@
 .seats-status.seats-status--red{
   border-color:rgba(239,51,80,.34);
   background:linear-gradient(135deg, rgba(239,51,80,.16), rgba(255,255,255,.98) 48%, rgba(239,51,80,.08));
+}
+.seats-status.seats-status--black{
+  border-color:rgba(31,31,36,.34);
+  background:linear-gradient(135deg, rgba(31,31,36,.16), rgba(255,255,255,.98) 48%, rgba(31,31,36,.08));
 }
 .seats-status__label{
   color:#333;

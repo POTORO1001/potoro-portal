@@ -5,7 +5,8 @@
   const statusMap = {
     green: { className: 'seats-status--green', label: '空席あり', message: 'ただいまご案内可能です' },
     blue: { className: 'seats-status--blue', label: '満席・並びなし', message: '満席中・現在お待ちの列はありません' },
-    red: { className: 'seats-status--red', label: '満席・待ちあり', message: '満席中・ご案内待ちがあります' }
+    red: { className: 'seats-status--red', label: '満席・待ちあり', message: '満席中・ご案内待ちがあります' },
+    black: { className: 'seats-status--black', label: '受付終了', message: '本日の受付は終了しました' }
   };
 
   const statusAliases = {
@@ -25,7 +26,11 @@
     '並びあり': 'red',
     '満席並びあり': 'red',
     '満席・並びあり': 'red',
-    waiting: 'red'
+    waiting: 'red',
+    black: 'black',
+    '黒': 'black',
+    '受付終了': 'black',
+    closed: 'black'
   };
 
   const statusKeys = ['status', 'color', '状態', '状況', '色'];
