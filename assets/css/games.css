@@ -9,6 +9,12 @@
   background:#fff;
 }
 
+.games-grid .thumb-omikuji{
+  object-fit:contain;
+  padding:14px;
+  background:linear-gradient(135deg,#fff8fb,#ffe6f1 58%,#fff);
+}
+
 .games-grid .body{
   display:flex;
   flex:1;
@@ -43,6 +49,11 @@
     height:100%;
     aspect-ratio:auto;
     object-fit:cover;
+  }
+
+  .games-grid .thumb-omikuji{
+    object-fit:contain;
+    padding:10px;
   }
 
   .games-grid .body{
