@@ -6,7 +6,7 @@ const pages = [
   { path: 'news.html', title: 'お知らせ', text: ['お知らせ', '最新情報'] },
   { path: 'events.html', title: 'イベント', text: ['イベント', '開催'] },
   { path: 'goods.html', title: 'グッズ', text: ['グッズ', '配布'] },
-  { path: 'games.html', title: 'ゲーム・診断', text: ['ゲーム', '診断'] },
+  { path: 'games.html', title: 'ゲーム・講義', text: ['ゲーム', '講義'] },
   { path: 'omikuji.html', title: '今日のおみくじ', text: ['今日のおみくじ', '本日の運勢'] },
   { path: 'schedule.html', title: '週間お給仕表', text: ['週間お給仕表'] },
   { path: 'price.html', title: '料金', text: ['料金', '飲み放題'] },

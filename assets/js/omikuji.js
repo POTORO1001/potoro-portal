@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
       money: '使い道を絞ると安心',
       work: '短時間の集中が成果に',
       action: '短い気分転換を入れる',
-      linkText: 'ゲーム/診断',
+      linkText: 'ゲーム/講義',
       href: 'games.html'
     },
     {
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
       money: '今日は無理に使わず整える',
       work: '抱え込みすぎないこと',
       action: '短くても落ち着ける時間を作る',
-      linkText: 'ゲーム/診断',
+      linkText: 'ゲーム/講義',
       href: 'games.html'
     },
     {
