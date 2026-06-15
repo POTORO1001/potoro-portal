@@ -16,6 +16,8 @@ const pages = [
 
 const issues = [];
 const fetchedAssets = new Set();
+const expectedGameCards = ['ポ・トロクエスト', '萌えセレクト講義', 'ご主人様タイプ診断', '今日のおみくじ'];
+const expectedOmikujiDetails = ['今日の総合運', '恋愛運', '金運', '仕事運', 'ラッキー行動', 'ラッキーリンク'];
 
 function addIssue(target, message) {
   issues.push(`${target}: ${message}`);
@@ -42,6 +44,10 @@ async function fetchWithTimeout(url) {
 function attr(tag, name) {
   const match = tag.match(new RegExp(`\\s${name}="([^"]*)"`, 'i'));
   return match ? match[1] : '';
+}
+
+function stripTags(value) {
+  return String(value || '').replace(/<[^>]*>/g, '').trim();
 }
 
 function hasEncodingDamage(value) {
@@ -124,6 +130,45 @@ async function validatePage(page) {
 
   const assets = collectCriticalAssets(html, url);
   for (const asset of assets) await validateAsset(asset);
+
+  validatePageSpecificContent(page, html, url);
+}
+
+function validateTextOrder(target, actual, expected) {
+  const compactActual = actual.join(' > ');
+  const compactExpected = expected.join(' > ');
+  if (compactActual !== compactExpected) {
+    addIssue(target, `unexpected order "${compactActual}", expected "${compactExpected}"`);
+  }
+}
+
+function validatePageSpecificContent(page, html, url) {
+  if (page.path === '') {
+    for (const id of ['sokuhouAlert', 'sokuhouAlertTrack', 'seatsStatus', 'seatsStatusLabel', 'seatsStatusUpdated']) {
+      if (!html.includes(`id="${id}"`)) addIssue(url, `missing top UI id "${id}"`);
+    }
+    if (!html.includes('ゲーム・講義・診断をまとめて確認')) {
+      addIssue(url, 'missing clear games/lecture card description');
+    }
+    if (!html.includes('assets/js/sokuhou.js')) addIssue(url, 'missing breaking news script');
+    if (!html.includes('assets/js/seats.js')) addIssue(url, 'missing seat status script');
+  }
+
+  if (page.path === 'games.html') {
+    const cards = [...html.matchAll(/<h3>([\s\S]*?)<\/h3>/gi)]
+      .map(match => stripTags(match[1]))
+      .filter(text => expectedGameCards.includes(text));
+    validateTextOrder(url, cards, expectedGameCards);
+  }
+
+  if (page.path === 'omikuji.html') {
+    for (const detail of expectedOmikujiDetails) {
+      if (!html.includes(detail)) addIssue(url, `missing omikuji detail "${detail}"`);
+    }
+    for (const id of ['fortuneOverall', 'fortuneLove', 'fortuneMoney', 'fortuneWork']) {
+      if (!html.includes(`id="${id}"`)) addIssue(url, `missing omikuji result id "${id}"`);
+    }
+  }
 }
 
 (async () => {
