@@ -138,8 +138,8 @@
           <div class="schedule-cards-panel mt-12" aria-labelledby="scheduleCardsTitle">
             <div class="schedule-cards-head">
               <div>
-                <h2 id="scheduleCardsTitle">直近の営業予定</h2>
-                <p>スマホでも見やすいよう、日付ごとにまとめています。</p>
+                <h2 id="scheduleCardsTitle">週間お給仕カード</h2>
+                <p>日付ごとに営業時間とメイドちゃんの予定をまとめています。</p>
               </div>
               <span class="schedule-cards-badge">7日分</span>
             </div>
@@ -148,19 +148,20 @@
             </div>
           </div>
 
-          <h2 class="sheet-title mt-16">週間お給仕表 詳細</h2>
-          <div class="mt-12 sheet-embed" aria-label="週間お給仕表">
-            <iframe
-              src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRdLqPoS9TfRnJ1IuixzjkcJwjJ2CaW02ZR6CDhFJ1fMfky7pC1HFQhxFUhYEXawPGdos9kl2wnMY-j/pubhtml?gid=306053530&amp;single=true&amp;widget=true&amp;headers=false"
-              title="週間お給仕表"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen></iframe>
-          </div>
-
-          <p class="subnote">
-            詳細表は横に長いため、スマホでは上のカード表示を先にご確認ください。表を詳しく見る場合は左右にスクロールできます。
-          </p>
+          <details class="sheet-details mt-16">
+            <summary>元のスプレッドシート表を確認する</summary>
+            <div class="mt-12 sheet-embed" aria-label="週間お給仕表">
+              <iframe
+                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRdLqPoS9TfRnJ1IuixzjkcJwjJ2CaW02ZR6CDhFJ1fMfky7pC1HFQhxFUhYEXawPGdos9kl2wnMY-j/pubhtml?gid=306053530&amp;single=true&amp;widget=true&amp;headers=false"
+                title="週間お給仕表"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen></iframe>
+            </div>
+            <p class="subnote">
+              元の表は横に長いため、スマホでは上のカード表示がおすすめです。
+            </p>
+          </details>
         </div>
       </div>
     </section>
@@ -257,7 +258,7 @@
 
   <script src="assets/js/config.js?v=20260306"></script>
   <script src="assets/js/core.js"></script>
-  <script src="assets/js/schedule-cards.js?v=20260607"></script>
+  <script src="assets/js/schedule-cards.js?v=20260617"></script>
   <script src="assets/js/page-init.js?v=20260606"></script>
 
   <noscript>JavaScriptが無効になっています。一部の表示が制限される可能性があります。</noscript>

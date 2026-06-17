@@ -170,6 +170,15 @@ function validatePageSpecificContent(page, html, url) {
       if (!html.includes(`id="${id}"`)) addIssue(url, `missing omikuji result id "${id}"`);
     }
   }
+
+  if (page.path === 'schedule.html') {
+    for (const text of ['週間お給仕カード', '元のスプレッドシート表を確認する']) {
+      if (!html.includes(text)) addIssue(url, `missing schedule UI text "${text}"`);
+    }
+    if (!html.includes('id="scheduleCardList"')) addIssue(url, 'missing schedule card list');
+    if (!html.includes('assets/js/schedule-cards.js')) addIssue(url, 'missing schedule cards script');
+    if (!html.includes('<details class="sheet-details')) addIssue(url, 'missing collapsible sheet details');
+  }
 }
 
 (async () => {
