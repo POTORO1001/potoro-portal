@@ -269,6 +269,25 @@
 .maid-time{color:#ff4fa3;font-weight:1000}
 .maid-time.is-off{color:#666}
 .maids-fallback{font-weight:900;color:#555;font-size:.92rem}
+.maids-closed{
+  display:grid;
+  gap:6px;
+  padding:14px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#2b252d,#4a3b47);
+  color:#fff;
+  box-shadow:0 10px 22px rgba(36,28,34,.18);
+}
+.maids-closed strong{
+  font-size:1.05rem;
+  font-weight:1000;
+}
+.maids-closed span{
+  color:#fff0f6;
+  font-size:.88rem;
+  font-weight:800;
+  line-height:1.55;
+}
 
 .reserve-stack{display:grid;gap:10px;margin-top:10px}
 .btn-reserve{

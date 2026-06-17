@@ -144,7 +144,7 @@ function validateTextOrder(target, actual, expected) {
 
 function validatePageSpecificContent(page, html, url) {
   if (page.path === '') {
-    for (const id of ['sokuhouAlert', 'sokuhouAlertTrack', 'seatsStatus', 'seatsStatusLabel', 'seatsStatusUpdated']) {
+    for (const id of ['sokuhouAlert', 'sokuhouAlertTrack', 'seatsStatus', 'seatsStatusLabel', 'seatsStatusUpdated', 'todayHours', 'todayMaidsWrap']) {
       if (!html.includes(`id="${id}"`)) addIssue(url, `missing top UI id "${id}"`);
     }
     if (!html.includes('ゲーム・講義・診断をまとめて確認')) {
@@ -152,6 +152,7 @@ function validatePageSpecificContent(page, html, url) {
     }
     if (!html.includes('assets/js/sokuhou.js')) addIssue(url, 'missing breaking news script');
     if (!html.includes('assets/js/seats.js')) addIssue(url, 'missing seat status script');
+    if (!html.includes('assets/js/today.js')) addIssue(url, 'missing today schedule script');
   }
 
   if (page.path === 'games.html') {

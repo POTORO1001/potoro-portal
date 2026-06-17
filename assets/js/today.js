@@ -32,6 +32,47 @@
     return (row?.off === true) || note === 'おやすみ' || (!start && !end);
   }
 
+  function parseTimeToMinutes(value){
+    const text = normalizeText(value).replace(/[０-９]/g, char => String.fromCharCode(char.charCodeAt(0) - 0xFEE0));
+    const match = text.match(/^(\d{1,2}):(\d{2})/);
+    if(!match) return null;
+    const hours = Number(match[1]);
+    const minutes = Number(match[2]);
+    if(!Number.isFinite(hours) || !Number.isFinite(minutes) || hours < 0 || hours > 24 || minutes < 0 || minutes > 59) return null;
+    if(hours === 24 && minutes !== 0) return null;
+    return (hours * 60) + minutes;
+  }
+
+  function getWorkingMaidTimes(day){
+    const rawMaids = Array.isArray(day?.maids) ? day.maids : [];
+    return rawMaids
+      .filter(maid => !isClosedLabel(maid?.maid))
+      .map(maid => ({
+        start: normalizeText(maid?.start),
+        end: normalizeText(maid?.end),
+        startMinutes: parseTimeToMinutes(maid?.start),
+        endMinutes: parseTimeToMinutes(maid?.end),
+        off: isOffRow(maid)
+      }))
+      .filter(time => !time.off && time.start && time.end && time.startMinutes !== null && time.endMinutes !== null);
+  }
+
+  function isSameLocalDate(a, b){
+    return a.getFullYear() === b.getFullYear()
+      && a.getMonth() === b.getMonth()
+      && a.getDate() === b.getDate();
+  }
+
+  function isAfterBusinessEndBeforeMidnight(day, now = new Date()){
+    const dateObj = parseSheetDateToJsDate(day?.date);
+    if(!dateObj || !isSameLocalDate(dateObj, now)) return false;
+    const times = getWorkingMaidTimes(day);
+    if(!times.length) return false;
+    const closeMinutes = Math.max(...times.map(time => time.endMinutes));
+    const nowMinutes = (now.getHours() * 60) + now.getMinutes();
+    return nowMinutes >= closeMinutes && nowMinutes < 24 * 60;
+  }
+
   function setReserveButton(){
     const btn = document.getElementById('reserveBtn');
     if(!btn) return;
@@ -82,13 +123,7 @@
       return;
     }
 
-    const times = maids
-      .map(maid => ({
-        start: normalizeText(maid?.start),
-        end: normalizeText(maid?.end),
-        off: isOffRow(maid)
-      }))
-      .filter(time => !time.off && time.start && time.end);
+    const times = getWorkingMaidTimes(day);
 
     if(!times.length){
       el.textContent = `${dateText}（営業時間は店頭/DMでご確認ください）`;
@@ -111,6 +146,16 @@
 
     if(maids.length === 0){
       wrap.innerHTML = '<div class="maids-fallback">本日はお屋敷休館日です</div>';
+      return;
+    }
+
+    if(isAfterBusinessEndBeforeMidnight(day)){
+      wrap.innerHTML = `
+        <div class="maids-closed">
+          <strong>本日の営業は終了しました</strong>
+          <span>本日のお給仕メイドちゃんの表示は終了しています。0時以降に本日の予定へ切り替わります。</span>
+        </div>
+      `;
       return;
     }
 
