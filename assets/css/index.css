@@ -122,7 +122,20 @@
   line-height:1.12;margin:.55rem 0 .35rem;
   font-weight:1000;letter-spacing:.02em;
 }
+.headline-line{
+  display:inline-block;
+}
+.headline-line-welcome{
+  white-space:nowrap;
+}
 .sub{color:#444;margin:.2rem 0 1rem;line-height:1.7}
+
+@media (max-width:520px){
+  .headline{
+    font-size:clamp(1.16rem,5.2vw,1.52rem);
+    line-height:1.3;
+  }
+}
 
 .hero-priority{
   display:grid;
