@@ -323,9 +323,20 @@
   box-shadow:0 6px 14px rgba(0,0,0,.08);
   text-decoration:none;color:#222;cursor:pointer;
   font-weight:1000;
+  font-family:inherit;
+  font-size:.92rem;
   text-align:center;
   line-height:1.35;
   min-height:44px;
+}
+.reserve-subactions .subaction-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:1.35em;
+  flex:0 0 1.35em;
+  font-size:1em;
+  line-height:1;
 }
 .reserve-note{color:#555;font-size:.86rem;font-weight:900;line-height:1.6}
 
