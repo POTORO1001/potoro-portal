@@ -541,6 +541,23 @@
   margin-top:0;
 }
 
+.reservation-guide-card{
+  border-color:rgba(229,77,139,.32);
+  background:linear-gradient(135deg,rgba(255,244,249,.96),rgba(255,255,255,.96));
+}
+
+.reservation-guide-card h3{
+  margin:0;
+  font-size:1.05rem;
+}
+
+.reservation-guide-card a{
+  color:#d94b8d;
+  font-weight:1000;
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+
 .promise-last{
   color:#6d4457;
   font-weight:500;
