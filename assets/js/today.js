@@ -95,14 +95,19 @@
   async function fetchTodayOnce(){
     const apiBase = window.PORTAL_CONFIG?.scheduleApiUrl;
     if(!apiBase) return null;
-    try{
-      const url = `${apiBase}?mode=today&ts=${Date.now()}`;
-      const data = await fetchJsonWithTimeout(url, 10000);
-      if(!data || data.ok !== true) return null;
-      return (data.days && data.days[0]) ? data.days[0] : null;
-    }catch(e){
-      return null;
+    const attempts = [22000, 30000];
+    for(const timeout of attempts){
+      try{
+        const url = `${apiBase}?mode=today&ts=${Date.now()}`;
+        const data = await fetchJsonWithTimeout(url, timeout);
+        if(data && data.ok === true){
+          return (data.days && data.days[0]) ? data.days[0] : null;
+        }
+      }catch(e){
+        console.warn('today schedule fetch failed:', e);
+      }
     }
+    return null;
   }
 
   function renderTodayHours(day){
@@ -140,6 +145,11 @@
   function renderTodayMaids(day){
     const wrap = document.getElementById('todayMaidsWrap');
     if(!wrap) return;
+
+    if(!day){
+      wrap.innerHTML = '<div class="maids-fallback">本日の出勤情報は取得できませんでした。時間をおいて再読み込みしてください。</div>';
+      return;
+    }
 
     const rawMaids = (day && Array.isArray(day.maids)) ? day.maids : [];
     const maids = rawMaids.filter(maid => !isClosedLabel(maid?.maid));
