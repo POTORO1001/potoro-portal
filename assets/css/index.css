@@ -541,6 +541,25 @@
   margin-top:0;
 }
 
+.first-visit-audio-card{
+  border-color:rgba(116,182,230,.34);
+  background:linear-gradient(135deg,rgba(246,251,255,.96),rgba(255,244,249,.94));
+}
+
+.first-visit-audio-card h3{
+  margin:0;
+  font-size:1.05rem;
+}
+
+.first-visit-audio{
+  display:block;
+  width:100%;
+  max-height:120px;
+  margin-top:12px;
+  border-radius:14px;
+  background:#fff;
+}
+
 .reservation-guide-card{
   border-color:rgba(229,77,139,.32);
   background:linear-gradient(135deg,rgba(255,244,249,.96),rgba(255,255,255,.96));
