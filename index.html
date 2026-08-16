@@ -209,7 +209,7 @@
                 <span class="today-pill">👑 本日のお給仕メイドちゃん</span>
               </div>
               <div class="maids-wrap" id="todayMaidsWrap">
-                <span class="maids-fallback">読み込み中…</span>
+                <span class="maids-fallback">本日の予定を確認中です。少しお待ちください♡</span>
               </div>
             </div>
 
@@ -549,7 +549,7 @@
         hoursEl.textContent = message || '本日の営業情報は取得できませんでした（DMでご確認ください）';
       }
       const maidsWrap = document.getElementById('todayMaidsWrap');
-      if(maidsWrap && (maidsWrap.textContent || '').includes('読み込み')) {
+      if(maidsWrap && /読み込み|確認中/.test(maidsWrap.textContent || '')) {
         maidsWrap.innerHTML = '<span class="maids-fallback">本日の出勤情報は取得できませんでした（DMでご確認ください）</span>';
       }
     }
