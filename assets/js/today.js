@@ -1,6 +1,7 @@
 // /assets/js/today.js
 (function(){
   const { fetchJsonWithTimeout, parseSheetDateToJsDate } = window.PortalCore;
+  const CACHE_KEY = 'potoro:today-schedule:v1';
 
   function buildDateText(day){
     const dateObj = parseSheetDateToJsDate(day.date) || new Date();
@@ -71,6 +72,55 @@
     const closeMinutes = Math.max(...times.map(time => time.endMinutes));
     const nowMinutes = (now.getHours() * 60) + now.getMinutes();
     return nowMinutes >= closeMinutes && nowMinutes < 24 * 60;
+  }
+
+  function getLocalDateKey(date = new Date()){
+    const parts = new Intl.DateTimeFormat('ja-JP-u-ca-gregory', {
+      timeZone: 'Asia/Tokyo',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }).formatToParts(date);
+    const year = parts.find(part => part.type === 'year')?.value || String(date.getFullYear());
+    const month = parts.find(part => part.type === 'month')?.value || String(date.getMonth() + 1).padStart(2,'0');
+    const day = parts.find(part => part.type === 'day')?.value || String(date.getDate()).padStart(2,'0');
+    return `${year}-${month}-${day}`;
+  }
+
+  function getDayDateKey(day){
+    const dateObj = parseSheetDateToJsDate(day?.date);
+    return dateObj ? getLocalDateKey(dateObj) : '';
+  }
+
+  function readCachedToday(){
+    try{
+      const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+      if(!cached || !cached.day) return null;
+      if(cached.dateKey !== getLocalDateKey()) return null;
+      if(getDayDateKey(cached.day) !== cached.dateKey) return null;
+      return cached.day;
+    }catch(e){
+      return null;
+    }
+  }
+
+  function writeCachedToday(day){
+    try{
+      const dateKey = getDayDateKey(day);
+      if(!dateKey || dateKey !== getLocalDateKey()) return;
+      localStorage.setItem(CACHE_KEY, JSON.stringify({
+        dateKey,
+        savedAt: Date.now(),
+        day
+      }));
+    }catch(e){
+      // localStorage may be unavailable in private or restricted browsing.
+    }
+  }
+
+  function publishToday(day, source){
+    window.PortalTodayDay = day;
+    window.dispatchEvent(new CustomEvent('portal:today-ready', { detail: { day, source } }));
   }
 
   function setReserveButton(){
@@ -191,12 +241,28 @@
 
   async function initToday(){
     setReserveButton();
+    const cachedDay = readCachedToday();
+    if(cachedDay){
+      renderTodayHours(cachedDay);
+      renderTodayMaids(cachedDay);
+      publishToday(cachedDay, 'cache');
+    }
+
     const day = await fetchTodayOnce();
-    renderTodayHours(day);
-    renderTodayMaids(day);
-    window.PortalTodayDay = day;
-    window.dispatchEvent(new CustomEvent('portal:today-ready', { detail: { day } }));
-    return day;
+    if(day){
+      writeCachedToday(day);
+      renderTodayHours(day);
+      renderTodayMaids(day);
+      publishToday(day, 'network');
+      return day;
+    }
+
+    if(!cachedDay){
+      renderTodayHours(null);
+      renderTodayMaids(null);
+      publishToday(null, 'error');
+    }
+    return cachedDay;
   }
 
   window.PortalToday = { initToday };
