@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "source": "initial",
+  "updatedAt": "2026-08-19T00:00:00+09:00",
+  "today": "2026-08-19",
+  "day": {
+    "date": "2026-08-19",
+    "dow": "水",
+    "maids": [
+      {
+        "maid": "せな",
+        "start": "18:00",
+        "end": "21:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "ソフィア",
+        "start": "18:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "なくる",
+        "start": "18:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "ねむ",
+        "start": "18:00",
+        "end": "21:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "みお",
+        "start": "18:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "れい",
+        "start": "18:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "きなぴー",
+        "start": "",
+        "end": "",
+        "note": "おやすみ",
+        "off": true
+      },
+      {
+        "maid": "める",
+        "start": "",
+        "end": "",
+        "note": "おやすみ",
+        "off": true
+      }
+    ]
+  }
+}

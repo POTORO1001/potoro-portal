@@ -104,6 +104,18 @@
     }
   }
 
+  async function fetchStaticToday(){
+    try{
+      const data = await fetchJsonWithTimeout('data/today.json', 3000);
+      if(!data || data.ok !== true || !data.day) return null;
+      if(data.today !== getLocalDateKey()) return null;
+      if(getDayDateKey(data.day) !== data.today) return null;
+      return data.day;
+    }catch(e){
+      return null;
+    }
+  }
+
   function writeCachedToday(day){
     try{
       const dateKey = getDayDateKey(day);
@@ -241,11 +253,36 @@
 
   async function initToday(){
     setReserveButton();
+    let displayedDay = null;
     const cachedDay = readCachedToday();
     if(cachedDay){
       renderTodayHours(cachedDay);
       renderTodayMaids(cachedDay);
       publishToday(cachedDay, 'cache');
+      displayedDay = cachedDay;
+    }
+
+    let staticDay = null;
+    if(!cachedDay){
+      staticDay = await fetchStaticToday();
+      if(staticDay){
+        writeCachedToday(staticDay);
+        renderTodayHours(staticDay);
+        renderTodayMaids(staticDay);
+        publishToday(staticDay, 'static');
+        displayedDay = staticDay;
+      }
+    }
+
+    if(displayedDay){
+      fetchTodayOnce().then(day => {
+        if(!day) return;
+        writeCachedToday(day);
+        renderTodayHours(day);
+        renderTodayMaids(day);
+        publishToday(day, 'network');
+      });
+      return displayedDay;
     }
 
     const day = await fetchTodayOnce();
@@ -257,12 +294,12 @@
       return day;
     }
 
-    if(!cachedDay){
+    if(!cachedDay && !staticDay){
       renderTodayHours(null);
       renderTodayMaids(null);
       publishToday(null, 'error');
     }
-    return cachedDay;
+    return cachedDay || staticDay;
   }
 
   window.PortalToday = { initToday };
