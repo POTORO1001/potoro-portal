@@ -1,11 +1,11 @@
 {
   "ok": true,
   "source": "github-actions",
-  "updatedAt": "2026-08-19T15:25:17.251Z",
-  "today": "2026-08-20",
+  "updatedAt": "2026-08-20T15:03:24.112Z",
+  "today": "2026-08-21",
   "day": {
-    "date": "2026-08-20",
-    "dow": "木",
+    "date": "2026-08-21",
+    "dow": "金",
     "maids": [
       {
         "maid": "うさ",
@@ -15,9 +15,23 @@
         "off": false
       },
       {
-        "maid": "ねむ",
+        "maid": "ソフィア",
+        "start": "18:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "なくる",
         "start": "18:00",
         "end": "21:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "みお",
+        "start": "18:00",
+        "end": "22:00",
         "note": "",
         "off": false
       },
@@ -36,22 +50,15 @@
         "off": false
       },
       {
+        "maid": "きなぴー",
+        "start": "18:30",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
         "maid": "りあ",
-        "start": "18:00",
-        "end": "22:00",
-        "note": "",
-        "off": false
-      },
-      {
-        "maid": "れい",
-        "start": "18:00",
-        "end": "22:00",
-        "note": "",
-        "off": false
-      },
-      {
-        "maid": "あかり",
-        "start": "20:00",
+        "start": "19:00",
         "end": "22:00",
         "note": "",
         "off": false
