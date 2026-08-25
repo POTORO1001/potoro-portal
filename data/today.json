@@ -1,7 +1,7 @@
 {
   "ok": true,
   "source": "github-actions",
-  "updatedAt": "2026-08-25T04:24:02.344Z",
+  "updatedAt": "2026-08-25T09:39:47.513Z",
   "today": "2026-08-25",
   "day": {
     "date": "2026-08-25",
@@ -58,7 +58,7 @@
       },
       {
         "maid": "きなぴー",
-        "start": "18:30",
+        "start": "19:00",
         "end": "22:00",
         "note": "",
         "off": false
