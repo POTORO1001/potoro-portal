@@ -1,19 +1,12 @@
 {
   "ok": true,
   "source": "github-actions",
-  "updatedAt": "2026-09-01T15:32:39.096Z",
+  "updatedAt": "2026-09-02T06:07:02.479Z",
   "today": "2026-09-02",
   "day": {
     "date": "2026-09-02",
     "dow": "水",
     "maids": [
-      {
-        "maid": "くろえ",
-        "start": "18:00",
-        "end": "22:00",
-        "note": "",
-        "off": false
-      },
       {
         "maid": "みお",
         "start": "18:00",
@@ -55,6 +48,13 @@
         "end": "22:00",
         "note": "",
         "off": false
+      },
+      {
+        "maid": "くろえ",
+        "start": "",
+        "end": "",
+        "note": "おやすみ",
+        "off": true
       }
     ]
   }
