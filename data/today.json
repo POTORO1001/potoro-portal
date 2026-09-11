@@ -1,64 +1,64 @@
 {
   "ok": true,
   "source": "github-actions",
-  "updatedAt": "2026-09-11T11:43:39.314Z",
-  "today": "2026-09-11",
+  "updatedAt": "2026-09-11T15:13:37.384Z",
+  "today": "2026-09-12",
   "day": {
-    "date": "2026-09-11",
-    "dow": "金",
+    "date": "2026-09-12",
+    "dow": "土",
     "maids": [
       {
-        "maid": "くろえ",
-        "start": "18:00",
-        "end": "22:00",
-        "note": "",
-        "off": false
-      },
-      {
-        "maid": "なくる",
-        "start": "18:00",
-        "end": "22:00",
-        "note": "",
-        "off": false
-      },
-      {
-        "maid": "ねむ",
-        "start": "18:00",
-        "end": "21:00",
-        "note": "",
-        "off": false
-      },
-      {
-        "maid": "みみ",
-        "start": "18:00",
-        "end": "22:00",
-        "note": "",
-        "off": false
-      },
-      {
-        "maid": "ゆの",
-        "start": "18:00",
-        "end": "22:00",
-        "note": "",
-        "off": false
-      },
-      {
-        "maid": "りあ",
-        "start": "18:00",
+        "maid": "うさ",
+        "start": "17:00",
         "end": "22:00",
         "note": "",
         "off": false
       },
       {
         "maid": "しいな",
-        "start": "18:30",
+        "start": "17:00",
         "end": "22:00",
         "note": "",
         "off": false
       },
       {
-        "maid": "あかり",
-        "start": "19:00",
+        "maid": "じゅら",
+        "start": "17:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "なくる",
+        "start": "17:00",
+        "end": "21:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "みお",
+        "start": "17:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "りあ",
+        "start": "17:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "める",
+        "start": "18:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "るな",
+        "start": "18:00",
         "end": "22:00",
         "note": "",
         "off": false
