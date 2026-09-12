@@ -18,7 +18,7 @@
   {"@context":"https://schema.org","@type":"WebPage","name":"ポトロパスポート講義","url":"https://potoro1001.github.io/potoro-portal/passport.html","inLanguage":"ja","description":"ポトロパスポートの会員証・特典・入店順抽選のご利用案内"}
   </script>
   <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/passport.css">
+  <link rel="stylesheet" href="assets/css/passport.css?v=20260912-2">
 </head>
 <body>
   <a href="#main" class="skip-link">本文へスキップ</a>
@@ -70,10 +70,31 @@
     </div>
   </header>
   <main id="main" class="passport-main">
+    <section class="passport-lesson" id="passportLesson" aria-label="ポトロパスポート講義" hidden>
+      <div class="lesson-heading"><h1>ポトロパスポート講義</h1><a href="#passportGuide">ご利用案内</a></div>
+      <div class="lesson-status"><span id="lessonChapter"></span><span id="lessonCount"></span></div>
+      <progress id="lessonProgress" max="20" value="1" aria-label="講義の進捗"></progress>
+      <div class="lesson-scene">
+        <img class="lesson-art" src="img/hero-welcome-maids.webp" alt="お屋敷でお迎えするポ・トロのメイドさん" width="1402" height="1122" fetchpriority="high" decoding="async">
+        <div class="lesson-dialogue" id="lessonDialogue" tabindex="-1" aria-label="講義の会話">
+          <p class="lesson-speaker">後輩メイド</p><p id="lessonStudent"></p>
+          <p class="lesson-speaker teacher">先輩メイド</p><p id="lessonTeacher"></p>
+          <fieldset id="lessonQuiz" hidden><legend id="lessonQuestion"></legend><div id="lessonChoices"></div></fieldset>
+          <p id="lessonFeedback" role="status"></p>
+          <div id="lessonComplete" hidden><p><strong>講義修了！</strong>お屋敷でパスポートを楽しんでくださいね。</p><p>作成をご希望の方は、公式XのDMかメイドさんへお声がけください。</p><a href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">公式Xを開く</a></div>
+        </div>
+      </div>
+      <nav class="lesson-controls" aria-label="講義の操作">
+        <button type="button" id="lessonPrev">前へ</button><button type="button" id="lessonAuto" aria-pressed="false">自動再生</button><button type="button" id="lessonNext">次へ</button>
+      </nav>
+      <div class="lesson-tools"><label for="lessonJump">章を選ぶ</label><select id="lessonJump"></select><button type="button" id="lessonRestart">最初から</button></div>
+    </section>
+    <details class="passport-guide" id="passportGuide" open>
+      <summary>ご利用案内をまとめて読む</summary>
     <div class="container passport-content">
       <div class="passport-intro">
         <p class="passport-kicker">ご利用案内</p>
-        <h1>ポトロパスポート講義</h1>
+        <h2>ポトロパスポート ご利用案内</h2>
         <p>ポトロパスポートは、ご主人様・お嬢様ご本人専用のデジタル会員証です。スマートフォンから、ポトロでの各種サービスや特典をご確認いただけます。</p>
         <p><strong>無料でご利用いただけます。メールアドレス・電話番号は使用しません。</strong></p>
       </div>
@@ -145,6 +166,7 @@
       </section>
       <div class="passport-end"><a class="btn btn-ghost" href="games.html">ゲーム／講義へ戻る</a><a class="btn btn-ghost" href="index.html">ポータルTOPへ</a></div>
     </div>
+    </details>
   </main>
   <footer>
     <div class="container foot reveal">
@@ -177,5 +199,6 @@
   </footer>
   <script src="assets/js/core.js"></script>
   <script src="assets/js/page-init.js?v=20260606"></script>
+  <script src="assets/js/passport-lesson.js?v=20260912-2"></script>
 </body>
 </html>
