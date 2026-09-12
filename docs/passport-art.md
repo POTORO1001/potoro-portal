@@ -1,5 +1,11 @@
 # Passport lesson artwork
 
+## Dedicated lesson thumbnail
+
+Built-in image generation, with `img/passport-maids.png` as character identity reference. Saved as `img/passport-lesson-card.png` and a quality-88 WebP delivery copy. Symbolic membership illustration, not an actual application screenshot.
+
+Prompt: Create a new square 1024x1024 anime illustration for the PO TORO Passport lesson thumbnail. Reference image is for identity and art style only: preserve the two original adult maid characters (long dark hair pink ribbon senior, chestnut bob mint ribbon junior) and lavender white uniforms. Primary focal object: a LARGE upright smartphone in the CENTER showing a clearly illustrated digital membership PASSPORT card, with a heart crest and the readable word PASSPORT and small PO TORO brand, symbolic member portrait, no real personal data, no functional QR. A small rose-pink passport booklet with gold heart crest overlaps the phone base, making the passport theme unmistakable. Two cute waist-up maid characters flank and present the phone with friendly smiles, one left one right, slightly smaller than central phone. Keep the phone, passport and faces within central 75% canvas so thumbnail stays legible. Polished kawaii visual novel art, delicate crisp linework, warm welcoming expression. Light mint and pale pink background with restrained lace corner details, no gradients or bokeh, no dark background. Strong visual hierarchy and readable silhouette at 108px. Not an actual app screenshot; symbolic illustration. No extra text or headline, no watermark.
+
 Generated using the built-in image generation tool on 2026-09-12.
 Original fictional characters; not portraits of actual staff. No voice audio is included.
 

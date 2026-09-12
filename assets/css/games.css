@@ -2,6 +2,11 @@
   min-height:100%;
 }
 
+.games-grid img.thumb-passport{
+  object-fit:contain;
+  background:#edf8f4;
+}
+
 .games-grid .thumb{
   aspect-ratio:16/9;
   width:100%;
