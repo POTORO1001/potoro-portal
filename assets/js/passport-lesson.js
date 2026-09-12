@@ -27,6 +27,7 @@
   const lesson = get('passportLesson');
   const answered = new Map();
   let index = 0;
+  let speaker = 'student';
   let automatic = false;
   let timer;
   function stopAuto() {
@@ -39,21 +40,31 @@
     clearTimeout(timer);
     if (!automatic) return;
     const slide = slides[index];
-    if (slide.question || slide.complete) { stopAuto(); return; }
-    timer = setTimeout(() => { index++; render(false); }, Math.max(8500, (slide.student.length + slide.teacher.length) * 100));
+    if (speaker === 'teacher' && (slide.question || slide.complete)) { stopAuto(); return; }
+    timer = setTimeout(() => { advance(false); }, Math.max(4500, slide[speaker].length * 105));
+  }
+  function advance(focus) {
+    if (speaker === 'student') speaker = 'teacher';
+    else if (index < slides.length - 1) { index++; speaker = 'student'; }
+    render(focus);
   }
   function render(focus) {
     const slide = slides[index];
+    const isTeacher = speaker === 'teacher';
+    const showQuiz = isTeacher && Boolean(slide.question);
+    const complete = isTeacher && Boolean(slide.complete);
     get('lessonChapter').textContent = slide.chapter;
     get('lessonCount').textContent = `${index + 1} / ${slides.length}`;
     get('lessonProgress').max = slides.length;
     get('lessonProgress').value = index + 1;
-    get('lessonStudent').textContent = slide.student;
-    get('lessonTeacher').textContent = slide.teacher;
-    get('lessonQuiz').hidden = !slide.question;
+    get('lessonScene').dataset.speaker = speaker;
+    get('lessonScene').classList.remove('quiz-success');
+    get('lessonSpeaker').textContent = isTeacher ? '先輩メイド' : '後輩メイド';
+    get('lessonLine').textContent = slide[speaker];
+    get('lessonQuiz').hidden = !showQuiz;
     get('lessonQuestion').textContent = slide.question || '';
     get('lessonChoices').replaceChildren();
-    get('lessonFeedback').textContent = answered.has(index) ? `正解！ ${slide.explanation}` : '';
+    get('lessonFeedback').textContent = showQuiz && answered.has(index) ? `正解！ ${slide.explanation}` : '';
     get('lessonFeedback').className = answered.has(index) ? 'is-correct' : '';
     (slide.choices || []).forEach((choice, choiceIndex) => {
       const button = document.createElement('button');
@@ -65,6 +76,7 @@
         if (choiceIndex === slide.correct) {
           answered.set(index, true);
           render(false);
+          get('lessonScene').classList.add('quiz-success');
           get('lessonNext').focus({ preventScroll: true });
         } else {
           get('lessonFeedback').textContent = `もう一度考えてみましょう。${slide.explanation}`;
@@ -73,11 +85,11 @@
       });
       get('lessonChoices').append(button);
     });
-    get('lessonComplete').hidden = !slide.complete;
-    get('lessonPrev').disabled = index === 0;
-    get('lessonNext').disabled = Boolean(slide.question && !answered.has(index));
-    get('lessonNext').textContent = slide.complete ? 'もう一度読む' : '次へ';
-    get('lessonAuto').disabled = Boolean(slide.question || slide.complete);
+    get('lessonComplete').hidden = !complete;
+    get('lessonPrev').disabled = index === 0 && !isTeacher;
+    get('lessonNext').disabled = showQuiz && !answered.has(index);
+    get('lessonNext').textContent = complete ? 'もう一度読む' : '次へ';
+    get('lessonAuto').disabled = showQuiz || complete;
     get('lessonJump').value = String(index);
     if (focus) {
       get('lessonDialogue').focus({ preventScroll: true });
@@ -91,16 +103,21 @@
     option.textContent = `${i + 1}. ${slide.chapter}`;
     get('lessonJump').append(option);
   });
-  function restart() { stopAuto(); index = 0; answered.clear(); render(true); }
-  get('lessonPrev').addEventListener('click', () => { stopAuto(); if (index > 0) index--; render(true); });
+  function restart() { stopAuto(); index = 0; speaker = 'student'; answered.clear(); render(true); }
+  get('lessonPrev').addEventListener('click', () => {
+    stopAuto();
+    if (speaker === 'teacher') speaker = 'student';
+    else if (index > 0) { index--; speaker = 'teacher'; }
+    render(true);
+  });
   get('lessonNext').addEventListener('click', () => {
     stopAuto();
-    if (index === slides.length - 1) { restart(); return; }
-    if (slides[index].question && !answered.has(index)) return;
-    index++; render(true);
+    if (speaker === 'teacher' && index === slides.length - 1) { restart(); return; }
+    if (speaker === 'teacher' && slides[index].question && !answered.has(index)) return;
+    advance(true);
   });
   get('lessonRestart').addEventListener('click', restart);
-  get('lessonJump').addEventListener('change', event => { stopAuto(); index = Number(event.target.value); render(true); });
+  get('lessonJump').addEventListener('change', event => { stopAuto(); index = Number(event.target.value); speaker = 'student'; render(true); });
   get('lessonAuto').addEventListener('click', () => {
     if (automatic) { stopAuto(); return; }
     automatic = true;
