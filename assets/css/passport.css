@@ -69,6 +69,12 @@
 .passport-guide{max-width:1100px;margin:auto;padding:0 4% 28px;scroll-margin-top:95px;}
 .passport-guide>summary{cursor:pointer;font-weight:700;padding:18px 0;border-top:1px solid #e5dce0;border-bottom:1px solid #e5dce0;}
 .passport-guide .passport-content{width:100%;}
+.lesson-audio{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;font-size:.85rem;}
+.bgm-toggle{display:flex;align-items:center;gap:6px;min-height:44px;font-weight:700;cursor:pointer;}
+.bgm-toggle input{width:20px;height:20px;accent-color:#a52e63;}
+#bgmVolume{flex:1;min-width:70px;max-width:180px;min-height:44px;accent-color:#a52e63;}
+#bgmVolumeValue{min-width:4ch;font-variant-numeric:tabular-nums;}
+#bgmStatus:not(:empty){flex-basis:100%;color:#8d2753;}
 @media(max-width:520px){
   .lesson-heading{align-items:flex-start;}
   .lesson-heading h1{font-size:1.15rem;}

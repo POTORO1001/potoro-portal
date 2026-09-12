@@ -18,7 +18,7 @@
   {"@context":"https://schema.org","@type":"WebPage","name":"ポトロパスポート講義","url":"https://potoro1001.github.io/potoro-portal/passport.html","inLanguage":"ja","description":"ポトロパスポートの会員証・特典・入店順抽選のご利用案内"}
   </script>
   <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/passport.css?v=20260912-3">
+  <link rel="stylesheet" href="assets/css/passport.css?v=20260912-4">
 </head>
 <body>
   <a href="#main" class="skip-link">本文へスキップ</a>
@@ -97,6 +97,13 @@
         <button type="button" id="lessonPrev">前へ</button><button type="button" id="lessonAuto" aria-pressed="false">自動再生</button><button type="button" id="lessonNext">次へ</button>
       </nav>
       <div class="lesson-tools"><label for="lessonJump">章を選ぶ</label><select id="lessonJump"></select><button type="button" id="lessonRestart">最初から</button></div>
+      <div class="lesson-audio" id="lessonAudio" hidden>
+        <label class="bgm-toggle"><input type="checkbox" id="bgmToggle"> BGMオン</label>
+        <label for="bgmVolume">音量</label>
+        <input type="range" id="bgmVolume" min="0" max="100" value="25" step="1" aria-label="BGMの音量">
+        <output id="bgmVolumeValue" for="bgmVolume">25%</output>
+        <span id="bgmStatus" role="status"></span>
+      </div>
     </section>
     <details class="passport-guide" id="passportGuide" open>
       <summary>ご利用案内をまとめて読む</summary>
@@ -209,5 +216,6 @@
   <script src="assets/js/core.js"></script>
   <script src="assets/js/page-init.js?v=20260606"></script>
   <script src="assets/js/passport-lesson.js?v=20260912-3"></script>
+  <script src="assets/js/passport-bgm.js?v=20260912-1"></script>
 </body>
 </html>
