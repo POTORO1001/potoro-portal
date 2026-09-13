@@ -1,7 +1,7 @@
 {
   "ok": true,
   "source": "github-actions",
-  "updatedAt": "2026-09-12T16:31:24.781Z",
+  "updatedAt": "2026-09-13T10:56:48.060Z",
   "today": "2026-09-13",
   "day": {
     "date": "2026-09-13",
@@ -43,9 +43,9 @@
         "off": false
       },
       {
-        "maid": "れい",
-        "start": "17:00",
-        "end": "22:00",
+        "maid": "める",
+        "start": "18:00",
+        "end": "18:30",
         "note": "",
         "off": false
       },
@@ -55,6 +55,13 @@
         "end": "22:00",
         "note": "",
         "off": false
+      },
+      {
+        "maid": "れい",
+        "start": "",
+        "end": "",
+        "note": "おやすみ",
+        "off": true
       }
     ]
   }
