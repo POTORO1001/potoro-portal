@@ -1,0 +1,36 @@
+.menu-main{background:#fff;}
+.menu-content{max-width:960px;line-height:1.8;letter-spacing:0;overflow-wrap:anywhere;}
+.menu-intro{padding:28px 0 16px;}
+.menu-intro>a{font-size:.9rem;display:inline-block;min-height:44px;padding:8px 0;}
+.menu-intro h1{font-size:1.75rem;line-height:1.5;margin:0 0 12px;}
+.menu-intro p{color:#66545e;margin:0;}
+.menu-jump{display:flex;gap:24px;border-bottom:1px solid #eadde3;}
+.menu-jump a{padding:12px 4px;min-height:48px;font-weight:700;color:#952751;}
+.menu-section{padding:28px 0;border-bottom:1px solid #eadde3;scroll-margin-top:140px;}
+.menu-section h2{font-size:1.4rem;margin:0 0 16px;}
+.menu-price{display:flex;align-items:baseline;flex-wrap:wrap;gap:8px 24px;background:#fff1f6;border-left:4px solid #c23a72;padding:14px 18px;}
+.menu-price strong{font-size:1.7rem;color:#a12e60;white-space:nowrap;}
+.menu-price strong span{font-size:.85rem;color:#574b51;}
+.menu-columns{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+.menu-category{padding:16px 0;}
+.menu-category h3{font-size:1.1rem;margin:0;border-bottom:3px solid #cc678e;padding:0 0 10px;}
+.menu-category.alcohol h3{border-color:#5b9466;}
+.menu-category.non-alcohol h3{border-color:#368d9e;}
+.menu-list{margin:0;}
+.menu-list>div{padding:12px 0;border-bottom:1px solid #eee5e9;}
+.menu-list dt{font-weight:600;}
+.menu-list dd{margin:3px 0 0;font-size:.85rem;color:#66545e;}
+.menu-list dd:empty{display:none;}
+.menu-payment{background:#edf7f4;border-left:4px solid #3f8a76;padding:14px 18px;}
+.menu-food-list{margin:20px 0 0;}
+.menu-food-list>div{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid #eee5e9;}
+.menu-food-list dt{font-weight:700;}
+.menu-food-list dt span{display:block;font-weight:400;font-size:.85rem;color:#66545e;}
+.menu-food-list dd{margin:0;font-weight:700;font-size:1.15rem;font-variant-numeric:tabular-nums;white-space:nowrap;color:#a12e60;}
+.menu-originals details{border-top:1px solid #eee5e9;}
+.menu-originals summary{padding:16px 0;cursor:pointer;min-height:48px;font-weight:600;}
+.menu-originals img{max-width:540px;width:100%;height:auto;margin:12px auto;}
+.menu-end{display:flex;flex-wrap:wrap;gap:12px;padding:28px 0 40px;}
+.drawer[aria-hidden="true"]{visibility:hidden;}
+@media(min-width:881px){.drawer{display:none;}}
+@media(max-width:600px){.menu-columns{grid-template-columns:1fr;gap:0;}.menu-intro h1{font-size:1.4rem;}.menu-section{scroll-margin-top:120px;}}
