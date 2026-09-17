@@ -18,6 +18,17 @@ body{
   background-size:220px, cover;
 }
 
+.recruit-comic-layout{display:grid;grid-template-columns:180px minmax(0,1fr);gap:28px;align-items:center;padding-top:16px;padding-bottom:24px;}
+.recruit-comic-cover img{display:block;width:100%;height:auto;border-radius:8px;box-shadow:0 8px 24px #6a3f551a;}
+.recruit-comic-copy h2{font-size:1.4rem;line-height:1.5;margin:0 0 14px;letter-spacing:0;}
+.recruit-comic-copy p{line-height:1.85;margin:0 0 18px;}
+.recruit-comic-copy .btn{background:#b32d69;color:#fff;}
+@media(max-width:520px){
+  .recruit-comic-layout{grid-template-columns:1fr;gap:18px;}
+  .recruit-comic-cover{width:150px;justify-self:center;}
+  .recruit-comic-copy h2{font-size:1.25rem;text-align:center;}
+}
+
 a{
   color:inherit;
   text-decoration:none;
