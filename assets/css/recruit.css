@@ -23,10 +23,13 @@ body{
 .recruit-comic-copy h2{font-size:1.4rem;line-height:1.5;margin:0 0 14px;letter-spacing:0;}
 .recruit-comic-copy p{line-height:1.85;margin:0 0 18px;}
 .recruit-comic-copy .btn{background:#b32d69;color:#fff;}
+.recruit-comic-actions{display:flex;flex-wrap:wrap;gap:10px;}
+.recruit-comic-actions .btn-ghost{background:#fff;color:var(--pt-text);}
 @media(max-width:520px){
   .recruit-comic-layout{grid-template-columns:1fr;gap:18px;}
   .recruit-comic-cover{width:150px;justify-self:center;}
   .recruit-comic-copy h2{font-size:1.25rem;text-align:center;}
+  .recruit-comic-actions{display:grid;grid-template-columns:1fr;}
 }
 
 a{

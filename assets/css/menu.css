@@ -4,6 +4,7 @@
 .menu-intro>a{font-size:.9rem;display:inline-block;min-height:44px;padding:8px 0;}
 .menu-intro h1{font-size:1.75rem;line-height:1.5;margin:0 0 12px;}
 .menu-intro p{color:#66545e;margin:0;}
+.menu-intro .menu-updated{margin-top:10px;font-size:.85rem;color:#705e67;}
 .menu-jump{display:flex;gap:24px;border-bottom:1px solid #eadde3;}
 .menu-jump a{padding:12px 4px;min-height:48px;font-weight:700;color:#952751;}
 .menu-section{padding:28px 0;border-bottom:1px solid #eadde3;scroll-margin-top:140px;}

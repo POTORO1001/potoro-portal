@@ -7,6 +7,8 @@ const pages = [
   { path: 'events.html', title: 'イベント', text: ['イベント', '開催'] },
   { path: 'goods.html', title: 'グッズ', text: ['グッズ', '配布'] },
   { path: 'games.html', title: 'ゲーム・講義', text: ['ゲーム', '講義'] },
+  { path: 'passport.html', title: 'ポトロパスポート講義', text: ['ポトロパスポート講義', 'BGMオン'] },
+  { path: 'menu.html', title: 'ドリンク・フードメニュー', text: ['ドリンク・フードメニュー', '2026年5月'] },
   { path: 'omikuji.html', title: '今日のおみくじ', text: ['今日のおみくじ', '本日の運勢'] },
   { path: 'schedule.html', title: '週間お給仕表', text: ['週間お給仕表'] },
   { path: 'price.html', title: '料金', text: ['料金', '飲み放題'] },
@@ -16,8 +18,11 @@ const pages = [
 
 const issues = [];
 const fetchedAssets = new Set();
-const expectedGameCards = ['ポ・トロクエスト', '萌えセレクト講義', 'ご主人様タイプ診断', '今日のおみくじ'];
+const expectedGameCards = ['ポ・トロクエスト', '萌えセレクト講義', 'ポトロパスポート講義', 'ご主人様タイプ診断', '今日のおみくじ'];
 const expectedOmikujiDetails = ['今日の総合運', '恋愛運', '金運', '仕事運', 'ラッキー行動', 'ラッキーリンク'];
+const expectedAssetText = [
+  { path: 'assets/js/today.js', text: '萌えセレクトのご予約はDM' }
+];
 
 function addIssue(target, message) {
   issues.push(`${target}: ${message}`);
@@ -74,8 +79,16 @@ function collectCriticalAssets(html, pageUrl) {
   for (const match of html.matchAll(/<img\b[^>]*>/gi)) {
     const tag = match[0];
     const src = attr(tag, 'src');
-    if (src && /(?:ogp|hero|uniform|recruit|moeselect|diagnosis|quest|omikuji)/i.test(src)) {
+    if (src && /(?:ogp|hero|uniform|recruit|moeselect|diagnosis|quest|omikuji|passport|menu)/i.test(src)) {
       assets.push(new URL(src, pageUrl).toString());
+    }
+  }
+
+  for (const match of html.matchAll(/<(?:source|video)\b[^>]*>/gi)) {
+    const tag = match[0];
+    for (const name of ['src', 'poster']) {
+      const src = attr(tag, name);
+      if (src) assets.push(new URL(src, pageUrl).toString());
     }
   }
 
@@ -88,7 +101,17 @@ async function validateAsset(url) {
 
   try {
     const response = await fetchWithTimeout(url);
-    if (!response.ok) addIssue(url, `asset returned HTTP ${response.status}`);
+    if (!response.ok) {
+      addIssue(url, `asset returned HTTP ${response.status}`);
+      return;
+    }
+
+    const pathname = new URL(url).pathname;
+    const check = expectedAssetText.find(item => pathname.endsWith(`/${item.path}`));
+    if (check) {
+      const content = await response.text();
+      if (!content.includes(check.text)) addIssue(url, `missing expected asset text "${check.text}"`);
+    }
   } catch (err) {
     addIssue(url, `asset fetch failed: ${err.message}`);
   }
@@ -153,6 +176,9 @@ function validatePageSpecificContent(page, html, url) {
     if (!html.includes('assets/js/sokuhou.js')) addIssue(url, 'missing breaking news script');
     if (!html.includes('assets/js/seats.js')) addIssue(url, 'missing seat status script');
     if (!html.includes('assets/js/today.js')) addIssue(url, 'missing today schedule script');
+    for (const text of ['ドリンクとフードを見る', '萌えセレクトのご予約はDM', 'video/first-visit-guide-web.mp4']) {
+      if (!html.includes(text)) addIssue(url, `missing top content "${text}"`);
+    }
   }
 
   if (page.path === 'games.html') {
@@ -178,6 +204,24 @@ function validatePageSpecificContent(page, html, url) {
     if (!html.includes('id="scheduleCardList"')) addIssue(url, 'missing schedule card list');
     if (!html.includes('assets/js/schedule-cards.js')) addIssue(url, 'missing schedule cards script');
     if (!html.includes('<details class="sheet-details')) addIssue(url, 'missing collapsible sheet details');
+  }
+
+  if (page.path === 'menu.html') {
+    for (const text of ['menu-updated', '飲み放題付き', 'メイドさんの手料理']) {
+      if (!html.includes(text)) addIssue(url, `missing menu content "${text}"`);
+    }
+  }
+
+  if (page.path === 'passport.html') {
+    for (const asset of ['assets/js/passport-lesson.js', 'assets/js/passport-bgm.js', 'img/passport-maids.webp']) {
+      if (!html.includes(asset)) addIssue(url, `missing passport asset "${asset}"`);
+    }
+  }
+
+  if (page.path === 'recruit/') {
+    for (const text of ['漫画でわかる、ポトロのお給仕', '応募条件を見る', '応募フォームへ']) {
+      if (!html.includes(text)) addIssue(url, `missing recruitment content "${text}"`);
+    }
   }
 }
 

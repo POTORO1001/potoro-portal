@@ -216,6 +216,13 @@ function validateHtml(file) {
     }
   }
 
+  for (const match of html.matchAll(/<video\b[^>]*\bposter="([^"]+)"/gi)) {
+    const target = normalizeLocalTarget(file, match[1]);
+    if (target && !fs.existsSync(path.join(root, target))) {
+      addIssue(file, `broken local video poster ${match[1]} -> ${target}`);
+    }
+  }
+
   if (is404 && !/<meta\s+name="robots"\s+content="noindex"/i.test(html)) {
     addIssue(file, '404 page should be noindex');
   }
