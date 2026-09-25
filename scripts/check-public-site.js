@@ -148,6 +148,9 @@ async function validatePage(page) {
     if (!html.includes(text)) addIssue(url, `missing expected text "${text}"`);
   }
 
+  const menuLinkCount = [...html.matchAll(/href="(?:\.\.\/)?menu\.html"/g)].length;
+  if (menuLinkCount < 2) addIssue(url, 'menu page is missing from shared navigation or footer');
+
   if (!/<link\s+rel="stylesheet"/i.test(html)) addIssue(url, 'missing stylesheet link');
   if (!/<script\b[^>]*src=/i.test(html)) addIssue(url, 'missing script reference');
 
@@ -204,6 +207,7 @@ function validatePageSpecificContent(page, html, url) {
     if (!html.includes('id="scheduleCardList"')) addIssue(url, 'missing schedule card list');
     if (!html.includes('assets/js/schedule-cards.js')) addIssue(url, 'missing schedule cards script');
     if (!html.includes('<details class="sheet-details')) addIssue(url, 'missing collapsible sheet details');
+    if (!html.includes('萌えセレクトのご予約はDM')) addIssue(url, 'missing Moe Select reservation wording');
   }
 
   if (page.path === 'menu.html') {

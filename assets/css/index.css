@@ -9,7 +9,6 @@
 .today-row > *,
 .today-left > *,
 .reserve-stack,
-.reserve-subactions,
 .quick-grid > *,
 .quick-links,
 .quick-section,
@@ -274,34 +273,6 @@
   border:1px solid rgba(255,255,255,.4);
   width:100%;justify-content:center;
 }
-.reserve-subactions{
-  display:flex;gap:10px;flex-wrap:wrap;align-items:center;
-}
-.reserve-subactions a,
-.reserve-subactions button{
-  display:inline-flex;gap:8px;align-items:center;
-  justify-content:center;
-  padding:9px 12px;border-radius:999px;
-  background:rgba(255,255,255,.95);
-  border:1px solid rgba(0,0,0,.06);
-  box-shadow:0 6px 14px rgba(0,0,0,.08);
-  text-decoration:none;color:#222;cursor:pointer;
-  font-weight:1000;
-  font-family:inherit;
-  font-size:.92rem;
-  text-align:center;
-  line-height:1.35;
-  min-height:44px;
-}
-.reserve-subactions .subaction-icon{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:1.35em;
-  flex:0 0 1.35em;
-  font-size:1em;
-  line-height:1;
-}
 .reserve-note{color:#555;font-size:.86rem;font-weight:900;line-height:1.6}
 
 .visitor-guide{
@@ -456,13 +427,12 @@
   .today-pill{white-space:normal}
   .seats-status{align-items:flex-start;flex-direction:column}
   .seats-status__updated{text-align:left}
-  .reserve-subactions{display:grid;grid-template-columns:1fr}
-  .reserve-subactions a,
-  .reserve-subactions button{width:100%;border-radius:14px}
   .visitor-guide__head{display:block}
   .visitor-guide__eyebrow{margin-bottom:4px}
-  .visitor-guide__grid{grid-template-columns:1fr}
-  .visitor-guide__item{min-height:auto}
+  .visitor-guide__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .visitor-guide__item{min-height:88px;padding:10px}
+  .visitor-guide__label{font-size:.75rem}
+  .visitor-guide__text{font-size:.84rem;line-height:1.4}
 }
 
 /* =========================

@@ -102,7 +102,7 @@
   }
   </script>
 <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/index.css?v=20260617">
+  <link rel="stylesheet" href="assets/css/index.css?v=20260925-2">
 
   <link rel="stylesheet" href="assets/css/home.css?v=20260712">
 </head>
@@ -156,6 +156,7 @@
       <a href="games.html">ゲーム/講義</a>
       <a href="schedule.html">週間お給仕表</a>
       <a href="price.html">料金詳細</a>
+      <a href="menu.html">ドリンク・フードメニュー</a>
       <a href="uniforms.html">歴代メイド服</a>
       <a href="index.html#access">アクセス</a>
       <a href="./recruit/">メイドさん募集</a>
@@ -218,13 +219,6 @@
                 href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">
                 💌 萌えセレクトのご予約はDM
               </a>
-
-              <div class="reserve-subactions">
-                <button type="button" id="openFirst"><span class="subaction-icon" aria-hidden="true">🫖</span><span>初めての方へ</span></button>
-                <a href="price.html"><span class="subaction-icon" aria-hidden="true">💴</span><span>料金詳細</span></a>
-                <a href="schedule.html"><span class="subaction-icon" aria-hidden="true">📅</span><span>週間お給仕表</span></a>
-                <a href="#access"><span class="subaction-icon" aria-hidden="true">📍</span><span>アクセス</span></a>
-              </div>
 
               <div class="reserve-note">
                 ※お席のみのご予約は承っておりません。萌えセレクトのDM予約では「ご予約名(ハンドルネーム)／ご利用日時と利用時間／セレクト希望メイドさん名」を送ってください♡
@@ -410,6 +404,7 @@
           <li><a href="games.html">ゲーム/講義</a></li>
           <li><a href="schedule.html">週間お給仕表</a></li>
           <li><a href="price.html">料金詳細</a></li>
+          <li><a href="menu.html">ドリンク・フードメニュー</a></li>
           <li><a href="uniforms.html">歴代メイド服</a></li>
           <li><a href="./recruit/">メイドさん募集</a></li>
         </ul>
@@ -581,7 +576,6 @@
       PortalCore.setupCommonFooterYear();
 
       const modalFirst = document.getElementById('modalFirst');
-      document.getElementById('openFirst')?.addEventListener('click', ()=> PortalCore.toggleModal(modalFirst, true));
       document.getElementById('openFirstGuide')?.addEventListener('click', ()=> PortalCore.toggleModal(modalFirst, true));
       document.querySelectorAll('.modal .close').forEach(btn=>{
         btn.addEventListener('click', ()=>{

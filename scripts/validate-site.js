@@ -33,7 +33,8 @@ const sitemapPages = [
   'recruit/index.html'
 ];
 
-const expectedNavLinks = 10;
+const expectedHeaderNavLinks = 10;
+const expectedDrawerLinks = 11;
 const issues = [];
 
 function readFile(file) {
@@ -128,13 +129,13 @@ function validateHtml(file) {
   if (h1Count !== 1) addIssue(file, `expected 1 h1, found ${h1Count}`);
 
   const navLinks = (html.match(/class="nav-links"/i) && html.match(/<div class="nav-links"[\s\S]*?<\/div>/i)?.[0].match(/<a\b/gi)) || [];
-  if (!isUniforms && navLinks.length !== expectedNavLinks) {
-    addIssue(file, `expected ${expectedNavLinks} header nav links, found ${navLinks.length}`);
+  if (!isUniforms && navLinks.length !== expectedHeaderNavLinks) {
+    addIssue(file, `expected ${expectedHeaderNavLinks} header nav links, found ${navLinks.length}`);
   }
 
   const drawerLinks = (html.match(/class="drawer"/i) && html.match(/<div class="drawer"[\s\S]*?<\/div>\s*<\/header>/i)?.[0].match(/<a\b/gi)) || [];
-  if (!isUniforms && drawerLinks.length !== expectedNavLinks) {
-    addIssue(file, `expected ${expectedNavLinks} drawer links, found ${drawerLinks.length}`);
+  if (!isUniforms && drawerLinks.length !== expectedDrawerLinks) {
+    addIssue(file, `expected ${expectedDrawerLinks} drawer links, found ${drawerLinks.length}`);
   }
 
   const drawerTag = html.match(/<div class="drawer"[^>]*>/i)?.[0] || '';
@@ -221,6 +222,12 @@ function validateHtml(file) {
     if (target && !fs.existsSync(path.join(root, target))) {
       addIssue(file, `broken local video poster ${match[1]} -> ${target}`);
     }
+  }
+
+  const menuHref = file === 'recruit/index.html' ? '../menu.html' : 'menu.html';
+  const menuLinkCount = [...html.matchAll(new RegExp(`href="${menuHref.replace('.', '\\.')}"`, 'g'))].length;
+  if (menuLinkCount < 2) {
+    addIssue(file, 'menu page should be linked from shared navigation and footer');
   }
 
   if (is404 && !/<meta\s+name="robots"\s+content="noindex"/i.test(html)) {
