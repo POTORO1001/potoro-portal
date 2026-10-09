@@ -1,12 +1,40 @@
 {
   "ok": true,
   "source": "github-actions",
-  "updatedAt": "2026-10-09T13:48:07.613Z",
-  "today": "2026-10-09",
+  "updatedAt": "2026-10-09T19:11:46.937Z",
+  "today": "2026-10-10",
   "day": {
-    "date": "2026-10-09",
-    "dow": "金",
+    "date": "2026-10-10",
+    "dow": "土",
     "maids": [
+      {
+        "maid": "じゅら",
+        "start": "17:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "みお",
+        "start": "17:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "りあ",
+        "start": "17:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "体験",
+        "start": "17:00",
+        "end": "20:00",
+        "note": "",
+        "off": false
+      },
       {
         "maid": "あかり",
         "start": "18:00",
@@ -20,41 +48,6 @@
         "end": "22:00",
         "note": "",
         "off": false
-      },
-      {
-        "maid": "くろえ",
-        "start": "18:00",
-        "end": "22:00",
-        "note": "",
-        "off": false
-      },
-      {
-        "maid": "ねむ",
-        "start": "18:00",
-        "end": "21:00",
-        "note": "",
-        "off": false
-      },
-      {
-        "maid": "ゆの",
-        "start": "18:00",
-        "end": "21:00",
-        "note": "",
-        "off": false
-      },
-      {
-        "maid": "りあ",
-        "start": "18:00",
-        "end": "22:00",
-        "note": "",
-        "off": false
-      },
-      {
-        "maid": "るな",
-        "start": "",
-        "end": "",
-        "note": "おやすみ",
-        "off": true
       }
     ]
   }
