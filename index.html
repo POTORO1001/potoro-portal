@@ -107,434 +107,64 @@
 
   <link rel="stylesheet" href="assets/css/home.css?v=20260712">
   <link rel="stylesheet" href="assets/css/theme-v2.css?v=20261020">
-  <style>
-    /* Renewal prototype: the header and full-screen menu remain scoped to this page. */
-    .theme-v2 header{
-      background:var(--v2-ivory);
-      border-bottom:1px solid rgba(169,120,45,.24);
-      box-shadow:0 8px 28px rgba(73,45,36,.07);
-      backdrop-filter:none;
-      -webkit-backdrop-filter:none;
-    }
-
-    .theme-v2 .nav{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:24px;
-      min-height:78px;
-    }
-
-    .theme-v2 .brand,
-    .theme-v2 .nav-links[hidden]{
-      display:none!important;
-    }
-
-    .theme-v2 #v2Wordmark{
-      display:inline-flex;
-      width:auto;
-      height:auto;
-      flex:0 1 auto;
-      flex-direction:column;
-      align-items:flex-start;
-      justify-content:center;
-      border:0;
-      border-radius:0;
-      color:var(--v2-brown);
-      background:transparent;
-      box-shadow:none;
-      font-family:var(--v2-serif);
-      line-height:1;
-      text-decoration:none;
-    }
-
-    .theme-v2 #v2Wordmark .v2-wordmark__sub{
-      margin:0 0 5px 2px;
-      color:var(--v2-gold);
-      font-family:var(--v2-sans);
-      font-size:.58rem;
-      font-weight:800;
-      letter-spacing:.18em;
-    }
-
-    .theme-v2 #v2Wordmark .v2-wordmark__name{
-      font-size:1.58rem;
-      font-weight:700;
-      letter-spacing:.04em;
-    }
-
-    .theme-v2 .hamburger{
-      display:inline-flex!important;
-      width:auto;
-      height:48px;
-      min-width:116px;
-      align-items:center;
-      justify-content:center;
-      gap:12px;
-      padding:0 18px;
-      border:1px solid rgba(169,120,45,.35);
-      border-radius:4px;
-      color:var(--v2-brown);
-      background:var(--v2-paper);
-      box-shadow:0 6px 18px rgba(75,53,47,.08);
-      font-family:var(--v2-serif);
-      font-size:.86rem;
-      font-weight:700;
-      letter-spacing:.12em;
-      cursor:pointer;
-      transition:border-color .2s ease,color .2s ease,background-color .2s ease;
-    }
-
-    .theme-v2 .hamburger:hover{
-      border-color:var(--v2-gold);
-      color:var(--v2-rose-deep);
-      background:#fff;
-    }
-
-    .theme-v2 .hamburger svg{
-      width:23px;
-      height:23px;
-    }
-
-    .theme-v2 #drawerScrim{
-      display:none!important;
-    }
-
-    .theme-v2 #drawer{
-      display:block!important;
-      position:fixed!important;
-      inset:0!important;
-      width:100%!important;
-      min-height:100dvh;
-      max-height:100dvh;
-      overflow-y:auto;
-      overscroll-behavior:contain;
-      border:0;
-      background:var(--v2-ivory)!important;
-      box-shadow:none;
-      opacity:0;
-      visibility:hidden;
-      pointer-events:none;
-      transform:none!important;
-      transition:opacity .3s ease,visibility 0s linear .3s;
-      z-index:4000;
-    }
-
-    .theme-v2 #drawer.open{
-      opacity:1;
-      visibility:visible;
-      pointer-events:auto;
-      transition:opacity .3s ease;
-    }
-
-    .theme-v2.drawer-open header{
-      z-index:5000;
-    }
-
-    .theme-v2.drawer-open .recruit-float{
-      opacity:0;
-      visibility:hidden;
-      pointer-events:none;
-    }
-
-    .theme-v2 .v2-menu-shell{
-      position:relative;
-      width:min(1180px,calc(100% - 80px));
-      min-height:100dvh;
-      margin:0 auto;
-      padding:30px 0 48px;
-    }
-
-    .theme-v2 .v2-menu-shell::before,
-    .theme-v2 .v2-menu-shell::after{
-      content:"";
-      position:absolute;
-      top:0;
-      bottom:0;
-      width:1px;
-      background:rgba(169,120,45,.2);
-      pointer-events:none;
-    }
-
-    .theme-v2 .v2-menu-shell::before{left:-20px}
-    .theme-v2 .v2-menu-shell::after{right:-20px}
-
-    .theme-v2 #drawer .head{
-      display:flex;
-      position:relative;
-      top:auto;
-      z-index:2;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:24px;
-      padding:0 0 26px;
-      border-bottom:1px solid rgba(169,120,45,.28);
-      background:transparent;
-      box-shadow:none;
-    }
-
-    .theme-v2 .v2-menu-brand{
-      display:flex;
-      flex-direction:column;
-      color:var(--v2-brown);
-      font-family:var(--v2-serif);
-      line-height:1;
-    }
-
-    .theme-v2 .v2-menu-brand span{
-      margin:0 0 8px 3px;
-      color:var(--v2-gold);
-      font-family:var(--v2-sans);
-      font-size:.62rem;
-      font-weight:800;
-      letter-spacing:.2em;
-    }
-
-    .theme-v2 .v2-menu-brand strong{
-      font-size:clamp(1.8rem,3vw,2.7rem);
-      font-weight:700;
-      letter-spacing:.04em;
-    }
-
-    .theme-v2 .drawer-close{
-      display:inline-flex;
-      width:auto;
-      height:48px;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:0 14px;
-      border:1px solid rgba(169,120,45,.35);
-      border-radius:4px;
-      color:var(--v2-brown);
-      background:var(--v2-paper);
-      font-family:var(--v2-sans);
-      font-size:.72rem;
-      font-weight:800;
-      letter-spacing:.12em;
-      cursor:pointer;
-    }
-
-    .theme-v2 .drawer-close__icon{
-      font-family:var(--v2-serif);
-      font-size:1.45rem;
-      font-weight:400;
-      line-height:1;
-    }
-
-    .theme-v2 .v2-menu-intro{
-      display:grid;
-      place-items:center;
-      padding:34px 0 18px;
-      color:var(--v2-rose-deep);
-      text-align:center;
-    }
-
-    .theme-v2 .v2-menu-intro span{
-      display:block;
-      color:var(--v2-gold);
-      font-size:1.6rem;
-      line-height:1;
-    }
-
-    .theme-v2 .v2-menu-intro p{
-      margin:10px 0 0;
-      color:var(--v2-brown-soft);
-      font-family:var(--v2-serif);
-      font-size:.78rem;
-      letter-spacing:.08em;
-    }
-
-    .theme-v2 .v2-menu-grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      column-gap:clamp(48px,8vw,120px);
-      row-gap:0;
-      counter-reset:v2-menu-item;
-    }
-
-    .theme-v2 #drawer .v2-menu-grid a{
-      display:grid;
-      grid-template-columns:42px minmax(0,1fr) 24px;
-      align-items:center;
-      min-height:72px;
-      margin:0;
-      padding:12px 4px;
-      border:0;
-      border-bottom:1px solid rgba(116,78,57,.2);
-      border-radius:0;
-      color:var(--v2-brown)!important;
-      background:transparent!important;
-      box-shadow:none;
-      font-family:var(--v2-serif);
-      font-size:clamp(1.05rem,1.5vw,1.3rem);
-      font-weight:700;
-      letter-spacing:.02em;
-      text-decoration:none;
-      counter-increment:v2-menu-item;
-      transition:color .2s ease,padding-left .2s ease,background-color .2s ease;
-    }
-
-    .theme-v2 #drawer .v2-menu-grid a::before{
-      content:counter(v2-menu-item,decimal-leading-zero);
-      color:var(--v2-gold);
-      font-family:var(--v2-sans);
-      font-size:.63rem;
-      font-weight:800;
-      letter-spacing:.08em;
-    }
-
-    .theme-v2 #drawer .v2-menu-grid a::after{
-      content:"→";
-      color:var(--v2-rose);
-      font-family:var(--v2-sans);
-      font-size:1rem;
-      text-align:right;
-    }
-
-    .theme-v2 #drawer .v2-menu-grid a:hover,
-    .theme-v2 #drawer .v2-menu-grid a:focus-visible{
-      padding-left:12px;
-      color:var(--v2-rose-deep)!important;
-      background:rgba(248,220,227,.28)!important;
-      transform:none;
-    }
-
-    .theme-v2 #drawer .v2-menu-grid a[aria-current="page"]{
-      color:var(--v2-rose-deep)!important;
-      border-bottom-color:var(--v2-rose);
-    }
-
-    .theme-v2 #drawer .v2-menu-grid a[aria-current="page"]::after{
-      content:"◆";
-      color:var(--v2-gold);
-      font-size:.7rem;
-    }
-
-    .theme-v2 .v2-menu-footer{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:14px;
-      margin-top:38px;
-      color:var(--v2-brown-soft);
-      font-family:var(--v2-serif);
-      font-size:.78rem;
-      letter-spacing:.08em;
-      text-align:center;
-    }
-
-    .theme-v2 .v2-menu-footer::before,
-    .theme-v2 .v2-menu-footer::after{
-      content:"";
-      width:54px;
-      height:1px;
-      background:var(--v2-gold-light);
-    }
-
-    @media (max-width:700px){
-      .theme-v2 .nav{
-        min-height:68px;
-      }
-
-      .theme-v2 #v2Wordmark .v2-wordmark__sub{
-        margin-bottom:4px;
-        font-size:.5rem;
-      }
-
-      .theme-v2 #v2Wordmark .v2-wordmark__name{
-        font-size:1.3rem;
-      }
-
-      .theme-v2 .hamburger{
-        min-width:96px;
-        height:44px;
-        gap:9px;
-        padding:0 13px;
-        font-size:.74rem;
-      }
-
-      .theme-v2 .hamburger svg{
-        width:20px;
-        height:20px;
-      }
-
-      .theme-v2 .v2-menu-shell{
-        width:calc(100% - 32px);
-        padding:18px 0 34px;
-      }
-
-      .theme-v2 .v2-menu-shell::before,
-      .theme-v2 .v2-menu-shell::after{
-        display:none;
-      }
-
-      .theme-v2 #drawer .head{
-        padding-bottom:18px;
-      }
-
-      .theme-v2 .v2-menu-brand strong{
-        font-size:1.65rem;
-      }
-
-      .theme-v2 .drawer-close{
-        width:44px;
-        min-width:44px;
-        height:44px;
-        padding:0;
-      }
-
-      .theme-v2 .drawer-close__label{
-        position:absolute;
-        width:1px;
-        height:1px;
-        overflow:hidden;
-        clip:rect(0,0,0,0);
-        white-space:nowrap;
-      }
-
-      .theme-v2 .v2-menu-intro{
-        padding:24px 0 10px;
-      }
-
-      .theme-v2 .v2-menu-grid{
-        grid-template-columns:1fr;
-      }
-
-      .theme-v2 #drawer .v2-menu-grid a{
-        min-height:58px;
-        grid-template-columns:36px minmax(0,1fr) 22px;
-        padding:9px 3px;
-        font-size:1rem;
-      }
-
-      .theme-v2 .v2-menu-footer{
-        margin-top:28px;
-        font-size:.7rem;
-      }
-    }
-
-    @media (prefers-reduced-motion:reduce){
-      .theme-v2 #drawer,
-      .theme-v2 .hamburger,
-      .theme-v2 #drawer .v2-menu-grid a{
-        transition:none!important;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/design-system.css?v=20261020">
 </head>
 
 <body class="theme-v2">
   <a href="#main" class="skip-link">本文へスキップ</a>
 
-  <header>
-    <nav class="nav container" aria-label="Main">
-      <a class="brand-logo" id="v2Wordmark" href="index.html" aria-label="PO.TORO ポータルTOPへ戻る">
-        <span class="v2-wordmark__sub">CONCEPT CAFE</span>
-        <span class="v2-wordmark__name">PO.TORO</span>
-      </a>
+  <!-- shared-layout:header:start -->
+<header class="site-header">
+  <nav class="nav container" aria-label="メインメニュー">
+    <a class="brand-logo" id="v2Wordmark" href="index.html" aria-label="PO.TORO ポータルTOPへ戻る">
+      <span class="v2-wordmark__sub">CONCEPT CAFE</span>
+      <span class="v2-wordmark__name">PO.TORO</span>
+    </a>
 
-      <div class="nav-links" id="navLinks" hidden aria-hidden="true">
+    <div class="nav-links" id="navLinks" hidden aria-hidden="true">
+      <a href="index.html" aria-current="page">ポータルTOP</a>
+      <a href="news.html">お知らせ</a>
+      <a href="events.html">イベント</a>
+      <a href="goods.html">グッズ</a>
+      <a href="games.html">ゲーム/講義</a>
+      <a href="schedule.html">週間お給仕表</a>
+      <a href="price.html">料金詳細</a>
+      <a href="uniforms.html">歴代メイド服</a>
+      <a href="index.html#access">アクセス</a>
+      <a href="recruit/">メイドさん募集</a>
+    </div>
+
+    <button class="hamburger" id="btnMenu" aria-label="メニューを開く" aria-controls="drawer" aria-expanded="false">
+      <span>MENU</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </nav>
+
+  <div class="drawer-scrim" id="drawerScrim" aria-hidden="true"></div>
+
+  <div class="drawer" id="drawer" aria-hidden="true" aria-label="全ページメニュー" role="dialog" aria-modal="true" tabindex="-1">
+    <div class="v2-menu-shell">
+      <div class="head">
+        <div class="v2-menu-brand" aria-hidden="true">
+          <span>CONCEPT CAFE</span>
+          <strong>PO.TORO</strong>
+        </div>
+        <button class="drawer-close" id="btnClose" aria-label="メニューを閉じる">
+          <span class="drawer-close__label">CLOSE</span>
+          <span class="drawer-close__icon" aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="v2-menu-intro" aria-hidden="true">
+        <span>&#10086;</span>
+        <p>Welcome back to our little manor.</p>
+      </div>
+
+      <nav class="v2-menu-grid" aria-label="全ページメニュー">
         <a href="index.html" aria-current="page">ポータルTOP</a>
         <a href="news.html">お知らせ</a>
         <a href="events.html">イベント</a>
@@ -542,59 +172,17 @@
         <a href="games.html">ゲーム/講義</a>
         <a href="schedule.html">週間お給仕表</a>
         <a href="price.html">料金詳細</a>
+        <a href="menu.html">ドリンク・フードメニュー</a>
         <a href="uniforms.html">歴代メイド服</a>
         <a href="index.html#access">アクセス</a>
-        <a href="./recruit/">メイドさん募集</a>
-      </div>
+        <a href="recruit/">メイドさん募集</a>
+      </nav>
 
-      <button class="hamburger" id="btnMenu" aria-label="メニューを開く" aria-controls="drawer" aria-expanded="false">
-        <span>MENU</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
-    </nav>
-
-    <div class="drawer-scrim" id="drawerScrim" aria-hidden="true"></div>
-
-    <div class="drawer" id="drawer" aria-hidden="true" aria-label="全ページメニュー" role="dialog" aria-modal="true" tabindex="-1">
-      <div class="v2-menu-shell">
-        <div class="head">
-          <div class="v2-menu-brand" aria-hidden="true">
-            <span>CONCEPT CAFE</span>
-            <strong>PO.TORO</strong>
-          </div>
-          <button class="drawer-close" id="btnClose" aria-label="メニューを閉じる">
-            <span class="drawer-close__label">CLOSE</span>
-            <span class="drawer-close__icon" aria-hidden="true">×</span>
-          </button>
-        </div>
-
-        <div class="v2-menu-intro" aria-hidden="true">
-          <span>❦</span>
-          <p>Welcome back to our little manor.</p>
-        </div>
-
-        <nav class="v2-menu-grid" aria-label="全ページメニュー">
-          <a href="index.html" aria-current="page">ポータルTOP</a>
-          <a href="news.html">お知らせ</a>
-          <a href="events.html">イベント</a>
-          <a href="goods.html">グッズ</a>
-          <a href="games.html">ゲーム/講義</a>
-          <a href="schedule.html">週間お給仕表</a>
-          <a href="price.html">料金詳細</a>
-          <a href="menu.html">ドリンク・フードメニュー</a>
-          <a href="uniforms.html">歴代メイド服</a>
-          <a href="index.html#access">アクセス</a>
-          <a href="./recruit/">メイドさん募集</a>
-        </nav>
-
-        <div class="v2-menu-footer" aria-hidden="true">Doors are always open for you.</div>
-      </div>
+      <div class="v2-menu-footer" aria-hidden="true">Doors are always open for you.</div>
     </div>
-  </header>
+  </div>
+</header>
+<!-- shared-layout:header:end -->
 
   <div class="sokuhou-alert" id="sokuhouAlert" hidden aria-live="polite">
     <a class="sokuhou-alert__inner container" id="sokuhouAlertLink" href="news.html">
@@ -782,7 +370,9 @@
     </div>
 
     <section class="v2-story-section" id="about">
-      <div class="v2-room-visual v2-room-visual--foyer" aria-hidden="true"></div>
+      <div class="v2-room-visual v2-room-visual--foyer" aria-hidden="true">
+        <img src="img/room-foyer-classical.webp" alt="" width="1672" height="941" loading="lazy" decoding="async">
+      </div>
       <div class="container reveal v2-room-content">
         <div class="v2-section-heading">
           <p class="v2-eyebrow">WELCOME TO OUR STORY</p>
@@ -808,7 +398,9 @@
     </section>
 
     <section class="v2-maids-section" id="maids">
-      <div class="v2-room-visual v2-room-visual--dressing" aria-hidden="true"></div>
+      <div class="v2-room-visual v2-room-visual--dressing" aria-hidden="true">
+        <img src="img/room-dressing-classical.webp" alt="" width="1672" height="941" loading="lazy" decoding="async">
+      </div>
       <div class="container reveal v2-room-content">
         <div class="v2-maids-feature">
           <div class="v2-maids-image">
@@ -828,7 +420,9 @@
     </section>
 
     <section class="v2-schedule-section" id="schedule-preview">
-      <div class="v2-room-visual v2-room-visual--study" aria-hidden="true"></div>
+      <div class="v2-room-visual v2-room-visual--study" aria-hidden="true">
+        <img src="img/room-study-classical.webp" alt="" width="1983" height="793" loading="lazy" decoding="async">
+      </div>
       <div class="container reveal v2-room-content">
         <div class="v2-section-heading">
           <p class="v2-eyebrow">WEEKLY SCHEDULE</p>
@@ -844,7 +438,9 @@
     </section>
 
     <section class="v2-events-section" id="events-home">
-      <div class="v2-room-visual v2-room-visual--garden" aria-hidden="true"></div>
+      <div class="v2-room-visual v2-room-visual--garden" aria-hidden="true">
+        <img src="img/room-rose-garden-classical.webp" alt="" width="1672" height="940" loading="lazy" decoding="async">
+      </div>
       <div class="container reveal v2-room-content">
         <div class="v2-section-heading">
           <p class="v2-eyebrow">NEWS &amp; EVENTS</p>
@@ -863,7 +459,9 @@
     </section>
 
     <section class="v2-enjoy-section" id="enjoy">
-      <div class="v2-room-visual v2-room-visual--treasure" aria-hidden="true"></div>
+      <div class="v2-room-visual v2-room-visual--treasure" aria-hidden="true">
+        <img src="img/room-treasure-classical.webp" alt="" width="1774" height="887" loading="lazy" decoding="async">
+      </div>
       <div class="container reveal v2-room-content">
         <div class="v2-section-heading">
           <p class="v2-eyebrow">HOW TO ENJOY PO.TORO</p>
@@ -951,45 +549,45 @@
     </div>
   </div>
 
-  <footer>
-    <div class="container foot reveal">
-      <div>
-        <h4>concept cafe PO.TORO</h4>
-        <p>ご帰宅ありがとうございます。最新情報は本ポータルでご確認ください。</p>
-
-        <div class="foot-call">
-          <a href="tel:089-909-5211" class="foot-tel" aria-label="電話をかける：089-909-5211">📞 089-909-5211</a>
-          <div class="foot-tel-note">お電話でのお問い合わせはこちら</div>
-        </div>
-
-        <div class="copyright">© <span id="year"></span> PO.TORO / concept cafe. All rights reserved.</div>
+  <!-- shared-layout:footer:start -->
+<footer class="site-footer">
+  <div class="container foot">
+    <div class="site-footer__brand">
+      <h4>concept cafe PO.TORO</h4>
+      <p>ご帰宅ありがとうございます。最新情報は本ポータルでご確認ください。</p>
+      <div class="foot-call">
+        <a href="tel:089-909-5211" class="foot-tel" aria-label="電話をかける：089-909-5211">TEL 089-909-5211</a>
+        <div class="foot-tel-note">お電話でのお問い合わせはこちら</div>
       </div>
-
-      <div>
-        <h4>リンク</h4>
-        <ul class="foot-list">
-          <li><a href="index.html">ポータルTOP</a></li>
-          <li><a href="news.html">お知らせ</a></li>
-          <li><a href="events.html">イベント</a></li>
-          <li><a href="goods.html">グッズ</a></li>
-          <li><a href="games.html">ゲーム/講義</a></li>
-          <li><a href="schedule.html">週間お給仕表</a></li>
-          <li><a href="price.html">料金詳細</a></li>
-          <li><a href="menu.html">ドリンク・フードメニュー</a></li>
-          <li><a href="uniforms.html">歴代メイド服</a></li>
-          <li><a href="./recruit/">メイドさん募集</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4>お問い合わせ</h4>
-        <ul class="foot-list">
-          <li><a href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">X（@po_toro）</a></li>
-          <li><a href="#access">店舗アクセス</a></li>
-        </ul>
-      </div>
+      <div class="copyright">© <span id="year"></span> PO.TORO / concept cafe. All rights reserved.</div>
     </div>
-  </footer>
+
+    <div>
+      <h4>リンク</h4>
+      <ul class="foot-list">
+        <li><a href="index.html">ポータルTOP</a></li>
+        <li><a href="news.html">お知らせ</a></li>
+        <li><a href="events.html">イベント</a></li>
+        <li><a href="goods.html">グッズ</a></li>
+        <li><a href="games.html">ゲーム/講義</a></li>
+        <li><a href="schedule.html">週間お給仕表</a></li>
+        <li><a href="price.html">料金詳細</a></li>
+        <li><a href="menu.html">ドリンク・フードメニュー</a></li>
+        <li><a href="uniforms.html">歴代メイド服</a></li>
+        <li><a href="recruit/">メイドさん募集</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>お問い合わせ</h4>
+      <ul class="foot-list">
+        <li><a href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">X（@po_toro）</a></li>
+        <li><a href="index.html#access">店舗アクセス</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+<!-- shared-layout:footer:end -->
 
   <div id="modalFirst" class="modal" aria-modal="true" tabindex="-1" role="dialog" aria-label="初めての方へ" aria-hidden="true">
     <div class="panel">

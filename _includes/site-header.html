@@ -1,0 +1,68 @@
+<header class="site-header">
+  <nav class="nav container" aria-label="メインメニュー">
+    <a class="brand-logo" id="v2Wordmark" href="{{ROOT}}index.html" aria-label="PO.TORO ポータルTOPへ戻る">
+      <span class="v2-wordmark__sub">CONCEPT CAFE</span>
+      <span class="v2-wordmark__name">PO.TORO</span>
+    </a>
+
+    <div class="nav-links" id="navLinks" hidden aria-hidden="true">
+      <a href="{{ROOT}}index.html"{{CURRENT:index}}>ポータルTOP</a>
+      <a href="{{ROOT}}news.html"{{CURRENT:news}}>お知らせ</a>
+      <a href="{{ROOT}}events.html"{{CURRENT:events}}>イベント</a>
+      <a href="{{ROOT}}goods.html"{{CURRENT:goods}}>グッズ</a>
+      <a href="{{ROOT}}games.html"{{CURRENT:games}}>ゲーム/講義</a>
+      <a href="{{ROOT}}schedule.html"{{CURRENT:schedule}}>週間お給仕表</a>
+      <a href="{{ROOT}}price.html"{{CURRENT:price}}>料金詳細</a>
+      <a href="{{ROOT}}uniforms.html"{{CURRENT:uniforms}}>歴代メイド服</a>
+      <a href="{{ROOT}}index.html#access">アクセス</a>
+      <a href="{{ROOT}}recruit/"{{CURRENT:recruit}}>メイドさん募集</a>
+    </div>
+
+    <button class="hamburger" id="btnMenu" aria-label="メニューを開く" aria-controls="drawer" aria-expanded="false">
+      <span>MENU</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </nav>
+
+  <div class="drawer-scrim" id="drawerScrim" aria-hidden="true"></div>
+
+  <div class="drawer" id="drawer" aria-hidden="true" aria-label="全ページメニュー" role="dialog" aria-modal="true" tabindex="-1">
+    <div class="v2-menu-shell">
+      <div class="head">
+        <div class="v2-menu-brand" aria-hidden="true">
+          <span>CONCEPT CAFE</span>
+          <strong>PO.TORO</strong>
+        </div>
+        <button class="drawer-close" id="btnClose" aria-label="メニューを閉じる">
+          <span class="drawer-close__label">CLOSE</span>
+          <span class="drawer-close__icon" aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="v2-menu-intro" aria-hidden="true">
+        <span>&#10086;</span>
+        <p>Welcome back to our little manor.</p>
+      </div>
+
+      <nav class="v2-menu-grid" aria-label="全ページメニュー">
+        <a href="{{ROOT}}index.html"{{CURRENT:index}}>ポータルTOP</a>
+        <a href="{{ROOT}}news.html"{{CURRENT:news}}>お知らせ</a>
+        <a href="{{ROOT}}events.html"{{CURRENT:events}}>イベント</a>
+        <a href="{{ROOT}}goods.html"{{CURRENT:goods}}>グッズ</a>
+        <a href="{{ROOT}}games.html"{{CURRENT:games}}>ゲーム/講義</a>
+        <a href="{{ROOT}}schedule.html"{{CURRENT:schedule}}>週間お給仕表</a>
+        <a href="{{ROOT}}price.html"{{CURRENT:price}}>料金詳細</a>
+        <a href="{{ROOT}}menu.html"{{CURRENT:menu}}>ドリンク・フードメニュー</a>
+        <a href="{{ROOT}}uniforms.html"{{CURRENT:uniforms}}>歴代メイド服</a>
+        <a href="{{ROOT}}index.html#access">アクセス</a>
+        <a href="{{ROOT}}recruit/"{{CURRENT:recruit}}>メイドさん募集</a>
+      </nav>
+
+      <div class="v2-menu-footer" aria-hidden="true">Doors are always open for you.</div>
+    </div>
+  </div>
+</header>

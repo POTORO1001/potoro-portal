@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { spawnSync } = require('child_process');
 
 const root = path.resolve(__dirname, '..');
 const publicPages = [
@@ -378,6 +379,42 @@ function validateOperationDocs() {
   }
 }
 
+function validateSharedDesignSystem() {
+  const cssFile = 'assets/css/design-system.css';
+  if (!fs.existsSync(path.join(root, cssFile))) {
+    addIssue(cssFile, 'missing shared design system');
+    return;
+  }
+
+  for (const file of publicPages) {
+    const html = readFile(file);
+    if (!html.includes('shared-layout:header:start') || !html.includes('shared-layout:header:end')) {
+      addIssue(file, 'missing managed shared header markers');
+    }
+    if (!html.includes('shared-layout:footer:start') || !html.includes('shared-layout:footer:end')) {
+      addIssue(file, 'missing managed shared footer markers');
+    }
+    if (!/body[^>]*class="[^"]*\btheme-v2\b/i.test(html)) {
+      addIssue(file, 'body missing theme-v2 class');
+    }
+    if (!/assets\/css\/design-system\.css/i.test(html)) {
+      addIssue(file, 'missing shared design-system.css');
+    }
+
+    const wordmark = html.match(/<a\b[^>]*id="v2Wordmark"[\s\S]*?<\/a>/i)?.[0] || '';
+    const name = wordmark.match(/class="v2-wordmark__name"[^>]*>([^<]+)</i)?.[1]?.trim() || '';
+    if (name !== 'PO.TORO') addIssue(file, `shared wordmark should be PO.TORO, found ${name || 'none'}`);
+  }
+
+  const result = spawnSync(process.execPath, [path.join(root, 'scripts/sync-shared-layout.js'), '--check'], {
+    cwd: root,
+    encoding: 'utf8'
+  });
+  if (result.status !== 0) {
+    addIssue('scripts/sync-shared-layout.js', (result.stderr || result.stdout || 'shared layout check failed').trim());
+  }
+}
+
 for (const page of publicPages) validateHtml(page);
 validateDynamicImageMarkup();
 validateSitemap();
@@ -385,6 +422,7 @@ validateIgnore();
 validateConfig();
 validateManagedImagePairs();
 validateOperationDocs();
+validateSharedDesignSystem();
 
 if (issues.length) {
   console.error(`Site validation failed with ${issues.length} issue(s):`);

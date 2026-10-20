@@ -249,10 +249,11 @@
   function setupReveal(){
     const els = Array.from(document.querySelectorAll('.reveal'));
     if(!els.length) return;
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)){
       els.forEach(el=>el.classList.add('is-in'));
       return;
     }
+    els.forEach(el=>el.classList.add('reveal-ready'));
     const io = new IntersectionObserver((entries)=>{
       for(const e of entries){
         if(e.isIntersecting){

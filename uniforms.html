@@ -66,13 +66,61 @@
   }
   </script>
 <link rel="stylesheet" href="assets/css/uniforms.css">
+  <link rel="stylesheet" href="assets/css/design-system.css?v=20261020">
 </head>
-<body>
-  <header class="container">
-    <a class="btn" href="index.html" aria-label="ポータルに戻る">← ポータルへ戻る</a>
-    <h1>PO・TORO 歴代メイド服紹介</h1>
-    <p class="lead">初代から七代目までのメイド服を一挙公開♡</p>
-    <nav class="page-nav" aria-label="主要ページ">
+<body class="theme-v2">
+  <!-- shared-layout:header:start -->
+<header class="site-header">
+  <nav class="nav container" aria-label="メインメニュー">
+    <a class="brand-logo" id="v2Wordmark" href="index.html" aria-label="PO.TORO ポータルTOPへ戻る">
+      <span class="v2-wordmark__sub">CONCEPT CAFE</span>
+      <span class="v2-wordmark__name">PO.TORO</span>
+    </a>
+
+    <div class="nav-links" id="navLinks" hidden aria-hidden="true">
+      <a href="index.html">ポータルTOP</a>
+      <a href="news.html">お知らせ</a>
+      <a href="events.html">イベント</a>
+      <a href="goods.html">グッズ</a>
+      <a href="games.html">ゲーム/講義</a>
+      <a href="schedule.html">週間お給仕表</a>
+      <a href="price.html">料金詳細</a>
+      <a href="uniforms.html" aria-current="page">歴代メイド服</a>
+      <a href="index.html#access">アクセス</a>
+      <a href="recruit/">メイドさん募集</a>
+    </div>
+
+    <button class="hamburger" id="btnMenu" aria-label="メニューを開く" aria-controls="drawer" aria-expanded="false">
+      <span>MENU</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </nav>
+
+  <div class="drawer-scrim" id="drawerScrim" aria-hidden="true"></div>
+
+  <div class="drawer" id="drawer" aria-hidden="true" aria-label="全ページメニュー" role="dialog" aria-modal="true" tabindex="-1">
+    <div class="v2-menu-shell">
+      <div class="head">
+        <div class="v2-menu-brand" aria-hidden="true">
+          <span>CONCEPT CAFE</span>
+          <strong>PO.TORO</strong>
+        </div>
+        <button class="drawer-close" id="btnClose" aria-label="メニューを閉じる">
+          <span class="drawer-close__label">CLOSE</span>
+          <span class="drawer-close__icon" aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="v2-menu-intro" aria-hidden="true">
+        <span>&#10086;</span>
+        <p>Welcome back to our little manor.</p>
+      </div>
+
+      <nav class="v2-menu-grid" aria-label="全ページメニュー">
         <a href="index.html">ポータルTOP</a>
         <a href="news.html">お知らせ</a>
         <a href="events.html">イベント</a>
@@ -83,11 +131,21 @@
         <a href="menu.html">ドリンク・フードメニュー</a>
         <a href="uniforms.html" aria-current="page">歴代メイド服</a>
         <a href="index.html#access">アクセス</a>
-        <a href="./recruit/">メイドさん募集</a>
-    </nav>
-  </header>
+        <a href="recruit/">メイドさん募集</a>
+      </nav>
+
+      <div class="v2-menu-footer" aria-hidden="true">Doors are always open for you.</div>
+    </div>
+  </div>
+</header>
+<!-- shared-layout:header:end -->
 
   <main class="container" id="list" aria-live="polite">
+    <section class="standalone-page-intro">
+      <p class="standalone-page-intro__eyebrow">UNIFORM ARCHIVE</p>
+      <h1>PO.TORO 歴代メイド服紹介</h1>
+      <p>初代から七代目までのメイド服を一挙公開します。</p>
+    </section>
     <div class="toolbar" aria-hidden="true">
       <span class="chip">全7モデル</span>
     </div>
@@ -234,37 +292,48 @@
     <img id="uniformLightboxImg" alt="拡大画像" decoding="async">
   </div>
 
-  <footer>
-    <div class="container footer-grid">
-      <div>
-        <h4>concept cafe PO・TORO</h4>
-        <small>© <span id="year"></span> PO・TORO / concept cafe.</small>
+  <!-- shared-layout:footer:start -->
+<footer class="site-footer">
+  <div class="container foot">
+    <div class="site-footer__brand">
+      <h4>concept cafe PO.TORO</h4>
+      <p>ご帰宅ありがとうございます。最新情報は本ポータルでご確認ください。</p>
+      <div class="foot-call">
+        <a href="tel:089-909-5211" class="foot-tel" aria-label="電話をかける：089-909-5211">TEL 089-909-5211</a>
+        <div class="foot-tel-note">お電話でのお問い合わせはこちら</div>
       </div>
-      <div>
-        <h4>リンク</h4>
-        <ul class="foot-list">
-          <li><a href="index.html">ポータルTOP</a></li>
-          <li><a href="news.html">お知らせ</a></li>
-          <li><a href="events.html">イベント</a></li>
-          <li><a href="goods.html">グッズ</a></li>
-          <li><a href="games.html">ゲーム/講義</a></li>
-          <li><a href="schedule.html">週間お給仕表</a></li>
-          <li><a href="price.html">料金詳細</a></li>
-          <li><a href="menu.html">ドリンク・フードメニュー</a></li>
-          <li><a href="uniforms.html">歴代メイド服</a></li>
-          <li><a href="./recruit/">メイドさん募集</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>お問い合わせ</h4>
-        <ul class="foot-list">
-          <li><a href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">X（@po_toro）</a></li>
-          <li><a href="./recruit/">メイドさん募集</a></li>
-        </ul>
-      </div>
+      <div class="copyright">© <span id="year"></span> PO.TORO / concept cafe. All rights reserved.</div>
     </div>
-  </footer>
+
+    <div>
+      <h4>リンク</h4>
+      <ul class="foot-list">
+        <li><a href="index.html">ポータルTOP</a></li>
+        <li><a href="news.html">お知らせ</a></li>
+        <li><a href="events.html">イベント</a></li>
+        <li><a href="goods.html">グッズ</a></li>
+        <li><a href="games.html">ゲーム/講義</a></li>
+        <li><a href="schedule.html">週間お給仕表</a></li>
+        <li><a href="price.html">料金詳細</a></li>
+        <li><a href="menu.html">ドリンク・フードメニュー</a></li>
+        <li><a href="uniforms.html">歴代メイド服</a></li>
+        <li><a href="recruit/">メイドさん募集</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>お問い合わせ</h4>
+      <ul class="foot-list">
+        <li><a href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">X（@po_toro）</a></li>
+        <li><a href="index.html#access">店舗アクセス</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+<!-- shared-layout:footer:end -->
 
   <script src="assets/js/uniforms.js?v=20260606"></script>
+<script src="assets/js/core.js?v=20261020"></script>
+<script src="assets/js/page-init.js?v=20261020"></script>
 </body>
 </html>
