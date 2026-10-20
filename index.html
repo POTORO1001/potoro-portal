@@ -782,7 +782,8 @@
     </div>
 
     <section class="v2-story-section" id="about">
-      <div class="container reveal">
+      <div class="v2-room-visual v2-room-visual--foyer" aria-hidden="true"></div>
+      <div class="container reveal v2-room-content">
         <div class="v2-section-heading">
           <p class="v2-eyebrow">WELCOME TO OUR STORY</p>
           <h2>PO.TOROについて</h2>
@@ -807,7 +808,8 @@
     </section>
 
     <section class="v2-maids-section" id="maids">
-      <div class="container reveal">
+      <div class="v2-room-visual v2-room-visual--dressing" aria-hidden="true"></div>
+      <div class="container reveal v2-room-content">
         <div class="v2-maids-feature">
           <div class="v2-maids-image">
             <picture>
@@ -826,7 +828,8 @@
     </section>
 
     <section class="v2-schedule-section" id="schedule-preview">
-      <div class="container reveal">
+      <div class="v2-room-visual v2-room-visual--study" aria-hidden="true"></div>
+      <div class="container reveal v2-room-content">
         <div class="v2-section-heading">
           <p class="v2-eyebrow">WEEKLY SCHEDULE</p>
           <h2>お給仕予定</h2>
@@ -835,12 +838,14 @@
         <div class="v2-schedule-rail" id="scheduleCardList" aria-live="polite">
           <div class="v2-loading"><span aria-hidden="true"></span>お給仕予定を確認しています</div>
         </div>
+        <p class="v2-schedule-hint">本日・明日を先頭に、横へ進んで一週間をご覧いただけます。</p>
         <div class="v2-section-action"><a class="btn btn-ghost" href="schedule.html">週間お給仕表を詳しく見る</a></div>
       </div>
     </section>
 
     <section class="v2-events-section" id="events-home">
-      <div class="container reveal">
+      <div class="v2-room-visual v2-room-visual--garden" aria-hidden="true"></div>
+      <div class="container reveal v2-room-content">
         <div class="v2-section-heading">
           <p class="v2-eyebrow">NEWS &amp; EVENTS</p>
           <h2>イベント情報</h2>
@@ -858,7 +863,8 @@
     </section>
 
     <section class="v2-enjoy-section" id="enjoy">
-      <div class="container reveal">
+      <div class="v2-room-visual v2-room-visual--treasure" aria-hidden="true"></div>
+      <div class="container reveal v2-room-content">
         <div class="v2-section-heading">
           <p class="v2-eyebrow">HOW TO ENJOY PO.TORO</p>
           <h2>ポトロの楽しみ方</h2>
@@ -882,7 +888,10 @@
     </section>
 
     <section id="access">
-      <div class="container reveal">
+      <div class="v2-access-threshold" aria-hidden="true">
+        <span>FROM THE MANOR TO MATSUYAMA</span>
+      </div>
+      <div class="container reveal v2-room-content">
         <div class="v2-section-heading">
           <p class="v2-eyebrow">VISIT THE MANOR</p>
           <h2>アクセス・店舗案内</h2>
@@ -922,6 +931,13 @@
               title="PO.TORO location map"
               src="https://www.google.com/maps?q=%E6%84%9B%E5%AA%9B%E7%9C%8C%E6%9D%BE%E5%B1%B1%E5%B8%82%E6%B9%8A%E7%94%BA3%E4%B8%81%E7%9B%AE7-2+2F&output=embed"
               class="map-frame" width="100%" height="360" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="v2-map-fallback">
+              <div>
+                <strong>地図が表示されない場合</strong>
+                <span>愛媛県松山市湊町3丁目7-2 2F</span>
+              </div>
+              <a href="https://www.google.com/maps/search/?api=1&query=%E6%84%9B%E5%AA%9B%E7%9C%8C%E6%9D%BE%E5%B1%B1%E5%B8%82%E6%B9%8A%E7%94%BA3%E4%B8%81%E7%9B%AE7-2+2F" target="_blank" rel="noopener noreferrer">Google Mapsで確認する</a>
+            </div>
           </div>
         </div>
       </div>

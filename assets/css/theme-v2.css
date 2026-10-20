@@ -487,3 +487,480 @@
   .theme-v2 .reveal{opacity:1;transform:none}
   .theme-v2 .v2-scroll-cue__arrow{animation:none!important}
 }
+
+/* STEP 3: journey through the manor. */
+.theme-v2 .v2-story-section,
+.theme-v2 .v2-maids-section,
+.theme-v2 .v2-schedule-section,
+.theme-v2 .v2-events-section,
+.theme-v2 .v2-enjoy-section,
+.theme-v2 #access{
+  position:relative;
+  overflow:hidden;
+  padding:0 0 124px;
+  isolation:isolate;
+}
+
+.theme-v2 .v2-story-section{--v2-room-base:#fffdf8;background:var(--v2-room-base)}
+.theme-v2 .v2-maids-section{--v2-room-base:#f7e6eb;background:var(--v2-room-base)}
+.theme-v2 .v2-schedule-section{--v2-room-base:#f8f0e4;background:var(--v2-room-base)}
+.theme-v2 .v2-events-section{--v2-room-base:#faecea;background:var(--v2-room-base)}
+.theme-v2 .v2-enjoy-section{--v2-room-base:#f1e8df;background:var(--v2-room-base)}
+.theme-v2 #access{--v2-room-base:#fffdf8;background:var(--v2-room-base)}
+
+.theme-v2 .v2-room-visual{
+  position:relative;
+  z-index:0;
+  width:100%;
+  height:clamp(380px,47vw,640px);
+  overflow:hidden;
+  border-top:1px solid rgba(169,120,45,.34);
+  border-bottom:1px solid rgba(169,120,45,.34);
+  background-position:var(--v2-room-x,50%) var(--v2-room-y,50%);
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+
+.theme-v2 .v2-room-visual::before{
+  content:"";
+  position:absolute;
+  inset:18px;
+  border:1px solid rgba(255,250,240,.7);
+  box-shadow:inset 0 0 0 1px rgba(169,120,45,.25);
+  pointer-events:none;
+}
+
+.theme-v2 .v2-room-visual::after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0;
+  height:48%;
+  background:linear-gradient(180deg,rgba(255,255,255,0),var(--v2-room-base));
+  pointer-events:none;
+}
+
+.theme-v2 .v2-room-visual--foyer{--v2-room-y:50%;background-image:url("../../img/room-foyer-classical.webp")}
+.theme-v2 .v2-room-visual--dressing{--v2-room-y:46%;background-image:url("../../img/room-dressing-classical.webp")}
+.theme-v2 .v2-room-visual--study{--v2-room-y:48%;background-image:url("../../img/room-study-classical.webp")}
+.theme-v2 .v2-room-visual--garden{--v2-room-y:48%;background-image:url("../../img/room-rose-garden-classical.webp")}
+.theme-v2 .v2-room-visual--treasure{--v2-room-y:50%;background-image:url("../../img/room-treasure-classical.webp")}
+
+.theme-v2 .v2-room-content{
+  position:relative;
+  z-index:2;
+  margin-top:-102px;
+  padding-top:28px;
+}
+
+.theme-v2 .v2-room-content::before{
+  content:"◆";
+  display:block;
+  width:max-content;
+  margin:0 auto 18px;
+  color:var(--v2-gold);
+  font-size:.7rem;
+}
+
+.theme-v2 .v2-room-content .v2-section-heading{
+  margin-bottom:54px;
+}
+
+.theme-v2 .v2-room-content .v2-section-heading::after{
+  content:"";
+  display:block;
+  width:78px;
+  height:1px;
+  margin:24px auto 0;
+  background:var(--v2-gold);
+}
+
+.theme-v2 .v2-story-grid{
+  position:relative;
+  grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);
+  gap:clamp(54px,8vw,104px);
+  padding:40px 0 22px;
+}
+
+.theme-v2 .v2-story-grid::before{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:55%;
+  width:1px;
+  background:linear-gradient(180deg,transparent,var(--v2-gold-light),transparent);
+}
+
+.theme-v2 .v2-story-copy{padding:0}
+.theme-v2 .v2-story-copy p{font-size:1.1rem;line-height:2.15}
+.theme-v2 .v2-principles{border-color:var(--v2-gold-light)}
+.theme-v2 .v2-principles>div{padding:27px 4px}
+
+.theme-v2 .v2-maids-feature{
+  grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);
+  min-height:540px;
+  border:0;
+  background:transparent;
+  box-shadow:none;
+}
+
+.theme-v2 .v2-maids-image{
+  align-self:end;
+  min-height:500px;
+  border:1px solid rgba(169,120,45,.55);
+  border-bottom:0;
+  border-radius:260px 260px 0 0;
+  background:rgba(255,253,248,.72);
+  box-shadow:0 26px 54px rgba(75,53,47,.14);
+}
+
+.theme-v2 .v2-maids-copy{
+  position:relative;
+  align-self:center;
+  margin-left:-36px;
+  padding:52px 44px;
+  border-top:1px solid var(--v2-gold-light);
+  border-bottom:1px solid var(--v2-gold-light);
+  background:rgba(255,253,248,.92);
+  box-shadow:18px 20px 50px rgba(75,53,47,.12);
+}
+
+.theme-v2 .v2-maids-copy::before{
+  content:"";
+  position:absolute;
+  inset:10px;
+  border:1px solid rgba(185,78,108,.16);
+  pointer-events:none;
+}
+
+.theme-v2 .v2-maids-copy>*{position:relative;z-index:1}
+
+.theme-v2 .v2-schedule-rail{
+  gap:18px;
+  padding:34px 28px 40px;
+  border-top:1px solid rgba(169,120,45,.38);
+  border-bottom:1px solid rgba(169,120,45,.38);
+  background:rgba(255,250,240,.9);
+  box-shadow:inset 0 18px 34px rgba(75,53,47,.05),inset 0 -18px 34px rgba(75,53,47,.05);
+}
+
+.theme-v2 .schedule-card{
+  position:relative;
+  padding:25px 22px 28px;
+  border-color:rgba(169,120,45,.32);
+  background:#fffaf0;
+  box-shadow:6px 9px 18px rgba(75,53,47,.1);
+}
+
+.theme-v2 .schedule-card::after{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border:1px solid rgba(169,120,45,.12);
+  pointer-events:none;
+}
+
+.theme-v2 .schedule-card>*{position:relative;z-index:1}
+.theme-v2 .schedule-card.is-today{border-color:var(--v2-rose);background:#fff7f7}
+.theme-v2 .schedule-card.is-tomorrow{border-color:var(--v2-gold-light)}
+.theme-v2 .v2-schedule-hint{display:none;margin:14px 0 0;color:var(--v2-brown-soft);font-size:.82rem;text-align:center}
+
+.theme-v2 .v2-events-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);
+  grid-template-rows:repeat(2,minmax(0,1fr));
+  gap:18px;
+}
+
+.theme-v2 .v2-events-grid .event-card{
+  min-height:0;
+  border-color:rgba(169,120,45,.38);
+  background:var(--v2-paper);
+  box-shadow:0 18px 42px rgba(75,53,47,.14);
+}
+
+.theme-v2 .v2-events-grid .event-card:first-child{
+  grid-row:1/3;
+}
+
+.theme-v2 .v2-events-grid .event-card:nth-child(n+4){display:none}
+.theme-v2 .event-image-button{height:auto;background:#fffaf0}
+.theme-v2 .event-image-button picture{height:auto}
+.theme-v2 .event-image-button img{height:270px;object-fit:contain;background:#fff}
+.theme-v2 .v2-events-grid .event-card:first-child .event-image-button img{height:610px}
+.theme-v2 .event-overlay{
+  position:relative;
+  inset:auto;
+  padding:18px 20px 22px;
+  color:var(--v2-brown);
+  background:var(--v2-paper);
+  border-top:1px solid var(--v2-line);
+}
+.theme-v2 .event-overlay .pill{border:1px solid var(--v2-line)}
+.theme-v2 .event-overlay .tag{display:block;margin-top:10px;background:transparent}
+.theme-v2 .event-overlay .tag a{color:var(--v2-rose-deep);font-weight:800}
+
+.theme-v2 .v2-news-panel{
+  margin-top:36px;
+  padding:30px 34px;
+  border:1px solid rgba(169,120,45,.34);
+  background:rgba(255,253,248,.92);
+  box-shadow:0 16px 38px rgba(75,53,47,.1);
+}
+
+.theme-v2 .v2-enjoy-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.16fr) minmax(360px,.84fr);
+  grid-template-rows:repeat(2,minmax(260px,auto));
+  gap:20px;
+}
+
+.theme-v2 .v2-enjoy-card{
+  border-color:rgba(169,120,45,.38);
+  border-radius:4px;
+  background:rgba(255,253,248,.95);
+  box-shadow:0 18px 44px rgba(75,53,47,.16);
+}
+
+.theme-v2 .v2-enjoy-card:first-child{grid-row:1/3}
+.theme-v2 .v2-enjoy-card:first-child picture{aspect-ratio:auto;height:430px}
+.theme-v2 .v2-enjoy-card:nth-child(n+2){
+  display:grid;
+  grid-template-columns:minmax(145px,.9fr) minmax(0,1.1fr);
+  grid-template-rows:auto auto 1fr;
+  align-items:start;
+}
+.theme-v2 .v2-enjoy-card:nth-child(n+2) picture{grid-row:1/4;height:100%;min-height:260px;aspect-ratio:auto}
+.theme-v2 .v2-enjoy-card:nth-child(n+2)>span,
+.theme-v2 .v2-enjoy-card:nth-child(n+2)>h3,
+.theme-v2 .v2-enjoy-card:nth-child(n+2)>p{margin-left:20px;margin-right:18px}
+.theme-v2 .v2-enjoy-card:nth-child(n+2)>span{margin-top:26px}
+.theme-v2 .v2-enjoy-card:nth-child(n+2)>p{margin-bottom:20px}
+
+.theme-v2 .v2-access-threshold{
+  position:relative;
+  display:grid;
+  width:100%;
+  height:clamp(260px,34vw,440px);
+  place-items:center;
+  overflow:hidden;
+  border-top:1px solid rgba(169,120,45,.35);
+  border-bottom:1px solid rgba(169,120,45,.35);
+  background:
+    linear-gradient(180deg,rgba(49,28,24,.18),rgba(49,28,24,.5)),
+    url("../../img/hero-manor-classical-fantasy.webp") center 58%/cover no-repeat;
+}
+
+.theme-v2 .v2-access-threshold::after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0;
+  height:45%;
+  background:linear-gradient(180deg,transparent,var(--v2-room-base));
+}
+
+.theme-v2 .v2-access-threshold span{
+  position:relative;
+  z-index:1;
+  color:#fffaf0;
+  font:700 .72rem Georgia,var(--v2-serif);
+  letter-spacing:.22em;
+  text-shadow:0 2px 16px rgba(43,23,19,.8);
+}
+
+.theme-v2 #access .grid{
+  grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);
+  gap:0;
+  border-top:1px solid var(--v2-gold-light);
+  border-bottom:1px solid var(--v2-gold-light);
+}
+
+.theme-v2 #access .card{
+  border:0;
+  border-right:1px solid var(--v2-line);
+  border-radius:0;
+  box-shadow:none;
+}
+.theme-v2 #access .card:last-child{border-right:0}
+.theme-v2 #access .card .body{padding:30px}
+.theme-v2 #access .map-card{margin-top:24px;border:1px solid var(--v2-gold-light);background:var(--v2-paper)}
+.theme-v2 #access .map-card .body{padding:0}
+.theme-v2 .v2-map-fallback{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  padding:18px 22px;
+  border-top:1px solid var(--v2-line);
+  color:var(--v2-brown-soft);
+  background:var(--v2-ivory);
+}
+.theme-v2 .v2-map-fallback div{display:grid;gap:4px}
+.theme-v2 .v2-map-fallback strong{color:var(--v2-brown);font-family:var(--v2-serif)}
+.theme-v2 .v2-map-fallback a{color:var(--v2-rose-deep);font-weight:800;white-space:nowrap}
+
+@media (min-width:901px){
+  .theme-v2 .v2-map-fallback{padding-right:230px}
+}
+
+.theme-v2 .v2-room-content.reveal .v2-section-heading>*{
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .55s ease,transform .55s ease;
+}
+.theme-v2 .v2-room-content.reveal.is-in .v2-section-heading>*{opacity:1;transform:none}
+.theme-v2 .v2-room-content.reveal.is-in .v2-section-heading>*:nth-child(2){transition-delay:.09s}
+.theme-v2 .v2-room-content.reveal.is-in .v2-section-heading>*:nth-child(3){transition-delay:.16s}
+.theme-v2 .v2-room-content.reveal.is-in .v2-section-heading>*:nth-child(4){transition-delay:.2s}
+.theme-v2 .v2-room-content.reveal .v2-story-grid,
+.theme-v2 .v2-room-content.reveal .v2-maids-feature,
+.theme-v2 .v2-room-content.reveal .v2-schedule-rail,
+.theme-v2 .v2-room-content.reveal .v2-events-grid,
+.theme-v2 .v2-room-content.reveal .v2-enjoy-grid,
+.theme-v2 #access .v2-room-content.reveal>.grid,
+.theme-v2 #access .v2-room-content.reveal>.map-card{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity .65s ease .18s,transform .65s ease .18s;
+}
+.theme-v2 .v2-room-content.reveal.is-in .v2-story-grid,
+.theme-v2 .v2-room-content.reveal.is-in .v2-maids-feature,
+.theme-v2 .v2-room-content.reveal.is-in .v2-schedule-rail,
+.theme-v2 .v2-room-content.reveal.is-in .v2-events-grid,
+.theme-v2 .v2-room-content.reveal.is-in .v2-enjoy-grid,
+.theme-v2 #access .v2-room-content.reveal.is-in>.grid,
+.theme-v2 #access .v2-room-content.reveal.is-in>.map-card{
+  opacity:1;
+  transform:none;
+}
+
+.theme-v2 footer{
+  position:relative;
+  border-top:1px solid var(--v2-gold-light);
+}
+.theme-v2 footer::before{
+  content:"◆";
+  display:grid;
+  position:absolute;
+  top:-17px;
+  left:50%;
+  width:34px;
+  height:34px;
+  place-items:center;
+  color:var(--v2-gold-light);
+  border:1px solid var(--v2-gold-light);
+  background:var(--v2-brown);
+  transform:translateX(-50%) rotate(45deg);
+}
+
+@supports (animation-timeline:view()){
+  @media (min-width:901px){
+    .theme-v2 .v2-room-visual{
+      animation:v2-room-parallax linear both;
+      animation-timeline:view();
+      animation-range:entry 0% exit 100%;
+    }
+  }
+}
+
+@keyframes v2-room-parallax{
+  from{background-position:var(--v2-room-x,50%) calc(var(--v2-room-y,50%) - 4%)}
+  to{background-position:var(--v2-room-x,50%) calc(var(--v2-room-y,50%) + 4%)}
+}
+
+@media (max-width:900px){
+  .theme-v2 .v2-story-section,
+  .theme-v2 .v2-maids-section,
+  .theme-v2 .v2-schedule-section,
+  .theme-v2 .v2-events-section,
+  .theme-v2 .v2-enjoy-section,
+  .theme-v2 #access{padding-bottom:92px}
+  .theme-v2 .v2-room-visual{height:460px;background-attachment:scroll}
+  .theme-v2 .v2-story-grid{grid-template-columns:1fr}
+  .theme-v2 .v2-story-grid::before{display:none}
+  .theme-v2 .v2-maids-feature{grid-template-columns:1fr}
+  .theme-v2 .v2-maids-image{width:min(680px,100%);margin:0 auto}
+  .theme-v2 .v2-maids-copy{width:min(680px,100%);margin:-18px auto 0}
+  .theme-v2 .v2-events-grid{grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr)}
+  .theme-v2 .v2-events-grid .event-card:first-child .event-image-button img{height:510px}
+  .theme-v2 .v2-enjoy-grid{grid-template-columns:1fr;grid-template-rows:auto}
+  .theme-v2 .v2-enjoy-card:first-child{grid-row:auto}
+  .theme-v2 .v2-enjoy-card:first-child picture{height:420px}
+  .theme-v2 #access .grid{grid-template-columns:1fr}
+  .theme-v2 #access .card{border-right:0;border-bottom:1px solid var(--v2-line)}
+  .theme-v2 #access .card:last-child{border-bottom:0}
+}
+
+@media (max-width:600px){
+  .theme-v2 .v2-story-section,
+  .theme-v2 .v2-maids-section,
+  .theme-v2 .v2-schedule-section,
+  .theme-v2 .v2-events-section,
+  .theme-v2 .v2-enjoy-section,
+  .theme-v2 #access{padding-bottom:72px}
+  .theme-v2 .v2-room-visual{height:330px;background-position:center}
+  .theme-v2 .v2-room-visual::before{inset:8px}
+  .theme-v2 .v2-room-visual::after{height:56%}
+  .theme-v2 .v2-room-visual--foyer{background-position:center top}
+  .theme-v2 .v2-room-visual--dressing{background-position:64% center}
+  .theme-v2 .v2-room-visual--study{background-position:53% center}
+  .theme-v2 .v2-room-visual--garden{background-position:48% center}
+  .theme-v2 .v2-room-visual--treasure{background-position:50% center}
+  .theme-v2 .v2-room-content{margin-top:-70px;padding-top:20px}
+  .theme-v2 .v2-room-content::before{margin-bottom:14px}
+  .theme-v2 .v2-room-content .v2-section-heading{margin-bottom:36px}
+  .theme-v2 .v2-room-content .v2-section-heading::after{margin-top:18px}
+  .theme-v2 .v2-story-grid{padding-top:12px}
+  .theme-v2 .v2-story-copy p{font-size:1rem;line-height:2}
+  .theme-v2 .v2-maids-feature{min-height:0}
+  .theme-v2 .v2-maids-image{aspect-ratio:4/3;border-radius:160px 160px 0 0}
+  .theme-v2 .v2-maids-copy{padding:34px 24px;margin-top:-10px}
+  .theme-v2 .v2-schedule-rail{
+    grid-auto-columns:minmax(278px,88vw);
+    margin-right:-12px;
+    margin-left:-12px;
+    padding:24px 12px 32px;
+    scroll-padding-left:12px;
+  }
+  .theme-v2 .schedule-card{padding:22px 18px 26px}
+  .theme-v2 .schedule-card.is-today{order:-2}
+  .theme-v2 .schedule-card.is-tomorrow{order:-1}
+  .theme-v2 .v2-schedule-hint{display:block}
+  .theme-v2 .v2-events-grid{grid-template-columns:1fr;grid-template-rows:auto}
+  .theme-v2 .v2-events-grid .event-card:first-child{grid-row:auto}
+  .theme-v2 .v2-events-grid .event-card:first-child .event-image-button img{height:470px}
+  .theme-v2 .event-image-button img{height:360px}
+  .theme-v2 .v2-news-panel{padding:22px 16px}
+  .theme-v2 .v2-enjoy-card:first-child picture{height:360px}
+  .theme-v2 .v2-enjoy-card:nth-child(n+2){display:block}
+  .theme-v2 .v2-enjoy-card:nth-child(n+2) picture{height:280px;min-height:0;aspect-ratio:auto}
+  .theme-v2 .v2-enjoy-card:nth-child(n+2)>span,
+  .theme-v2 .v2-enjoy-card:nth-child(n+2)>h3,
+  .theme-v2 .v2-enjoy-card:nth-child(n+2)>p{margin-left:20px;margin-right:20px}
+  .theme-v2 .v2-access-threshold{height:270px;background-position:center 60%}
+  .theme-v2 .v2-access-threshold span{font-size:.58rem;letter-spacing:.14em}
+  .theme-v2 #access .card .body{padding:22px 18px}
+  .theme-v2 .map-frame{height:320px}
+  .theme-v2 .v2-map-fallback{align-items:flex-start;flex-direction:column;padding:16px 18px}
+  .theme-v2 .v2-map-fallback a{white-space:normal}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .theme-v2 .v2-room-visual{
+    animation:none!important;
+    background-attachment:scroll!important;
+    background-position:var(--v2-room-x,50%) var(--v2-room-y,50%)!important;
+  }
+  .theme-v2 .v2-room-content.reveal .v2-section-heading>*,
+  .theme-v2 .v2-room-content.reveal .v2-story-grid,
+  .theme-v2 .v2-room-content.reveal .v2-maids-feature,
+  .theme-v2 .v2-room-content.reveal .v2-schedule-rail,
+  .theme-v2 .v2-room-content.reveal .v2-events-grid,
+  .theme-v2 .v2-room-content.reveal .v2-enjoy-grid,
+  .theme-v2 #access .v2-room-content.reveal>.grid,
+  .theme-v2 #access .v2-room-content.reveal>.map-card{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+  }
+}
