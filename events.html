@@ -66,10 +66,11 @@
   }
   </script>
 <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/events.css">
   <link rel="stylesheet" href="assets/css/design-system.css?v=20261020">
+  <link rel="stylesheet" href="assets/css/story-pages.css?v=20261023">
+  <link rel="stylesheet" href="assets/css/events.css?v=20261023">
 </head>
-<body class="theme-v2">
+<body class="theme-v2 page-events">
   <a href="#main" class="skip-link">本文へスキップ</a>
 
   <!-- shared-layout:header:start -->
@@ -144,15 +145,41 @@
 <!-- shared-layout:header:end -->
 
   <main id="main">
-    <section>
-      <div class="container reveal">
-        <h1 class="sec-title">🎉 イベント一覧</h1>
+    <section class="story-page-hero events-page-hero" aria-labelledby="eventsPageTitle">
+      <div class="story-page-hero__visual" aria-hidden="true">
+        <img src="img/events-rose-invitation.webp" alt="" width="1672" height="941" fetchpriority="high" decoding="async">
+      </div>
+      <div class="container story-page-hero__content reveal">
+        <p class="story-page-hero__eyebrow">EVENTS</p>
+        <h1 id="eventsPageTitle">イベント</h1>
+        <p class="story-page-hero__lead">バラ園から届く招待状。特別な一日のご案内です。</p>
+      </div>
+      <div class="story-page-hero__ornament" aria-hidden="true">&#10086;</div>
+    </section>
 
-        <div class="grid cols-3" id="eventsGrid">
-          <div class="tag">読み込み中です...</div>
+    <section class="events-invitations-section" aria-labelledby="eventsInvitationsTitle">
+      <div class="container">
+        <header class="story-section-heading reveal">
+          <p class="story-section-heading__eyebrow">INVITATIONS FROM THE ROSE GARDEN</p>
+          <h2 id="eventsInvitationsTitle">バラ園の招待状</h2>
+          <p>開催日とご案内を確認し、気になる招待状を開いてみてください。</p>
+        </header>
+
+        <div class="events-invitation-grid reveal" id="eventsGrid" aria-live="polite">
+          <div class="events-loading">招待状を確認しています...</div>
         </div>
+        <noscript>
+          <div class="data-fallback events-noscript">
+            <div class="data-fallback-title">イベントの表示にはJavaScriptが必要です</div>
+            <p class="data-fallback-text">最新の開催情報は公式X、またはお知らせからご確認ください。</p>
+            <div class="fallback-actions">
+              <a href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">Xで最新情報を見る</a>
+              <a href="news.html">お知らせを見る</a>
+            </div>
+          </div>
+        </noscript>
 
-        <section class="schedule-wrap mt-16" aria-labelledby="scheduleTitle">
+        <section class="schedule-wrap reveal" aria-labelledby="scheduleTitle">
           <div class="schedule-head">
             <div>
               <h2 class="schedule-title" id="scheduleTitle">📅 直近7日間の営業スケジュール</h2>
@@ -168,7 +195,7 @@
           <div class="schedule-status" id="eventScheduleStatus"></div>
         </section>
 
-        <div class="mt-12">
+        <div class="story-page-back reveal">
           <a class="btn btn-ghost" href="index.html">ポータルへ戻る</a>
         </div>
       </div>
@@ -244,7 +271,7 @@
 
   <script src="assets/js/config.js?v=20260306"></script>
   <script src="assets/js/core.js?v=20260306"></script>
-  <script src="assets/js/events.js?v=20260306"></script>
+  <script src="assets/js/events.js?v=20261023"></script>
   <script src="assets/js/event-schedule.js?v=20260606"></script>
 </body>
 </html>

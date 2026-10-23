@@ -114,6 +114,17 @@
         </article>
       `;
     }).join('');
+
+    grid.querySelectorAll('.event-image-button .thumb').forEach((image)=>{
+      const showImageFallback = ()=>{
+        image.classList.add('is-missing');
+        const button = image.closest('.event-image-button');
+        button?.classList.add('has-missing-image');
+        button?.setAttribute('aria-label', `${image.alt || 'イベント画像'}（画像を表示できません）`);
+      };
+      image.addEventListener('error', showImageFallback, { once: true });
+      if(image.complete && image.naturalWidth === 0) showImageFallback();
+    });
   }
 
   function setupLightbox(){
@@ -149,7 +160,7 @@
       const button = event.target.closest('.event-image-button');
       if(!button) return;
       const target = button.querySelector('img');
-      if(!target) return;
+      if(!target || target.classList.contains('is-missing')) return;
       open(target.currentSrc || target.getAttribute('data-full') || target.src, target.alt, button);
     });
 

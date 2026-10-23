@@ -66,10 +66,11 @@
   }
   </script>
 <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/news.css">
   <link rel="stylesheet" href="assets/css/design-system.css?v=20261020">
+  <link rel="stylesheet" href="assets/css/story-pages.css?v=20261023">
+  <link rel="stylesheet" href="assets/css/news.css?v=20261023">
 </head>
-<body class="theme-v2">
+<body class="theme-v2 page-news">
   <a href="#main" class="skip-link">本文へスキップ</a>
 
   <!-- shared-layout:header:start -->
@@ -144,15 +145,43 @@
 <!-- shared-layout:header:end -->
 
   <main id="main">
-    <section>
-      <div class="container reveal">
-        <h1 class="sec-title">🗞️ お知らせ一覧</h1>
-        <div class="ticker">
-          <ul id="newsList">
-            <li><span class="tag">-</span> 読み込み中です...</li>
+    <section class="story-page-hero news-page-hero" aria-labelledby="newsPageTitle">
+      <div class="story-page-hero__visual" aria-hidden="true">
+        <img src="img/news-correspondence-study.webp" alt="" width="1983" height="793" fetchpriority="high" decoding="async">
+      </div>
+      <div class="container story-page-hero__content reveal">
+        <p class="story-page-hero__eyebrow">NEWS</p>
+        <h1 id="newsPageTitle">お知らせ</h1>
+        <p class="story-page-hero__lead">お屋敷から届いた、日々のお便りをお届けします。</p>
+      </div>
+      <div class="story-page-hero__ornament" aria-hidden="true">&#10086;</div>
+    </section>
+
+    <section class="news-letters-section" aria-labelledby="newsLettersTitle">
+      <div class="container">
+        <header class="story-section-heading reveal">
+          <p class="story-section-heading__eyebrow">LETTERS FROM THE MANOR</p>
+          <h2 id="newsLettersTitle">お屋敷からのお便り</h2>
+          <p>営業案内や更新情報を、新しいものから順にご覧いただけます。</p>
+        </header>
+
+        <div class="ticker news-letter-stack reveal">
+          <ul id="newsList" aria-live="polite">
+            <li class="news-loading"><span class="tag">-</span><span>お便りを確認しています...</span></li>
           </ul>
         </div>
-        <div class="mt-12">
+        <noscript>
+          <div class="data-fallback news-noscript">
+            <div class="data-fallback-title">お知らせの表示にはJavaScriptが必要です</div>
+            <p class="data-fallback-text">最新情報は公式X、または週間お給仕表からご確認ください。</p>
+            <div class="fallback-actions">
+              <a href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">Xで最新情報を見る</a>
+              <a href="schedule.html">週間お給仕表を見る</a>
+            </div>
+          </div>
+        </noscript>
+
+        <div class="story-page-back reveal">
           <a class="btn btn-ghost" href="index.html">ポータルへ戻る</a>
         </div>
       </div>
