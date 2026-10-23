@@ -1,11 +1,28 @@
 /* Shared story-page composition for the renewed news and events pages only. */
 .theme-v2:is(.page-news,.page-events){
+  height:auto;
+  min-height:100%;
+  overflow-x:clip;
+  overflow-y:visible;
   background:
     linear-gradient(rgba(255,250,240,.94),rgba(255,250,240,.94)),
     url("../../img/bg-pattern.webp") center top/260px auto;
 }
 
 .theme-v2:is(.page-news,.page-events) main{overflow-x:clip}
+
+/* Keep content visible if IntersectionObserver or a capture tool never advances scroll. */
+.theme-v2:is(.page-news,.page-events) .reveal.reveal-ready{
+  animation:story-page-reveal-failsafe 0s linear 1.5s forwards;
+}
+
+.theme-v2:is(.page-news,.page-events) .reveal.reveal-ready.is-in{
+  animation:none;
+}
+
+@keyframes story-page-reveal-failsafe{
+  to{opacity:1;transform:none}
+}
 
 .theme-v2:is(.page-news,.page-events) .story-page-hero{
   display:grid;
