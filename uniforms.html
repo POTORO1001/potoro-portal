@@ -8,6 +8,7 @@
   <meta name="format-detection" content="telephone=no" />
   <meta name="theme-color" content="#f6b7d2" />
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/uniforms.html" />
+  <link rel="icon" href="img/ogp.jpg" type="image/jpeg" />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="concept cafe PO・TORO" />
@@ -21,7 +22,7 @@
   <meta name="twitter:title" content="歴代メイド服 | PO・TORO 公式ポータル">
   <meta name="twitter:description" content="concept cafe PO・TORO（ポ・トロ）の歴代メイド服紹介。初代から七代目までの制服デザインと雰囲気を写真で確認できます。">
   <meta name="twitter:image" content="https://potoro1001.github.io/potoro-portal/img/ogp.jpg">
-  <link rel="preload" as="image" href="img/uniform_1st.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="img/room-dressing-classical.webp" type="image/webp" fetchpriority="high">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -65,10 +66,13 @@
     ]
   }
   </script>
-<link rel="stylesheet" href="assets/css/uniforms.css">
+  <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/design-system.css?v=20261020">
+  <link rel="stylesheet" href="assets/css/manor-collection-pages.css?v=20261024">
+  <link rel="stylesheet" href="assets/css/uniforms.css?v=20261024">
 </head>
-<body class="theme-v2">
+<body class="theme-v2 page-uniforms">
+  <a href="#list" class="skip-link">本文へスキップ</a>
   <!-- shared-layout:header:start -->
 <header class="site-header">
   <nav class="nav container" aria-label="メインメニュー">
@@ -140,19 +144,33 @@
 </header>
 <!-- shared-layout:header:end -->
 
-  <main class="container" id="list" aria-live="polite">
-    <section class="standalone-page-intro">
-      <p class="standalone-page-intro__eyebrow">UNIFORM ARCHIVE</p>
-      <h1>PO.TORO 歴代メイド服紹介</h1>
-      <p>初代から七代目までのメイド服を一挙公開します。</p>
+  <main id="list" aria-live="polite">
+    <section class="room-page-hero uniforms-page-hero" aria-labelledby="uniformsPageTitle">
+      <div class="room-page-hero__visual" aria-hidden="true">
+        <img src="img/room-dressing-classical.webp" alt="" width="1672" height="941" decoding="async" fetchpriority="high">
+      </div>
+      <div class="container room-page-hero__content reveal">
+        <p class="room-page-hero__eyebrow">THE MANOR'S COSTUME GALLERY</p>
+        <h1 id="uniformsPageTitle">歴代メイド服</h1>
+        <p class="room-page-hero__lead">お屋敷の記憶を彩ってきた、七つの衣装をご覧ください。</p>
+      </div>
+      <span class="room-page-hero__ornament" aria-hidden="true"></span>
     </section>
-    <div class="toolbar" aria-hidden="true">
-      <span class="chip">全7モデル</span>
-    </div>
 
-    <div class="grid">
+    <section class="room-page-section uniform-gallery-section" aria-labelledby="uniformGalleryTitle">
+      <div class="container">
+        <header class="room-section-heading reveal">
+          <p class="room-section-heading__eyebrow">UNIFORM ARCHIVE</p>
+          <h2 id="uniformGalleryTitle">お屋敷の衣装展示室</h2>
+          <p>初代から七代目まで、PO.TOROの歩みとともに生まれたメイド服を順にご紹介します。</p>
+        </header>
+        <div class="uniform-toolbar" aria-hidden="true">
+          <span class="chip">全7モデル</span>
+        </div>
+
+    <div class="uniform-grid">
       <!-- 初代 -->
-      <article class="card">
+      <article class="card reveal">
         <button type="button" class="uniform-image-button" aria-label="初代メイド服を拡大">
           <picture>
             <source srcset="img/uniform_1st.webp" type="image/webp">
@@ -169,7 +187,7 @@
       </article>
 
       <!-- 弐代目 -->
-      <article class="card">
+      <article class="card reveal">
         <button type="button" class="uniform-image-button" aria-label="弐代目メイド服を拡大">
           <picture>
             <source srcset="img/uniform_2nd.webp" type="image/webp">
@@ -185,7 +203,7 @@
       </article>
 
       <!-- 三代目 -->
-      <article class="card">
+      <article class="card reveal">
         <button type="button" class="uniform-image-button" aria-label="三代目メイド服を拡大">
           <picture>
             <source srcset="img/uniform_3rd.webp" type="image/webp">
@@ -201,7 +219,7 @@
       </article>
 
       <!-- 四代目 -->
-      <article class="card">
+      <article class="card reveal">
         <button type="button" class="uniform-image-button" aria-label="四代目メイド服を拡大">
           <picture>
             <source srcset="img/uniform_4th.webp" type="image/webp">
@@ -217,7 +235,7 @@
       </article>
 
       <!-- 五代目 -->
-      <article class="card">
+      <article class="card reveal">
         <button type="button" class="uniform-image-button" aria-label="五代目メイド服を拡大">
           <picture>
             <source srcset="img/uniform_5th.webp" type="image/webp">
@@ -233,7 +251,7 @@
       </article>
 
       <!-- 六代目（現行） -->
-      <article class="card">
+      <article class="card reveal">
         <button type="button" class="uniform-image-button" aria-label="六代目メイド服（現行）を拡大">
           <picture>
             <source srcset="img/uniform_6th.webp" type="image/webp">
@@ -249,7 +267,7 @@
       </article>
 
       <!-- 七代目 -->
-      <article class="card">
+      <article class="card reveal">
         <button type="button" class="uniform-image-button" aria-label="七代目メイド服を拡大">
           <picture>
             <source srcset="img/uniform_7th.webp" type="image/webp">
@@ -265,8 +283,11 @@
       </article>
 
     </div>
+      </div>
+    </section>
     <section class="next-links-section" aria-labelledby="nextLinksTitle">
-      <h2 id="nextLinksTitle">次に見る</h2>
+      <div class="container">
+      <h2 class="sec-title" id="nextLinksTitle">次に見る</h2>
       <div class="next-links">
         <a class="next-link-card" href="./recruit/">
           <span class="next-link-label">制服に惹かれた方へ</span>
@@ -283,6 +304,7 @@
           <span class="next-link-title">料金詳細</span>
           <p class="next-link-text">基本料金や利用前のポイントを分かりやすく確認できます。</p>
         </a>
+      </div>
       </div>
     </section>
   </main>

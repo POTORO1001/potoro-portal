@@ -1,0 +1,218 @@
+/* Shared manor-room composition for goods, games, and uniforms pages. */
+.theme-v2:is(.page-goods,.page-games,.page-uniforms){
+  height:auto;
+  min-height:100%;
+  overflow-x:clip;
+  overflow-y:visible;
+  color:var(--v2-brown);
+  background:
+    linear-gradient(rgba(255,250,240,.95),rgba(255,250,240,.95)),
+    url("../../img/bg-pattern.webp") center top/260px auto;
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) main{overflow-x:clip}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .reveal.reveal-ready{
+  animation:collection-page-reveal-failsafe 0s linear 1.5s forwards;
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .reveal.reveal-ready.is-in{animation:none}
+
+@keyframes collection-page-reveal-failsafe{
+  to{opacity:1;transform:none}
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero{
+  display:grid;
+  position:relative;
+  min-height:clamp(390px,48vw,570px);
+  place-items:center;
+  margin:0;
+  padding:0;
+  isolation:isolate;
+  overflow:hidden;
+  border-bottom:1px solid rgba(169,120,45,.38);
+  background:var(--v2-brown);
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero__visual,
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero__visual::after{
+  position:absolute;
+  inset:0;
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero__visual::after{
+  content:"";
+  background:
+    linear-gradient(90deg,rgba(37,20,16,.8) 0%,rgba(37,20,16,.48) 38%,rgba(37,20,16,.08) 72%),
+    linear-gradient(0deg,rgba(37,20,16,.34),transparent 54%);
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero__visual img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  transform:scale(1.012);
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero__content{
+  position:relative;
+  z-index:1;
+  width:min(1180px,calc(100% - 40px));
+  padding:72px 0 92px;
+  color:#fffaf0;
+  text-shadow:0 2px 14px rgba(37,19,15,.56);
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero__eyebrow,
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-section-heading__eyebrow{
+  margin:0 0 14px;
+  color:var(--v2-gold-light);
+  font-family:var(--v2-sans);
+  font-size:.73rem;
+  font-weight:800;
+  letter-spacing:0;
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero h1{
+  max-width:11em;
+  margin:0;
+  color:#fffaf0;
+  font-size:clamp(2.8rem,6vw,5.5rem);
+  font-weight:500;
+  line-height:1.12;
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero__lead{
+  max-width:36em;
+  margin:24px 0 0;
+  color:#fffaf0;
+  font-family:var(--v2-serif);
+  font-size:clamp(1rem,1.5vw,1.2rem);
+  line-height:1.9;
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero__ornament{
+  display:grid;
+  position:absolute;
+  z-index:2;
+  bottom:-24px;
+  left:50%;
+  width:48px;
+  height:48px;
+  place-items:center;
+  border:1px solid var(--v2-gold-light);
+  color:var(--v2-gold);
+  background:var(--v2-ivory);
+  font-size:0;
+  transform:translateX(-50%) rotate(45deg);
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero__ornament::before{
+  content:"◆";
+  font-size:.8rem;
+  transform:rotate(-45deg);
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-section{
+  position:relative;
+  margin:0;
+  padding:clamp(72px,9vw,112px) 0;
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-section-heading{
+  max-width:780px;
+  margin:0 auto 44px;
+  text-align:center;
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-section-heading__eyebrow{color:var(--v2-gold)}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-section-heading h2{
+  margin:0;
+  color:var(--v2-brown);
+  font-size:clamp(2rem,4.5vw,3.5rem);
+  font-weight:500;
+  line-height:1.25;
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-section-heading>p:last-child{
+  margin:18px auto 0;
+  color:var(--v2-brown-soft);
+  line-height:1.9;
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+  margin:32px 0 0;
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .next-links-section{
+  margin:0;
+  padding:82px 0 96px;
+  border-top:1px solid rgba(169,120,45,.24);
+  background:rgba(248,220,227,.18);
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .next-links-section .sec-title{
+  margin:0 0 26px;
+  color:var(--v2-brown);
+  font-size:clamp(1.7rem,3vw,2.4rem);
+  text-align:center;
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .next-links{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .next-link-card{
+  display:block;
+  min-width:0;
+  padding:24px;
+  border:1px solid var(--v2-line);
+  border-radius:var(--v2-radius);
+  color:var(--v2-brown);
+  background:var(--v2-paper);
+  box-shadow:var(--v2-shadow-soft);
+  text-decoration:none;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .next-link-card:hover{
+  border-color:var(--v2-gold);
+  box-shadow:var(--v2-shadow);
+  transform:translateY(-3px);
+}
+
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .next-link-label{display:block;margin-bottom:10px;color:var(--v2-rose);font-size:.74rem;font-weight:800}
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .next-link-title{display:block;font-family:var(--v2-serif);font-size:1.24rem;font-weight:800}
+.theme-v2:is(.page-goods,.page-games,.page-uniforms) .next-link-text{margin:12px 0 0;color:var(--v2-brown-soft);font-size:.9rem;line-height:1.75}
+
+@media (max-width:760px){
+  .theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero{min-height:430px}
+  .theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero__content{width:calc(100% - 32px);padding:62px 0 78px}
+  .theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero__visual::after{background:linear-gradient(0deg,rgba(37,20,16,.78) 0%,rgba(37,20,16,.34) 72%,rgba(37,20,16,.18))}
+  .theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero h1{font-size:clamp(2.65rem,13vw,4rem)}
+  .theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero__lead{max-width:25em;margin-top:18px;font-size:.95rem}
+  .theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-section-heading{margin-bottom:34px}
+  .theme-v2:is(.page-goods,.page-games,.page-uniforms) .next-links{grid-template-columns:1fr}
+  .theme-v2:is(.page-goods,.page-games,.page-uniforms) .next-links-section{padding:64px 0 78px}
+}
+
+@media (max-width:380px){
+  .theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero{min-height:400px}
+  .theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero__content{width:calc(100% - 24px)}
+  .theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero h1{font-size:2.5rem}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .theme-v2:is(.page-goods,.page-games,.page-uniforms) .room-page-hero__visual img{transform:none!important}
+  .theme-v2:is(.page-goods,.page-games,.page-uniforms) .next-link-card:hover{transform:none}
+}

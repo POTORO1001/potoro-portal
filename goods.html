@@ -8,7 +8,9 @@
   <meta name="format-detection" content="telephone=no" />
   <meta name="theme-color" content="#f6b7d2" />
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/goods.html" />
+  <link rel="icon" href="img/ogp.jpg" type="image/jpeg" />
   <link rel="preconnect" href="https://docs.google.com" crossorigin>
+  <link rel="preload" as="image" href="img/room-treasure-classical.webp" type="image/webp" fetchpriority="high">
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="concept cafe PO・TORO" />
@@ -65,12 +67,13 @@
     ]
   }
   </script>
-<link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/table.css">
-  <link rel="stylesheet" href="assets/css/goods.css">
   <link rel="stylesheet" href="assets/css/design-system.css?v=20261020">
+  <link rel="stylesheet" href="assets/css/manor-collection-pages.css?v=20261024">
+  <link rel="stylesheet" href="assets/css/goods.css?v=20261024">
 </head>
-<body class="theme-v2">
+<body class="theme-v2 page-goods">
   <a href="#main" class="skip-link">本文へスキップ</a>
 
   <!-- shared-layout:header:start -->
@@ -145,15 +148,27 @@
 <!-- shared-layout:header:end -->
 
   <main id="main">
-    <section>
-      <div class="container reveal">
-        <div class="goods-wrap">
-          <h1>🎁 現在配布中のグッズ</h1>
-          <p class="section-lead">
-            お屋敷でお渡ししている各種グッズの配布状況です。
-            保管期間は配布開始日から1年間です。
-          </p>
+    <section class="room-page-hero goods-page-hero" aria-labelledby="goodsPageTitle">
+      <div class="room-page-hero__visual" aria-hidden="true">
+        <img src="img/room-treasure-classical.webp" alt="" width="1774" height="887" decoding="async" fetchpriority="high">
+      </div>
+      <div class="container room-page-hero__content reveal">
+        <p class="room-page-hero__eyebrow">THE MANOR'S TREASURE ROOM</p>
+        <h1 id="goodsPageTitle">グッズ</h1>
+        <p class="room-page-hero__lead">お屋敷で大切にお預かりしている、思い出の品をご案内します。</p>
+      </div>
+      <span class="room-page-hero__ornament" aria-hidden="true"></span>
+    </section>
 
+    <section class="room-page-section goods-treasure-section" aria-labelledby="goodsLedgerTitle">
+      <div class="container">
+        <header class="room-section-heading reveal">
+          <p class="room-section-heading__eyebrow">TREASURE LEDGER</p>
+          <h2 id="goodsLedgerTitle">お屋敷の収蔵台帳</h2>
+          <p>現在お屋敷でお渡ししているグッズの配布状況です。保管期間は配布開始日から1年間です。</p>
+        </header>
+
+        <div class="goods-ledger reveal">
           <table class="table table-goods" aria-label="現在配布中のグッズ一覧">
             <thead>
               <tr>
@@ -163,12 +178,16 @@
                 <th>配布終了日</th>
               </tr>
             </thead>
-            <tbody id="goodsBody"></tbody>
+            <tbody id="goodsBody">
+              <tr class="goods-loading"><td colspan="4">収蔵台帳を確認しています。少しお待ちください。</td></tr>
+            </tbody>
           </table>
+          <noscript><p class="goods-noscript">グッズ情報の表示にはJavaScriptが必要です。最新情報はお知らせまたは公式Xからご確認ください。</p></noscript>
+        </div>
 
-          <div class="mt-12">
-            <a class="btn btn-ghost" href="index.html">ポータルへ戻る</a>
-          </div>
+        <div class="room-actions reveal">
+          <a class="btn btn-ghost" href="index.html">ポータルへ戻る</a>
+          <a class="btn btn-ghost" href="news.html">お知らせを見る</a>
         </div>
       </div>
     </section>

@@ -8,6 +8,7 @@
   <meta name="format-detection" content="telephone=no" />
   <meta name="theme-color" content="#f6b7d2" />
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/games.html" />
+  <link rel="icon" href="img/ogp.jpg" type="image/jpeg" />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="concept cafe PO・TORO" />
@@ -21,7 +22,7 @@
   <meta name="twitter:title" content="ゲーム・講義 | PO・TORO 公式ポータル">
   <meta name="twitter:description" content="concept cafe PO・TORO（ポ・トロ）のゲーム、萌えセレクト講義、診断へのリンク集です。">
   <meta name="twitter:image" content="https://potoro1001.github.io/potoro-portal/img/ogp.jpg">
-  <link rel="preload" as="image" href="img/hero-quest-card.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="img/game-room-classical.webp" type="image/webp" fetchpriority="high">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -65,11 +66,12 @@
     ]
   }
   </script>
-<link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/games.css?v=20260912-passport-2">
+  <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/design-system.css?v=20261020">
+  <link rel="stylesheet" href="assets/css/manor-collection-pages.css?v=20261024">
+  <link rel="stylesheet" href="assets/css/games.css?v=20261024">
 </head>
-<body class="theme-v2">
+<body class="theme-v2 page-games">
   <a href="#main" class="skip-link">本文へスキップ</a>
 
   <!-- shared-layout:header:start -->
@@ -144,75 +146,95 @@
 <!-- shared-layout:header:end -->
 
   <main id="main">
-    <section>
-      <div class="container reveal">
-        <h1 class="sec-title">🎮 ゲーム / 講義</h1>
+    <section class="room-page-hero games-page-hero" aria-labelledby="gamesPageTitle">
+      <div class="room-page-hero__visual" aria-hidden="true">
+        <img src="img/game-room-classical.webp" alt="" width="1774" height="887" decoding="async" fetchpriority="high">
+      </div>
+      <div class="container room-page-hero__content reveal">
+        <p class="room-page-hero__eyebrow">THE MANOR'S GAME ROOM</p>
+        <h1 id="gamesPageTitle">ゲーム／講義</h1>
+        <p class="room-page-hero__lead">遊びと学びが待つ、お屋敷の小さな遊戯室へようこそ。</p>
+      </div>
+      <span class="room-page-hero__ornament" aria-hidden="true"></span>
+    </section>
 
-        <div class="grid cols-4 games-grid">
-          <article class="card">
+    <section class="room-page-section game-room-section" aria-labelledby="gameRoomTitle">
+      <div class="container">
+        <header class="room-section-heading reveal">
+          <p class="room-section-heading__eyebrow">CHOOSE YOUR ADVENTURE</p>
+          <h2 id="gameRoomTitle">遊戯室の扉</h2>
+          <p>気になるゲームや講義を選んで、PO.TOROの世界をもう少し深くお楽しみください。</p>
+        </header>
+
+        <div class="games-grid">
+          <article class="game-card reveal">
             <picture>
               <source srcset="img/hero-quest-card.webp" type="image/webp">
-              <img src="img/hero-quest-card.png" alt="ポ・トロクエスト" class="thumb" loading="lazy" width="1280" height="720" decoding="async">
+              <img src="img/hero-quest-card.png" alt="ポ・トロクエスト" class="thumb" width="1280" height="720" decoding="async" fetchpriority="high">
             </picture>
             <div class="body">
+              <span class="game-card__kind">GAME</span>
               <h3>ポ・トロクエスト</h3>
               <p class="tag">ゲームクリアでご褒美GET!?</p>
               <a class="btn btn-ghost mt-12" href="https://potoro1001.github.io/potoro-quest/" target="_blank" rel="noopener noreferrer">プレイする</a>
             </div>
           </article>
 
-          <article class="card" id="moeselect">
+          <article class="game-card reveal" id="moeselect">
             <picture>
               <source srcset="img/moeselect_thumbnail.webp" type="image/webp">
               <img src="img/moeselect_thumbnail.jpg" alt="萌えセレクト講義" class="thumb" loading="lazy" width="1280" height="720" decoding="async">
             </picture>
             <div class="body">
+              <span class="game-card__kind">LECTURE</span>
               <h3>萌えセレクト講義</h3>
               <p class="tag">講義形式で学ぶ 📱↻横向きでご利用ください</p>
               <a class="btn btn-ghost mt-12" href="https://potoro1001.github.io/potoro-moeselect/" target="_blank" rel="noopener noreferrer">受講する</a>
             </div>
           </article>
 
-          <article class="card" id="passport">
+          <article class="game-card reveal" id="passport">
             <picture>
               <source srcset="img/passport-lesson-card.webp" type="image/webp">
               <img src="img/passport-lesson-card.png" alt="デジタル会員証とパスポートを紹介する先輩メイドと後輩メイド" class="thumb thumb-passport" loading="lazy" width="1254" height="1254" decoding="async">
             </picture>
             <div class="body">
+              <span class="game-card__kind">LECTURE</span>
               <h3>ポトロパスポート講義</h3>
               <p class="tag">メイドさんの会話とクイズで学ぶパスポートの使い方</p>
               <a class="btn btn-ghost mt-12" href="passport.html">受講する</a>
             </div>
           </article>
 
-          <article class="card">
+          <article class="game-card reveal">
             <picture>
               <source srcset="img/hero-diagnosis-card.webp" type="image/webp">
               <img src="img/hero-diagnosis-card.png" alt="ご主人様タイプ診断" class="thumb" loading="lazy" width="1280" height="720" decoding="async">
             </picture>
             <div class="body">
+              <span class="game-card__kind">DIAGNOSIS</span>
               <h3>ご主人様タイプ診断</h3>
               <p class="tag">MBTIミニ12問</p>
               <a class="btn btn-ghost mt-12" href="https://potoro1001.github.io/potoro-diagnosis/" target="_blank" rel="noopener noreferrer">診断する</a>
             </div>
           </article>
 
-          <article class="card">
+          <article class="game-card reveal">
             <picture>
               <source srcset="img/omikuji-box.webp" type="image/webp">
-              <img src="img/omikuji-box.png" alt="おみくじ筒" class="thumb thumb-omikuji" width="601" height="1061" decoding="async" fetchpriority="high">
+              <img src="img/omikuji-box.png" alt="おみくじ筒" class="thumb thumb-omikuji" loading="lazy" width="601" height="1061" decoding="async">
             </picture>
             <div class="body">
+              <span class="game-card__kind">FORTUNE</span>
               <h3>今日のおみくじ</h3>
               <p class="tag">今日の運勢と行動のヒントをチェック</p>
               <a class="btn btn-ghost mt-12" href="omikuji.html">引いてみる</a>
             </div>
           </article>
-
         </div>
 
-        <div class="mt-12">
-          <a class="btn btn-ghost" href="index.html">← トップへ戻る</a>
+        <div class="game-return reveal">
+          <a class="btn btn-ghost" href="index.html">ポータルへ戻る</a>
         </div>
       </div>
     </section>
