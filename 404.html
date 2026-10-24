@@ -8,8 +8,17 @@
   <meta name="robots" content="noindex" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="theme-color" content="#f6b7d2" />
-  <base href="/potoro-portal/">
+  <script>
+    document.write('<base href="' + (
+      location.hostname === "127.0.0.1" || location.hostname === "localhost"
+        ? "/"
+        : "/potoro-portal/"
+    ) + '">');
+  </script>
+  <noscript><base href="/potoro-portal/"></noscript>
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/404.html" />
+  <link rel="icon" href="img/ogp.jpg" type="image/jpeg" />
+  <link rel="preload" as="image" href="img/lost-corridor-classical.webp" type="image/webp" fetchpriority="high">
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="concept cafe PO・TORO" />
@@ -26,8 +35,9 @@
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/index.css">
   <link rel="stylesheet" href="assets/css/design-system.css?v=20261020">
+  <link rel="stylesheet" href="assets/css/manor-final-pages.css?v=20261024">
 </head>
-<body class="theme-v2">
+<body class="theme-v2 page-not-found">
   <a href="#main" class="skip-link">本文へスキップ</a>
 
   <!-- shared-layout:header:start -->
@@ -102,11 +112,14 @@
 <!-- shared-layout:header:end -->
 
   <main id="main">
-    <section class="hero">
+    <section class="hero manor-page-hero error-hero" aria-labelledby="notFoundTitle">
+      <picture class="manor-page-hero__media" aria-hidden="true">
+        <img src="img/lost-corridor-classical.webp" alt="" width="1774" height="887" decoding="async" fetchpriority="high">
+      </picture>
       <div class="container wrap">
-        <div class="reveal is-in">
+        <div class="reveal is-in error-copy">
           <span class="badge">404</span>
-          <h1 class="headline">お探しのページが見つかりませんでした</h1>
+          <h1 class="headline" id="notFoundTitle">お屋敷で、少し迷ってしまったようです</h1>
           <p class="sub">URLが変更されたか、ページが移動した可能性があります。</p>
           <div class="quick">
             <a class="btn btn-primary" href="index.html">ポータルTOPへ</a>

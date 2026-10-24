@@ -1,0 +1,438 @@
+/* STEP 5-D: scoped classical-fantasy presentation for the remaining pages. */
+.theme-v2:is(.page-passport,.page-omikuji,.page-recruit,.page-not-found){
+  overflow-x:clip;
+  background:var(--v2-ivory);
+}
+
+.theme-v2:is(.page-passport,.page-omikuji,.page-recruit,.page-not-found) main{
+  display:block;
+  min-height:0;
+}
+
+.theme-v2:is(.page-passport,.page-omikuji,.page-recruit,.page-not-found) .reveal{
+  opacity:1;
+  transform:none;
+}
+
+.manor-page-hero{
+  position:relative;
+  isolation:isolate;
+  display:grid;
+  min-height:clamp(430px,52vw,620px);
+  overflow:hidden;
+  color:#fff;
+  background:#3b2824;
+}
+
+.manor-page-hero__media,
+.manor-page-hero__media img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+
+.manor-page-hero__media{z-index:-2}
+.manor-page-hero__media img{display:block;object-fit:cover;object-position:center}
+
+.manor-page-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:linear-gradient(90deg,rgba(31,18,18,.82) 0%,rgba(45,25,23,.62) 35%,rgba(45,25,23,.14) 70%,rgba(45,25,23,.05) 100%);
+}
+
+.manor-page-hero__inner{
+  width:min(1180px,calc(100% - 40px));
+  margin:auto;
+  padding:clamp(72px,10vw,132px) 0;
+}
+
+.manor-page-hero__copy{max-width:650px;text-shadow:0 3px 20px rgba(21,11,10,.48)}
+.manor-page-hero__eyebrow{
+  margin:0 0 18px;
+  color:#f4d489;
+  font-family:var(--v2-serif);
+  font-size:.75rem;
+  font-weight:800;
+  letter-spacing:.13em;
+}
+.manor-page-hero h1{
+  margin:0;
+  color:#fff;
+  font-size:clamp(2.65rem,7vw,5rem);
+  line-height:1.12;
+  text-wrap:balance;
+}
+.manor-page-hero__lead{
+  max-width:620px;
+  margin:24px 0 0;
+  color:rgba(255,255,255,.92);
+  font-size:clamp(.98rem,1.8vw,1.15rem);
+  line-height:1.9;
+}
+.manor-page-hero__seal{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:54px;
+  min-height:54px;
+  margin:0 0 20px;
+  border:1px solid rgba(244,212,137,.72);
+  border-radius:50%;
+  color:#fff4d8;
+  font-family:var(--v2-serif);
+  font-size:.82rem;
+  background:rgba(99,38,55,.82);
+  box-shadow:0 0 0 6px rgba(255,250,240,.09);
+}
+
+/* Passport: invitation lesson and guide. */
+.page-passport .passport-main{
+  background:linear-gradient(180deg,#fdf2ef 0,#fffaf0 32%,#f8ede6 100%);
+}
+.page-passport .passport-hero .manor-page-hero__media img{object-position:center}
+.page-passport .passport-lesson{
+  width:min(1120px,calc(100% - 40px));
+  max-width:none;
+  margin:clamp(42px,7vw,82px) auto 0;
+  padding:clamp(26px,4vw,48px);
+  border:1px solid rgba(169,120,45,.32);
+  border-radius:6px;
+  background:rgba(255,253,248,.96);
+  box-shadow:var(--v2-shadow);
+}
+.page-passport .lesson-heading{
+  padding-bottom:16px;
+  border-bottom:1px solid var(--v2-line);
+}
+.page-passport .lesson-heading h2{margin:0;color:var(--v2-brown);font-size:clamp(1.5rem,3vw,2.2rem)}
+.page-passport .lesson-heading a{color:var(--v2-rose-deep);font-weight:800}
+.page-passport .lesson-status{color:var(--v2-rose-deep)}
+.page-passport #lessonProgress{height:8px;accent-color:var(--v2-rose-deep)}
+.page-passport .lesson-scene{
+  border:1px solid rgba(169,120,45,.36);
+  border-radius:6px;
+  background-color:#f3faf8;
+  box-shadow:inset 0 0 50px rgba(255,255,255,.44);
+}
+.page-passport .lesson-dialogue{
+  border-color:var(--v2-rose);
+  border-radius:5px;
+  color:var(--v2-brown);
+  background:rgba(255,253,248,.97);
+  box-shadow:0 12px 28px rgba(75,53,47,.14);
+}
+.page-passport .passport-lesson button,
+.page-passport .lesson-tools select{
+  border-color:rgba(169,120,45,.46);
+  border-radius:4px;
+  color:var(--v2-brown);
+  background:var(--v2-paper);
+}
+.page-passport .passport-lesson #lessonNext{
+  border-color:var(--v2-rose-deep);
+  background:var(--v2-rose-deep);
+}
+.page-passport .passport-guide{
+  width:min(1040px,calc(100% - 40px));
+  max-width:none;
+  margin:clamp(28px,5vw,56px) auto clamp(50px,8vw,90px);
+  padding:0;
+  border:1px solid rgba(169,120,45,.34);
+  border-radius:6px;
+  background:rgba(255,253,248,.96);
+  box-shadow:var(--v2-shadow);
+}
+.page-passport .passport-guide>summary{
+  padding:20px clamp(20px,4vw,38px);
+  border:0;
+  color:var(--v2-brown);
+  font-family:var(--v2-serif);
+  font-size:1.05rem;
+  background:linear-gradient(90deg,rgba(248,220,227,.72),rgba(255,250,240,.8));
+}
+.page-passport .passport-content{width:100%;max-width:none;padding:0 clamp(20px,5vw,56px)}
+.page-passport .passport-intro{padding:clamp(36px,6vw,62px) 0 26px;text-align:center}
+.page-passport .passport-kicker{color:var(--v2-gold);font-size:.75rem;letter-spacing:.12em}
+.page-passport .passport-intro h2{color:var(--v2-brown);font-size:clamp(1.7rem,4vw,2.7rem)}
+.page-passport .passport-index{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  padding:16px 0 26px;
+  border:0;
+}
+.page-passport .passport-index a{
+  justify-content:center;
+  min-height:48px;
+  border:1px solid rgba(169,120,45,.28);
+  border-radius:4px;
+  color:var(--v2-rose-deep);
+  text-align:center;
+  background:#fffaf5;
+}
+.page-passport .passport-section{
+  margin:0 0 16px;
+  padding:clamp(24px,4vw,34px);
+  border:1px solid rgba(169,120,45,.22);
+  border-left:4px solid var(--v2-gold-light);
+  border-radius:4px;
+  background:#fffdf9;
+  box-shadow:0 8px 22px rgba(75,53,47,.06);
+}
+.page-passport .passport-section h2{color:var(--v2-brown);font-size:clamp(1.15rem,2.4vw,1.45rem)}
+.page-passport .passport-note{border-color:var(--v2-rose);background:#fff1f5}
+.page-passport .passport-timing{border:1px solid #dce9df;background:#f2f8f2}
+.page-passport .passport-end{justify-content:center;padding:22px 0 48px}
+
+/* Omikuji: the interaction remains central while the room frames it. */
+.page-omikuji main{background:linear-gradient(180deg,#241927 0 580px,#fff7ef 580px,#fffaf0 100%)}
+.page-omikuji .fortune-hero .manor-page-hero__media img{object-position:center}
+.page-omikuji .omikuji-hero{padding:clamp(44px,7vw,84px) 0;background:transparent}
+.page-omikuji .omikuji-shell{
+  display:block;
+  width:min(1040px,100%);
+  margin:0 auto;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+}
+.page-omikuji .omikuji-copy{
+  max-width:720px;
+  margin:0 auto 30px;
+  padding:clamp(24px,4vw,40px);
+  border:1px solid rgba(169,120,45,.34);
+  border-radius:5px;
+  text-align:center;
+  background:rgba(255,253,248,.96);
+  box-shadow:var(--v2-shadow-soft);
+}
+.page-omikuji .omikuji-kicker{color:var(--v2-gold);font-family:var(--v2-serif);letter-spacing:.12em}
+.page-omikuji .omikuji-copy h2{margin:8px 0 12px;color:var(--v2-brown);font-size:clamp(1.8rem,4vw,2.8rem)}
+.page-omikuji .omikuji-lead{color:var(--v2-brown-soft)}
+.page-omikuji .fortune-card{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(190px,260px) minmax(0,1fr);
+  gap:clamp(20px,4vw,44px);
+  align-items:center;
+  max-width:940px;
+  min-height:0;
+  margin:0 auto;
+  padding:clamp(22px,4vw,42px);
+  border:1px solid rgba(169,120,45,.4);
+  border-radius:6px;
+  background:linear-gradient(135deg,rgba(87,42,59,.96),rgba(48,29,47,.98));
+  box-shadow:0 26px 70px rgba(35,19,31,.3);
+}
+.page-omikuji .fortune-box{
+  position:relative;
+  inset:auto;
+  z-index:1;
+  display:block;
+  width:min(230px,100%);
+  margin:auto;
+  transform:none;
+  filter:drop-shadow(0 18px 24px rgba(12,7,12,.28));
+}
+.page-omikuji .fortune-box img{width:100%;height:auto;max-height:360px;object-fit:contain}
+.page-omikuji .fortune-paper{
+  position:relative;
+  z-index:2;
+  min-height:0;
+  padding:clamp(24px,4vw,42px);
+  border:1px solid #d9b76e;
+  border-radius:4px;
+  color:var(--v2-brown);
+  background:#fffdf8;
+  box-shadow:0 16px 42px rgba(15,8,13,.24);
+}
+.page-omikuji .fortune-paper::before{border-color:rgba(169,120,45,.42)}
+.page-omikuji .fortune-mark{border-color:var(--v2-gold-light);color:var(--v2-rose-deep);background:#fff7ee}
+.page-omikuji .fortune-rank{color:var(--v2-rose-deep)}
+.page-omikuji .fortune-details div{border-color:rgba(169,120,45,.22);background:#fff9f2}
+.page-omikuji .fortune-actions{grid-template-columns:1fr 1fr}
+.page-omikuji .next-links-section{background:#fff6f1}
+
+/* Recruit: bright invitation with the existing characters and exact conditions. */
+.page-recruit main{background:linear-gradient(180deg,#fff8f3,#fffaf0 45%,#f9eee8)}
+.page-recruit .hero{
+  position:relative;
+  isolation:isolate;
+  min-height:660px;
+  padding:clamp(48px,7vw,88px) 0;
+  overflow:hidden;
+  color:var(--v2-brown);
+  background:#f8e5e3;
+}
+.page-recruit .hero::before,
+.page-recruit .hero::after{content:none}
+.page-recruit .recruit-hero-media,
+.page-recruit .recruit-hero-media img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.page-recruit .recruit-hero-media{z-index:-2}
+.page-recruit .recruit-hero-media img{display:block;object-fit:cover;object-position:center}
+.page-recruit .hero>.recruit-hero-wash{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:linear-gradient(90deg,rgba(255,250,240,.96),rgba(255,250,240,.72) 49%,rgba(255,250,240,.35));
+}
+.page-recruit .hero-wrap{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:minmax(0,1.12fr) minmax(220px,.72fr) minmax(280px,.9fr);
+  gap:clamp(22px,4vw,52px);
+  align-items:center;
+}
+.page-recruit .hero-copy,
+.page-recruit .hero-panel{
+  padding:clamp(24px,4vw,38px);
+  border:1px solid rgba(169,120,45,.34);
+  border-radius:6px;
+  background:rgba(255,253,248,.92);
+  box-shadow:var(--v2-shadow);
+  backdrop-filter:blur(5px);
+}
+.page-recruit .eyebrow{color:var(--v2-gold);font-family:var(--v2-serif);letter-spacing:.13em}
+.page-recruit .headline{color:var(--v2-brown);font-size:clamp(2.25rem,5vw,4.2rem);text-wrap:balance}
+.page-recruit .headline::after{background:linear-gradient(90deg,var(--v2-rose),var(--v2-gold-light))}
+.page-recruit .hero-desc{color:var(--v2-brown-soft)}
+.page-recruit .mini-pill{border-color:rgba(185,78,108,.32);color:var(--v2-rose-deep);background:#fff2f6}
+.page-recruit .recruit-hero-figure{align-self:end;margin-bottom:-88px;filter:drop-shadow(0 20px 24px rgba(76,43,48,.18))}
+.page-recruit .recruit-hero-figure img{display:block;width:100%;height:auto}
+.page-recruit .hero-panel{align-self:center}
+.page-recruit .hero-panel::before{content:none}
+.page-recruit .hero-panel h2{color:var(--v2-brown)}
+.page-recruit .hero-panel li::before{color:var(--v2-rose)}
+.page-recruit .section{padding:clamp(52px,8vw,92px) 0;background:transparent}
+.page-recruit .section:nth-of-type(even){background:rgba(248,220,227,.18)}
+.page-recruit .section+.section::before{background:linear-gradient(90deg,transparent,var(--v2-gold-light),transparent)}
+.page-recruit .section-title{color:var(--v2-brown);font-size:clamp(1.7rem,4vw,2.45rem)}
+.page-recruit .section-title::before{border-color:var(--v2-gold);background:#fffaf0}
+.page-recruit .section-title::after{background:linear-gradient(90deg,var(--v2-gold),transparent)}
+.page-recruit .card,
+.page-recruit .apply-step,
+.page-recruit .recruit-comic-layout{
+  border:1px solid rgba(169,120,45,.28);
+  border-radius:6px;
+  background:rgba(255,253,248,.96);
+  box-shadow:var(--v2-shadow-soft);
+}
+.page-recruit .recruit-comic-layout{grid-template-columns:220px minmax(0,1fr);padding:clamp(24px,4vw,44px)}
+.page-recruit .recruit-comic-cover img{border:1px solid rgba(169,120,45,.26);border-radius:4px}
+.page-recruit .apply-step span{color:var(--v2-gold)}
+.page-recruit .list li::before{color:var(--v2-rose)}
+.page-recruit .faq-item strong{color:var(--v2-rose-deep)}
+.page-recruit .cta{padding:clamp(30px,6vw,70px) 0;background:transparent}
+.page-recruit .cta-card{
+  border:1px solid rgba(169,120,45,.4);
+  border-radius:6px;
+  color:var(--v2-brown);
+  background:linear-gradient(135deg,#fff5f7,#fffaf0);
+  box-shadow:var(--v2-shadow);
+}
+.page-recruit .cta-card::before{content:none}
+.page-recruit .next-links-section{background:#fff6f1}
+
+/* 404: a concise wrong-turn scene. */
+.page-not-found .error-hero{min-height:clamp(560px,70vh,760px)}
+.page-not-found .error-hero .manor-page-hero__media img{object-position:center}
+.page-not-found .error-hero::after{background:linear-gradient(90deg,rgba(33,18,17,.9),rgba(48,27,24,.64) 43%,rgba(48,27,24,.08) 76%)}
+.page-not-found .error-hero .wrap{width:min(1180px,calc(100% - 40px));margin:auto;padding:80px 0}
+.page-not-found .error-copy{max-width:650px}
+.page-not-found .badge{
+  display:inline-flex;
+  align-items:center;
+  min-height:34px;
+  padding:6px 13px;
+  border:1px solid rgba(244,212,137,.62);
+  border-radius:999px;
+  color:#f7d98f;
+  font-weight:800;
+  letter-spacing:.12em;
+  background:rgba(91,44,55,.55);
+}
+.page-not-found .error-hero .headline{
+  max-width:620px;
+  margin:22px 0 18px;
+  color:#fff;
+  font-size:clamp(2.25rem,6vw,4.4rem);
+  line-height:1.2;
+  text-shadow:0 4px 24px rgba(20,10,9,.42);
+  text-wrap:balance;
+}
+.page-not-found .error-hero .sub{max-width:560px;color:rgba(255,255,255,.9);font-size:1.05rem;line-height:1.9}
+.page-not-found .quick{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.page-not-found .quick .btn-ghost{border-color:rgba(255,240,205,.72);color:#fff;background:rgba(43,25,23,.62)}
+
+@media (max-width:900px){
+  .page-recruit .hero-wrap{grid-template-columns:1fr 240px}
+  .page-recruit .recruit-hero-figure{grid-column:2;grid-row:1 / span 2;margin-bottom:-54px}
+  .page-recruit .hero-panel{grid-column:1}
+}
+
+@media (max-width:720px){
+  .page-passport .passport-hero h1{
+    font-size:clamp(2rem,10.5vw,2.9rem);
+    white-space:nowrap;
+  }
+
+  .manor-page-hero{min-height:430px}
+  .manor-page-hero__inner{width:min(100% - 28px,1180px);padding:82px 0 54px;align-self:end}
+  .manor-page-hero::after{background:linear-gradient(180deg,rgba(35,20,19,.08),rgba(35,20,19,.76) 58%,rgba(35,20,19,.92))}
+  .manor-page-hero__copy{max-width:none}
+  .manor-page-hero h1{font-size:clamp(2.25rem,12vw,3.5rem)}
+  .manor-page-hero__lead{margin-top:16px;line-height:1.75}
+  .page-passport .passport-hero .manor-page-hero__media img,
+  .page-omikuji .fortune-hero .manor-page-hero__media img{object-position:62% center}
+  .page-passport .passport-lesson,
+  .page-passport .passport-guide{width:calc(100% - 24px)}
+  .page-passport .passport-lesson{padding:18px 12px 22px}
+  .page-passport .passport-index{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .page-passport .passport-content{padding:0 12px}
+  .page-passport .passport-section{padding:22px 18px}
+  .page-omikuji main{background:linear-gradient(180deg,#241927 0 420px,#fff7ef 420px,#fffaf0 100%)}
+  .page-omikuji .omikuji-hero{padding:34px 0 54px}
+  .page-omikuji .fortune-card{grid-template-columns:1fr;padding:18px 12px 24px}
+  .page-omikuji .fortune-box{width:126px}
+  .page-omikuji .fortune-paper{padding:22px 14px}
+  .page-omikuji .fortune-actions{grid-template-columns:1fr}
+  .page-recruit .hero{min-height:0;padding:34px 0 0}
+  .page-recruit .hero-wrap{grid-template-columns:1fr;gap:18px}
+  .page-recruit .hero-copy,.page-recruit .hero-panel{padding:24px 18px}
+  .page-recruit .recruit-hero-figure{grid-column:auto;grid-row:auto;width:min(300px,82vw);justify-self:center;margin:0 auto -12px;order:2}
+  .page-recruit .hero-panel{grid-column:auto;order:3;margin-bottom:28px}
+  .page-recruit .recruit-comic-layout{grid-template-columns:1fr;padding:24px 18px}
+  .page-recruit .recruit-comic-cover{width:min(210px,65vw)}
+  .page-not-found .error-hero .manor-page-hero__media img{object-position:68% center}
+  .page-not-found .error-hero::after{background:linear-gradient(180deg,rgba(33,18,17,.15),rgba(33,18,17,.86) 55%,rgba(33,18,17,.94))}
+  .page-not-found .error-hero .wrap{width:calc(100% - 28px);padding:220px 0 48px;align-self:end}
+  .page-not-found .quick{display:grid;grid-template-columns:1fr}
+}
+
+@media (max-width:360px){
+  .page-passport .lesson-heading{display:block}
+  .page-passport .lesson-heading a{display:inline-block;margin-top:8px}
+  .page-passport .passport-index{grid-template-columns:1fr}
+  .page-recruit .hero-actions,.page-recruit .cta-actions{display:grid;grid-template-columns:1fr}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .theme-v2:is(.page-passport,.page-omikuji,.page-recruit,.page-not-found) *,
+  .theme-v2:is(.page-passport,.page-omikuji,.page-recruit,.page-not-found) *::before,
+  .theme-v2:is(.page-passport,.page-omikuji,.page-recruit,.page-not-found) *::after{
+    scroll-behavior:auto!important;
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+  }
+}

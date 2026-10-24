@@ -8,6 +8,8 @@
   <meta name="theme-color" content="#f6b7d2">
   <meta name="format-detection" content="telephone=no">
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/passport.html">
+  <link rel="icon" href="img/ogp.jpg" type="image/jpeg">
+  <link rel="preload" as="image" href="img/passport-invitation-classical.webp" type="image/webp" fetchpriority="high">
   <meta property="og:type" content="website">
   <meta property="og:title" content="ポトロパスポート講義 | PO・TORO 公式ポータル">
   <meta property="og:description" content="ご本人専用のデジタル会員証。チェキ券・特典・入店順抽選のご利用案内。">
@@ -20,8 +22,9 @@
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/passport.css?v=20260912-4">
   <link rel="stylesheet" href="assets/css/design-system.css?v=20261020">
+  <link rel="stylesheet" href="assets/css/manor-final-pages.css?v=20261024">
 </head>
-<body class="theme-v2">
+<body class="theme-v2 page-passport">
   <a href="#main" class="skip-link">本文へスキップ</a>
   <!-- shared-layout:header:start -->
 <header class="site-header">
@@ -94,8 +97,21 @@
 </header>
 <!-- shared-layout:header:end -->
   <main id="main" class="passport-main">
+    <section class="manor-page-hero passport-hero" aria-labelledby="passportHeroTitle">
+      <picture class="manor-page-hero__media" aria-hidden="true">
+        <img src="img/passport-invitation-classical.webp" alt="" width="1774" height="887" decoding="async" fetchpriority="high">
+      </picture>
+      <div class="manor-page-hero__inner">
+        <div class="manor-page-hero__copy">
+          <span class="manor-page-hero__seal" aria-hidden="true">P</span>
+          <p class="manor-page-hero__eyebrow">A SPECIAL INVITATION TO THE MANOR</p>
+          <h1 id="passportHeroTitle">ポトロパスポート</h1>
+          <p class="manor-page-hero__lead">お屋敷をもっと楽しむための、ご主人様・お嬢様専用デジタル会員証。その使い方をメイドさんと一緒に学びましょう。</p>
+        </div>
+      </div>
+    </section>
     <section class="passport-lesson" id="passportLesson" aria-label="ポトロパスポート講義" hidden>
-      <div class="lesson-heading"><h1>ポトロパスポート講義</h1><a href="#passportGuide">ご利用案内</a></div>
+      <div class="lesson-heading"><h2>ポトロパスポート講義</h2><a href="#passportGuide">ご利用案内</a></div>
       <div class="lesson-status"><span id="lessonChapter"></span><span id="lessonCount"></span></div>
       <progress id="lessonProgress" max="20" value="1" aria-label="講義の進捗"></progress>
       <div class="lesson-scene" id="lessonScene" data-speaker="student">

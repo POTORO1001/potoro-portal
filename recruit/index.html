@@ -9,6 +9,8 @@
   <meta name="format-detection" content="telephone=no" />
   <meta name="theme-color" content="#f6b7d2" />
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/recruit/" />
+  <link rel="icon" href="../img/ogp.jpg" type="image/jpeg" />
+  <link rel="preload" as="image" href="../img/passport-cafe.webp" type="image/webp" fetchpriority="high">
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="concept cafe PO・TORO" />
@@ -75,9 +77,10 @@
   <link rel="stylesheet" href="../assets/css/index.css">
   <link rel="stylesheet" href="../assets/css/recruit.css?v=20260925-comic">
   <link rel="stylesheet" href="../assets/css/design-system.css?v=20261020">
+  <link rel="stylesheet" href="../assets/css/manor-final-pages.css?v=20261024">
 </head>
 
-<body class="theme-v2">
+<body class="theme-v2 page-recruit">
   <a href="#main" class="skip-link">本文へスキップ</a>
 
   <!-- shared-layout:header:start -->
@@ -153,6 +156,10 @@
 
   <main id="main">
     <section class="hero">
+      <picture class="recruit-hero-media" aria-hidden="true">
+        <img src="../img/passport-cafe.webp" alt="" width="1536" height="1024" decoding="async" fetchpriority="high">
+      </picture>
+      <div class="recruit-hero-wash" aria-hidden="true"></div>
       <div class="container hero-wrap">
         <div class="hero-copy">
           <div class="eyebrow">Cast Recruit</div>
@@ -173,6 +180,10 @@
             <a class="btn btn-ghost" href="#recruitFlow">応募の流れを見る</a>
           </div>
         </div>
+
+        <figure class="recruit-hero-figure">
+          <img src="../img/passport-maids.webp" alt="笑顔で応募を案内する二人のメイド" width="1536" height="1024" loading="eager" decoding="async">
+        </figure>
 
         <div class="hero-panel">
           <h2>ポ・トロで働く魅力</h2>

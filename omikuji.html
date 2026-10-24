@@ -8,6 +8,8 @@
   <meta name="format-detection" content="telephone=no" />
   <meta name="theme-color" content="#f6b7d2" />
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/omikuji.html" />
+  <link rel="icon" href="img/ogp.jpg" type="image/jpeg" />
+  <link rel="preload" as="image" href="img/fortune-room-classical.webp" type="image/webp" fetchpriority="high">
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="concept cafe PO・TORO" />
@@ -67,8 +69,9 @@
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/omikuji.css">
   <link rel="stylesheet" href="assets/css/design-system.css?v=20261020">
+  <link rel="stylesheet" href="assets/css/manor-final-pages.css?v=20261024">
 </head>
-<body class="theme-v2">
+<body class="theme-v2 page-omikuji">
   <a href="#main" class="skip-link">本文へスキップ</a>
 
   <!-- shared-layout:header:start -->
@@ -143,12 +146,24 @@
 <!-- shared-layout:header:end -->
 
   <main id="main">
+    <section class="manor-page-hero fortune-hero" aria-labelledby="fortuneHeroTitle">
+      <picture class="manor-page-hero__media" aria-hidden="true">
+        <img src="img/fortune-room-classical.webp" alt="" width="1774" height="887" decoding="async" fetchpriority="high">
+      </picture>
+      <div class="manor-page-hero__inner">
+        <div class="manor-page-hero__copy">
+          <p class="manor-page-hero__eyebrow">THE MANOR'S FORTUNE CHAMBER</p>
+          <h1 id="fortuneHeroTitle">今日のおみくじ</h1>
+          <p class="manor-page-hero__lead">月明かりの占いの間で、今日の運勢を一枚だけ。結果と小さな行動のヒントをお届けします。</p>
+        </div>
+      </div>
+    </section>
     <section class="omikuji-hero">
       <div class="container reveal">
         <div class="omikuji-shell">
           <div class="omikuji-copy">
             <p class="omikuji-kicker">Today's fortune</p>
-            <h1>今日のおみくじ</h1>
+            <h2>おみくじを引く</h2>
             <p class="omikuji-lead">今日の運勢と、ちょっとした行動のヒントを一枚だけ引けます。</p>
           </div>
 
