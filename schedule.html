@@ -7,6 +7,7 @@
   <meta name="description" content="concept cafe PO・TORO（ポ・トロ）の週間お給仕表。出勤予定、営業予定、店舗アクセスを来店前に確認できます。" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="theme-color" content="#f6b7d2" />
+  <link rel="icon" href="img/ogp.jpg" type="image/jpeg" />
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/schedule.html" />
   <link rel="preconnect" href="https://docs.google.com" crossorigin>
 
@@ -66,12 +67,12 @@
   }
   </script>
 <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/index.css">
-  <link rel="stylesheet" href="assets/css/schedule.css">
   <link rel="stylesheet" href="assets/css/design-system.css?v=20261020">
+  <link rel="stylesheet" href="assets/css/room-pages.css?v=20261023">
+  <link rel="stylesheet" href="assets/css/schedule.css?v=20261023">
 </head>
 
-<body class="theme-v2">
+<body class="theme-v2 page-schedule">
   <a href="#main" class="skip-link">本文へスキップ</a>
 
   <!-- shared-layout:header:start -->
@@ -146,71 +147,79 @@
 <!-- shared-layout:header:end -->
 
   <main id="main">
-    <section class="hero schedule-hero">
-      <div class="container wrap">
-        <div class="reveal schedule-main">
-          <h1 class="headline">📅 週間お給仕表</h1>
+    <section class="room-page-hero schedule-page-hero" aria-labelledby="schedulePageTitle">
+      <div class="room-page-hero__visual" aria-hidden="true">
+        <img src="img/schedule-planning-room.webp" alt="" width="2048" height="853" fetchpriority="high" decoding="async">
+      </div>
+      <div class="container room-page-hero__content reveal">
+        <p class="room-page-hero__eyebrow">WEEKLY SCHEDULE</p>
+        <h1 id="schedulePageTitle">週間お給仕表</h1>
+        <p class="room-page-hero__lead">お屋敷の予定帳をひらいて、これから一週間のお給仕予定をご案内します。</p>
+      </div>
+      <span class="room-page-hero__ornament" aria-hidden="true"></span>
+    </section>
 
-          <div class="top-actions">
-            <a class="btn btn-ghost" href="index.html">ポータルへ戻る</a>
-            <a class="btn btn-primary" href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">萌えセレクトのご予約はDM</a>
-            <a class="btn btn-ghost" href="price.html">料金詳細</a>
-          </div>
+    <section class="room-page-section schedule-ledger-section" aria-labelledby="scheduleCardsTitle">
+      <div class="container">
+        <header class="room-section-heading reveal">
+          <p class="room-section-heading__eyebrow">THE MANOR'S APPOINTMENT BOOK</p>
+          <h2 id="scheduleCardsTitle">お屋敷の予定帳</h2>
+          <p>日付ごとに営業時間とメイドちゃんの予定をまとめています。本日と明日は印を付けてご案内します。</p>
+        </header>
 
-          <div class="schedule-cards-panel mt-12" aria-labelledby="scheduleCardsTitle">
-            <div class="schedule-cards-head">
-              <div>
-                <h2 id="scheduleCardsTitle">週間お給仕カード</h2>
-                <p>日付ごとに営業時間とメイドちゃんの予定をまとめています。</p>
-              </div>
-              <span class="schedule-cards-badge">7日分</span>
-            </div>
-            <div class="schedule-card-list" id="scheduleCardList" aria-live="polite">
-              <div class="schedule-card-loading">営業予定を読み込み中です…</div>
-            </div>
-          </div>
-
-          <details class="sheet-details mt-16">
-            <summary>元のスプレッドシート表を確認する</summary>
-            <div class="mt-12 sheet-embed" aria-label="週間お給仕表">
-              <iframe
-                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRdLqPoS9TfRnJ1IuixzjkcJwjJ2CaW02ZR6CDhFJ1fMfky7pC1HFQhxFUhYEXawPGdos9kl2wnMY-j/pubhtml?gid=306053530&amp;single=true&amp;widget=true&amp;headers=false"
-                title="週間お給仕表"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                allowfullscreen></iframe>
-            </div>
-            <p class="subnote">
-              元の表は横に長いため、スマホでは上のカード表示がおすすめです。
-            </p>
-          </details>
+        <div class="room-actions reveal">
+          <a class="btn btn-ghost" href="index.html">ポータルへ戻る</a>
+          <a class="btn btn-primary" href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">萌えセレクトのご予約はDM</a>
+          <a class="btn btn-ghost" href="price.html">料金詳細</a>
         </div>
+
+        <div class="schedule-cards-panel reveal">
+          <div class="schedule-cards-head">
+            <div>
+              <h3>直近7日間のお給仕予定</h3>
+              <p>休館日や予定未登録の日も、この予定帳で確認できます。</p>
+            </div>
+            <span class="schedule-cards-badge">7日分</span>
+          </div>
+          <div class="schedule-card-list" id="scheduleCardList" aria-live="polite">
+            <div class="schedule-card-loading">営業予定を確認しています。少しお待ちください。</div>
+          </div>
+          <noscript><p class="schedule-card-fallback"><strong>予定表を表示するにはJavaScriptが必要です。</strong>元のスプレッドシート表から予定をご確認いただけます。</p></noscript>
+        </div>
+
+        <details class="sheet-details reveal">
+          <summary>元のスプレッドシート表を確認する</summary>
+          <div class="sheet-embed" aria-label="週間お給仕表">
+            <iframe
+              src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRdLqPoS9TfRnJ1IuixzjkcJwjJ2CaW02ZR6CDhFJ1fMfky7pC1HFQhxFUhYEXawPGdos9kl2wnMY-j/pubhtml?gid=306053530&amp;single=true&amp;widget=true&amp;headers=false"
+              title="週間お給仕表"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen></iframe>
+          </div>
+          <p class="subnote">元の表は横に長いため、スマートフォンでは上の予定帳表示がおすすめです。</p>
+        </details>
       </div>
     </section>
 
-    <section id="access">
-      <div class="container reveal">
-        <h2 class="sec-title">📍 アクセス</h2>
-        <div class="grid cols-3">
-          <div class="card access-main-card">
-            <div class="body">
-              <h3>店舗情報</h3>
-              <p>〒790-0012 愛媛県松山市湊町3丁目7-2 2F</p>
-              <p>営業時間（通常）：平日・祝 18:00–22:00 / 土日 17:00–22:00</p>
-              <p class="tag">実際の営業は「本日の営業時間」を優先してご確認ください。</p>
-              <p class="tag mt-8">放置ゼロ宣言・キャストドリンク無しで安心。</p>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="body">
-              <h3>地図</h3>
-              <div class="map-embed">
-                <iframe title="PO・TOROの場所" src="https://www.google.com/maps?q=33.8359588,132.7696145&z=18&output=embed"
-                  loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-              </div>
-              <p class="mt-12"><a href="https://www.google.com/maps/place/PO.TORO/@33.8358626,132.7688299,18.58z" target="_blank" rel="noopener noreferrer">Google マップで開く</a></p>
-            </div>
+    <section class="room-page-section schedule-visit-section" id="access" aria-labelledby="scheduleAccessTitle">
+      <div class="container">
+        <header class="room-section-heading reveal">
+          <p class="room-section-heading__eyebrow">VISIT THE MANOR</p>
+          <h2 id="scheduleAccessTitle">お屋敷へのご案内</h2>
+          <p>予定が決まったら、お屋敷までの道のりをご確認ください。</p>
+        </header>
+        <div class="schedule-access-grid reveal">
+          <article class="schedule-access-copy">
+            <h3>concept cafe PO.TORO</h3>
+            <p>〒790-0012<br>愛媛県松山市湊町3丁目7-2 2F</p>
+            <p>営業時間（通常）：平日・祝 18:00–22:00 / 土日 17:00–22:00</p>
+            <p class="schedule-access-note">実際の営業はトップページの「本日の営業時間」を優先してご確認ください。</p>
+            <a class="btn btn-ghost" href="https://www.google.com/maps/place/PO.TORO/@33.8358626,132.7688299,18.58z" target="_blank" rel="noopener noreferrer">Google Mapsで開く</a>
+          </article>
+          <div class="map-embed">
+            <iframe title="PO.TOROの場所" src="https://www.google.com/maps?q=33.8359588,132.7696145&z=18&output=embed"
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
           </div>
         </div>
       </div>

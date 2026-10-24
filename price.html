@@ -8,6 +8,7 @@
   <meta name="description" content="concept cafe PO・TORO（ポ・トロ）の料金詳細。30分1,000円からの基本料金、ご利用の流れ、延長、注意事項を確認できます。" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="theme-color" content="#f6b7d2" />
+  <link rel="icon" href="img/ogp.jpg" type="image/jpeg" />
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/price.html" />
 
   <meta property="og:type" content="website" />
@@ -91,12 +92,12 @@
   }
   </script>
 <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/index.css">
-  <link rel="stylesheet" href="assets/css/price.css">
   <link rel="stylesheet" href="assets/css/design-system.css?v=20261020">
+  <link rel="stylesheet" href="assets/css/room-pages.css?v=20261023">
+  <link rel="stylesheet" href="assets/css/price.css?v=20261023">
 </head>
 
-<body class="theme-v2">
+<body class="theme-v2 page-price">
   <a href="#main" class="skip-link">本文へスキップ</a>
 
   <!-- shared-layout:header:start -->
@@ -171,45 +172,54 @@
 <!-- shared-layout:header:end -->
 
   <main id="main">
-    <section class="hero">
-      <div class="container hero-wrap">
-        <div class="hero-copy">
-          <div class="eyebrow">Price System</div>
-          <h1 class="headline">ポ・トロの料金システム</h1>
-          <p class="hero-desc">
-            初めてのご主人さま・お嬢さまにも分かりやすいように、PO・TOROの基本料金とご利用の流れをまとめました。
-            安心してご帰宅いただけるよう、シンプルで明確なシステムにしています。
-          </p>
+    <section class="room-page-hero price-page-hero" aria-labelledby="pricePageTitle">
+      <div class="room-page-hero__visual" aria-hidden="true">
+        <img src="img/price-reception-guide.webp" alt="" width="2048" height="853" fetchpriority="high" decoding="async">
+      </div>
+      <div class="container room-page-hero__content reveal">
+        <p class="room-page-hero__eyebrow">PRICE &amp; GUIDE</p>
+        <h1 id="pricePageTitle">料金詳細</h1>
+        <p class="room-page-hero__lead">初めてのご帰宅にも分かりやすい、お屋敷のご利用案内です。</p>
+      </div>
+      <span class="room-page-hero__ornament" aria-hidden="true"></span>
+    </section>
 
-          <div class="hero-note">
-            <span class="mini-pill">前金制で安心</span>
-            <span class="mini-pill">30分単位でご案内</span>
-            <span class="mini-pill">各種ドリンク飲み放題</span>
+    <section class="room-page-section price-overview-section" aria-labelledby="priceOverviewTitle">
+      <div class="container">
+        <header class="room-section-heading reveal">
+          <p class="room-section-heading__eyebrow">THE MANOR'S GUIDEBOOK</p>
+          <h2 id="priceOverviewTitle">お屋敷のご利用案内</h2>
+          <p>基本料金とご利用の流れを、案内状のようにひとつずつご説明します。</p>
+        </header>
+        <div class="price-overview-grid reveal">
+          <div class="price-overview-copy">
+            <p>初めてのご主人さま・お嬢さまにも分かりやすいように、PO.TOROの基本料金とご利用の流れをまとめました。安心してご帰宅いただけるよう、シンプルで明確なシステムにしています。</p>
+            <div class="hero-note">
+              <span class="mini-pill">前金制で安心</span>
+              <span class="mini-pill">30分単位でご案内</span>
+              <span class="mini-pill">各種ドリンク飲み放題</span>
+            </div>
+          </div>
+          <div class="hero-panel">
+            <span class="price-badge">基本システム</span>
+            <p class="big-price" aria-label="30分 1,000円 税込み">
+              <span class="price-duration">30分</span>
+              <span class="price-amount">1,000円</span>
+              <span class="price-tax">税込</span>
+            </p>
+            <p>各種ドリンク飲み放題（生ビール含む）。延長は30分単位でご利用いただけます。</p>
           </div>
         </div>
-
-        <div class="hero-panel">
-          <span class="price-badge">基本システム</span>
-          <p class="big-price" aria-label="30分 1,000円 税込み">
-            <span class="price-duration">30分</span>
-            <span class="price-amount">1,000円</span>
-            <span class="price-tax">税込</span>
-          </p>
-          <p>
-            各種ドリンク飲み放題（生ビール含む）。延長は30分単位でご利用いただけます。
-          </p>
-
-          <div class="hero-actions">
-            <a class="btn btn-ghost" href="menu.html">ドリンク・フードメニュー</a>
-            <a class="btn btn-primary" href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">萌えセレクトのご予約はDM</a>
-            <a class="btn btn-ghost" href="index.html">ポータルへ戻る</a>
-          </div>
+        <div class="room-actions reveal">
+          <a class="btn btn-ghost" href="menu.html">ドリンク・フードメニュー</a>
+          <a class="btn btn-primary" href="https://x.com/po_toro" target="_blank" rel="noopener noreferrer">萌えセレクトのご予約はDM</a>
+          <a class="btn btn-ghost" href="index.html">ポータルへ戻る</a>
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
+    <section class="section room-page-section">
+      <div class="container reveal">
         <h2 class="section-title">基本料金</h2>
 
         <div class="price-quick" aria-label="料金早見表">
@@ -268,8 +278,8 @@
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
+    <section class="section room-page-section">
+      <div class="container reveal">
         <h2 class="section-title">ご利用の流れ</h2>
 
         <div class="flow">
@@ -296,8 +306,8 @@
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
+    <section class="section room-page-section">
+      <div class="container reveal">
         <h2 class="section-title">あわせて知っておきたいこと</h2>
 
         <div class="cards cols-2">
@@ -335,8 +345,8 @@
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
+    <section class="section room-page-section price-notice-section">
+      <div class="container reveal">
         <div class="notice">
           <div><strong>ご案内</strong> 営業状況やイベント内容により、ご案内内容が一部変わる場合があります。</div>
           <div><strong>ご不明点</strong> ご帰宅時、またはDMにてお気軽にお問い合わせください。</div>
@@ -344,8 +354,8 @@
       </div>
     </section>
 
-    <section class="cta">
-      <div class="container">
+    <section class="cta room-page-section">
+      <div class="container reveal">
         <div class="cta-card">
           <h2>ご帰宅をお待ちしております</h2>
           <p>

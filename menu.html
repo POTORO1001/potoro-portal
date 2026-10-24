@@ -7,6 +7,7 @@
   <meta name="description" content="ポ・トロの飲み放題ドリンクとフードメニュー。ソフトドリンク、アルコール、ノンアルコールと、フードの税込価格をご案内します。">
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#f6b7d2">
+  <link rel="icon" href="img/ogp.jpg" type="image/jpeg">
   <link rel="canonical" href="https://potoro1001.github.io/potoro-portal/menu.html">
   <meta property="og:type" content="website">
   <meta property="og:title" content="ドリンク・フードメニュー | PO・TORO 公式ポータル">
@@ -18,10 +19,11 @@
   {"@context":"https://schema.org","@type":"WebPage","name":"ドリンク・フードメニュー","url":"https://potoro1001.github.io/potoro-portal/menu.html","inLanguage":"ja","description":"ポ・トロの飲み放題ドリンクとフードメニュー"}
   </script>
   <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/menu.css?v=20260925">
   <link rel="stylesheet" href="assets/css/design-system.css?v=20261020">
+  <link rel="stylesheet" href="assets/css/room-pages.css?v=20261023">
+  <link rel="stylesheet" href="assets/css/menu.css?v=20261023">
 </head>
-<body class="theme-v2">
+<body class="theme-v2 page-menu">
   <a href="#main" class="skip-link">本文へスキップ</a>
   <!-- shared-layout:header:start -->
 <header class="site-header">
@@ -94,17 +96,30 @@
 </header>
 <!-- shared-layout:header:end -->
   <main id="main" class="menu-main">
-    <div class="container menu-content">
-      <div class="menu-intro">
-        <a href="price.html">料金詳細へ戻る</a>
-        <h1>ドリンク・フードメニュー</h1>
-        <p>お好きな一杯と、お屋敷でのひとときを。</p>
-        <p class="menu-updated">メニュー更新：<time datetime="2026-05">2026年5月</time></p>
+    <section class="room-page-hero menu-page-hero" aria-labelledby="menuPageTitle">
+      <div class="room-page-hero__visual" aria-hidden="true">
+        <img src="img/menu-tearoom.webp" alt="" width="2048" height="853" fetchpriority="high" decoding="async">
       </div>
-      <nav class="menu-jump" aria-label="メニューの種類">
+      <div class="container room-page-hero__content reveal">
+        <p class="room-page-hero__eyebrow">TEA ROOM MENU</p>
+        <h1 id="menuPageTitle"><span class="menu-title-line">ドリンク・</span><span class="menu-title-line">フードメニュー</span></h1>
+        <p class="room-page-hero__lead">お好きな一杯と、お屋敷でのひとときを。</p>
+      </div>
+      <span class="room-page-hero__ornament" aria-hidden="true"></span>
+    </section>
+
+    <section class="room-page-section menu-book-section" aria-labelledby="menuBookTitle">
+    <div class="container menu-content">
+      <header class="room-section-heading menu-intro reveal">
+        <p class="room-section-heading__eyebrow">THE MANOR'S MENU BOOK</p>
+        <h2 id="menuBookTitle">お屋敷のメニューブック</h2>
+        <p>飲み放題のドリンクと、別料金で楽しめるフードをご案内します。</p>
+        <p class="menu-updated">メニュー更新：<time datetime="2026-05">2026年5月</time></p>
+      </header>
+      <nav class="menu-jump reveal" aria-label="メニューの種類">
         <a href="#drinks">ドリンク</a><a href="#food">フード</a>
       </nav>
-      <section id="drinks" class="menu-section" aria-labelledby="drinksTitle">
+      <section id="drinks" class="menu-section reveal" aria-labelledby="drinksTitle">
         <h2 id="drinksTitle">ドリンク</h2>
         <p class="menu-price"><span class="menu-price-total">30分（1セット）<strong>1,000円<span>（税込）</span></strong></span><span>飲み放題付き</span></p>
         <p>下記のドリンクは、すべて飲み放題に含まれます。生ビールもお楽しみいただけます。</p>
@@ -151,7 +166,7 @@
           </div>
         </div>
       </section>
-      <section id="food" class="menu-section" aria-labelledby="foodTitle">
+      <section id="food" class="menu-section reveal" aria-labelledby="foodTitle">
         <h2 id="foodTitle">フード</h2>
         <p class="menu-payment"><strong>フードは別料金です。</strong>前金制のため、ご注文時にお支払いください。価格はすべて税込です。</p>
         <dl class="menu-food-list">
@@ -163,13 +178,14 @@
           <div><dt>メイドさんの手料理<span>一皿</span></dt><dd>1,000円</dd></div>
         </dl>
       </section>
-      <section class="menu-section menu-originals" aria-labelledby="originalsTitle">
+      <section class="menu-section menu-originals reveal" aria-labelledby="originalsTitle">
         <h2 id="originalsTitle">店内メニュー表</h2>
         <details><summary>ドリンクメニュー表を見る</summary><a href="img/menu-drinks-202605.png" target="_blank" rel="noopener noreferrer" aria-label="ドリンクメニュー表を原寸で開く（新しいタブ）"><img src="img/menu-drinks-202605.webp" alt="2026年5月のドリンクメニュー表" width="1054" height="1492" loading="lazy" decoding="async"></a></details>
         <details><summary>フード・オプションメニュー表を見る</summary><a href="img/menu-food-202605.png" target="_blank" rel="noopener noreferrer" aria-label="フード・オプションメニュー表を原寸で開く（新しいタブ）"><img src="img/menu-food-202605.webp" alt="2026年5月のフード・オプションメニュー表" width="1054" height="1492" loading="lazy" decoding="async"></a></details>
       </section>
-      <div class="menu-end"><a class="btn btn-ghost" href="price.html">料金詳細へ戻る</a><a class="btn btn-ghost" href="index.html">ポータルTOPへ</a></div>
+      <div class="menu-end reveal"><a class="btn btn-ghost" href="price.html">料金詳細へ戻る</a><a class="btn btn-ghost" href="index.html">ポータルTOPへ</a></div>
     </div>
+    </section>
   </main>
   <!-- shared-layout:footer:start -->
 <footer class="site-footer">
