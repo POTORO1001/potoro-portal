@@ -28,11 +28,15 @@ function render(template, current, root) {
     .replace(/\{\{CURRENT:([^}]+)\}\}/g, (_, page) => page === current ? ' aria-current="page"' : '');
 }
 
-function replaceRegion(html, name, markup, fallbackPattern) {
+function normalizeEol(text, eol) {
+  return text.replace(/\r?\n/g, eol);
+}
+
+function replaceRegion(html, name, markup, fallbackPattern, eol) {
   const start = `<!-- shared-layout:${name}:start -->`;
   const end = `<!-- shared-layout:${name}:end -->`;
   const managedPattern = new RegExp(`${start}[\\s\\S]*?${end}`);
-  const managed = `${start}\n${markup}\n${end}`;
+  const managed = `${start}${eol}${normalizeEol(markup, eol)}${eol}${end}`;
   return managedPattern.test(html) ? html.replace(managedPattern, managed) : html.replace(fallbackPattern, managed);
 }
 
@@ -46,10 +50,10 @@ function addBodyClass(html) {
   });
 }
 
-function ensureStylesheet(html, root) {
+function ensureStylesheet(html, root, eol) {
   if (/assets\/css\/design-system\.css/.test(html)) return html;
   const tag = `  <link rel="stylesheet" href="${root}assets/css/design-system.css?v=20261020">`;
-  return html.replace('</head>', `${tag}\n</head>`);
+  return html.replace('</head>', `${tag}${eol}</head>`);
 }
 
 function removeLegacyPrototypeStyle(html) {
@@ -59,26 +63,27 @@ function removeLegacyPrototypeStyle(html) {
   );
 }
 
-function ensureUniformScripts(html, root, file) {
+function ensureUniformScripts(html, root, file, eol) {
   if (file !== 'uniforms.html' || /assets\/js\/core\.js/.test(html)) return html;
   const scripts = [
     `<script src="${root}assets/js/core.js?v=20261020"></script>`,
     `<script src="${root}assets/js/page-init.js?v=20261020"></script>`
-  ].join('\n');
-  return html.replace('</body>', `${scripts}\n</body>`);
+  ].join(eol);
+  return html.replace('</body>', `${scripts}${eol}</body>`);
 }
 
 const stale = [];
 for (const [file, current, root] of pages) {
   const absolute = path.join(rootDir, file);
   const original = fs.readFileSync(absolute, 'utf8');
+  const eol = original.includes('\r\n') ? '\r\n' : '\n';
   let html = original;
-  html = replaceRegion(html, 'header', render(headerTemplate, current, root), /<header\b[\s\S]*?<\/header>/i);
-  html = replaceRegion(html, 'footer', render(footerTemplate, current, root), /<footer\b[\s\S]*?<\/footer>/i);
+  html = replaceRegion(html, 'header', render(headerTemplate, current, root), /<header\b[\s\S]*?<\/header>/i, eol);
+  html = replaceRegion(html, 'footer', render(footerTemplate, current, root), /<footer\b[\s\S]*?<\/footer>/i, eol);
   html = removeLegacyPrototypeStyle(html);
   html = addBodyClass(html);
-  html = ensureStylesheet(html, root);
-  html = ensureUniformScripts(html, root, file);
+  html = ensureStylesheet(html, root, eol);
+  html = ensureUniformScripts(html, root, file, eol);
 
   if (html === original) continue;
   if (checkOnly) stale.push(file);
