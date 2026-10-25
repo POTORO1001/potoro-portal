@@ -263,6 +263,14 @@
       }
     }, {threshold: 0.12});
     els.forEach(el=>io.observe(el));
+    window.setTimeout(()=>{
+      els.forEach(el=>{
+        if(!el.classList.contains('is-in')){
+          el.classList.add('is-in');
+          io.unobserve(el);
+        }
+      });
+    }, 1500);
   }
 
   function getFocusable(container){

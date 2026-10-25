@@ -21,7 +21,10 @@
   --v2-space-xl:64px;
   --v2-serif:"Yu Mincho","Hiragino Mincho ProN","Noto Serif JP",serif;
   --v2-sans:"Yu Gothic","Hiragino Kaku Gothic ProN",system-ui,sans-serif;
+  height:auto;
   min-height:100%;
+  overflow-x:clip;
+  overflow-y:visible;
   color:var(--v2-brown);
   background:var(--v2-ivory);
   font-family:var(--v2-sans);
@@ -314,7 +317,7 @@
   transform:translateX(-50%) rotate(45deg);
 }
 .theme-v2 .site-footer .foot{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(180px,.65fr) minmax(180px,.65fr);gap:40px}
-.theme-v2 .site-footer h4{margin:0 0 14px;color:#fff8ec}
+.theme-v2 .site-footer h2{margin:0 0 14px;color:#fff8ec;font-size:1.1rem}
 .theme-v2 .site-footer p{margin:0 0 18px;color:#f8ead7;line-height:1.8}
 .theme-v2 .site-footer a{color:#f8ead7;text-decoration:none}
 .theme-v2 .site-footer a:hover{color:#fff;text-decoration:underline}

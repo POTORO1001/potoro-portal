@@ -2,7 +2,7 @@ const baseUrl = process.env.PUBLIC_SITE_URL || 'https://potoro1001.github.io/pot
 const timeoutMs = Number(process.env.PUBLIC_SITE_TIMEOUT_MS || 15000);
 
 const pages = [
-  { path: '', title: 'PO・TORO', text: ['PO・TORO', '料金', 'メイドさん募集'] },
+  { path: '', title: 'PO.TORO', text: ['PO.TORO', '料金', 'メイドさん募集'] },
   { path: 'news.html', title: 'お知らせ', text: ['お知らせ', '最新情報'] },
   { path: 'events.html', title: 'イベント', text: ['イベント', '開催'] },
   { path: 'goods.html', title: 'グッズ', text: ['グッズ', '配布'] },

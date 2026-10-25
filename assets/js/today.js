@@ -149,7 +149,7 @@
       btn.href = cfg.xProfileUrl || 'https://x.com/po_toro';
       btn.target = '_blank';
       btn.rel = 'noopener noreferrer';
-      btn.setAttribute('aria-label','XのDMで萌えセレクトを予約する（PO・TORO公式へ）');
+      btn.setAttribute('aria-label','XのDMで萌えセレクトを予約する（PO.TORO公式へ）');
       btn.textContent = '💌 萌えセレクトのご予約はDM';
     }
   }
