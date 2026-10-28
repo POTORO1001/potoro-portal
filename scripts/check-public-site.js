@@ -201,7 +201,7 @@ function validatePageSpecificContent(page, html, url) {
   }
 
   if (page.path === 'schedule.html') {
-    for (const text of ['週間お給仕カード']) {
+    for (const text of ['直近7日間のお給仕予定']) {
       if (!html.includes(text)) addIssue(url, `missing schedule UI text "${text}"`);
     }
     if (!html.includes('id="scheduleCardList"')) addIssue(url, 'missing schedule card list');
