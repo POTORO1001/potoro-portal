@@ -34,8 +34,8 @@ const sitemapPages = [
   'recruit/index.html'
 ];
 
-const expectedHeaderNavLinks = 10;
-const expectedDrawerLinks = 11;
+const expectedHeaderNavLinks = 11;
+const expectedDrawerLinks = 12;
 const issues = [];
 
 function readFile(file) {
