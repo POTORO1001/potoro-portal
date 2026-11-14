@@ -1,18 +1,53 @@
 {
   "ok": true,
   "source": "github-actions",
-  "updatedAt": "2026-11-13T18:45:49.306Z",
-  "today": "2026-11-14",
+  "updatedAt": "2026-11-14T18:51:37.818Z",
+  "today": "2026-11-15",
   "day": {
-    "date": "2026-11-14",
-    "dow": "土",
+    "date": "2026-11-15",
+    "dow": "日",
     "maids": [
       {
-        "maid": "お屋敷休館日",
-        "start": "",
-        "end": "",
-        "note": "お屋敷休館日",
-        "off": true
+        "maid": "うさ",
+        "start": "17:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "じゅら",
+        "start": "17:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "みお",
+        "start": "17:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "りあ",
+        "start": "17:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "こぐま",
+        "start": "19:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
+      },
+      {
+        "maid": "れい",
+        "start": "19:00",
+        "end": "22:00",
+        "note": "",
+        "off": false
       }
     ]
   }
