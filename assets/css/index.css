@@ -239,13 +239,20 @@
   display:flex;gap:8px;align-items:center;flex-wrap:wrap;
   font-weight:1000;color:#222;margin-bottom:8px;
 }
-.maids-wrap{display:flex;flex-direction:column;gap:6px}
-.today-maid{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
-.maid-name{font-weight:1000}
-.maid-time{color:#ff4fa3;font-weight:1000}
+.maids-wrap{
+  display:grid;
+  grid-template-columns:max-content minmax(0,1fr);
+  column-gap:12px;
+  row-gap:6px;
+  align-items:baseline;
+}
+.today-maid{display:contents}
+.maid-name{min-width:0;font-weight:1000}
+.maid-time{color:#ff4fa3;font-weight:1000;white-space:nowrap}
 .maid-time.is-off{color:#666}
-.maids-fallback{font-weight:900;color:#555;font-size:.92rem}
+.maids-fallback{grid-column:1/-1;font-weight:900;color:#555;font-size:.92rem}
 .maids-closed{
+  grid-column:1/-1;
   display:grid;
   gap:6px;
   padding:14px;
