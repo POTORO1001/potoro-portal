@@ -44,6 +44,26 @@
     return (hours * 60) + minutes;
   }
 
+  function compareTodayMaids(a, b){
+    const aOff = isOffRow(a);
+    const bOff = isOffRow(b);
+    if(aOff !== bOff) return aOff ? 1 : -1;
+
+    const missingTime = Number.POSITIVE_INFINITY;
+    const aStart = parseTimeToMinutes(a?.start) ?? missingTime;
+    const bStart = parseTimeToMinutes(b?.start) ?? missingTime;
+    if(aStart !== bStart) return aStart - bStart;
+
+    const aEnd = parseTimeToMinutes(a?.end) ?? missingTime;
+    const bEnd = parseTimeToMinutes(b?.end) ?? missingTime;
+    if(aEnd !== bEnd) return aEnd - bEnd;
+
+    return normalizeText(a?.maid).localeCompare(normalizeText(b?.maid), 'ja', {
+      sensitivity: 'base',
+      numeric: true
+    });
+  }
+
   function getWorkingMaidTimes(day){
     const rawMaids = Array.isArray(day?.maids) ? day.maids : [];
     return rawMaids
@@ -214,7 +234,9 @@
     }
 
     const rawMaids = (day && Array.isArray(day.maids)) ? day.maids : [];
-    const maids = rawMaids.filter(maid => !isClosedLabel(maid?.maid));
+    const maids = rawMaids
+      .filter(maid => !isClosedLabel(maid?.maid))
+      .sort(compareTodayMaids);
 
     if(maids.length === 0){
       wrap.innerHTML = '<div class="maids-fallback">本日はお屋敷休館日です</div>';
