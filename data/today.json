@@ -1,11 +1,11 @@
 {
   "ok": true,
   "source": "github-actions",
-  "updatedAt": "2026-11-22T17:19:18.692Z",
-  "today": "2026-11-23",
+  "updatedAt": "2026-11-24T00:13:05.673Z",
+  "today": "2026-11-24",
   "day": {
-    "date": "2026-11-23",
-    "dow": "月",
+    "date": "2026-11-24",
+    "dow": "火",
     "maids": [
       {
         "maid": "お屋敷休館日",
